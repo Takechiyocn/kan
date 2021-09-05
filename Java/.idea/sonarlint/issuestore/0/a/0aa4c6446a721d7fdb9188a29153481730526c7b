@@ -1,0 +1,40 @@
+
+S	java:S106["9Replace this use of System.out or System.err by a logger.(ëºŠúýÿÿÿÿ
+W	java:S125€"<This block of commented-out lines of code should be removed.(íü€‘ÿÿÿÿÿ
+N
+java:S1135ý"2Complete the task associated to this TODO comment.(›Èó¶úÿÿÿÿ
+S	java:S1067"9Replace this use of System.out or System.err by a logger.(Ç£—¯ÿÿÿÿÿ
+Q	java:S125|"<This block of commented-out lines of code should be removed.(Ââ®Ê
+O
+java:S4973R"9Use the "equals" method if value comparison was intended.(àìÇê
+S	java:S106A"9Replace this use of System.out or System.err by a logger.(‚é€Þûÿÿÿÿ
+K
+java:S1481%"0Remove this unused "intArrayDec" local variable.(âú¥Æþÿÿÿÿ
+N
+java:S1135þ"2Complete the task associated to this TODO comment.(·Ïûüýÿÿÿÿ
+W	java:S125ø"<This block of commented-out lines of code should be removed.(¢«„¢ÿÿÿÿÿ
+S	java:S106"9Replace this use of System.out or System.err by a logger.(Žµñåþÿÿÿÿ
+S	java:S106"9Replace this use of System.out or System.err by a logger.(¯€ˆ‹üÿÿÿÿ
+Z
+java:S1854%"?Remove this useless assignment to local variable "intArrayDec".(âú¥Æþÿÿÿÿ
+W	java:S125í"<This block of commented-out lines of code should be removed.(£™×ðþÿÿÿÿ
+N	java:S106"9Replace this use of System.out or System.err by a logger.(´½¦¢
+N	java:S106,"9Replace this use of System.out or System.err by a logger.(Œ²¦ 
+S	java:S106"9Replace this use of System.out or System.err by a logger.(ŒÀä‰þÿÿÿÿ
+W	java:S125á"<This block of commented-out lines of code should be removed.(¸Ñ×Ðûÿÿÿÿ
+N	java:S106R"9Replace this use of System.out or System.err by a logger.(àìÇê
+N
+java:S4973S"9Use the "equals" method if value comparison was intended.(²Œæ
+N	java:S106"9Replace this use of System.out or System.err by a logger.(•ê®ì
+N	java:S106
+"9Replace this use of System.out or System.err by a logger.(ò°ÿº
+V	java:S125 "<This block of commented-out lines of code should be removed.(ÉóÃ¿ýÿÿÿÿ
+S	java:S1065"9Replace this use of System.out or System.err by a logger.(Ç£—¯ÿÿÿÿÿ
+S	java:S106E"9Replace this use of System.out or System.err by a logger.(§Ø€Ýÿÿÿÿÿ
+M	java:S106S"9Replace this use of System.out or System.err by a logger.(²Œæ
+S	java:S1061"9Replace this use of System.out or System.err by a logger.(Ç£—¯ÿÿÿÿÿ
+S	java:S106"9Replace this use of System.out or System.err by a logger.(œõ÷…üÿÿÿÿ
+N	java:S106Z"9Replace this use of System.out or System.err by a logger.(Ñ¼‰Ž
+S	java:S106/"9Replace this use of System.out or System.err by a logger.(´‹¹öþÿÿÿÿ
+‚
+java:S1130"lRemove the declaration of thrown exception 'java.io.IOException', as it cannot be thrown from method's body.(œû¿Ø

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    // 正数二进制：31位为符号位（0位开始）
+    // 负数二进制：正数的二进制 反码 + 1  --> 补码
+
+    // 按位非~：实际结果，对数值取反并减一
+    //   返回二进制的补数
+    let num1 = 25;
+    let num2 = ~num1;
+    alert(num2);
+
+    // 按位与&： 同真 为真
+
+    // 按位或|： 有真 则真
+
+    // 按位异或^： 不同 为真
+
+    // 逻辑非：！
+    //   ！！：第一个返回布尔值，第二个对该布尔值取反。 ！！false --> false     ！false --> true
+
+    // 逻辑与&&：短路操作
+
+    // 逻辑或：||
+
+    // 指数操作符 ＊＊ <==> Math.pow(x,y)
+    alert(2 ** 3);
+    let squared = 3;
+    alert(squared **= 4);
+
+</script>
+</body>
+</html>

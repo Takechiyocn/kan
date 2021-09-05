@@ -1,0 +1,83 @@
+package concept;
+
+import occupation.Employee;
+import lombok.extern.slf4j.Slf4j;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
+/**
+ * @description: 泛型
+ *               数组列表ArrayList
+ *               泛型类（generic class）
+ *               添加元素：obj.add(new Object(...))
+ *               改变数组元素：obj.set(i, new Object(...))  --> 只能替换数组列表中已经存在的元素内容
+ *               访问数组元素：obj.get(i)
+ * @author: Kan
+ * @date: 2021/2/23 22:37
+ */
+@Slf4j
+public class GenericClass {
+    public static void main(String[] args) {
+        // 数组列表只是表明该数组列表拥有保存10个元素的潜力（实际重新分配空间将会超过100）
+        // 未用add等方法追加元素前，数组列表中包含的实际元素数目为0
+        ArrayList<String> arrayList = new ArrayList<>(10);
+        // 如果能确定数组可能存储的元素数量，可用ensureCapacity方法
+        arrayList.ensureCapacity(100);
+        // 如果确定数组列表的大小不再发生变化，可用trimToSize方法调整存储区域大小
+        // 垃圾回收器将回收多余的存储空间
+        arrayList.trimToSize();
+        // 分配10个元素的存储空间
+        String[] array = new String[10];
+        log.info("Size:" + arrayList.size());
+        log.info("Size:" + array.length);
+        Integer a = 100;
+        Integer b = 100;
+        Integer c = 1000;
+        Integer d = 1000;
+        // TODO：出力时机奇怪？为什么在下面staff出力之后才出力该log
+        System.out.println(a == b);
+        System.out.println(c == d);
+        System.out.println("Equal compare:" + (a == b));
+        System.out.println("Equal compare:" + (c == d));
+
+        ArrayList<Employee> staff = new ArrayList<>();
+        staff.add(new Employee("Carl Cracker", 75000, 1987, 12, 15));
+        staff.add(new Employee("Harry Hacker", 50000, 1989, 10, 1));
+        staff.add(new Employee("Tony Tester", 40000, 1990, 3, 15));
+
+        for (Employee e : staff) {
+            e.raiseSalary(5);
+        }
+
+        for (Employee e : staff) {
+            log.info("name=" + e.getName() + ",salary=" + e.getSalary() + ",hireDay=" + e.getHireDay());
+        }
+
+        ArrayList<Employee> findEl = find("Tony Tester");
+        for (Employee e : findEl) {
+//            log.info("Found: name=" + e.getName() + ",salary=" + e.getSalary() + ",hireDay=" + e.getHireDay());
+        }
+    }
+
+    /**
+     * 类型化与原始列表（没有使用泛型<></>）的兼容
+     * 调用元是静态static类型， 所以该方法也应该是静态
+     * @param query
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public static ArrayList find(String query) {
+        ArrayList<Employee> aList = new ArrayList<>();
+        aList.add(new Employee("Carl Cracker", 75000, 1987, 12, 15));
+        aList.add(new Employee("Harry Hacker", 50000, 1989, 10, 1));
+        aList.add(new Employee("Tony Tester", 40000, 1990, 3, 15));
+
+        for (Employee e : aList) {
+            if (query.equals(e.getName())) {
+                return new ArrayList(Arrays.asList(e));
+            }
+        }
+        return new ArrayList(Arrays.asList(new Employee()));
+    }
+}

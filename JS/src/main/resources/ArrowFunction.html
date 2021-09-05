@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    // 无参数
+    // TODO: 无参数不转换成string类型无法输出
+    let noParam = () => 3.14;
+    alert(noParam());
+
+    // 固定参数
+    let twoParam = (x, y) => x * x + y * y;
+    console.log(twoParam(2, 3));
+
+    // 可变参数
+    let tripleParam = (x, y, ...rest) => {
+        let i, sum = x + y;
+        for (i = 0; i < rest.length; i++) {
+            sum += rest;
+        }
+        return sum;
+    }
+    // TODO: 输出？？？
+    // alert(tripleParam(1, 2, 3, 4))
+    console.log(tripleParam(1, 2))
+
+    // 匿名函数
+    var obj1 = {
+        birth: 1990,
+        getAge: function () {
+            let b = this.birth;
+            let fn = function () {
+                //
+                console.log(new Date().getFullYear() - this.birth)
+                return new Date().getFullYear() - this.birth;   // this指向window或者undefined
+            }
+            return fn();
+        }
+    };
+    // alert(obj1.getAge());
+
+    // this：箭头函数内部的this是词法作用域，由上下文确定，即this总是指向外层调用者obj
+    var arrayFunctionObject = {
+        birth: 1990,
+        getAge: function () {
+            // var b = this.birth;
+            var fn = () => new Date().getFullYear() - this.birth;   // this指向arrayFunctionObject
+            return fn();
+        }
+    }
+    alert(arrayFunctionObject.getAge());
+
+    // 由于this在箭头函数中已经按照词法作用域绑定了，
+    // 所以，用call()或者apply()调用箭头函数时，无法对this进行绑定，即传入的第一个参数被忽略：
+    var callObj = {
+        birth: 1990,
+        getAge: function (year) {
+            var b = this.birth; // 1990
+            var fn = (y) => y - this.birth; // this.birth仍是1990
+            return fn.call({birth:2000}, year);
+        }
+    };
+    alert(callObj.getAge(2015)); // 25
+</script>
+</body>
+</html>

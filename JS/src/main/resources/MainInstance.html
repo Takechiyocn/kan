@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--<script src="/static/StatementInstance.js" type="text/javascript" charset="UTF-8"></script>-->
+<script src="concept/RegExpProcedure.js" type="text/javascript" charset="UTF-8"></script>
+<script src="concept/OrignalValueWrapper.js" type="text/javascript" charset="UTF-8"></script>
+<script src="klib/FindSubString.js"></script>
+<script>
+    // for in ： 枚举对象中的非符号属性键
+    for (const propName in Window) {
+        console.log(propName)
+    }
+
+    // for of：遍历迭代对象元素
+    for (const el of [2,4,6,8]) {
+        console.log(el)
+    }
+    regExpNormal();
+    originalValueWrapper();
+    findSubString();
+</script>
+</body>
+</html>

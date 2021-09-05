@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    // 原始值：primitive value 简单的数据类型
+    //   保存原始值的变量是按值by value访问
+    // 引用值：reference value 由多个值构成的对象
+    //   保存引用值的变量是按引用by reference访问
+    //   尽管引用值保存在内存中，但js不允许直接访问内存位置。操作对象时实际上操作的是对该对象的引用而非实际的对象本身
+    let obj1 = new Object();
+    obj1.name = "test";
+    let obj2 = obj1;
+    console.log(obj2.name);
+
+    // ★★★JS所有的参数都是按值传递★★★
+    //   当参数类型为原始值时：实参值会被复制到形参上，调用结束实参值不会改变
+    //   当参数类型为引用值时：引用会被复制到形参上，调用结束引用的对象内的值可能会改变。
+    //      --> 函数内形参可重新定义新指向
+    function setName(obj) {
+        obj.name = "AA";
+        // 形参指向新的对象。 以此证明函数调用 并非 按引用传值
+        obj = new Object();
+        obj.name = "BB";
+    }
+
+    // const：一经声明，生命周期内不能赋予新值
+    //   --> 赋值为对象（引用）的const变量 不能 再被重新赋值为其他对象的引用）
+    //       对象的键不受限制
+    //        --> Object.freeze(): 对象的键也不能变更
+    const person = new Object();
+    setName(person);
+    console.log(person.name);   // AA
+    const obj3 = Object.freeze({});
+    obj3.name = 'DD';
+    console.log(obj3.name);     // undefined
+
+    // let person1 = new Object();
+    // setName(person1);
+    // person1.name = "CC";
+    // console.log(person1.name)
+    // person = person1;
+
+</script>
+</body>
+</html>

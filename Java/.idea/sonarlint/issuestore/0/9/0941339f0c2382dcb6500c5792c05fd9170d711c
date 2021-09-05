@@ -1,0 +1,22 @@
+
+I
+java:S3599&",Use another way to initialize this instance.(§‚Èò8Ã”ÒÊş.
+ƒ
+java:S1488"aImmediately return this expression instead of assigning it to the temporary variable "arrayList".(ÄÃò€ıÿÿÿÿ8œ»ØÊş.
+
+java:S1488&"bImmediately return this expression instead of assigning it to the temporary variable "arrayList3".(§‚Èò8®ÓÊş.
+’
+java:S1319"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(¾í²ğøÿÿÿÿ8ÈÂÀÊş.
+
+java:S1319"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(Ë¼µ8ÕŸ½Êş.
+
+java:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(äí­8ÕŸ½Êş.
+v
+java:S1171&"YMove the contents of this initializer to a standard constructor or to field initializers.(§‚Èò8Ã”ÒÊş.
+:
+java:S1118"Hide this public constructor.(äí­8ÆàÈÊş.
+X	java:S125"<This block of commented-out lines of code should be removed.(è•« 8ÈÌ²Êş.
+]	java:S125"<This block of commented-out lines of code should be removed.(…æïúÿÿÿÿ8œ»ØÊş.
+
+java:S1319%"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(ú«Íß8–¨ÎÊş.
+W	java:S125#"<This block of commented-out lines of code should be removed.(ÎğÛ$8ÌÑÊÊş.

@@ -1,0 +1,11 @@
+8月 31, 2021 12:08:26 上午 logger.BaseLogger main
+较详细: THROW
+java.io.FileNotFoundException: test (系统找不到指定的文件。)
+	at java.base/java.io.FileInputStream.open0(Native Method)
+	at java.base/java.io.FileInputStream.open(FileInputStream.java:211)
+	at java.base/java.io.FileInputStream.<init>(FileInputStream.java:153)
+	at java.base/java.io.FileInputStream.<init>(FileInputStream.java:108)
+	at logger.BaseLogger.read(BaseLogger.java:71)
+	at logger.BaseLogger.getLoggerInfo(BaseLogger.java:48)
+	at logger.BaseLogger.main(BaseLogger.java:35)
+

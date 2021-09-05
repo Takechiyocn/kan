@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    for (const key in {a: 1, b: 2}) {
+        console.log(key);
+    }
+    for (const value of [11, 22, 33]) {
+        console.log(value);
+    }
+    // 6简单数据类型（原始类型）：Undefined，Null，Boolean，Number，String，Symbol
+    // 1复杂数据类型：Object无序名值对的集合
+    // typeof数据类型
+    //   undefined：值未定义
+    //   boolean：值为布尔型
+    //   string：值为字符串
+    //   number：值为数值
+    //   symbol：值为符号
+    //   function：值为函数
+    //   object：值为对象（而不是函数）或者null
+    // Undefined类型：undefined
+    //    var，let声明未初始化，值为undefined，未声明的变量值同样为undefined
+    // Null类型：null表示一个空对象指针 --> type of null变量 返回object
+    //    undefined由null派生，即 null == undefined , -->true
+    //  --> undefined和null都是假值，即undefined和null变量可当作逻辑判断条件
+    //      let message = null;
+    //      let age;   // undefined
+    //      if(message) {}  -> 不执行
+    //      if(age) {}   -> 不执行
+    // Boolean类型：true，false
+    // Number类型：
+    //    整数
+    //    浮点数
+    //    NaN：不是数值，用于表示本来要返回数值的操作失败了（而不是抛出错误）
+    //         --> 不等于包括自己NaN在内的任何值，可用isNaN()函数检测，会先转换称数值，如不能转换返回true表示非数值
+    //         0/0， -0/+0  --> NaN
+    //         5/0，5/-0    --> -/Infinity
+    // console.log(isNaN(NaN));    // true
+    // console.log(isNaN(10));     // false
+    // console.log(isNaN("10"));   // false，转换成10
+    // console.log(isNaN("blue")); // true, 转换失败
+    // console.log(isNaN(true));   // false，转换成1
+    // console.log(isNaN("")); // false, 转换成0
+
+    // 数值转换：Number(), parseInt(), parseFloat
+    //   Number():
+    //     布尔：true --> 1， false --> 0;
+    //     数值：直接返回
+    //     null：返回0
+    //     undefined：返回NaN
+    //     字符串：
+    //       模板字面量：可保留换行符，跨行定义。模板字面量可保留反引号`内的内容。通常用于定义模板
+
+    // 可变参数
+    function capitalize(word) {
+        return `${word[0].toUpperCase()}${word.slice(1)}`;
+    }
+
+    console.log(`${capitalize('hello')}, ${capitalize('world')}`);
+    let a = 1;
+    let b = 2;
+
+    function simpleTag(strings, aValExpression, bValExpression, sumExpression) {
+        console.log(strings);
+        console.log(aValExpression);
+        console.log(bValExpression);
+        console.log(sumExpression);
+        return 'foobar';
+    }
+
+    let untaggedResult = `${a} + ${b} = ${a + b}`;
+    // 模板字面量标签函数：接受被插值记号（+）分隔后的模板和对每个表达式求值的结果
+    //   参数：原始字符串数组，每个表达式的求值结果
+    //   返回：对模板字面量求值得到的字符串
+    let taggedResult = simpleTag`${a} + ${b} = ${a + b}`;
+    // alert(untaggedResult);  // 1 + 2 = 3
+    // alert(taggedResult);    // foobar
+
+    // 剩余操作符rest operator，当参数不确定时使用
+    let c = 6;
+    let d = 9;
+
+    function simpleTag2(strings, ...expressions) {
+        console.log(strings);
+        // ["", " + "," = ",""] 或者 ["", " + "," = "," * d"]
+        for (const expression of expressions) {
+            console.log(expression);
+            // 6
+            // 9
+            // 15
+        }
+        return 'foobar2';
+    }
+
+    // alert(simpleTag2`${c} + ${d} = ${c + d} * d`)
+
+    //
+    let e = 2;
+    let f = 3;
+
+    function zipTag(strings, ...expressions) {
+        return strings[0] +
+            expressions.map((e, i) => `${e}${strings[i + 1]}`).join('');
+    }
+
+    // alert(zipTag`${e} + ${f} = ${e + f}`)
+
+    // 获取原始的模板字面量内容，而非被转换后的字符表示。
+    console.log((`\u00A9`));
+    console.log(String.raw`\u00A`);     //
+    console.log(`first line\nsecond line`);
+
+    function printRaw(strings) {
+        console.log('Actual characters:')
+        for (const string of strings) {
+            console.log(string);
+        }
+        console.log('Escaped characters:');
+        // //
+        // for(const rawString of strings.raw) {
+        //     console.log(rawString);
+        // }
+    }
+    printRaw(`\u00A9${`and`}\n`);
+
+
+</script>
+</body>
+</html>
