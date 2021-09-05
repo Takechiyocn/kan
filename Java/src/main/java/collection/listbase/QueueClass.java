@@ -1,11 +1,11 @@
-package collection;
+package collection.listbase;
 
-import occupation.Employee;
 import org.jetbrains.annotations.NotNull;
 import org.omg.CosTrading.Link;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Queue;
 
 /**
@@ -17,8 +17,40 @@ import java.util.Queue;
  */
 public class QueueClass {
 
-    Queue<Employee> el = new  CirculeArrayQueue<>(100);
-    boolean result = el.add(new Employee("el1"));
+    public static void main(String[] args) {
+
+        Queue<String> el = new LinkedList<>();
+        // 尾端插入元素
+        //  a. add:列表满了，抛出异常NoSuchElementException
+        //  b. offer:列表满了，返回false
+        el.add("e1");
+        el.add("e2");
+        el.add("e3");
+        // 尾端插入元素
+        el.offer("e4");
+        System.out.println(el);
+
+        // 前端删除元素：
+        //  a. remove:列表为空，抛出异常NoSuchElementException
+        //  b. poll:列表为空，返回null
+        System.out.println(el.remove());
+        System.out.println(el.poll());
+        System.out.println(el);
+
+        // 查找元素:从表前端
+        //  a. element:列表为空，抛出异常NoSuchElementException
+        //  b. poll:列表为空，返回null
+        System.out.println(el.element());
+        System.out.println(el);
+        System.out.println(el.peek());
+        System.out.println(el);
+
+        // 查找元素: element, 列表为空，抛出异常NoSuchElementException
+        el.poll();
+        el.poll();
+        el.poll();
+        System.out.println(el.element());
+    }
 }
 
 /**

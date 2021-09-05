@@ -1,4 +1,4 @@
-package collection;
+package collection.listbase;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -42,9 +42,6 @@ public class IteratorBase {
         } else {
             System.out.println("Not support random access!");
         }
-
-
-
     }
 
     /**

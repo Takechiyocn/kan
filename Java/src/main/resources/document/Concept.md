@@ -380,15 +380,15 @@ lambda表达式就是闭包
 * 在算法的适当位置运行代码（例如，排序中的比较操作）
 * 发生某种情况时执行代码（如，点击了一个按钮，数据到达，等等）
 * 只在必要时才运行代码
-  ![img_2.png](img_2.png)
-  ![img_3.png](img_3.png)
+  ![img_2.png](images/img_2.png)
+  ![img_3.png](images/img_3.png)
 
 **TODO：包装器类**
 
 **异常**
 
 *异常层次结构*
-![img_4.png](img_4.png)
+![img_4.png](images/img_4.png)
 
 ### JAVA三种处理系统错误的机制
 
@@ -454,12 +454,18 @@ private static int sumUp(int[] values) {
 } 
 ```
 
-![img_8.png](img_8.png)
+![img_8.png](images/img_8.png)
 
 
-![img_7.png](img_7.png)
+![img_7.png](images/img_7.png)
 
 
-![img_9.png](img_9.png)
+![img_9.png](images/img_9.png)
 
-![img_10.png](img_10.png)
+![img_10.png](images/img_10.png)
+
+![img_11.png](images/img_11.png)
+
+![img_12.png](images/img_12.png)
+
+![img_13.png](images/img_13.png)
