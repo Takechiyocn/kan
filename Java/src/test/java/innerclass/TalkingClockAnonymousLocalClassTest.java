@@ -9,8 +9,9 @@ import javax.swing.*;
  */
 public class TalkingClockAnonymousLocalClassTest {
     public static void main(String[] args) {
+
         TalkingClockAnonymousLocalClass clock = new TalkingClockAnonymousLocalClass();
-        clock.start(5000, true);
+        clock.start(2000, true);
 
         JOptionPane.showConfirmDialog(null, "Quit??");
     }

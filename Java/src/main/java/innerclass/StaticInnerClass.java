@@ -8,8 +8,11 @@ package innerclass;
  *     声明在接口中的内部类自动成为static和public类
  *     静态内部类的作用：只是为了降低包的深度，方便类的使用，静态内部类适用于包含类当中，但又不依赖与外在的类，
  *       不用使用外在类的非静态属性和方法，只是为了方便管理类结构而定义。在创建静态内部类的时候，不需要外部类对象的引用。
+ *
+ *  TODO：静态类？
+ *
  * @author: Kan
- * @date: 2021/3/4 23:22
+ *
  */
 public class StaticInnerClass {
     /**
@@ -22,7 +25,9 @@ public class StaticInnerClass {
         private double second;
 
         public Pair(double first, double second) {
-            this.first = first;
+            // 通过类实例访问静态成员：不推荐
+//            this.first = first;
+            Pair.first = first;
             this.second = second;
         }
 

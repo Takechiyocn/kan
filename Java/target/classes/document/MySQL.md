@@ -67,7 +67,7 @@ mysql80;
 
 ###  
 
-![img_5.png](img_5.png)
+![img_5.png](images/img_5.png)
 
 ### 关键字
 

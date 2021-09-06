@@ -31,7 +31,7 @@
          包名为“com.公司名.项目名.模块名.……”。
 
 UML 依赖us-a 聚合has-a 继承is-a
-![img.png](img.png)
+![img.png](images/img.png)
 
 
 

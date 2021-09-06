@@ -9,7 +9,7 @@ import javax.swing.*;
  */
 public class TalkingClockTest {
     public static void main(String[] args) {
-        TalkingClock tc = new TalkingClock(5000,true);
+        TalkingClock tc = new TalkingClock(2000,true);
         tc.start();
 
         JOptionPane.showConfirmDialog(null,"Quit?");

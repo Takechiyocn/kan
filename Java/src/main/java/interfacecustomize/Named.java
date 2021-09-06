@@ -13,8 +13,8 @@ public interface Named {
 
     /**
      * 实现类可以不用覆盖默认方法，若实现类继承多处相同的方法，则实现类应明确指定使用哪种方法
-     * JDK 8 新特征 interface中允许使用default修饰方法，来完成
-     * 对于方法的默认定义，该方法可以有方法体
+     * JDK 8 新特征 interface中允许使用default修饰方法，来完成对于方法的默认定义，该方法可以有方法体
+     *
      * @return name
      */
     default String getName() {
