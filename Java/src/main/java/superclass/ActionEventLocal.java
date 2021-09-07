@@ -1,6 +1,7 @@
 package superclass;
 
 import java.awt.event.ActionEvent;
+import java.util.function.Supplier;
 
 /**
  * @description:
@@ -14,7 +15,11 @@ public class ActionEventLocal {
      * ActionListener必须要有监听对象（ActionEvent），所有super的greet方法必须有该参数
      * @param actionEvent
      */
-    public void greet(ActionEvent actionEvent) {
-        System.out.println("Hello, world!");
+    public void greet(ActionEvent actionEvent)  {
+        System.out.println("Hello, world! Event:" + actionEvent);
+    }
+
+    public void greet2(Supplier<String> msg, ActionEvent actionEvent)  {
+        System.out.println("Hello, world! Event:" + actionEvent);
     }
 }

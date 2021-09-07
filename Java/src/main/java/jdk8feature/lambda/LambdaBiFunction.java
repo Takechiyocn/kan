@@ -1,4 +1,4 @@
-package jdk8feature;
+package jdk8feature.lambda;
 
 import occupation.Employee;
 import org.apache.commons.lang3.StringUtils;

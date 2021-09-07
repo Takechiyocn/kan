@@ -10,7 +10,9 @@ import java.util.Objects;
  * @author moku
  */
 public class PredicateClass {
+
    public static void main(String[] args) {
+
       List<String> str = new ArrayList<String>(Arrays.asList("a","b",null,"c"));
 
       System.out.println("Before remove, size:" + str.size());

@@ -28,7 +28,7 @@ public class RepeatLambada {
     }
 
     /**
-     * 基本类型函数式接口
+     * 基本类型函数式接口：整形的消费型函数式接口
      * @param n
      * @param action
      */

@@ -11,8 +11,10 @@ import lombok.Setter;
 @Setter
 @Getter
 public class Person {
+
     private String name;
     private Integer age;
+    private String message;
 
     public Person(String name, Integer age) {
         this.name = name;
@@ -28,7 +30,11 @@ public class Person {
     }
 
     public void greet() {
-        System.out.println("Hello, world!");
+        System.out.println("Hello, world Base!");
+    }
+
+    public String getMessage() {
+        return message;
     }
 
     @Override

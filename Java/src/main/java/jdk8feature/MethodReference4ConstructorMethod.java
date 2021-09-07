@@ -20,7 +20,7 @@ import java.util.stream.Stream;
  * @author moku
  */
 @Slf4j
-public class MethodReferenceConstructorMethod {
+public class MethodReference4ConstructorMethod {
     /**
      * 获取空的Person列表：lambda表达式
      */

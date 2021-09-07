@@ -1,4 +1,4 @@
-package jdk8feature;
+package jdk8feature.lambda;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,9 +18,9 @@ import java.util.function.Consumer;
  * @author moku
  */
 @Slf4j
-public class LambdaTest {
+public class LambdaBase {
     public static void main(String[] args) throws InterruptedException {
-        LambdaTest test = new LambdaTest();
+        LambdaBase test = new LambdaBase();
         // 创建线程：匿名内部类
         test.threadPrint();
 
@@ -45,6 +45,9 @@ public class LambdaTest {
 
         // 语法格式5：lambda表达式的数据类型可以省略不写（JVM编译器通过上下文可以推断出数据类型）
         System.out.println(test2.multi(10, 5));
+
+        // 语法格式6：无个参数，有返回值(供给型Supplier接口)
+
     }
 
     /**
@@ -108,6 +111,7 @@ public class LambdaTest {
 //        Timer t = new Timer(10000, e -> log.info("The time is " + new Date()));
 
         // 显示说明执行时机，Invoked when an action occurs.
+        // 此处Timer被注册为一个action
         new Timer(2000, e -> log.info("The time is " + new Date() + "Action:" + e.getSource())).start();
         Thread.sleep(3000);
     }
@@ -117,7 +121,7 @@ public class LambdaTest {
      *
      * @param consumer
      */
-    public void print(Consumer<String> consumer) {
+    public void print(String s, Consumer<String> consumer) {
         // accept方法接收1个参数，即函数式接口Consumer对象consumer：(str) -> System.out.println(msg+str)
         consumer.accept("accept parameter");
     }
@@ -135,8 +139,8 @@ public class LambdaTest {
         //  2. lambda实现了该接口方法accept，即
         //     <System.out.println(msg+str)> == accept方法体
         //  3. 如果该接口没有显示说明复写接口方法执行时机，则需自己执行该方法
-        print((str) -> System.out.println(msg+str));
-        print(str -> System.out.println(msg+str+"2"));
+        print("name", (str) -> System.out.println(msg+str));
+        print("age", str -> System.out.println(msg+str+"2"));
     }
 
 }

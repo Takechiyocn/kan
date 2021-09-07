@@ -1,4 +1,4 @@
-package concept;
+package jdk8feature;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,7 +18,7 @@ import java.util.function.BiFunction;
  * @date: 2021/2/28 22:57
  */
 @Slf4j
-public class LambdaClass {
+public class LambdaAndFuncRefSumClass {
 
     public static void main(String[] args) {
 

@@ -10,7 +10,7 @@ import java.util.function.BiPredicate;
  * 构建方法引用        类名::new             (args) -> new 类名(args)
  * @author moku
  */
-public class MethodReferenceObjectMethod {
+public class MethodReference3ObjectMethod {
 
     public static void main(String[] args) {
 

@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 /**
- * @description:
+ * @description: 断言assert
  * @author: Kan
  * @date: 2021/3/5 21:49
  */
@@ -15,7 +15,7 @@ public class StackTraceClass {
         System.out.println("Enter n:");
 
         int n = in.nextInt();
-        // 断言：允许在测试期间插入一些检查语句，代码发布时这些插入的检测语句会被自动一走。
+        // 断言：允许在测试期间插入一些检查语句，代码发布时这些插入的检测语句会被自动移走。
         //      当条件检测结果为false时，会抛出AssertionError异常（assert a!=null,当a为null时抛出 -->前置条件Precondition）
         //   1. assert 条件
         //   2. assert 条件：表达式  （表达式会被传入AssertionError构造器中并转换成一个消息字符串）
@@ -31,9 +31,11 @@ public class StackTraceClass {
         //    setClassAssertionStatus：启用/禁用类（包括内部类）的断言状态
         //    setPackageAssertionStatus：启用/禁用包和其子包的断言状态
         //    clearAssertionStatus：移去所有类和包的显式断言状态设置，并禁用所有通过这个类加载器加载的类的断言。
-        assert n <= 0 : "n<=0";
+        //  语法：assert 表达式 : 断言信息
+        //    -> 当表达式不为true时抛出异常，即断言这个表达式一定为true
+        assert n > 0 : "n<=0";
 
-        System.out.println(n);
+        System.out.println("Input:" + n);
         System.out.println("Result:" + factorial(n));
     }
 
