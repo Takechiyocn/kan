@@ -1,4 +1,4 @@
-package jdk8feature;
+package jdk8feature.methodref;
 
 import java.util.function.IntConsumer;
 
@@ -11,6 +11,7 @@ public class RepeatLambada {
 
     public static void main(String[] args) {
         repeatRunnable(2, ()->System.out.println("Runnable无参数无返回值"));
+
         repeatRunnable(2, System.out::println);
         repeatIntConsumer(2, i -> System.out.println("基本类型函数式接口:" + i));
         repeatIntConsumer(2, System.out::println);

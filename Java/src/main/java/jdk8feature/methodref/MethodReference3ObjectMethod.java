@@ -1,4 +1,4 @@
-package jdk8feature;
+package jdk8feature.methodref;
 
 import java.util.function.BiPredicate;
 

@@ -1,5 +1,6 @@
-package jdk8feature;
+package jdk8feature.methodref;
 
+import jdk8feature.comparator.TraditionalComparator;
 import lombok.extern.slf4j.Slf4j;
 import superclass.Person;
 

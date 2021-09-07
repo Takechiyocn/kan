@@ -1,4 +1,4 @@
-package jdk8feature;
+package jdk8feature.methodref;
 
 import lombok.extern.slf4j.Slf4j;
 import occupation.Employee;
@@ -21,6 +21,7 @@ import java.util.stream.Stream;
  */
 @Slf4j
 public class MethodReference4ConstructorMethod {
+
     /**
      * 获取空的Person列表：lambda表达式
      */
@@ -34,6 +35,7 @@ public class MethodReference4ConstructorMethod {
     List<Person> person2 = userSupplier2.get();
 
     public  static void main(String[]args) {
+
         // 将字符串列表转换为Employee对象数组
         ArrayList<String> names = new ArrayList<>(Arrays.asList("EmployeeA","EmployeeB"));
         ArrayList<Double> salary = new ArrayList<>(){{
@@ -41,20 +43,32 @@ public class MethodReference4ConstructorMethod {
             add(22.2);
             add(12.0);
         }};
+
         // 构造器引用：编译器自动选择合适的构造器
-        // TODO: 流库后再check
-        // 1.string构造器
+        // TODO: 第二卷流库后
+        // 1.String构造器
+        // apply方法由流执行
+        //  -> map:Returns a stream consisting of the results of applying the given function
+        //     to the elements of this stream.
+        //  apply = public Employee(String name) {}
         Stream<Employee> stream = names.stream().map(Employee::new);
         List<Employee> people = stream.collect(Collectors.toList());
+
         // 2.double构造器
+        //  apply = public Employee(double salary) {}
         Stream<Employee> stream2 = salary.stream().map(Employee::new);
         List<Employee> people2 = stream2.collect(Collectors.toList());
 
         people.forEach(x -> log.info(x.getName()));
         people2.forEach(x -> log.info(String.valueOf(x.getSalary())));
 
-        // 数组构造器
+        // 1.String构造器
         Stream<Employee> stream3 = names.stream().map(Employee::new);
+        // 数组构造器
+        //
+        // <A> A[] toArray(IntFunction<A[]> generator);
+        // generator – a function which produces a new array of the desired type and
+        //             the provided length
         Employee[] peopleArrays = stream3.toArray(Employee[]::new);
         for (Employee e : peopleArrays) {
             log.info("Stream to array:" + e.getName());

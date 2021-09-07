@@ -1,4 +1,4 @@
-package jdk8feature.functional;
+package jdk8feature.functionalinterface;
 
 import org.apache.commons.lang3.StringUtils;
 import superclass.Person;
