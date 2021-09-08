@@ -62,10 +62,9 @@ public class MethodReference4ConstructorMethod {
         people.forEach(x -> log.info(x.getName()));
         people2.forEach(x -> log.info(String.valueOf(x.getSalary())));
 
-        // 1.String构造器
+        // String构造器
         Stream<Employee> stream3 = names.stream().map(Employee::new);
         // 数组构造器
-        //
         // <A> A[] toArray(IntFunction<A[]> generator);
         // generator – a function which produces a new array of the desired type and
         //             the provided length

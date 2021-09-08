@@ -16,6 +16,7 @@ public class PredicateClass {
       List<String> str = new ArrayList<String>(Arrays.asList("a","b",null,"c"));
 
       System.out.println("Before remove, size:" + str.size());
+      // 静态方法引用
       str.removeIf(Objects::isNull);
       System.out.println("After remove, size:" + str.size());
    }

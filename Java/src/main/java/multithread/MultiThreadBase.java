@@ -1,4 +1,4 @@
-package multithread.routine;
+package multithread;
 
 /**
  * @author moku

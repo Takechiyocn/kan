@@ -25,7 +25,7 @@ public class ProfessionalComparator extends TraditionalComparator {
         // 1. Arrays.comparing()
         // 键：姓，比较器：默认 -> 姓字符升序
         // Arrays.comparing代替手动实现comparator
-        // 对象发方法引用（第一个参数是实例方法的参数调用者，第二个参数是实例方法的参数）
+        // 对象方法法引用（第一个参数是实例方法的参数调用者，第二个参数是实例方法的参数）
         Arrays.sort(people, Comparator.comparing(Person::getLastName));
         // 对象方法调用：lambda表达式
 //        Arrays.sort(people, Comparator.comparing(p -> {return p.getLastName();}));

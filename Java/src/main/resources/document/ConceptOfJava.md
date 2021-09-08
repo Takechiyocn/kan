@@ -446,19 +446,18 @@ lambda表达式就是闭包
 * 一个方法里只能有一个这样的形参
 * 不能再同一个类中定义一个和转化后的方法签名一直的方法
 * 编译器看来，实参个数可变的方法是最后带了一个数组形参方法的特例
+
 ```java
-private static int sumUp(int... values) {
-}
+private static int sumUp(int...values){
+        }
 // 转化后的方法
-private static int sumUp(int[] values) {
-} 
+private static int sumUp(int[]values){
+        } 
 ```
 
 ![img_8.png](images/img_8.png)
 
-
 ![img_7.png](images/img_7.png)
-
 
 ![img_9.png](images/img_9.png)
 
@@ -469,3 +468,97 @@ private static int sumUp(int[] values) {
 ![img_12.png](images/img_12.png)
 
 ![img_13.png](images/img_13.png)
+
+### 线程状态
+
+042-311-7000
+
+* 新创建New
+* 可运行Runnable
+* 被阻塞Blocked
+* 等待Waiting
+* 计时等待Timed waiting
+* 被终止Terminated
+
+### 新创建线程
+
+> 使用new操作符创建一个新线程时：该线程还没有开始运行，即它的状态时new
+
+### 可运行线程
+
+> 调用start方法时，线程处于runnable状态。
+
+> 可运行线程可能正在运行也可能没有运行。取决于操作系统给线程提供的运行时间。
+> 即一个可运行线程不必始终保持运行。
+
+### 被阻塞线程
+
+> （引用）线程获取内部对象锁（非java.util.concurrent库中的所），且该锁被其他线程持有，则该线程进入阻塞状态
+
+> 当该内部对象锁被释放且线程调度器允许本线程持有它的时候，该线程阻塞状态解除变成非阻塞状态
+
+### 等待线程
+
+> 当线程等待另一个线程通知调度器一个条件时，它自己进入等待状态。
+>* 调用Object.wait方法
+>* Thread.join：等待终止指定的线程（即被等待线程结束后，该线程才能进入runnable状态）
+>* 等待java.util.concurrent库中的Lock或Condition时
+
+### 计时等待
+
+> 调用带有超时参数的方法时，该线程进入计时等待（如下列方法设置超时参数时）
+>* Thread.sleep
+>* Object.wait
+>* Thread.join：等待指定的线程死亡或者经过指定的毫秒数
+>* Lock.tryLock
+>* Condition.await
+
+> 这一状态一直保持到期满或者接收到适当的通知
+
+### 被终止线程
+
+> run方法正常退出而自然死亡
+
+> 一个没有捕获的异常终止了run方法而意外死亡
+>* stop方法可杀死一个线程，调用该方法抛出ThreadDeath错误对象。该方法已过时
+
+![img.png](images/ThreadStatus.png)
+
+### 守护线程
+
+> 用途：为其他线程提供服务，必须在线程启动前调用
+> * 如计时线程：定时发送计时器嘀嗒信号给其他线程或清空过时的高速缓存项的线程。
+>
+> * 当只剩下守护线程时时，虚拟机退出。
+
+### 未捕获异常处理器
+
+#### 线程异常捕获流程：
+
+>+ 线程run方法不能抛出受查异常
+>- 非受查异常（error和RunTimeException）导致线程终止->线程死亡
+>* 不需要catch子句处理可以被传播的异常，即线程死亡前异常被传递到一个用于未捕获异常的处理器
+
+#### 未捕获异常处理器特点：
+
+>* 必须属于一个实现Thread.UncaughtExceptionHandler接口的类，即复写该类uncaughtException方法
+>* Thread.setDefaultUncaughtExceptionHandler：为所有线程安装默认处理器
+> > * 如果不调用(setDefaultUncaughtExceptionHandler)即不安装默认处理器，默认处理器为空
+>* Thread对象.setUncaughtExceptionHandler：为线程安装处理器
+> > * 不为线程独立安装处理器，
+> > > * 有父线程组：调用父线程组的uncaughtException
+> > > * 没有父线程组：
+> > > > * 有默认处理器：调用默认处理器（非空）
+> > > > * 没有默认处理器：输出轨迹到标准错误流
+> > > > > * 异常为ThreadDeath对象(由stop产生，stop已过时)：由于轨迹栈被禁用，什么也不做
+> > > > > * 异常上述以外：线程名字即Throwable的轨迹栈被输出到标准错误流即System.err上
+
+#### 线程组(不推荐使用)
+
+> 统一管理线程的集合
+
+> 实现了Thread.UncaughtExceptionHandler接口
+
+> 默认情况：创建的所有线程属于相同的线程组，也能建立其他的组
+
+
