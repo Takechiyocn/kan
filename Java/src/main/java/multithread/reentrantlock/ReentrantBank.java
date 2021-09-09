@@ -1,28 +1,38 @@
-package multithread.implicitlylock;
+package multithread.reentrantlock;
 
 import java.util.Arrays;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-public class Bank {
+public class ReentrantBank {
 
     private final double[] accounts;
     private Lock bankLock;
     // 条件对象/条件变量(condition variable)
     private Condition sufficientFunds;
+    private ReentrantReadWriteLock rwl = new ReentrantReadWriteLock();
+    // 得到一个可以被多个读操作共用的读锁，但会排斥所有写操作（它线程读操作允许，所有线程写操作禁止）
+    private Lock readLock = rwl.readLock();
+    // 得到一个写锁，排斥所有其他的读操作和写操作（本线程读操作，它线程读写操作禁止）
+    private Lock writeLock = rwl.writeLock();
 
-    public Bank(int n, double initialBalance) {
+    public ReentrantBank(int n, double initialBalance) {
         this.accounts = new double[n];
         Arrays.fill(accounts, initialBalance);
         // 可重入锁
         bankLock = new ReentrantLock();
         // 资金条件对象
         sufficientFunds = bankLock.newCondition();
+        //
     }
 
     public void transfer(int from, int to, double amount) throws InterruptedException {
+        // lock方法不能被中断：因为如果一个线程在等待获得一个锁时被中断，中断线程(想获取锁的线程)在获得锁之前一直处于被阻塞状态
+        //                   如果出现死锁，lock方法就无法终止。
         bankLock.lock();
+//        writeLock.lock();
         try {
             while (accounts[from] < amount) {
                 // 阻塞当前线程，并放弃锁 -> 其他线程可进行转账操作，以此可能满足该条件
@@ -47,6 +57,8 @@ public class Bank {
             //          b. TODO：如果条件满足，该线程执行完后，应唤醒其他所有被解除阻塞状态的线程，继续测试？
             // -> 线程1调用该方法时，由于是该对象的第一个执行的线程，所以没有被阻塞的其他线程
             sufficientFunds.signalAll();
+            // 以下方法导致线程最终被阻塞
+//            sufficientFunds.signal();
         } finally {
             bankLock.unlock();
         }
@@ -55,6 +67,7 @@ public class Bank {
     public double getTotalBalance() {
         // 锁的重入：锁计数器+1
         bankLock.lock();
+//        readLock.lock();
         try {
             double sum = 0;
 

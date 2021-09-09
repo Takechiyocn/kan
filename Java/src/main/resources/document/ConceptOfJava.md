@@ -172,7 +172,10 @@ public class Test() {
 
 2. 对象.方法(容易混淆)
 
-   Class Employee() { // static variable private static int nextID = 1; private int ID;
+    ```java
+    Class Employee() {
+        // static variable 
+        private static int nextID = 1; private int ID;
 
         // set ID
         public void setID() {
@@ -185,12 +188,17 @@ public class Test() {
             return nextID;
         ｝
 
-   }
+    }
 
-   // 访问静态变量 // harry.setID(); // -->
-   // harry.ID = Employee.nextID; // Employee.nextID++;
+    // 访问静态变量 
+    harry.setID();
+    harry.ID = Employee.nextID; 
+    Employee.nextID++;
 
-   // 访问静态方法 int n = Employee.getNextID(); int n = harry.getNextID();
+    // 访问静态方法
+    int n = Employee.getNextID();
+    int n = harry.getNextID();
+    ```
 
 **使用范围**
 
@@ -471,7 +479,7 @@ private static int sumUp(int[]values){
 
 ### 线程状态
 
-042-311-7000
+81 042-311-7000
 
 * 新创建New
 * 可运行Runnable
@@ -561,4 +569,58 @@ private static int sumUp(int[]values){
 
 > 默认情况：创建的所有线程属于相同的线程组，也能建立其他的组
 
+#### 多线程安全读取域：即保证原子性操作
 
+* 使用锁
+* 使用volatile修饰符
+* 使用final修饰符
+* java.util.concurrent.atomic保证操作的原子性
+
+    ```java
+    // 自增
+    public static AtomicLong nextNumber = new AtomicLong();
+    // in some thread
+    // 获得值、增1并设置、生成新值的操作不会中断
+    long in = nextNumber.incrementAndGet();
+  
+    // 更复杂的更新compareAndSet
+    public static AtomicLong largest = new AtomicLong();
+    do {
+        oldValue = largest.get();
+        newValue = Math.max(oldValue, newValue);
+    // 另外线程也在更新largest时，本线程更新被阻止
+    // -> 1. compareAndSet返回false，即不会设置新值
+    //    2. **循环会再次尝试**，读取(另外线程)更新后的值，并尝试修改（尽管如此也比锁快）
+    } while (!largest.compareAndSet(oldValue, newValue));
+  
+    // JDK8后，可使用lambda表达式完成更新（也包含重试过程）
+    largest.updateAndGet(x -> Math.max(x, oberved));
+    largest.accumulateAndGet(oberved, Math::max);
+  
+    // 大量线程访问相同原子值，因乐观更新需多次重试，性能会大幅下降
+    // JDK8可用LongAdder、LongAccumulator类解决
+    // LongAdder包含多个变量（加数），其总和为当前值
+    final LongAdder adder = new LongAdder();
+    for (...) {
+        pool.submit(
+            () -> {
+                while (...) {
+                    ...
+                    if (...) {
+                        // 每个线程会自动提供新的加数
+                        adder.increment();
+                    }
+                }
+            }
+        );
+    }
+    ...
+    // 求和
+    long total = adder.sum();
+  
+    // LongAccumulator实现相同效果
+    LongAccumulator adder = new LongAccumulator(Long::sum, 0);
+    // in some thread
+    add.accumulate(value);
+    ```
+  

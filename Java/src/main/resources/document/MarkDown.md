@@ -21,7 +21,6 @@
     op3=>operation: 操作3 | future
     pa=>parallel: 多输出操作4 | approved
     cond=>condition: 确认？ | rejected
-    
     st->op1->cond
     cond(true)->e	
     cond(no)->op2(right)->op3->pa(path1,right)->op1

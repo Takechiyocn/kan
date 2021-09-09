@@ -1,4 +1,4 @@
-package multithread.explicitlyock;
+package multithread.synclock;
 
 import java.util.Arrays;
 import java.util.concurrent.locks.Condition;
@@ -13,11 +13,11 @@ import java.util.concurrent.locks.ReentrantLock;
  *        3. 每个锁仅有单一的条件 -> 业务可能不满足
  * @author moku
  */
-public class Bank {
+public class SyncBank {
 
     private final double[] accounts;
 
-    public Bank(int n, double initialBalance) {
+    public SyncBank(int n, double initialBalance) {
         this.accounts = new double[n];
         Arrays.fill(accounts, initialBalance);
     }
@@ -44,7 +44,7 @@ public class Bank {
         }
         System.out.print(Thread.currentThread() + ":");
         accounts[from] -= amount;
-        System.out.printf("Transfer [%10.2f] from account[%d] to account[%d].", amount, from, to);
+        System.out.printf("Transfer [%10.2f] from account[%d:%10.2f] to account[%d].", amount, from, accounts[from], to);
         accounts[to] += amount;
         // 调用使用相同锁（ReentrantLock）的方法：getTotalBalance
         System.out.printf("After transfer, total balance:%10.2f%n", getTotalBalance());
