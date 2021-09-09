@@ -1,11 +1,13 @@
 package tacos;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@ExtendWith(SpringExtension.class)
+/**
+ * ExtendWith：Junit5注解
+ * Sprint Boot2.1.x后SpringBootTest包含该注解，所以无需再单独注解
+ */
+//@ExtendWith(SpringExtension.class)
 @SpringBootTest
 class TacoCloudApplicationTests {
 

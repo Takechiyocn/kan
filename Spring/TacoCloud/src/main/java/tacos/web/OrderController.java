@@ -32,6 +32,7 @@ public class OrderController {
 
     @GetMapping("/current")
     public String orderForm() {
+        // 被解析为视图的逻辑名
         return "orderForm";
     }
 

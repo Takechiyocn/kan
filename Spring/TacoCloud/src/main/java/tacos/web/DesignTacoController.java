@@ -19,18 +19,24 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
+ * 类级别的SessionAttributes能够指定模型对象（order：订单属性）要保存在session中，才能跨请求使用
+ *
  * @author kan
  */
 @Slf4j
 @Controller
 @RequestMapping("/design")
-// 类级别的SessionAttributes能够指定模型对象（order：订单属性）要保存在session中，才能跨请求使用
 @SessionAttributes("order")
 public class DesignTacoController {
     private final IngredientRepository ingredientRepo;
     private TacoRepository designRepo;
 
-    // 注入IngredientRepository，TacoRepository
+    /**
+     * 注入IngredientRepository，TacoRepository
+     *
+     * @param ingredientRepo
+     * @param designRepo
+     */
     @Autowired
     public DesignTacoController(
             IngredientRepository ingredientRepo,
