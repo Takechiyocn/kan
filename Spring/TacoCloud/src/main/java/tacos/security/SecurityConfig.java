@@ -25,11 +25,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .withUser("buzz")
                 .password("buzz")
                 .roles("USER")
-//                .authorities("SUPERADMIN")
-//                .and()
-//                .withUser("woody")
-//                .password("infinity")
-//                .authorities("ROLE_USER")
+                .authorities("SUPERADMIN")
+                .and()
+                .withUser("woody")
+                .password("infinity")
+                .authorities("ROLE_USER")
         ;
     }
 

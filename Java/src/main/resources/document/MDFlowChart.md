@@ -10,10 +10,10 @@
 	style D stroke:#000,stroke-width:8px;
 ```
 
-### 2.Flowchart流程图
+### 2.TODO:PUML
 
-```mermaid
-    flowchat
+```puml
+@startuml
     st=>start: 开始
     e=>end: 结束
     op1=>operation: 操作1 | past
@@ -26,6 +26,7 @@
     cond(no)->op2(right)->op3->pa(path1,right)->op1
     pa(path2,left) ->e
     st@>op1({"stroke":"Blue"})@>cond({"stroke":"Green"})@>e({"stroke":"Red","stroke-width":6,"arrow-end":"classic-wide-long"})
+@enduml
 ```
 
 ### 3.时序图
