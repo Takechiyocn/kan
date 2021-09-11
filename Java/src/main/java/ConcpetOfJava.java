@@ -70,31 +70,6 @@ public class ConcpetOfJava {
         System.out.println(t1 == t4);
         System.out.println(t1 == t5);
 
-        // Spring核心：提供一个容器， Spring应用上下文。用于创建/管理应用组件
-        // 应用组件：bean
-        // 依赖注入：将bean装配在一起
-        //   --> 所依赖的组件由容器(单独的实体)创建和维护(生命周期)，并将其注入到需要他们的bean中
-        //   --> 通常通过构造器参数和属性访问方法来实现
-        //   --> 如B组件依赖于A组件， 则进行 A --> B 注入
-
-        // 组件扫描component scanning：发现应用类路径下的组件，并将其创建成上下文中的bean
-        // 自动装配autowiring：为组件注入他们所依赖的bean
-        // 自动配置autoconfiguration：
-        //   基于应用类路径中的条目
-        //   环境变量
-        //   其他因素
-        //   合理猜测需要配置的组件并进行封装
-
-        // 领域：应用所要解决的主题范围（也就是会影响到对应用理解的理念和概念）
-        //   taco设计，组成这些设计的配料，顾客，顾客所下的订单
-
-        // Controller注解：Spring组件功能自动发现并初始化为Spring应用上下文的bean
-        // 视图控制器：多用于没有模型数据和逻辑处理的http get请求
-
-        // stereotype注解:构造型注解如@Repository,Controller,Component
-        // Autowired：创建bean时候通过该标注的构造器注入相应bean
-
-
         // 封装（数据隐藏encapsulation）：将数据和行为组合在一个包中，并对对象的使用者隐藏了数据的实现方式
         // 实例域：对象中的数据成为实例域instance field
         // 对象的当前状态：对于每个特定的类实例（对象）都有一组特定的实例域值，这些值的集合就叫对象的当前状态state

@@ -37,12 +37,25 @@
 
 ####  控制器controller
 
-    Spring MVC核心，填充可选的数据模型并将请求传递给一个视图，以便于生成返回给浏览器的HTML。
+    1. 处理HTTP请求
+    2. 填充可选的数据模型并将请求传递给一个视图，以便于生成返回给浏览器的HTML。
+    3. 直接将数据写入响应体(RESTful) 
+
+### 试图
+
+    将数据渲染到html中并在浏览器中展现
+
+### 领域
+
+    应用所要解决的主题范围（也就是会影响到对应用理解的理念和概念）
+    如taco中组成这些设计的配料，顾客，顾客所下的订单
 
 ####  模板引擎
   > [Thymeleaf](https://www.thymeleaf.org/ 'Thymeleaf.org')
   >
-  > [Vue](https://vuejs.org/index.html 'Vue.org')
+  > [FreeMarker](https://freemarker.apache.org/ "FreeMarker.apache.org") 
+  > 
+  > [Vue?](https://vuejs.org/index.html 'Vue.org')
 
 ### 依赖注入方式
 
@@ -87,21 +100,33 @@
   > * @EnableAutoConfiguration注解
   > * @ComponentScan注解
 
-* @Component注解
-
-      让组件扫描将类识别为一个组件，并创建该类实例作为Spring上下文中的bean。
-
 * @Controller注解
 
       让组件扫描将类识别为一个组件，并创建该类实例作为Spring上下文中的bean。
 
-* @Service注解
+* @Component注解
 
       让组件扫描将类识别为一个组件，并创建该类实例作为Spring上下文中的bean。
 
 * @Repository注解
 
       让组件扫描将类识别为一个组件，并创建该类实例作为Spring上下文中的bean。
+      同时将标注类中的数据访问异常封装为Sprig的数据访问异常类型。
+
+* @Service注解
+
+      让组件扫描将类识别为一个组件，并创建该类实例作为Spring上下文中的bean。
+
+* @Autowired注解
+
+      将@Autowired标注的组件注入到相应的bean中。
+
+* 构造型(stereotype)注解
+
+  * @Controller
+  * @Component
+  * @Repository
+
 
 * @RunWith(测试运行器)注解
 
@@ -121,6 +146,22 @@
 
       表明如果针对URL发送HTTP GET请求，被注解的方法将会处理请求。
       通常返回试图的逻辑名称
+
+* @NotNull注解
+
+      应用场景：基本类型（或包装类）或String
+      说明：不能为null，可以为empty
+
+* @NotBlank注解
+
+      应用场景：只适用于String类型
+      说明：不能为null且trim()之后size>0
+
+* @NotEmpty注解
+
+      应用场景：集合
+      说明：不能为null或也不能为空
+      补足：加了该注解的String类、Collection、Map、数组不能为null或长度为0的（String、Collection、Map的isEmpty()方法）。
 
 ### Spring框架
 
@@ -163,6 +204,9 @@
 #### Spring Cloud
     不再将应用程序作为单个部署单元来开发，而是使用由微服务组成的多个独立部署单元来组合形成应用程序。
 
+#### Spring MVC请求映射注解
+
+![SpringMVC请求映射注解](SpringMVCRequestReflectionAnnoation.png)
 
 [comment]: <> (** 构造型注解：stereotype @Repository:Spring组件扫描ComponentScan会自动发现类并将其初始化为Spring应用上下文中的bean，)
 
@@ -173,6 +217,8 @@
 [comment]: <> (4716442903549583)
 
 [comment]: <> (JDBC：Java Database connectivity JPA：Java Persistence API持久层API Spring Data JPA：基于关系型数据库进行JPA持久化)
+
+* 测试用ccNumber：370000000000002
 
 
 
