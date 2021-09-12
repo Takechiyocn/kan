@@ -1,5 +1,7 @@
 package com.tacos.service.impl;
 
+import com.tacos.entity.Ingredient;
+import com.tacos.entity.Taco;
 import com.tacos.service.TacoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -8,8 +10,6 @@ import org.springframework.jdbc.core.PreparedStatementCreatorFactory;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-import com.tacos.entity.Ingredient;
-import com.tacos.entity.Taco;
 
 import java.sql.Timestamp;
 import java.sql.Types;
@@ -41,8 +41,8 @@ public class JdbcTacoRepository implements TacoRepository {
     }
 
     private long saveTacoInfo(Taco taco) {
-        // PreparedStatementCreator
         taco.setCreatedAt(new Date());
+        // PreparedStatementCreator
         PreparedStatementCreatorFactory preparedStatementCreatorFactory =
                 new PreparedStatementCreatorFactory(
                         "insert into Taco (name, createdAt) values (?, ?)",
@@ -56,12 +56,19 @@ public class JdbcTacoRepository implements TacoRepository {
                                 new Timestamp(taco.getCreatedAt().getTime())
                         )
                 );
+        // 每个不同的Taco生成不同的Taco id
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        // TODO: keyHolder(ID)被更新到Taco表中？
+        // 更新keyHolder(ID)到Taco表
         jdbc.update(psc, keyHolder);
         return keyHolder.getKey().longValue();
     }
 
+    /**
+     * JdbcTemplate更新数据1：JdbcTemplate.update
+     *
+     * @param ingredient
+     * @param tacoId
+     */
     private void saveIngredientToTaco(Ingredient ingredient, long tacoId) {
         jdbc.update(
                 "insert into Taco_Ingredients (taco, ingredient)" +

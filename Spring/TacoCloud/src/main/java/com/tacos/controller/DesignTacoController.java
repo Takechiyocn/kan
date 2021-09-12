@@ -103,7 +103,7 @@ public class DesignTacoController {
         }
 
         Taco saved = designRepo.save(design);
-        // 将Taco对象保存到session里面的Order中，直到提交/更新到数据库(sessionStatus.setComplete();)
+        // 将Taco对象保存到session里面的Order中，直到提交/更新到数据库(sessionStatus.setComplete)
         order.addDesign(saved);
         log.info("Processing design: " + design);
 

@@ -1,12 +1,13 @@
 package com.tacos.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tacos.entity.Order;
+import com.tacos.entity.Taco;
 import com.tacos.service.OrderRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
-import com.tacos.entity.Order;
-import com.tacos.entity.Taco;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -67,6 +68,7 @@ public class JdbcOrderRepository implements OrderRepository {
     private SimpleJdbcInsert orderTacoInserter;
     private ObjectMapper objectMapper;
 
+    @Autowired
     public JdbcOrderRepository(JdbcTemplate jdbc) {
         this.orderInserter = new SimpleJdbcInsert(jdbc)
                 .withTableName("Taco_Order")
@@ -76,9 +78,17 @@ public class JdbcOrderRepository implements OrderRepository {
         this.objectMapper = new ObjectMapper();
     }
 
+    /**
+     *
+     * 更新数据2：SimpleJdbcInsert(该类对JdbcTemplate进行了包装)
+     * @param order
+     * @return
+     */
     @Override
     public Order save(Order order) {
         order.setPlacedAt(new Date());
+        // 同一客户 order id 相同？
+        // 同一客户可有多个不同订单（Taco）
         long orderId = saveOrderDetails(order);
         order.setId(orderId);
         List<Taco> tacos = order.getTacos();

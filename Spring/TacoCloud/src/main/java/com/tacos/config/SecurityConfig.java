@@ -35,6 +35,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        // H2本地无法访问对应：设置同源访问。
+        http.headers().frameOptions().sameOrigin();
         http.authorizeRequests()
                 .antMatchers("/orders").permitAll()
 //                .antMatchers("/design","/orders/current").hasRole("USER") //访问 /user这个接口，需要有USER角色

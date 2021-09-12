@@ -1,6 +1,7 @@
 package com.tacos.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +27,7 @@ public class OrderController {
 
     // 注入OrderRepository
     // TODO:此处不用Autowired？ SimpleJdbcInsert的原因？
+    @Autowired
     public OrderController(OrderRepository orderRepo) {
         this.orderRepo = orderRepo;
     }
@@ -36,10 +38,13 @@ public class OrderController {
         return "orderForm";
     }
 
+    /**
+     * 表单提交的Order对象亦即session中持有的Object对象
+     */
     @PostMapping
-    // 表单提交的Order对象亦即session中持有的Object对象
     public String processOrder(@Valid Order order, Errors errors,
                                SessionStatus sessionStatus) {
+
         if (errors.hasErrors()) {
             return "orderForm";
         }
