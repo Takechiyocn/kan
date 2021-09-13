@@ -30,20 +30,20 @@ end
 ```mermaid
 graph
 subgraph 节点组织
-    1.默认节点无替代
-    id1[1.矩形节点]
-    id2(2.圆角矩形节点:round edges)
-    id3([3.体育场形状:stadium-shaped])
-    id4[(4.圆柱形节点:cylindrical edges)]
-    id5[[5.矩形嵌套节点:subroutine shape]]
-    id6((6.圆:circle))
-    id7->7.不对称节点:asymmetric shape]
-    id8{8.菱形节点:rhombus}
-    id9{{9.六边形节点:hexagon}}
-    id10[/10.平行四边形:hexagon/]
-    id11[\11.逆平行四边形:hexagon\]
-    id12[/12.梯形节点:hexagon\]
-    id13[\13.逆梯形节点:hexagon/]
+ 1.默认节点无替代
+ id1[1.矩形节点]
+ id2(2.圆角矩形节点:round edges)
+ id3([3.体育场形状:stadium-shaped])
+ id4[(4.圆柱形节点:cylindrical edges)]
+ id5[[5.矩形嵌套节点:subroutine shape]]
+ id6((6.圆:circle))
+ id7->7.不对称节点:asymmetric shape]
+ id8{8.菱形节点:rhombus}
+ id9{{9.六边形节点:hexagon}}
+ id10[/10.平行四边形:hexagon/]
+ id11[\11.逆平行四边形:hexagon\]
+ id12[/12.梯形节点:hexagon\]
+ id13[\13.逆梯形节点:hexagon/]
 end
 ```
 
