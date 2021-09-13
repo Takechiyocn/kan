@@ -252,9 +252,7 @@
 
 
 ```mermaid
-
 erDiagram
-
   Taco_Order || -- |{ Taco_Order_Tacos : "a"
   Taco_Order {
     identity id
