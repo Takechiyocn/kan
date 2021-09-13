@@ -28,7 +28,7 @@ end
 * 节点nodes
 
 ```mermaid
-graph
+graph LR
 subgraph 节点组织
  1.默认节点无替代
  id1[1.矩形节点]
