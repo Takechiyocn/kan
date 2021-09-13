@@ -111,4 +111,4 @@ graph TB
 ```
 * 链接长度
 
-![linklength.png](mermaid/graph/MermaidGraphLinklength.png)
+![linklength.png](mermaid/flowchart/MermaidGraphLinklength.png)
