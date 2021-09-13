@@ -78,4 +78,41 @@ mysql80;
     where过滤行
     having过滤分组
 
+### 基本查询
 
+* 连接
+  
+      mysql -h主机地址 -u用户名 -p用户密码
+  
+* 查看所有数据库
+  
+      show databases;
+  
+* 选择指定数据库
+  
+      use XXXX;
+  
+* 查看当前选择的数据库1:show tables的第一行
+  
+      show tables;
+      select database();
+      status;
+  
+* 查看表结构
+  
+      desc XXXX;
+      describe XXXX;
+  
+* 查看表字段全部信息
+
+      SHOW FULL COLUMNS FROM orders;
+
+* 建库、建表、赋权限
+
+  * 建库
+  
+        create databse XXXX;
+  * 删库
+    
+        drop database XXXX;
+  
