@@ -1,5 +1,7 @@
 ### Mermaid语法
 
+流程图：graph或graph（github支持graph）
+
 ```mermaid
 graph LR
 subgraph Title
@@ -26,7 +28,7 @@ end
 * 节点nodes
 
 ```mermaid
-flowchart
+graph
 subgraph 节点组织
     1.默认节点无替代
     id1[1.矩形节点]
@@ -49,7 +51,7 @@ end
 
 * 箭头链接arrow links
 ```mermaid
-flowchart LR
+graph LR
     A1 --> B1
     A2 -- text -->B2
     A3 --> |text| B3
@@ -62,7 +64,7 @@ flowchart LR
   
 * 开放链接open links
 ```mermaid
-flowchart LR
+graph LR
     A1 --- B1
     A2 -- text --- B2
     A3 ---| text | B3
@@ -71,27 +73,27 @@ flowchart LR
   
 * 虚线链接dotted links
 ```mermaid
-flowchart LR
+graph LR
     A1 -.->B1
     A2 -. text .->B2
 ```
 
 * 加粗线链接thick links
 ```mermaid
-flowchart LR
+graph LR
     A1 ==> B1
     A2 == text ==> B2
 ```
   
 #### 链接链
 ```mermaid
-flowchart LR
+graph LR
     A -- text --> B -- text2 --> C
     A1 --> B1 & C1 --> D1
     A2 & B2 --> C2 & D2
 ```
 ```mermaid
-flowchart TB
+graph TB
     A --> C
     A --> D
     B --> C
@@ -100,7 +102,7 @@ flowchart TB
 
 #### 链接长度
 ```mermaid
-flowchart TB
+graph TB
     A[Start] --> B{Is it?};
     B --> |Yes| C[OK];
     C --> D[Rethink];
@@ -109,4 +111,4 @@ flowchart TB
 ```
 * 链接长度
 
-![linklength.png](mermaid/flowchart/MermaidGraphLinklength.png)
+![linklength.png](mermaid/graph/MermaidGraphLinklength.png)
