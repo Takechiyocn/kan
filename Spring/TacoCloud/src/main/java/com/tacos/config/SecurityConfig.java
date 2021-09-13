@@ -88,7 +88,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     //                 并要求服务器将这个密码与用户的密码进行对比(对比在LDAP服务器内完成)
     //                 登录表单提供的密码与默认的LDAP条目对比：userPassword属性
     //                 可通过passwordAttribute()方法声明对比条目
-    //  Spring Security的LDAP认证默认LDAP服务器监听本机的33389端口，
+    //  spring Security的LDAP认证默认LDAP服务器监听本机的33389端口，
     //    可使用contextSource()方法配置该地址
     /*
     @Override
