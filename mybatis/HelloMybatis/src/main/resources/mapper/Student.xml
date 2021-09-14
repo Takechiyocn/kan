@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="main.resources.mapper.Student">
+    <select id="listStudent" resultType="main.java.com.moku.api.entity.Student">
+        select * from  users.student
+    </select>
+
+    <insert id="addStudent" parameterType="main.java.com.moku.api.entity.Student">
+        insert into users.student (id, studentID, name) values (#{id}, #{studentID}, #{name})
+    </insert>
+
+    <delete id="deleteStudent" parameterType="_int">
+        delete from users.student where id = #{id}
+    </delete>
+
+    <select id="getStudent" parameterType="int" resultType="main.java.com.moku.api.entity.Student">
+        select * from users.student where id = #{id}
+    </select>
+
+    <update id="updateStudent" parameterType="main.java.com.moku.api.entity.Student">
+        update users.student set name = #{name} where id = #{id}
+    </update>
+
+    <select id="findStudentByName" parameterType="java.lang.String" resultType="main.java.com.moku.api.entity.Student">
+        select * from users.student where name like '%${value}%'
+    </select>
+</mapper>

@@ -1,12 +1,12 @@
 package com.tacos.service.impl;
 
+import com.tacos.entity.Ingredient;
 import com.tacos.service.IngredientRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-import com.tacos.entity.Ingredient;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -53,6 +53,63 @@ public class JdbcIngredientRepository implements IngredientRepository {
     }
 
     /**
+     * Find by id with Lambda function
+     *
+     * @param id id
+     * @return Ingredient
+     */
+//    @Override
+//    public Ingredient findOneDefault(String id) {
+//        Connection connection = null;
+//        PreparedStatement statement = null;
+//        ResultSet resultSet = null;
+//
+//        try {
+//            DataSource dataSource;
+//            connection = dataSource.getConnection();
+//            statement = connection.prepareStatement(
+//                    "select id, name, type from Ingredient where id=?");
+//            statement.setString(1, id);
+//            resultSet = statement.executeQuery();
+//            Ingredient ingredient = null;
+//            if (resultSet.next()) {
+//                ingredient = new Ingredient(
+//                        resultSet.getString("id"),
+//                        resultSet.getString("name"),
+//                        Ingredient.Type.valueOf(resultSet.getString("type"))
+//                );
+//            }
+//            return ingredient;
+//        } catch (SQLException throwables) {
+//            // what TODO ?
+//            throwables.printStackTrace();
+//        } finally {
+//            if (resultSet != null) {
+//                try {
+//                    resultSet.close();
+//                } catch (SQLException throwables) {
+//                    throwables.printStackTrace();
+//                }
+//            }
+//            if (statement != null) {
+//                try {
+//                    resultSet.close();
+//                } catch (SQLException throwables) {
+//                    throwables.printStackTrace();
+//                }
+//            }
+//            if (connection != null) {
+//                try {
+//                    connection.close();
+//                } catch (SQLException throwables) {
+//                    throwables.printStackTrace();
+//                }
+//            }
+//        }
+//        return null;
+//    }
+
+    /**
      * Find by id with Anonymous function
      */
     @Override
@@ -71,7 +128,6 @@ public class JdbcIngredientRepository implements IngredientRepository {
                 },
                 id);
     }
-
 
     @Override
     public Ingredient save(Ingredient ingredient) {

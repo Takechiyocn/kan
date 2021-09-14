@@ -9,11 +9,20 @@ public interface IngredientRepository {
     Iterable<Ingredient> findAll();
 
     /**
-     * find Ingredient by id
+     * find Ingredient by id with JdbcTemplate
      * @param id  id
      * @return Ingredient
      */
     Ingredient findOne(String id);
+
+    /**
+     * find Ingredient by id default
+     * @param id  id
+     * @return Ingredient
+     */
+    default Ingredient findOneDefault(String id) {
+        return null;
+    };
 
     /**
      * save Ingredient

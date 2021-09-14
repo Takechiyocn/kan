@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//MyBatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 配置映射
+namespace : 命名空间(通俗说法: 给当前映射文件的唯一标识:起一个唯一的名字)
+ -->
+<mapper namespace="main.java.com.moku.api.mapper.UserMapper">
+    <!-- 新增操作
+        id: 当前功能的唯一标识,和接口方法同名
+        parameterType ： 参数的类型
+        useGeneratedKeys：是否返回数据库生成的主键 true是/false否
+        keyProperty : 数据库主键对应java的pojo对象的属性
+        keyColumn : 数据表的主键列名
+     -->
+    <insert id="insert" parameterType="main.java.com.moku.api.entity.User" keyProperty="id" keyColumn="id">
+        insert into tb_user (name, age, email, password) values (#{name}, #{age}, #{email}, #{password});
+    </insert>
+</mapper>
