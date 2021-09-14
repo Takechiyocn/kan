@@ -7,26 +7,27 @@
 <!-- 命名空间指定的文件内应包含映射文件定义的方法 -->
 <mapper namespace="main.resources.mapper.Student">
     <select id="listStudent" resultType="main.java.com.moku.api.entity.Student">
-        select * from  users.student
+        select * from  mybatis2.student
     </select>
 
-    <insert id="addStudent" parameterType="main.java.com.moku.api.entity.Student">
-        insert into users.student (id, studentID, name) values (#{id}, #{studentID}, #{name})
+    <insert id="addStudent" parameterType="main.java.com.moku.api.entity.Student" keyProperty="id" keyColumn="id">
+        insert into mybatis2.student (name) values (#{name})
     </insert>
 
+    <!-- Java类型别名 -->
     <delete id="deleteStudent" parameterType="_int">
-        delete from users.student where id = #{id}
+        delete from mybatis2.student where id = #{id}
     </delete>
 
     <select id="getStudent" parameterType="int" resultType="main.java.com.moku.api.entity.Student">
-        select * from users.student where id = #{id}
+        select * from mybatis2.student where id = #{id}
     </select>
 
     <update id="updateStudent" parameterType="main.java.com.moku.api.entity.Student">
-        update users.student set name = #{name} where id = #{id}
+        update mybatis2.student set name = #{name} where id = #{id}
     </update>
 
     <select id="findStudentByName" parameterType="java.lang.String" resultType="main.java.com.moku.api.entity.Student">
-        select * from users.student where name like '%${value}%'
+        select * from mybatis2.student where name like '%${value}%'
     </select>
 </mapper>

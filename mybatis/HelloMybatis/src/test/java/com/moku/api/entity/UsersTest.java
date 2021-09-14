@@ -10,12 +10,19 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+/**
+ * 自定义映射接口
+ *
+ * @author moku
+ */
 public class UsersTest {
 
     @Test
     public void testInsert() {
+
         final Logger logger = LogManager.getLogger(UsersTest.class);
         final org.slf4j.Logger logger2 = org.slf4j.LoggerFactory.getLogger(UsersTest.class);
+
         logger.info("***********logger info***********");
         logger2.info("***********logger info2***********");
 
@@ -56,7 +63,6 @@ public class UsersTest {
             userMapper.updateUserById(user4);
 
             session.commit();
-
         } catch (Exception e) {
             e.printStackTrace();
             session.rollback();

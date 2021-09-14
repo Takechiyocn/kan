@@ -14,11 +14,11 @@ namespace : 命名空间(通俗说法: 给当前映射文件的唯一标识:起�
         keyColumn : 数据表的主键列名
      -->
     <insert id="insert" parameterType="main.java.com.moku.api.entity.User" keyProperty="id" keyColumn="id">
-        insert into tb_user (name, age, email, password) values (#{name}, #{age}, #{email}, #{password});
+        insert into muser (name, age, email, password) values (#{name}, #{age}, #{email}, #{password});
     </insert>
     <update id="updateUserById" parameterType="main.java.com.moku.api.entity.User">
         update
-            tb_user
+            muser
         set
             name = #{name},
             age = #{age},
@@ -27,14 +27,13 @@ namespace : 命名空间(通俗说法: 给当前映射文件的唯一标识:起�
         where
             id = #{id}
     </update>
-
     <delete id="deleteUserById">
-        delete from tb_user where id > #{id}
+        delete from muser where id > #{id}
     </delete>
     <select id="selectUserById" resultType="main.java.com.moku.api.entity.User">
-        select * from tb_user where id = #{id};
+        select * from muser where id = #{id};
     </select>
     <select id="selectAll" resultType="main.java.com.moku.api.entity.User">
-        select * from tb_user;
+        select * from muser;
     </select>
 </mapper>

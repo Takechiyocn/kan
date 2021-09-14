@@ -3,9 +3,10 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <!-- 根元素: 用于配置MyBatis -->
 <configuration>
-<!--    <settings>-->
-<!--        <setting name="jdbcTypeForNull" value="NULL" />-->
-<!--    </settings>-->
+    <settings>
+        <setting name="jdbcTypeForNull" value="NULL" />
+<!--        <setting name="autoMappingBehavior" value="NONE"/>-->
+    </settings>
     <!-- 别名 -->
     <typeAliases>
         <package name="main.java.com.moku.api.entity.Student"/>
@@ -44,5 +45,6 @@
     <mappers>
         <mapper resource="main/resources/mapper/Student.xml"/>
         <mapper resource="main/resources/mapper/UserMapper.xml"/>
+        <mapper resource="main/resources/mapper/EmployeeMapper.xml"/>
     </mappers>
 </configuration>
