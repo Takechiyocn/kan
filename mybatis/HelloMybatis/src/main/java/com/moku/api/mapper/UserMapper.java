@@ -2,6 +2,8 @@ package main.java.com.moku.api.mapper;
 
 import main.java.com.moku.api.entity.User;
 
+import java.util.List;
+
 public interface UserMapper {
 
     /**
@@ -15,4 +17,8 @@ public interface UserMapper {
      * @param user
      */
     void insert(User user);
+    User selectUserById(long id);
+    List<User> selectAll();
+    void deleteUserById(long id);
+    void updateUserById(User user);
 }

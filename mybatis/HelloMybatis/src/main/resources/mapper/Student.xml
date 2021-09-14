@@ -3,6 +3,8 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
+<!-- 不使用映射接口时(默认映射接口)，命名空间应指定为映射文件的全限定名 -->
+<!-- 命名空间指定的文件内应包含映射文件定义的方法 -->
 <mapper namespace="main.resources.mapper.Student">
     <select id="listStudent" resultType="main.java.com.moku.api.entity.Student">
         select * from  users.student

@@ -3,6 +3,9 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <!-- 根元素: 用于配置MyBatis -->
 <configuration>
+<!--    <settings>-->
+<!--        <setting name="jdbcTypeForNull" value="NULL" />-->
+<!--    </settings>-->
     <!-- 别名 -->
     <typeAliases>
         <package name="main.java.com.moku.api.entity.Student"/>
@@ -28,6 +31,7 @@
                 <!-- 数据库驱动 -->
                 <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
                 <!-- 连接数据库的url -->
+<!--                <property name="url" value="jdbc:mysql://localhost:3306/mybatis?characterEncoding=UTF-8&amp;allowMultiQueries=true"/>-->
                 <property name="url" value="jdbc:mysql://localhost:3306/mybatis?characterEncoding=UTF-8"/>
                 <!-- 连接数据库账号 -->
                 <property name="username" value="moku"/>
@@ -41,5 +45,4 @@
         <mapper resource="main/resources/mapper/Student.xml"/>
         <mapper resource="main/resources/mapper/UserMapper.xml"/>
     </mappers>
-
 </configuration>
