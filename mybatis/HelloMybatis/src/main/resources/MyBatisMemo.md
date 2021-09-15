@@ -31,6 +31,11 @@
     * 如果操作的涉及表名这些非参数的数据时，需要使用${}。
       因为基于JDBC的接口的原来的表名是不可以使用?的，?只能用于传入的参数。
 
+
+#### SQL标签
+
+![SqlTag.png](SqlTag.png)
+
 #### JdbcType与JavaType关系
 
 |JDBC Type|Java Type|
@@ -67,13 +72,13 @@ ARRAY|Array
 
 ![JdbcTypeTime.png](images/JdbcTypeTime.png)
 
-#### 别名映射
+#### 参数类型别名映射
 
 ![AliasMapping.png](images/AliasMapping.png)
 
 ![AliasMapping2.png](images/AliasMapping2.png)
 
-#### settings标签
+#### 配置文件settings标签
 
 ![setting.png](images/setting.png)
 

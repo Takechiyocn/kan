@@ -18,7 +18,7 @@ import java.util.List;
 public class EmployeeTest {
 
     @Test
-    public void testInsert() {
+    public void testEmployee() {
 
         Logger logger = LoggerFactory.getLogger(EmployeeTest.class);
         SqlSession session = MyBatisUtil.openSession();

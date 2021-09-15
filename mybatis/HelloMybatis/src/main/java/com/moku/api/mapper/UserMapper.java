@@ -28,4 +28,30 @@ public interface UserMapper {
 
     // OGNL
     int dropTable(@Param("tableName") String tblName);
+
+    /**
+     * 标签复用：根据条件查询结果
+     */
+    List<User> selectByCondition(User user);
+
+    /**
+     * 标签复用：根据条件查询结果总数
+     */
+    Long selectTotalByCondition(User user);
+
+    /**
+     * 标签复用：修改用户
+     */
+    int updateUserByNotNull(User user);
+
+    /**
+     * 标签复用：批量删除
+     */
+    int deleteByIds(@Param("ids") Integer[] ids);
+
+    /**
+     * 标签复用：批量插入
+     */
+    int insertByBatch(@Param("users")List<User> users);
+
 }

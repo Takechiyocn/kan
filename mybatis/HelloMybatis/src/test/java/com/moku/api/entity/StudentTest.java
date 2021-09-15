@@ -3,6 +3,7 @@ package test.java.com.moku.api.entity;
 import main.java.com.moku.api.utils.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
 import main.java.com.moku.api.entity.Student;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.List;
@@ -15,7 +16,8 @@ import java.util.List;
  */
 public class StudentTest {
 
-    public static void main(String[] args) throws IOException {
+    @Test
+    public void testStudent() {
 
         // 使用系统默认映射接口（不用自定义Mapper接口）
         testWithClassLoader();

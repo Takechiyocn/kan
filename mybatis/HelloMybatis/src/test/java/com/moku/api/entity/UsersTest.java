@@ -18,7 +18,7 @@ import java.util.List;
 public class UsersTest {
 
     @Test
-    public void testInsert() {
+    public void testUsers() {
 
         final Logger logger = LogManager.getLogger(UsersTest.class);
         final org.slf4j.Logger logger2 = org.slf4j.LoggerFactory.getLogger(UsersTest.class);

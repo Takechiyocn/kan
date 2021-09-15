@@ -3,7 +3,7 @@
         PUBLIC "-//MyBatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- 配置映射
-namespace : 命名空间(通俗说法: 给当前映射文件的唯一标识:起一个唯一的名字)
+     namespace : 命名空间(通俗说法: 给当前映射文件的唯一标识:起一个唯一的名字)
  -->
 <mapper namespace="main.java.com.moku.api.mapper.UserMapper">
     <!-- 新增操作
@@ -38,8 +38,111 @@ namespace : 命名空间(通俗说法: 给当前映射文件的唯一标识:起�
         select * from muser;
     </select>
 
+    <!--  OGNL对象图导航语言  -->
     <delete id="dropTable" parameterType="String">
         <!-- drop table #{tableName} -->
         drop table ${tableName}
     </delete>
+
+    <!-- 标签查询 -->
+    <!-- 标签sql片段 -->
+    <sql id="condition_sql">
+        <if test="name !='' and name != null">
+            name like concat('%', #{name}, '%')
+        </if>
+        <if test="age !='' and age != null">
+            and age = #{age}
+        </if>
+        <if test="email !='' and email != null">
+            and email = #{email}
+        </if>
+        <if test="password !='' and password != null">
+            and password = #{password}
+        </if>
+    </sql>
+    <!-- 标签sql片段 -->
+    <sql id="select_condition_sql">
+        <!--
+            a.去掉WHER后第一个子句条件的AND或OR
+            b.如果一个条件都没有，那么就相当于查询所有数据
+        -->
+        <where>
+            <include refid="condition_sql"/>
+        </where>
+    </sql>
+    <!-- trim标签 -->
+    <sql id="count_condition_sql">
+        <!--
+            prefix：前缀
+                a. 条件：使用WHERE
+                b. 修改：使用SET
+            prefixOverrides：和WHERE配套使用，去掉WHER后第一个子句条件的AND或OR
+            suffixOverrides：和SET配套使用，去掉最后一个条件的逗号
+        -->
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <include refid="condition_sql"/>
+        </trim>
+    </sql>
+    <!-- 标签： 根据条件查询结果 -->
+    <select id="selectByCondition" parameterType="User" resultType="User">
+        <!-- 静态SQL
+             一开始已经确定SQL的语义，不管有没有数据，都会对全部数据进行修改，
+             如果某一个数据没有，name会自动设置为null，不符合实际场景。
+             如： select * from muser where name like ’%null%‘ 返回0条数据。
+             解决方案：使用动态SQL语句
+        select * from muser where name like concat('%', #{name}, '%') or age = #{age}
+        -->
+        select * from muser
+        <include refid="select_condition_sql"/>
+    </select>
+    <!-- 标签： 根据条件查询结果总数 -->
+    <select id="selectTotalByCondition" parameterType="User" resultType="java.lang.Long">
+        select count(1) from muser
+        <include refid="count_condition_sql"/>
+    </select>
+
+    <!-- 标签sql片段 -->
+    <sql id="update_value">
+        <if test="name != '' and name != null">name = #{name},</if>
+        <if test="age != '' and age != null">age = #{age},</if>
+        <if test="email != '' and email != null">email = #{email},</if>
+        <if test="password != '' and password != null">password = #{password}</if>
+    </sql>
+    <!-- 标签sql片段 -->
+    <sql id="update_value_sql_by_set">
+        <!-- set标签会自动过滤掉多余的逗号 -->
+        <set>
+            <include refid="update_value"></include>
+        </set>
+    </sql>
+    <!-- 标签sql片段 -->
+    <sql id="update_value_sql_by_trim">
+        <!-- suffixOverrides：和SET配套使用，去掉最后一个条件的逗号 -->
+        <trim prefix="SET" suffixOverrides=",">
+            <include refid="update_value"></include>
+        </trim>
+    </sql>
+    <!-- 标签： 修改用户 -->
+    <update id="updateUserByNotNull" parameterType="User">
+        update muser
+        <include refid="update_value_sql_by_set"></include>
+        where id = #{id}
+    </update>
+    <!-- 标签： 批量删除用户 -->
+    <delete id="deleteByIds" parameterType="List">
+        <!-- delete from muser where id in(1, 2, 3) -->
+        delete from muser
+        where id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+    <!-- 标签： 批量插入 -->
+    <insert id="insertByBatch">
+        insert into muser (name, age, email, password)
+        values
+        <foreach collection="users" item="user" separator=",">
+            (#{user.name}, #{user.age}, #{user.email}, #{user.password})
+        </foreach>
+    </insert>
 </mapper>
