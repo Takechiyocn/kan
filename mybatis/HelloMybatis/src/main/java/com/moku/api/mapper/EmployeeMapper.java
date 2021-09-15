@@ -1,7 +1,11 @@
 package main.java.com.moku.api.mapper;
 
 import main.java.com.moku.api.entity.Employee;
+import org.apache.ibatis.annotations.Result;
+import org.apache.ibatis.annotations.Results;
+import org.apache.ibatis.annotations.Select;
 
+import org.apache.ibatis.type.JdbcType;
 import java.util.List;
 
 /**

@@ -6,11 +6,11 @@
 <!-- 不使用映射接口时(默认映射接口)，命名空间应指定为映射文件的全限定名 -->
 <!-- 命名空间指定的文件内应包含映射文件定义的方法 -->
 <mapper namespace="main.resources.mapper.Student">
-    <select id="listStudent" resultType="main.java.com.moku.api.entity.Student">
+    <select id="listStudent" resultType="Student">
         select * from  mybatis2.student
     </select>
 
-    <insert id="addStudent" parameterType="main.java.com.moku.api.entity.Student" keyProperty="id" keyColumn="id">
+    <insert id="addStudent" parameterType="Student" keyProperty="id" keyColumn="id">
         insert into mybatis2.student (name) values (#{name})
     </insert>
 
@@ -19,15 +19,15 @@
         delete from mybatis2.student where id = #{id}
     </delete>
 
-    <select id="getStudent" parameterType="int" resultType="main.java.com.moku.api.entity.Student">
+    <select id="getStudent" parameterType="int" resultType="Student">
         select * from mybatis2.student where id = #{id}
     </select>
 
-    <update id="updateStudent" parameterType="main.java.com.moku.api.entity.Student">
+    <update id="updateStudent" parameterType="Student">
         update mybatis2.student set name = #{name} where id = #{id}
     </update>
 
-    <select id="findStudentByName" parameterType="java.lang.String" resultType="main.java.com.moku.api.entity.Student">
+    <select id="findStudentByName" parameterType="java.lang.String" resultType="Student">
         select * from mybatis2.student where name like '%${value}%'
     </select>
 </mapper>

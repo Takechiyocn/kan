@@ -62,6 +62,9 @@ public class UsersTest {
             }};
             userMapper.updateUserById(user4);
 
+            // 动态操作：删表
+//            userMapper.dropTable("muser2");
+
             session.commit();
         } catch (Exception e) {
             e.printStackTrace();

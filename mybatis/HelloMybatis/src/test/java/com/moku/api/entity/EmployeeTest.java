@@ -1,9 +1,7 @@
 package test.java.com.moku.api.entity;
 
 import main.java.com.moku.api.entity.Employee;
-import main.java.com.moku.api.entity.User;
 import main.java.com.moku.api.mapper.EmployeeMapper;
-import main.java.com.moku.api.mapper.UserMapper;
 import main.java.com.moku.api.utils.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.jupiter.api.Test;
@@ -12,6 +10,11 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
+/**
+ * 自定义映射接口：手动映射封装resultMap
+ *
+ * @author moku
+ */
 public class EmployeeTest {
 
     @Test

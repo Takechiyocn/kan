@@ -3,13 +3,16 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <!-- 根元素: 用于配置MyBatis -->
 <configuration>
+    <properties resource="db.properties" />
     <settings>
         <setting name="jdbcTypeForNull" value="NULL" />
 <!--        <setting name="autoMappingBehavior" value="NONE"/>-->
     </settings>
     <!-- 别名 -->
     <typeAliases>
-        <package name="main.java.com.moku.api.entity.Student"/>
+        <typeAlias alias="Employee" type="main.java.com.moku.api.entity.Employee" />
+        <typeAlias alias="Student" type="main.java.com.moku.api.entity.Student" />
+        <typeAlias alias="User" type="main.java.com.moku.api.entity.User" />
     </typeAliases>
     <!-- 配置MyBatis的运行环境 ,可以配置多个环境,但是一次只能使用一个
        default属性 : 当前使用的环境 ,使用下面环境的id 即可  -->
@@ -30,21 +33,30 @@
             <dataSource type="POOLED">
                 <!-- 连接数据库的操作 -->
                 <!-- 数据库驱动 -->
-                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+                <property name="driver" value="${jdbc.driverClassName}"/>
+                <!--                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>-->
                 <!-- 连接数据库的url -->
-<!--                <property name="url" value="jdbc:mysql://localhost:3306/mybatis?characterEncoding=UTF-8&amp;allowMultiQueries=true"/>-->
-                <property name="url" value="jdbc:mysql://localhost:3306/mybatis?characterEncoding=UTF-8"/>
+                <property name="url" value="${jdbc.url}"/>
+                <!--                <property name="url" value="jdbc:mysql://localhost:3306/mybatis?characterEncoding=UTF-8&amp;allowMultiQueries=true"/>-->
+<!--                <property name="url" value="jdbc:mysql://localhost:3306/mybatis?characterEncoding=UTF-8"/>-->
                 <!-- 连接数据库账号 -->
-                <property name="username" value="moku"/>
+                <property name="username" value="${jdbc.username}"/>
+<!--                <property name="username" value="moku"/>-->
                 <!-- 连接数据库密码 -->
-                <property name="password" value="M@kuk2n!"/>
+                <property name="password" value="${jdbc.password}"/>
+<!--                <property name="password" value="M@kuk2n!"/>-->
             </dataSource>
         </environment>
     </environments>
     <!-- 配置映射文件 -->
     <mappers>
+        <!--指定一个配置文件-->
         <mapper resource="main/resources/mapper/Student.xml"/>
         <mapper resource="main/resources/mapper/UserMapper.xml"/>
         <mapper resource="main/resources/mapper/EmployeeMapper.xml"/>
+        <!-- 指定一个配置类：注解映射配置 -->
+        <mapper class="main.java.com.moku.api.mapper.AnnotationMapper"/>
+        <!--指定一个包，包含多个配置文件或这配置类-->
+<!--        <package name="main.resources.mapper"/>-->
     </mappers>
 </configuration>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//MyBatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 配置映射
+namespace : 命名空间(通俗说法: 给当前映射文件的唯一标识:起一个唯一的名字)
+ -->
+<mapper namespace="main.java.com.moku.api.mapper.EmployeeMapper">
+
+    <insert id="insertEmployee" parameterType="Employee" keyProperty="e_id" keyColumn="e_id">
+        insert into mybatis.employee (e_name, e_age, e_email) values (#{name}, #{age}, #{email})
+    </insert>
+    <!-- MyBatis默认配置：<setting name="jdbcTypeForNull" value="NULL" /> -->
+    <!-- 个别配置
+        insert into mybatis.employee (e_name, e_age, e_email) values (#{name, jdbcType=VARCHAR}, #{age, jdbcType=VARCHAR}, #{email, jdbcType=VARCHAR})
+    -->
+
+    <resultMap id="employee_map" type="Employee">
+        <!--
+			id指定定义主键列的封装规则
+			id定义主键底层会有优化的
+			column是指定哪一列
+			property:指定对应的JavaBean属性
+		 -->
+        <id column="e_id" jdbcType="BIGINT" property="id"/>
+        <!-- <result/>是定义普通列的封装规则 -->
+        <result column="e_name" jdbcType="VARCHAR" property="name"/>
+        <result column="e_age" jdbcType="INTEGER" property="age"/>
+        <result column="e_email" jdbcType="VARCHAR" property="email"/>
+    </resultMap>
+
+    <!-- 当个别字段查询时，查询结果中某个字段为null时，映射map不标明jdbcType则不能映射成功 -->
+    <select id="queryOne" resultMap="employee_map">
+        select e_id, e_name, e_age, e_email from employee where e_id = #{id}
+    </select>
+
+    <!-- 使用默认的构造器进行映射 -->
+    <select id="queryAll" resultMap="employee_map">
+        select
+            *
+        from
+            employee
+    </select>
+</mapper>
