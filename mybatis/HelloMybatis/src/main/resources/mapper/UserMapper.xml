@@ -1,1 +1,45 @@
-<?xml version="1.0" encoding="UTF-8" ?><!DOCTYPE mapper        PUBLIC "-//MyBatis.org//DTD Mapper 3.0//EN"        "http://mybatis.org/dtd/mybatis-3-mapper.dtd"><!-- 配置映射namespace : 命名空间(通俗说法: 给当前映射文件的唯一标识:起一个唯一的名字) --><mapper namespace="main.java.com.moku.api.mapper.UserMapper">    <!-- 新增操作        id: 当前功能的唯一标识,和接口方法同名        parameterType ： 参数的类型 -> 使用MyBatis配置的别名        useGeneratedKeys：是否返回数据库生成的主键 true是/false否        keyProperty : 数据库主键对应java的pojo对象的属性        keyColumn : 数据表的主键列名     -->    <!-- 方法多参数传递：将参数封装到对象里(JavaBean/Map) -->    <insert id="insert" parameterType="User" keyProperty="id" keyColumn="id">        insert into muser (name, age, email, password) values (#{name}, #{age}, #{email}, #{password});    </insert>    <update id="updateUserById" parameterType="User">        update            muser        set            name = #{name},            age = #{age},            email = #{email},            password = #{password}        where            id = #{id}    </update>    <delete id="deleteUserById">        delete from muser where id > #{id}    </delete>    <select id="selectUserById" resultType="User">        select * from muser where id = #{id};    </select>    <select id="selectAll" resultType="User">        select * from muser;    </select>    <delete id="dropTable" parameterType="String">        <!-- drop table #{tableName} -->        drop table ${tableName}    </delete></mapper>
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//MyBatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 配置映射
+namespace : 命名空间(通俗说法: 给当前映射文件的唯一标识:起一个唯一的名字)
+ -->
+<mapper namespace="main.java.com.moku.api.mapper.UserMapper">
+    <!-- 新增操作
+        id: 当前功能的唯一标识,和接口方法同名
+        parameterType ： 参数的类型 -> 使用MyBatis配置的别名
+        useGeneratedKeys：是否返回数据库生成的主键 true是/false否
+        keyProperty : 数据库主键对应java的pojo对象的属性
+        keyColumn : 数据表的主键列名
+     -->
+    <!-- 方法多参数传递：将参数封装到对象里(JavaBean/Map) -->
+    <insert id="insert" parameterType="User" keyProperty="id" keyColumn="id">
+        insert into muser (name, age, email, password) values (#{name}, #{age}, #{email}, #{password});
+    </insert>
+    <update id="updateUserById" parameterType="User">
+        update
+            muser
+        set
+            name = #{name},
+            age = #{age},
+            email = #{email},
+            password = #{password}
+        where
+            id = #{id}
+    </update>
+    <delete id="deleteUserById">
+        delete from muser where id > #{id}
+    </delete>
+    <select id="selectUserById" resultType="User">
+        select * from muser where id = #{id};
+    </select>
+    <select id="selectAll" resultType="User">
+        select * from muser;
+    </select>
+
+    <delete id="dropTable" parameterType="String">
+        <!-- drop table #{tableName} -->
+        drop table ${tableName}
+    </delete>
+</mapper>
