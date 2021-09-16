@@ -6,6 +6,7 @@
      namespace : 命名空间(通俗说法: 给当前映射文件的唯一标识:起一个唯一的名字)
  -->
 <mapper namespace="main.java.com.moku.api.mapper.UserMapper">
+    
     <!-- 新增操作
         id: 当前功能的唯一标识,和接口方法同名
         parameterType ： 参数的类型 -> 使用MyBatis配置的别名

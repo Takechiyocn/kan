@@ -45,13 +45,16 @@ public interface UserMapper {
     int updateUserByNotNull(User user);
 
     /**
+     * 动态SQL：基于映射文件（xml文件）
+     * 法多参数传递：对象集合
      * 标签复用：批量删除
      */
     int deleteByIds(@Param("ids") Integer[] ids);
 
     /**
+     * 方法多参数传递：集合
      * 标签复用：批量插入
      */
-    int insertByBatch(@Param("users")List<User> users);
+    int insertByBatch(@Param("users") List<User> users);
 
 }

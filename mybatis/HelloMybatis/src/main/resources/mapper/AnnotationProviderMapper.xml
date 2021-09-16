@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//MyBatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 配置映射
+     namespace : 命名空间(通俗说法: 给当前映射文件的唯一标识:起一个唯一的名字)
+ -->
+<mapper namespace="main.java.com.moku.api.mapper.AnnotationProviderMapper">
+
+    <resultMap id="annotation_employee_map" type="Employee">
+        <!--
+			id指定定义主键列的封装规则
+			id定义主键底层会有优化的
+			column是指定哪一列
+			property:指定对应的JavaBean属性
+		 -->
+        <id column="e_id" jdbcType="BIGINT" property="id"/>
+        <!-- <result/>是定义普通列的封装规则 -->
+        <result column="e_name" jdbcType="VARCHAR" property="name"/>
+        <result column="e_age" jdbcType="INTEGER" property="age"/>
+        <result column="e_email" jdbcType="VARCHAR" property="email"/>
+    </resultMap>
+
+</mapper>
