@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//MyBatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="api.mapper.blogger.BlogMapper">
+
+    <resultMap id="blogMap" type="api.entity.blogger.Blog">
+        <!-- 允许在将查询结果映射为类对象时，使用类相应的构造方法来设置属性的值 -->
+        <constructor>
+            <!-- 将结果集标记为ID，以方便全局调用 -->
+            <idArg column="blog_id" javaType="int" name="id"/>
+        </constructor>
+        <id property="id" column="blog_id"/>
+        <result property="title" column="blog_title"/>
+        <!-- 嵌套结果映射，表示有一个 -->
+        <association property="author" javaType="api.entity.blogger.Author">
+            <id property="id" column="author_id"/>
+            <result property="userName" column="author_username"/>
+            <result property="password" column="author_password"/>
+            <result property="email" column="author_email"/>
+            <result property="bio" column="author_bio"/>
+            <result property="favouriteSection" column="author_favourite_section"/>
+        </association>
+        <!-- 嵌套结果映射，表示有多个 -->
+        <collection property="posts" ofType="api.entity.blogger.Post">
+            <id property="id" column="post_id"/>
+            <result property="subject" column="post_subject"/>
+            <result property="content" column="post_content"/>
+            <result property="draftStatus" column="post_draft_status"/>
+            <association property="author" javaType="api.entity.blogger.Author">
+                <id property="id" column="post_author_id"/>
+                <result property="userName" column="author_username"/>
+                <result property="password" column="author_password"/>
+                <result property="email" column="author_email"/>
+                <result property="bio" column="author_bio"/>
+                <result property="favouriteSection" column="author_favourite_section"/>
+            </association>
+            <collection property="comments" ofType="api.entity.blogger.Comment">
+                <id property="id" column="comment_id"/>
+                <result property="content" column="comment_content"/>
+            </collection>
+            <collection property="tags" ofType="api.entity.blogger.Tag">
+                <id property="id" column="tag_id"/>
+                <result property="content" column="tag_content"/>
+            </collection>
+        </collection>
+    </resultMap>
+
+    <select id="getBlog" parameterType="int" resultMap="blogMap">
+        select
+            B.blog_id,
+            B.blog_title,
+            A.author_id,
+            A.author_username,
+            A.author_password,
+            A.author_email,
+            A.author_bio,
+            A.author_favourite_section,
+            P.post_id,
+            P.post_subject,
+            P.author_id as post_author_id,
+            P.draft_status as post_draft_status,
+            P.post_content,
+            C.comment_id,
+            C.comment_content,
+            T.tag_id,
+            T.tag_content
+        from tb_blog B
+             left outer join tb_author A on B.author_id=A.author_id
+             left outer join tb_post P on B.blog_id=P.blog_id
+             left outer join tb_comment C on C.post_id=P.post_id
+             left outer join tb_tag T on T.post_id=P.post_id
+        where B.blog_id=#{id}
+    </select>
+</mapper>

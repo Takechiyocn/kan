@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- dtd(文档类型定义document type definition)约束 -->
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<!-- 根元素: 用于配置MyBatis -->
+<configuration>
+    <properties resource="db.properties" />
+    <settings>
+        <setting name="jdbcTypeForNull" value="NULL" />
+<!--        <setting name="autoMappingBehavior" value="NONE"/>-->
+    </settings>
+    <!-- 别名 -->
+    <typeAliases>
+<!--        <typeAlias alias="Employee" type="main.java.com.moku.api.entity.Employee" />-->
+<!--        <typeAlias alias="Student" type="main.java.com.moku.api.entity.Student" />-->
+<!--        <typeAlias alias="User" type="main.java.com.moku.api.entity.User" />-->
+<!--        <typeAlias alias="Author" type="main.java.api.entity.blogger.Author" />-->
+    </typeAliases>
+    <!-- 配置MyBatis的运行环境 ,可以配置多个环境,但是一次只能使用一个
+       default属性 : 当前使用的环境 ,使用下面环境的id 即可  -->
+    <environments default="development">
+        <!-- 环境配置  id 属性,唯一标识当前环境 -->
+        <environment id="development">
+            <!-- 配置MyBatis事务管理器
+                type属性 :  事物类型
+                    JDBC  使用事务(正常提交commit,异常回滚事务 rollback) 默认
+                    MANAGED : 不使用事务
+              -->
+            <transactionManager type="JDBC"/>
+            <!-- 配置MyBatis的数据源
+                type : 配置连接池
+                    POOLED :MyBatis内置的一个连接池(默认)
+                    后期都交给spring管理了,配置 dbcp连接池,阿里巴巴的 druid连接池
+             -->
+            <dataSource type="POOLED">
+                <!-- 连接数据库的操作 -->
+                <!-- 数据库驱动 -->
+                <property name="driver" value="${jdbc.driverClassName}"/>
+                <!--                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>-->
+                <!-- 连接数据库的url -->
+                <property name="url" value="${jdbc.url}"/>
+                <!--                <property name="url" value="jdbc:mysql://localhost:3306/mybatis?characterEncoding=UTF-8&amp;allowMultiQueries=true"/>-->
+<!--                <property name="url" value="jdbc:mysql://localhost:3306/mybatis?characterEncoding=UTF-8"/>-->
+                <!-- 连接数据库账号 -->
+                <property name="username" value="${jdbc.username}"/>
+<!--                <property name="username" value="moku"/>-->
+                <!-- 连接数据库密码 -->
+                <property name="password" value="${jdbc.password}"/>
+<!--                <property name="password" value="M@kuk2n!"/>-->
+            </dataSource>
+        </environment>
+    </environments>
+    <!-- 配置映射文件 -->
+    <mappers>
+        <!--指定一个配置文件-->
+        <mapper resource="mapper/blogger/AuthorMapper.xml"/>
+        <mapper resource="mapper/blogger/BlogMapper.xml"/>
+    </mappers>
+</configuration>

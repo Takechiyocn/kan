@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="api.mapper.blogger.AuthorMapper">
+
+    <resultMap id="authorMap" type="api.entity.blogger.Author">
+        <id property="id" column="author_id"/>
+        <result property="userName" column="author_username"/>
+        <result property="password" column="author_password"/>
+        <result property="email" column="author_email"/>
+        <result property="bio" column="author_bio"/>
+        <result property="favouriteSection" column="author_favourite_section"/>
+    </resultMap>
+
+    <select id="getAuthor" parameterType="int" resultMap="authorMap">
+        SELECT * FROM tb_author WHERE author_id=#{id}
+    </select>
+</mapper>
