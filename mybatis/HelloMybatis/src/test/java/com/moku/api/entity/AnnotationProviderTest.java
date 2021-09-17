@@ -1,7 +1,6 @@
 package test.java.com.moku.api.entity;
 
 import main.java.com.moku.api.entity.Employee;
-import main.java.com.moku.api.entity.Employee;
 import main.java.com.moku.api.mapper.AnnotationProviderMapper;
 import main.java.com.moku.api.utils.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
@@ -10,9 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Provider test
@@ -25,13 +22,13 @@ public class AnnotationProviderTest {
     private SqlSession session = MyBatisUtil.openSession();
     private AnnotationProviderMapper mapper = session.getMapper(AnnotationProviderMapper.class);
 
-//    @Test
-//    public void queryOne() {
-//
-//        long id = 20L;
-//        Employee employee = mapper.getEmployee(id);
-//        logger.info("Name:{}, Age:{}, Email:{}", employee.getName(), employee.getAge(), employee.getEmail());
-//    }
+    @Test
+    public void queryOne() {
+
+        long id = 50L;
+        Employee employee = mapper.getEmployee(id);
+        logger.info("Id:{}, Name:{}, Age:{}, Email:{}", employee.getId(), employee.getName(), employee.getAge(), employee.getEmail());
+    }
 
     @Test
     public void testQueryMultiEmployee() {
@@ -43,7 +40,7 @@ public class AnnotationProviderTest {
         }};
         List<Employee> employeeList = mapper.queryMultiEmployee(employee);
         for (Employee e : employeeList) {
-            logger.info("Name:{}, Age:{}, Email:{}", e.getName(), e.getAge(), e.getEmail());
+            logger.info("Id:{}, Name:{}, Age:{}, Email:{}", e.getId(), e.getName(), e.getAge(), e.getEmail());
         }
         session.close();
     }
@@ -77,40 +74,117 @@ public class AnnotationProviderTest {
         session.close();
     }
 
-//    @Test
-//    public void testDeleteByIds() {
-//
-//        // 批量删除
-//        int delCnt = mapper.deleteByIds(new Integer[]{74, 75});
-//        logger.info("Deleted Count {}", delCnt);
-//    }
+    @Test
+    public void testQueryMultiEmployeeByMultiParameters() {
 
-//    @Test
-//    public void testInsertByBatch() {
-//        // 批量插入
-//        List<Employee> employeeList2 = new ArrayList<>() {{
-//            add(new Employee() {{
-//                this.setName("batchEmployee");
-//                this.setAge(20);
-//                this.setEmail("email1");
-//                this.setPassword("pwd1");
-//            }});
-//            add(new Employee() {{
-//                this.setName("batchEmployee2");
-//                this.setAge(21);
-//                this.setEmail("email2");
-//                this.setPassword("pwd2");
-//            }});
-//            add(new Employee() {{
-//                this.setName("batchEmployee3");
-//                this.setAge(22);
-//                this.setEmail("email3");
-//                this.setPassword("pwd3");
-//            }});
-//        }};
-//        int insCnt = mapper.insertByBatch(employeeList2);
-//        logger.info("BatchInsert Count {}", insCnt);
-//
-//        session.commit();
-//    }
+        // 根据条件查询结果
+        List<Employee> employees = mapper.queryMultiEmployeeByMultiParameters(100, 101, 102);
+        for (Employee e : employees) {
+            logger.info("Id:{}, Name:{}, Age:{}, Email:{}", e.getId(), e.getName(), e.getAge(), e.getEmail());
+        }
+
+        session.commit();
+        session.close();
+    }
+
+    @Test
+    public void testQueryMultiEmployeeByArrays() {
+
+        // 根据条件查询结果
+        List<Employee> employees = mapper.queryMultiEmployeeByArrays(new Integer[]{90, 91});
+        for (Employee e : employees) {
+            logger.info("Id:{}, Name:{}, Age:{}, Email:{}", e.getId(), e.getName(), e.getAge(), e.getEmail());
+        }
+
+        session.commit();
+        session.close();
+    }
+
+    @Test
+    public void testQueryMultiEmployeeList() {
+
+        // 根据条件查询结果
+        List<Employee> employeeList = new ArrayList<>() {{
+            add(new Employee() {{
+                this.setId(41L);
+            }});
+            add(new Employee() {{
+                this.setId(42L);
+            }});
+        }};
+        List<Employee> employeeListResult = mapper.queryMultiEmployeeByList(employeeList);
+        for (Employee e : employeeListResult) {
+            logger.info("Id:{}, Name:{}, Age:{}, Email:{}", e.getId(), e.getName(), e.getAge(), e.getEmail());
+        }
+        session.close();
+    }
+
+    @Test
+    public void testDeleteByIds() {
+
+        // 批量删除
+        int delCnt = mapper.deleteByIds(new Integer[]{74, 75});
+        logger.info("Deleted Count {}", delCnt);
+
+        session.commit();
+        session.close();
+    }
+
+    @Test
+    public void testInsertByBatch() {
+
+        // 批量插入
+        List<Employee> employees = new ArrayList<>() {{
+            add(new Employee() {{
+                this.setName("batchEmployee");
+                this.setAge(20);
+                this.setEmail("email1");
+            }});
+            add(new Employee() {{
+                this.setName("batchEmployee2");
+                this.setAge(21);
+                this.setEmail("email2");
+            }});
+        }};
+        int insCnt = mapper.insertByBatch(employees);
+        logger.info("BatchInsert Count {}", insCnt);
+
+        session.commit();
+        session.close();
+    }
+
+    @Test
+    public void testInsertByBatch2() {
+
+        // 批量插入
+        List<Employee> employeeList = new ArrayList<>() {{
+            add(new Employee() {{
+                this.setName("batch2Employee");
+                this.setAge(20);
+                this.setEmail("email1");
+            }});
+            add(new Employee() {{
+                this.setName("batch2Employee2");
+                this.setAge(21);
+                this.setEmail("email2");
+            }});
+        }};
+        int insCnt = mapper.insertByBatch2(employeeList);
+        logger.info("BatchInsert2 Count {}", insCnt);
+
+        session.commit();
+        session.close();
+    }
+
+    @Test
+    public void testGetByIdsWithMultiParameter() {
+
+        // 批量查找
+        List<Employee> employeeListResult = mapper.getByIdsWithMultiParameter(new Integer[]{101, 102}, 103, 104);
+        for (Employee e : employeeListResult) {
+            logger.info("Id:{}, Name:{}, Age:{}, Email:{}", e.getId(), e.getName(), e.getAge(), e.getEmail());
+        }
+
+        session.close();
+    }
 }

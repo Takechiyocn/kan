@@ -66,7 +66,11 @@ public class AnnotationTest {
 
             // 方法多参数传递1：将参数封装到对象里(JavaBean)
             User loginUser = mapper.login(newUser);
-            logger.info("loginUser: " + loginUser.getName() + ", " + loginUser.getPassword());
+            if (null != loginUser) {
+                logger.info("loginUser: " + loginUser.getName() + ", " + loginUser.getPassword());
+            } else {
+                logger.info("loginUser null");
+            }
 
             // 方法多参数传递1：将参数封装到对象里(Map)
             Map<String, Object> userMap = new HashMap<>() {{
@@ -78,7 +82,11 @@ public class AnnotationTest {
 
             // 方法多参数传递2：使用Param注解
             User loginUser3 = mapper.login3("moku", "test");
-            logger.info("loginUser: " + loginUser3.getName() + ", " + loginUser3.getPassword());
+            if (null != loginUser) {
+                logger.info("loginUser3: " + loginUser3.getName() + ", " + loginUser3.getPassword());
+            } else {
+                logger.info("loginUser3 null");
+            }
 
             session.commit();
 
