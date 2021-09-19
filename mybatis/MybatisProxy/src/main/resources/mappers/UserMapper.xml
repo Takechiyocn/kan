@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//MyBatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 命名空间绑定接口 -->
+<mapper namespace="com.moku.mapper.UserMapper">
+
+    <!-- mybatis-config.xml配置文件设置别名 -->
+    <!-- useGeneratedKeys：是否返回数据库生成的主键 true是/false否 -->
+    <!-- keyProperty : 数据库主键对应java的pojo对象的属性 -->
+    <!-- keyColumn : 数据表的主键列名 -->
+    <!-- 增 -->
+    <insert id="addUser" parameterType="User" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        <!-- 使用MYSQL实现获取主键 -->
+<!--    <insert id="addUser" parameterType="User">-->
+<!--        <selectKey resultType="java.lang.Integer" keyProperty="id" order="BEFORE">-->
+<!--            SELECT @@IDENTITY-->
+<!--        </selectKey>-->
+        insert into muser ( name, age, email, password) values ( #{name}, #{age}, #{email}, #{password})
+    </insert>
+
+    <!-- 删 -->
+    <delete id="deleteUserById" parameterType="int">
+        delete from muser where id = #{id}
+    </delete>
+
+    <!-- 改 -->
+    <update id="updateUserById" parameterType="User" keyProperty="id" keyColumn="id">
+        update muser set name = #{name}, age = #{age}, email = #{email}, password = #{password} where id = #{id}
+    </update>
+
+    <!-- 查：按id查一个 -->
+    <select id="getUserById" resultType="com.moku.bean.User">
+        select * from muser where 1 = 1 and id = #{id}
+    </select>
+
+    <!-- 查：查所有 -->
+    <select id="getUser" resultType="com.moku.bean.User">
+        select * from muser
+    </select>
+</mapper>
