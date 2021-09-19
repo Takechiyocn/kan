@@ -1,7 +1,8 @@
 package main.java.com.moku.api.mapper;
 
 import main.java.com.moku.api.entity.Employee;
-import main.java.com.moku.api.provider.EmployeeProvider;
+//import main.java.com.moku.api.mapper.provider.AnnotationProvider;
+import main.java.com.moku.api.mapper.provider.*;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -21,7 +22,7 @@ import java.util.List;
  */
 public interface AnnotationProviderMapper {
 
-    @SelectProvider(type = EmployeeProvider.class, method = "queryEmployee")
+    @SelectProvider(type = AnnotationProvider.class, method = "queryEmployee")
     @ResultMap("annotation_employee_map")
     Employee getEmployee(long employeeId);
 
@@ -31,7 +32,7 @@ public interface AnnotationProviderMapper {
      * @param employee
      * @return
      */
-    @SelectProvider(type = EmployeeProvider.class, method = "queryMulti")
+    @SelectProvider(type = AnnotationProvider.class, method = "queryMulti")
     @ResultMap("annotation_employee_map")
     List<Employee> queryMultiEmployee(Employee employee);
 
@@ -41,7 +42,7 @@ public interface AnnotationProviderMapper {
      * @param employee
      * @return
      */
-    @SelectProvider(type = EmployeeProvider.class, method = "queryMultiCnt")
+    @SelectProvider(type = AnnotationProvider.class, method = "queryMultiCnt")
     Long queryMultiEmployeeCount(Employee employee);
 
     /**
@@ -50,7 +51,7 @@ public interface AnnotationProviderMapper {
      * @param employee
      * @return
      */
-    @UpdateProvider(type = EmployeeProvider.class, method = "updEmployeeByNotNull")
+    @UpdateProvider(type = AnnotationProvider.class, method = "updEmployeeByNotNull")
     int updateEmployeeByNotNull(Employee employee);
 
     /**
@@ -61,7 +62,7 @@ public interface AnnotationProviderMapper {
      * @param id3
      * @return
      */
-    @SelectProvider(type = EmployeeProvider.class, method = "queryMultiEmployeeByMultiParameters")
+    @SelectProvider(type = AnnotationProvider.class, method = "queryMultiEmployeeByMultiParameters")
     @ResultMap("annotation_employee_map")
     List<Employee> queryMultiEmployeeByMultiParameters(Integer id1, Integer id2, Integer id3);
 
@@ -71,7 +72,7 @@ public interface AnnotationProviderMapper {
      * @param idList
      * @return
      */
-    @SelectProvider(type = EmployeeProvider.class, method = "queryMultiEmployeeByArrays")
+    @SelectProvider(type = AnnotationProvider.class, method = "queryMultiEmployeeByArrays")
     @ResultMap("annotation_employee_map")
     List<Employee> queryMultiEmployeeByArrays(Integer[] idList);
 
@@ -81,7 +82,7 @@ public interface AnnotationProviderMapper {
      * @param employeeList
      * @return
      */
-    @SelectProvider(type = EmployeeProvider.class, method = "queryMultiEmployeeByList")
+    @SelectProvider(type = AnnotationProvider.class, method = "queryMultiEmployeeByList")
     @ResultMap("annotation_employee_map")
     List<Employee> queryMultiEmployeeByList(List<Employee> employeeList);
 
@@ -91,7 +92,7 @@ public interface AnnotationProviderMapper {
      * @param idList
      * @return
      */
-    @DeleteProvider(type = EmployeeProvider.class, method = "deleteByIds")
+    @DeleteProvider(type = AnnotationProvider.class, method = "deleteByIds")
     int deleteByIds(@Param("ids")Integer[] idList);
 
     /**
@@ -121,7 +122,7 @@ public interface AnnotationProviderMapper {
      * @param employeeList
      * @return
      */
-    @InsertProvider(type = EmployeeProvider.class, method = "insertByBatch2")
+    @InsertProvider(type = AnnotationProvider.class, method = "insertByBatch2")
     int insertByBatch2(@Param("employees") List<Employee> employeeList);
 
     /**
@@ -133,7 +134,7 @@ public interface AnnotationProviderMapper {
      * @param id3
      * @return
      */
-    @SelectProvider(type = EmployeeProvider.class, method = "getByIdsWithMultiParameter")
+    @SelectProvider(type = AnnotationProvider.class, method = "getByIdsWithMultiParameter")
     @ResultMap("annotation_employee_map")
     List<Employee> getByIdsWithMultiParameter(@Param("ids")Integer[] idList, @Param("id2add") Integer id2, @Param("id3add") Integer id3);
 }

@@ -51,17 +51,22 @@
     <!-- 配置映射文件 -->
     <mappers>
         <!--指定一个配置文件-->
-        <mapper resource="main/resources/mapper/Student.xml"/>
-        <mapper resource="main/resources/mapper/UserMapper.xml"/>
-        <mapper resource="main/resources/mapper/EmployeeMapper.xml"/>
-        <!-- 使用注解+配置文件(xml)：只用指定配置文件 -->
-        <mapper resource="main/resources/mapper/AnnotationProviderMapper.xml"/>
+<!--        <mapper resource="main/resources/mapper/Student.xml"/>-->
+<!--        <mapper resource="main/resources/mapper/UserMapper.xml"/>-->
+<!--        <mapper resource="main/resources/mapper/EmployeeMapper.xml"/>-->
+
+
+        <!--指定一个包，包含多个配置文件或这配置类-->
+<!--        <package name="main/resources/mapper"/>-->
+
         <!-- 指定一个配置类：注解映射配置 -->
         <!-- 只使用注解 -->
-        <mapper class="main.java.com.moku.api.mapper.AnnotationMapper"/>
+<!--        <mapper class="main.java.com.moku.api.mapper.AnnotationMapper"/>-->
+
+        <package name="main.java.com.moku.api.mapper"/>
+
         <!-- 使用注解+配置文件(xml)：只用指定配置文件 -->
-<!--        <mapper class="main.java.com.moku.api.mapper.AnnotationProviderMapper"/>-->
-        <!--指定一个包，包含多个配置文件或这配置类-->
-<!--        <package name="main.resources.mapper"/>-->
+<!--        <mapper resource="main/resources/mapper/AnnotationProviderMapper.xml"/>-->
+
     </mappers>
 </configuration>

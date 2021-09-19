@@ -1,4 +1,4 @@
-package main.java.com.moku.api.provider;
+package main.java.com.moku.api.mapper.provider;
 
 import main.java.com.moku.api.entity.Employee;
 import org.apache.ibatis.annotations.Param;
@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author moku
  */
-public class EmployeeProvider {
+public class AnnotationProvider {
 
     public String queryEmployee(long userId) {
 
