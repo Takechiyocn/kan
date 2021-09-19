@@ -4,8 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!-- 命名空间绑定接口 -->
-<!-- 动态代理时命名空间必须是接口的全限定名 -->
-<mapper namespace="com.moku.mapper.UserMapper">
+<mapper namespace="com.moku.dao.UserDao">
 
     <!-- mybatis-config.xml配置文件设置别名 -->
     <!-- useGeneratedKeys：是否返回数据库生成的主键 true是/false否 -->

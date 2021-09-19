@@ -5,7 +5,6 @@ import org.apache.ibatis.session.SqlSession;
 import main.java.com.moku.api.entity.Student;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -17,17 +16,7 @@ import java.util.List;
 public class StudentTest {
 
     @Test
-    public void testStudent() {
-
-        // 使用系统默认映射接口（不用自定义Mapper接口）
-        testWithClassLoader();
-
-        testWithStreamObject();
-
-        testWithReaderObject();
-    }
-
-    private static void testWithReaderObject() {
+    public void testWithReaderObject() {
 
         // 创建sqlSession
         SqlSession session = MyBatisUtil.openSessionWithReader();
@@ -39,7 +28,8 @@ public class StudentTest {
         session.close();
     }
 
-    private static void testWithStreamObject() {
+    @Test
+    public void testWithStreamObject() {
 
         // 创建sqlSession
         SqlSession session = MyBatisUtil.openSessionWithStream();
@@ -51,7 +41,8 @@ public class StudentTest {
         session.close();
     }
 
-    private static void testWithClassLoader() {
+    @Test
+    public void testWithClassLoader() {
 
         // 创建sqlSession
         SqlSession session = MyBatisUtil.openSession();

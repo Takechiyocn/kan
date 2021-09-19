@@ -16,6 +16,7 @@ public class AuthorMapperTest {
     @Test
     public void testAuthorMapper() {
 
+        // 应该使用SQL代理开发
         SqlSession session = MyBatisUtil.openSessionWithStream();
         AuthorMapper mapper = session.getMapper(AuthorMapper.class);
         Logger logger = LoggerFactory.getLogger(AuthorMapperTest.class);

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- dtd(文档类型定义document type definition)约束 -->
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<!-- 根元素: 用于配置MyBatis -->
+<configuration>
+    <properties resource="db.properties"/>
+
+    <settings>
+        <setting name="jdbcTypeForNull" value="NULL"/>
+<!--        <setting name="useGeneratedKeys" value="true"/>-->
+    </settings>
+
+    <!-- 别名 -->
+    <typeAliases>
+        <typeAlias alias="User" type="com.moku.bean.User"/>
+    </typeAliases>
+
+    <!-- 可配置多套运行环境，将SQL映射到多个不同的数据库上，但必须通过default属性指定默认运行环境 -->
+    <!-- 环境配置  id 属性,唯一标识当前环境 -->
+    <environments default="development">
+        <!-- 第一套运行环境的id-->
+        <environment id="development">
+            <!-- 配置MyBatis事务管理器 -->
+            <!-- type属性:事务类型 -->
+            <!-- JDBC:使用事务(正常提交commit,异常回滚事务 rollback) 默认 -->
+            <!-- MANAGED:不使用事务 -->
+            <transactionManager type="JDBC"/>
+            <!-- 配置MyBatis的数据源 -->
+            <!-- type : 配置连接池 -->
+            <!-- POOLED :MyBatis内置的一个连接池(默认) -->
+            <dataSource type="POOLED">
+                <!-- 连接数据库的操作 -->
+                <!-- 数据库驱动 -->
+                <property name="driver" value="${jdbc.driverClassName}"/>
+                <!-- 连接数据库的url -->
+                <property name="url" value="${jdbc.url}"/>
+                <!-- 连接数据库账号 -->
+                <property name="username" value="${jdbc.username}"/>
+                <!-- 连接数据库密码 -->
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!-- 配置映射文件 -->
+    <mappers>
+        <!--方式一：使用resource配置映射文件-->
+        <mapper resource="sqlMap/User.xml"/>
+        <!--方式二：使用url配置映射文件-->
+        <!-- 本地文件资源需要设置file:/// -->
+<!--        <mapper url="file:///C:\Workspace\kan\study\mybatis\MybatisProxy\src\main\resources\mappers\User.xml"></mapper>-->
+        <!--方式三TODO：多个映射器的使用：开启扫描-->
+        <!-- 嵌套路径使用.标注，如moku.mappers -->
+<!--        <package name="mappers"/>-->
+    </mappers>
+</configuration>

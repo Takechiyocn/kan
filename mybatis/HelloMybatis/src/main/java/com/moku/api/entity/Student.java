@@ -5,8 +5,6 @@ public class Student {
     private int id;
     private String name;
 
-    /* getter and setter */
-
     public int getId() {
         return id;
     }

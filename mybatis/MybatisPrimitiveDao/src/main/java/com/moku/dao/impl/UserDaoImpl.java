@@ -1,32 +1,31 @@
-package com.moku.service;
+package com.moku.dao.impl;
 
 import com.moku.bean.User;
-import com.moku.mapper.UserMapper;
+import com.moku.dao.UserDao;
 import com.moku.utils.Factory;
 import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
 
 /**
- * UserService工具类（原始dao开发中的impl类）
+ * 原始dao需要实现接口
  *
  * @author moku
  */
-public class UserService {
+public class UserDaoImpl implements UserDao {
 
     SqlSession sqlSession = null;
 
     // 增
+    @Override
     public boolean addUser(User user) {
 
         try {
             // 1.通过工厂获取会话
             sqlSession = Factory.getSession();
-            // 2.从会话中获取接口的代理对象
-            UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
-            // 3.通过代理对象操作数据库
-            userMapper.addUser(user);
-            // 4.提交事务
+            // 2.通过代会话操作数据库
+            sqlSession.insert("addUser", user);
+            // 3.提交事务：增删改都需要提交事务
             sqlSession.commit();
             return true;
         } catch (Exception e) {
@@ -44,14 +43,14 @@ public class UserService {
     }
 
     // 删
+    @Override
     public boolean deleteUserById(int id) {
 
         try {
             sqlSession = Factory.getSession();
-            UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
-            boolean tf = userMapper.deleteUserById(id);
+            sqlSession.delete("deleteUserById", id);
             sqlSession.commit();
-            return tf;
+            return true;
         } catch (Exception e) {
             if (sqlSession != null) {
                 sqlSession.rollback();
@@ -65,12 +64,12 @@ public class UserService {
     }
 
     // 改
+    @Override
     public boolean updateUserById(User user) {
 
         try {
             sqlSession = Factory.getSession();
-            UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
-            userMapper.updateUserById(user);
+            sqlSession.update("getMapper", user);
             sqlSession.commit();
             return true;
         } catch (Exception e) {
@@ -86,12 +85,12 @@ public class UserService {
     }
 
     // 查：按id查一个
+    @Override
     public User getUserById(int id) {
 
         try {
             sqlSession = Factory.getSession();
-            UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
-            return userMapper.getUserById(id);
+            return sqlSession.selectOne("getUserById", id);
         } catch (Exception e) {
             if (sqlSession != null) {
                 sqlSession.rollback();
@@ -106,12 +105,12 @@ public class UserService {
     }
 
     // 查：查所有
+    @Override
     public List<User> getUser() {
 
         try {
             sqlSession = Factory.getSession();
-            UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
-            return userMapper.getUser();
+            return sqlSession.selectList("getUser");
         } catch (Exception e) {
             if (sqlSession != null) {
                 sqlSession.rollback();
