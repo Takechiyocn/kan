@@ -3,7 +3,7 @@
 
 <mapper namespace="api.mapper.blogger.AuthorMapper">
 
-    <resultMap id="authorMap" type="api.entity.blogger.Author">
+    <resultMap id="authorMap" type="Author">
         <id property="id" column="author_id"/>
         <result property="userName" column="author_username"/>
         <result property="password" column="author_password"/>

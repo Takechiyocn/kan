@@ -11,7 +11,9 @@ public class Factory {
 
     private final static Class<Factory> lock = Factory.class;
     private static SqlSessionFactory sqlSessionFactory = null;
-    private Factory() {}
+
+    private Factory() {
+    }
 
     /**
      * 对外提供一个工厂

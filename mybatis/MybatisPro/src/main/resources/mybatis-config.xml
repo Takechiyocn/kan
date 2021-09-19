@@ -14,7 +14,7 @@
 <!--        <typeAlias alias="Employee" type="main.java.com.moku.api.entity.Employee" />-->
 <!--        <typeAlias alias="Student" type="main.java.com.moku.api.entity.Student" />-->
 <!--        <typeAlias alias="User" type="main.java.com.moku.api.entity.User" />-->
-<!--        <typeAlias alias="Author" type="main.java.api.entity.blogger.Author" />-->
+        <typeAlias alias="Author" type="api.entity.blogger.Author" />
     </typeAliases>
     <!-- 配置MyBatis的运行环境 ,可以配置多个环境,但是一次只能使用一个
        default属性 : 当前使用的环境 ,使用下面环境的id 即可  -->

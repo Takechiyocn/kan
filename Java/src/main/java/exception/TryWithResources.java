@@ -27,7 +27,7 @@ public class TryWithResources {
         }
 
         // 3. Closeable的close方法关闭资源（相当于之前得try final的final语句）
-        // 4. close发生异常。该异常被自动捕获并有addSuppressed方法增加到原来的异常中。
+        // 4. close发生异常。该异常被自动捕获并用addSuppressed方法增加到原来的异常中。
         //    可由getSuppressed方法获取被抑制的异常列表
         // 5  带资源的try语句可以使用finally，在close关闭资源后执行。
         finally {
