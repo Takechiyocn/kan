@@ -3,6 +3,9 @@
 
 <mapper namespace="api.mapper.blogger.AuthorMapper">
 
+    <!-- 开启本mapper的namespace下的二级缓存 -->
+    <cache type="org.mybatis.caches.ehcache.EhcacheCache" />
+
     <resultMap id="authorMap" type="Author">
         <id property="id" column="author_id"/>
         <result property="userName" column="author_username"/>
@@ -15,4 +18,8 @@
     <select id="getAuthor" parameterType="int" resultMap="authorMap">
         SELECT * FROM tb_author WHERE author_id=#{id}
     </select>
+
+    <delete id="deleteAuthorById" parameterType="int">
+        DELETE  FROM tb_author WHERE author_id=#{id}
+    </delete>
 </mapper>

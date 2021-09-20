@@ -9,7 +9,7 @@ import java.util.List;
 
 public class BlogService {
 
-    SqlSession sqlSession = null;
+    private SqlSession sqlSession = null;
 
     public List<Blog> getBlog(int id) {
 
@@ -24,7 +24,7 @@ public class BlogService {
             return null;
         } finally {
             if (sqlSession != null) {
-                sqlSession.rollback();
+                sqlSession.close();
             }
         }
     }

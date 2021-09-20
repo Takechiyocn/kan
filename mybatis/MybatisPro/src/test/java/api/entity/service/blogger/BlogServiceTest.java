@@ -1,5 +1,7 @@
-package api.entity.blogger;
+package api.entity.service.blogger;
 
+import api.entity.blogger.Author;
+import api.entity.blogger.Blog;
 import api.service.blogger.BlogService;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;

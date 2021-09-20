@@ -4,17 +4,26 @@
 
 <!-- 根元素: 用于配置MyBatis -->
 <configuration>
+
+    <!-- 数据库配置 -->
     <properties resource="db.properties" />
+
     <settings>
         <setting name="jdbcTypeForNull" value="NULL" />
 <!--        <setting name="autoMappingBehavior" value="NONE"/>-->
+        <!-- 开启二级缓存 -->
+        <setting name="cacheEnabled" value="true"/>
+        <!-- 二级缓存日志-->
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
     </settings>
+
     <!-- 别名 -->
     <typeAliases>
-<!--        <typeAlias alias="Employee" type="main.java.com.moku.api.entity.Employee" />-->
-<!--        <typeAlias alias="Student" type="main.java.com.moku.api.entity.Student" />-->
-<!--        <typeAlias alias="User" type="main.java.com.moku.api.entity.User" />-->
         <typeAlias alias="Author" type="api.entity.blogger.Author" />
+        <typeAlias alias="Blog" type="api.entity.blogger.Blog" />
+        <typeAlias alias="Comment" type="api.entity.blogger.Comment" />
+        <typeAlias alias="Post" type="api.entity.blogger.Post" />
+        <typeAlias alias="Tag" type="api.entity.blogger.Tag" />
     </typeAliases>
     <!-- 配置MyBatis的运行环境 ,可以配置多个环境,但是一次只能使用一个
        default属性 : 当前使用的环境 ,使用下面环境的id 即可  -->
@@ -55,5 +64,7 @@
         <!--指定一个配置文件-->
         <mapper resource="mapper/blogger/AuthorMapper.xml"/>
         <mapper resource="mapper/blogger/BlogMapper.xml"/>
+        <!-- 注解+配置：只用指定配置文件 -->
+        <mapper resource="mapper/blogger/AuthorProviderMapper.xml"/>
     </mappers>
 </configuration>

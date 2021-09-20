@@ -4,8 +4,6 @@ import api.entity.blogger.Author;
 import api.mapper.blogger.AuthorMapper;
 import api.utils.MyBatisFactory;
 import org.apache.ibatis.session.SqlSession;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -16,10 +14,9 @@ import java.util.List;
  */
 public class AuthorService {
 
-    SqlSession sqlSession = null;
+    private SqlSession sqlSession = null;
 
     public List<Author> getAuthorById(int id) {
-
         try {
             sqlSession = MyBatisFactory.getSession();
             AuthorMapper mapper = sqlSession.getMapper(AuthorMapper.class);
@@ -31,7 +28,7 @@ public class AuthorService {
             return null;
         } finally {
             if (sqlSession != null) {
-                sqlSession.rollback();
+                sqlSession.close();
             }
         }
     }

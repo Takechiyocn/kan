@@ -9,4 +9,6 @@ import java.util.List;
 public interface AuthorMapper {
 
     List<Author> getAuthor(Integer id);
+
+    int deleteAuthorById(Integer id);
 }

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="api.mapper.blogger.AuthorProviderMapper">
+
+    <resultMap id="author_provider_map" type="Author">
+        <id column="author_id" jdbcType="BIGINT" property="id"/>
+        <result column="author_username" jdbcType="VARCHAR" property="userName"/>
+        <result column="author_password" jdbcType="VARCHAR" property="password"/>
+        <result column="author_email" jdbcType="VARCHAR" property="email"/>
+        <result column="author_bio" jdbcType="VARCHAR" property="bio"/>
+        <result column="author_favourite_section" jdbcType="VARCHAR" property="favouriteSection"/>
+    </resultMap>
+</mapper>

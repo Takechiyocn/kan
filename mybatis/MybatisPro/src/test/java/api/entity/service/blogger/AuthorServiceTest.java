@@ -1,5 +1,6 @@
-package api.entity.blogger;
+package api.entity.service.blogger;
 
+import api.entity.blogger.Author;
 import api.service.blogger.AuthorService;
 import com.alibaba.fastjson.JSONArray;
 import org.junit.jupiter.api.Test;
@@ -18,6 +19,7 @@ public class AuthorServiceTest {
         AuthorService service = new AuthorService();
 
         List<Author> authorList = service.getAuthorById(2);
+        // fastjson
         JSONArray object = JSONArray.parseArray(JSON.toJSONString(authorList));
         logger.info("author:{}", object);
     }
