@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="api.mapper.reflector.EmployeeMapper">
+
+    <resultMap id="emp_map_many2one" type="Employee">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <!-- association标签：将主表的某一列的值(此处为dept_id)作为查询条件查询副表，并将查询结果封装成对象返回 -->
+        <!-- property属性：最后映射返回的对象名 -->
+        <!-- column属性：副表查询条件 -->
+        <association property="dept" column="dept_id" select="selectDeptById"/>
+    </resultMap>
+
+    <resultMap id="emp_map_one2one" type="Employee">
+        <id property="id" column="e_id"/>
+        <result property="name" column="e_name"/>
+        <!-- property属性：最后映射返回的对象名 -->
+        <!-- ofType：查询结果封装类型 -->
+        <collection property="dept" ofType="Department">
+            <id property="id" column="d_id"/>
+            <result property="name" column="d_name"/>
+        </collection>
+    </resultMap>
+
+    <!-- 查询主表一条记录 -->
+    <select id="selectEmployeeByPrimaryKey" resultMap="emp_map_many2one">
+        select * from mybatis2.employee where id = #{emp_id}
+    </select>
+
+    <!-- 查询主表一条记录 -->
+    <select id="selectEmployeeByPrimaryKey2" resultMap="emp_map_one2one">
+        select e.id e_id, e.name e_name, d.id d_id, d.name d_name
+        from mybatis2.employee e
+        left join mybatis2.department d on e.dept_id = d.id
+        where e.id = #{emp_id}
+    </select>
+
+    <!-- 查询附表N条记录 -->
+    <select id="selectDeptById" resultType="Department">
+        select * from mybatis2.department where id = #{dept_id}
+    </select>
+
+</mapper>

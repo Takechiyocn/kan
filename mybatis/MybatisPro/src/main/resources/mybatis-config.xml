@@ -24,6 +24,8 @@
         <typeAlias alias="Comment" type="api.entity.blogger.Comment" />
         <typeAlias alias="Post" type="api.entity.blogger.Post" />
         <typeAlias alias="Tag" type="api.entity.blogger.Tag" />
+        <typeAlias alias="Employee" type="api.entity.reflector.Employee" />
+        <typeAlias alias="Department" type="api.entity.reflector.Department" />
     </typeAliases>
     <!-- 配置MyBatis的运行环境 ,可以配置多个环境,但是一次只能使用一个
        default属性 : 当前使用的环境 ,使用下面环境的id 即可  -->
@@ -66,5 +68,10 @@
         <mapper resource="mapper/blogger/BlogMapper.xml"/>
         <!-- 注解+配置：只用指定配置文件 -->
         <mapper resource="mapper/blogger/AuthorProviderMapper.xml"/>
+        <mapper resource="mapper/reflector/EmployeeMapper.xml"/>
+        <mapper resource="mapper/reflector/DepartmentMapper.xml"/>
+        <!-- 注解：配置class文件 -->
+        <mapper class="api.mapper.reflector.EmployeeAnnotationMapper"/>
+        <mapper class="api.mapper.reflector.DepartmentAnnotationMapper"/>
     </mappers>
 </configuration>

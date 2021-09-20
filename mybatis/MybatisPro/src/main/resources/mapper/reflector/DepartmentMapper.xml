@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="api.mapper.reflector.DepartmentMapper">
+
+    <resultMap id="dept_map_many2one" type="Department">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <association property="emps" column="id" select="selectEmployeeById"/>
+    </resultMap>
+
+    <!-- 等值查询 -->
+    <resultMap id="dept_map_one2one" type="Department">
+        <id property="id" column="d_id"/>
+        <result property="name" column="d_name"/>
+        <collection property="emps" ofType="Employee">
+            <id property="id" column="e_id"/>
+            <result property="name" column="e_name"/>
+            <result property="deptId" column="d_id"/>
+        </collection>
+    </resultMap>
+
+    <!-- 主查询：1对多查询 -->
+    <select id="selectDeptById" resultMap="dept_map_many2one">
+        select * from mybatis2.department where id = #{id}
+    </select>
+
+    <!-- 主查询：1对多查询 -->
+    <select id="selectDeptById2" resultMap="dept_map_one2one">
+        select d.id d_id, d.name d_name, e.id e_id, e.name e_name
+        from mybatis2.department d
+        left join mybatis2.employee e on d.id = e.dept_id
+        where d.id = #{dept_id}
+    </select>
+
+    <!-- 副查询 -->
+    <select id="selectEmployeeById" resultType="Employee">
+        select * from mybatis2.employee where dept_id = #{id}
+    </select>
+
+</mapper>
