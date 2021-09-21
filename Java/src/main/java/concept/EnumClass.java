@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.Scanner;
 
 /**
- * @description:所有的枚举类型都继承自Enum
+ * @description: 所有的枚举类型都继承自Enum
  * @author: Kan
  * @date: 2021/2/23 22:44
  */

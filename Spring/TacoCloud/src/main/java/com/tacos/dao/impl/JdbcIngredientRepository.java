@@ -1,7 +1,7 @@
-package com.tacos.service.impl;
+package com.tacos.dao.impl;
 
 import com.tacos.entity.Ingredient;
-import com.tacos.service.IngredientRepository;
+import com.tacos.dao.IngredientRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -116,7 +116,7 @@ public class JdbcIngredientRepository implements IngredientRepository {
     public Ingredient findById(String id) {
         return jdbc.queryForObject(
                 "select id, name, type from Ingredient where id=?",
-                new RowMapper<>() {
+                new RowMapper<Ingredient>() {
                     @Override
                     public Ingredient mapRow(ResultSet resultSet, int i) throws SQLException {
                         return new Ingredient(

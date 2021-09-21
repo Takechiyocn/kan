@@ -1,8 +1,8 @@
-package com.tacos.service.impl;
+package com.tacos.dao.impl;
 
 import com.tacos.entity.Ingredient;
 import com.tacos.entity.Taco;
-import com.tacos.service.TacoRepository;
+import com.tacos.dao.TacoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;

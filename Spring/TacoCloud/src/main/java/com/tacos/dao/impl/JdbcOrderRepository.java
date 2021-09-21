@@ -1,9 +1,9 @@
-package com.tacos.service.impl;
+package com.tacos.dao.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tacos.entity.Order;
 import com.tacos.entity.Taco;
-import com.tacos.service.OrderRepository;
+import com.tacos.dao.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
@@ -16,54 +16,7 @@ import java.util.Map;
 
 @Repository
 public class JdbcOrderRepository implements OrderRepository {
-    //    private SimpleJdbcInsert orderInserter;
-//    private SimpleJdbcInsert orderTacoInserter;
-//    private ObjectMapper objectMapper;
-//
-//    @Autowired
-//    public JdbcOrderRepository(JdbcTemplate jdbc) {
-//        this.orderInserter = new SimpleJdbcInsert(jdbc)
-//                .withSchemaName("data")
-//                .withTableName("Taco_Order")
-//                .usingGeneratedKeyColumns("id");
-//
-//        this.orderInserter = new SimpleJdbcInsert(jdbc)
-//                .withTableName("Taco_Order_Tacos");
-//
-//        this.objectMapper = new ObjectMapper();
-//    }
-//
-//    @Override
-//    public Order save(Order order) {
-//        order.setPlacedAt(new Date());
-//        long orderId = saveOrderDetails(order);
-//        order.setId(orderId);
-//
-//        List<Taco> com.tacos = order.getTacos();
-//        for(Taco taco : com.tacos) {
-//            saveTacoToOrder(taco, orderId);
-//        }
-//
-//        return order;
-//    }
-//
-//    private long saveOrderDetails(Order order) {
-//        @SuppressWarnings("unchecked")
-//        Map<String, Object> values = objectMapper.convertValue(order, Map.class);
-//        values.put("placedAt", order.getPlacedAt());
-//
-//        long orderId = orderInserter.executeAndReturnKey(values).longValue();
-//
-//        return orderId;
-//    }
-//
-//    private void saveTacoToOrder(Taco taco, long orderId) {
-//        Map<String, Object> values = new HashMap<>();
-//        values.put("tacoOrder", orderId);
-//        values.put("taco", taco.getId());
-//
-//        orderTacoInserter.execute(values);
-//    }
+
     private SimpleJdbcInsert orderInserter;
     private SimpleJdbcInsert orderTacoInserter;
     private ObjectMapper objectMapper;
@@ -79,15 +32,14 @@ public class JdbcOrderRepository implements OrderRepository {
     }
 
     /**
-     *
      * 更新数据2：SimpleJdbcInsert(该类对JdbcTemplate进行了包装)
+     *
      * @param order
      * @return
      */
     @Override
     public Order save(Order order) {
         order.setPlacedAt(new Date());
-        // 同一客户 order id 相同？
         // 同一客户可有多个不同订单（Taco）
         long orderId = saveOrderDetails(order);
         order.setId(orderId);

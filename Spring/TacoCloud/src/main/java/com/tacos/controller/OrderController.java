@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import com.tacos.entity.Order;
-import com.tacos.service.OrderRepository;
+import com.tacos.dao.OrderRepository;
 
 import javax.validation.Valid;
 

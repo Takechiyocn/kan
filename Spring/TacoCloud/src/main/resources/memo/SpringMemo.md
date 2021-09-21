@@ -58,11 +58,11 @@
 ![img.png](spring/SpringDataRepositoryAnalyze.png)
 
 ####  模板引擎
-  > [Thymeleaf](https://www.thymeleaf.org/ 'Thymeleaf.org')
+  > [服务端模板引擎：Thymeleaf](https://www.thymeleaf.org/ 'Thymeleaf.org')
   >
-  > [FreeMarker](https://freemarker.apache.org/ "FreeMarker.apache.org") 
+  > [服务端模板引擎：FreeMarker](https://freemarker.apache.org/ "FreeMarker.apache.org") 
   > 
-  > [Vue?](https://vuejs.org/index.html 'Vue.org')
+  > [客户端模板引擎：Vue](https://vuejs.org/index.html 'Vue.org')
 
 ### 依赖注入方式
 

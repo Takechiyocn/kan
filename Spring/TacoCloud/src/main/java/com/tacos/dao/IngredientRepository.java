@@ -1,4 +1,4 @@
-package com.tacos.service;
+package com.tacos.dao;
 import com.tacos.entity.Ingredient;
 
 /**
