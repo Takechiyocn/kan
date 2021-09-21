@@ -20,8 +20,8 @@ import java.util.Collection;
  * @author: Kan
  * @date: 2021/3/10 22:31
  */
-@Entity
 @Data
+@Entity
 @RequiredArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PUBLIC, force = true)
 public class User implements UserDetails {

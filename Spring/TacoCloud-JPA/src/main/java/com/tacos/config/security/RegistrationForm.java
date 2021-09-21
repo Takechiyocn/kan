@@ -1,8 +1,8 @@
 package com.tacos.config.security;
 
+import com.tacos.domain.User;
 import lombok.Data;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import com.tacos.domain.User;
 
 /**
  * @description:

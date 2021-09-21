@@ -1,5 +1,7 @@
 package com.tacos.controller;
 
+import com.tacos.domain.Order;
+import com.tacos.domain.User;
 import com.tacos.service.OrderRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -10,8 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
-import com.tacos.domain.Order;
-import com.tacos.domain.User;
 
 import javax.validation.Valid;
 
@@ -42,20 +42,13 @@ public class OrderController {
      * AuthenticationPrincipal注解使user变成认证的principal
      * 注入User(已认证用户)
      * 1. 注入Principal对象到控制器方法中
-     * public String processOrder(@Valid Order order, Errors errors,
-     * SessionStatus sessionStatus,
-     * Principal principal)
-     * User user = userRepository.findByUsername(principal.getName());
-     * -> 在与安全无关的功能中参杂安全性代码
+     *   -> 在与安全无关的功能中参杂安全性代码
      * 2. 注入Authentication对象到控制器方法中
-     * public String processOrder(@Valid Order order, Errors errors,
-     * SessionStatus sessionStatus,
-     * Authentication authentication)
-     * User user = (User)authentication.getPrincipal();
+     *   -> getPrincipal()返回Object，需要进行类型转换
      * 3. 使用SecurityContextHolder来获取安全上下文
      *   Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
      *   User user = (User) authentication.getPrincipal();
-     * ->充满安全性代码，可以在程序任何地方使用，适合在较低级别的代码中使用
+     *   ->充满安全性代码，可以在程序任何地方使用，适合在较低级别的代码中使用
      * 4. 使用@AuthenticationPrincipal注解来标注方法
      *
      * @param order
@@ -80,4 +73,56 @@ public class OrderController {
 
         return "redirect:/";
     }
+
+    /**
+     * 1. 注入Principal对象到控制器方法中
+     *
+     * @param order
+     * @param errors
+     * @param sessionStatus
+     * @param principal
+     * @return
+     */
+//    @PostMapping
+//    public String processOrder(@Valid Order order, Errors errors,
+//                               SessionStatus sessionStatus,
+//                               Principal principal) {
+//
+//        UserRepository userRepository;
+//        User user = userRepository.findByUsername(principal.getName());
+//    }
+
+    /**
+     * 2. 注入Authentication对象到控制器方法中
+     *
+     * @param order
+     * @param errors
+     * @param sessionStatus
+     * @param authentication
+     * @return
+     */
+//    @PostMapping
+//    public String processOrder(@Valid Order order, Errors errors,
+//                               SessionStatus sessionStatus,
+//                               Authentication authentication) {
+//        User user = (User) authentication.getPrincipal();
+//    }
+
+    /**
+     * 3. 使用SecurityContextHolder来获取安全上下文
+     *
+     * @param order
+     * @param errors
+     * @param sessionStatus
+     * @param authentication
+     * @return
+     */
+//    @PostMapping
+//    public String processOrder(@Valid Order order, Errors errors,
+//                               SessionStatus sessionStatus,
+//                               Authentication authentication) {
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        User user = (User) authentication.getPrincipal();
+//    }
+
 }

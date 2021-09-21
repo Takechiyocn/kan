@@ -10,6 +10,7 @@ public interface OrderRepository
 
     /**
      * 自定义JPA Repository：通过邮编查找
+     *
      * @param deliveryZip
      * @return
      */
@@ -17,6 +18,7 @@ public interface OrderRepository
 
     /**
      * 自定义JPA Repository：通过邮编查找和地址范围
+     *
      * @param deliveryZip
      * @param startDate
      * @param endDate
@@ -27,6 +29,7 @@ public interface OrderRepository
 
     /**
      * 自定义JPA Repository：查找数量
+     *
      * @param deliveryZip
      * @param startDate
      * @param endDate
@@ -37,6 +40,7 @@ public interface OrderRepository
 
     /**
      * 自定义JPA Repository：忽略大小写
+     *
      * @param deliveryTo
      * @param deliveryCity
      * @return
@@ -45,7 +49,8 @@ public interface OrderRepository
 //            String deliveryTo, String deliveryCity);
 
     /**
-     * TODO: JPA Query注解明确表明要执行的查询
+     * JPA Query注解明确表明要执行的查询
+     *
      * @return
      */
 //    @Query("Select * From Taco_Order o where o.deliveryCity='Seattle'")

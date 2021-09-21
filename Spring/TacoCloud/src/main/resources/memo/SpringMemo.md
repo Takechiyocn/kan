@@ -41,7 +41,7 @@
     2. 填充可选的数据模型并将请求传递给一个视图，以便于生成返回给浏览器的HTML。
     3. 直接将数据写入响应体(RESTful) 
 
-### 试图
+### 视图
 
     将数据渲染到html中并在浏览器中展现
 
@@ -128,6 +128,11 @@
 
       将@Autowired标注的组件注入到相应的bean中。
 
+* @Data注解
+
+      提高代码的简洁，该注解可以省去getter、setter、toString等方法(运行时生成)。
+      该注解会自动添加一个有参构造器。
+
 * 构造型(stereotype)注解
 
   * @Controller
@@ -175,11 +180,11 @@
       添加一个无参构造器（JPA）
       如果有final字段，应将force设置true以确保Lombok无参构造器会将final字段为null
       @NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
+      使用该注解后，@Data注解生成的有参构造器会被移除掉，因此需要有参构造器时需要显示指定。
 
 * @RequiredArgsConstructor
 
-      Spring会自动添加一个有参构造器
-      使用Lombok的NoArgsConstructor注解后会将默认有参构造器移除，所以要显示指定有参构造器
+      显示添加一个有参构造器。
 
 * @PrePersist注解
 
@@ -190,6 +195,48 @@
       实体应该持久化到数据库中的指定表中
 
 
+### JPA注解
+
+* @Entity
+
+      声明为JPA实体类（必须）。
+
+* @Id
+
+      数据库中唯一标识该实体的属性。即PK。
+
+* @GeneratedValue
+
+      自动生成。
+      @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+* @ManyToMany
+
+      声明关系。多对多。
+      @ManyToMany(targetEntity = Ingredient.class)
+
+* @ManyToOne
+
+      声明关系。多对一（Order实体中多个Order对应一个User）。
+      @ManyToOne
+      private User user;
+
+* @PrePersist
+
+      用于为相应的生命周期事件指定回调方法。 该注释可以应用于实体类，映射超类或回调监听器类的方法。可以方便的自动填入实体类创建时间、更新时间。
+
+* @Column
+
+      定义了被标注字段在数据库表中所对应字段的名称。
+      如果Column注解定义的字段名和属性名一样，会被忽略。
+
+* @Table
+
+      表明实体应该持久化到数据库中的指定表。
+
+* @Query注解
+
+      Repository方法调用时要执行的查询。
 
 ### Spring框架
 

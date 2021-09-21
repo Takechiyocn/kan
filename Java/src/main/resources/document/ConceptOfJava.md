@@ -624,3 +624,5 @@ private static int sumUp(int[]values){
     add.accumulate(value);
     ```
   
+#### 构造者builder风格接口
+
