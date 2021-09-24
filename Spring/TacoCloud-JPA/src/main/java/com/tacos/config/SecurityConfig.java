@@ -48,9 +48,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                        "T(java.util.Calendar).getInstance().get(" +
 //                        "T(java.util.Calendar).DAY_OF_WEEK) == " +
 //                        "T(java.util.Calendar).TUESDAY")
-                .antMatchers("/", "/**").access("permitAll")
+//                .antMatchers("/", "/**").access("permitAll")
+                .antMatchers("/orders").permitAll()
                 // 新的配置区域filter：当前一个filter失败时，保存状态，继续执行下一个filter
                 // and 方法表示已经完成了授权相关配置，并且要添加一些其他http配置
+                .and()
+                .anonymous()
                 .and()
                 .formLogin()
                 .loginPage("/login")
@@ -83,7 +86,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             throws Exception {
         auth
                 .userDetailsService(userDetailsService)
-                .passwordEncoder(encoder());
+//                .passwordEncoder(encoder())
+        ;
     }
 
     /**

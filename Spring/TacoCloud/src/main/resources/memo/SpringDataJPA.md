@@ -36,3 +36,7 @@
 * Is、Equals
 *IsNot、Not
 * IgnoringCase、IgnoresCase
+
+#### Spring属性配置
+
+![SpringConfiguration.png](spring/SpringConfiguration.png)
