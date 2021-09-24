@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!--设定页面使用的字符集-->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Hello Thymeleaf</title>
+    <script type="text/javascript" th:src="@{js/thymeleaf.js}"></script>
+    <!--访问model中属性值-->
+    <script th:inline="javascript">
+        testFunction()
+        var single = [[${student}]];
+        console.log(single.name + "/" + single.id);
+    </script>
+
+</head>
+<body>
+<script src="http://localhost:35729/livereload.js"></script>
+<!--<div> 可定义文档中的分区或节（division/section）。-->
+<div>
+    div节：
+    <!--th:text用于文本显示${}-->
+    <p th:text="${name}">name</p>
+    <p th:text="'Hello！ ' + ${name2} + '!'">hello world</p>
+    <p th:text="|Hello！ ${name3}!|">hello world</p>
+    <!--th:text用于文本显示:可进行简单计算-->
+    <p th:text="9+7">2021</p>
+</div>
+<!--列表显示#{}-->
+<div th:if="${#lists.isEmpty(teachers)}">div节：teachers集合为空！</div>
+<div th:if="not ${#lists.isEmpty(students)}">
+<!--定义表格-->
+<table border="2">
+    <!--thead标签定义表格的表头-->
+    <thead>
+        <!--<tr> 标签定义 HTML 表格中的行-->
+        <tr>
+            <!--th定义表格内的表头单元格。-->
+            <th>index</th>
+            <th>学生id</th>
+            <th>学生姓名</th>
+        </tr>
+    </thead>
+    <!--tbody 元素用于对 HTML 表格中的主体内容进行分组-->
+    <tbody>
+<!--        <tr th:each="s:${students}">-->
+        <!--带状态的遍历-->
+        <tr th:class="${status.even}?'even':'odd'" th:each="s,status:${students}">
+            <!--<td> 标签定义 HTML 表格中的标准单元格。-->
+            <td th:text="${status.index}"></td>
+            <td th:text="${s.id}"></td>
+            <td th:text="${s.name}"></td>
+        </tr>
+    </tbody>
+    <!--tfoot 元素用于对 HTML 表格中的表注（页脚）内容进行分组。-->
+    <tfoot>
+        <tr>
+            <td>999</td>
+            <td>999</td>
+            <td>Anonymous</td>
+        </tr>
+    </tfoot>
+</table>
+</div>
+<!--th: include 类似于 insert ，但是不是插入片段 而是只插入此片段的内容【注：不推荐使用】-->
+<div th:include="footercommon::footer1"></div>
+<!--th: replace 用指定实际片段来替换主标签-->
+<div th:replace="footercommon::footer2(2015,2021)"></div>
+<!--th: insert 它是简单的插入指定的片段作为正文的主标签-->
+<div th:insert="footercommon::copy"></div>
+<!--TODO-->
+<!--<div th:insert="footercommon::copy-section"></div>-->
+</body>
+<style type="text/css">
+    /*table {border: 200px}*/
+    thead {color:green}
+    tbody {color:blue;height:50px}
+    tfoot {color:red;background-color: yellow}
+    .even{
+    /*桃红色，艳粉色*/
+    background-color: hotpink;
+    }
+    .odd{
+    /*浅蓝色（矢车菊）*/
+    background-color: cornflowerblue;
+    }
+</style>
+</html>

@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 
 import javax.sql.DataSource;
 
@@ -24,21 +25,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * @param auth
      * @throws Exception
      */
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth
-//                .inMemoryAuthentication()
-//                // 新版本内存用户需要提供密码编码器passwordEncoder
-//                .passwordEncoder(NoOpPasswordEncoder.getInstance())
-//                .withUser("buzz")
-//                .password("buzz")
-//                .roles("USER")
-//                .authorities("SUPERADMIN")
-//                .and()
-//                .withUser("woody")
-//                .password("woody")
-//                .authorities("ROLE_USER");
-//    }
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth
+                .inMemoryAuthentication()
+                // 新版本内存用户需要提供密码编码器passwordEncoder
+                .passwordEncoder(NoOpPasswordEncoder.getInstance())
+                .withUser("buzz")
+                .password("buzz")
+                .roles("USER")
+                .authorities("SUPERADMIN")
+                .and()
+                .withUser("woody")
+                .password("woody")
+                .authorities("ROLE_USER");
+    }
 
 
     /**
@@ -51,8 +52,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Autowired
     DataSource dataSource;
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//    @Override
+    protected void configure2(AuthenticationManagerBuilder auth) throws Exception {
         auth
                 .jdbcAuthentication()
                 .dataSource(dataSource)
