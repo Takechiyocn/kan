@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <!--设定页面使用的字符集-->
+    <!--http-equiv设定页面使用的字符集-->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>Hello Thymeleaf</title>
     <script type="text/javascript" th:src="@{js/thymeleaf.js}"></script>
-    <!--访问model中属性值-->
+    <!--javascript访问model中属性值:th:inline-->
     <script th:inline="javascript">
         testFunction()
         var single = [[${student}]];
@@ -18,14 +18,14 @@
 <!--<div> 可定义文档中的分区或节（division/section）。-->
 <div>
     div节：
-    <!--th:text用于文本显示${}-->
+    <!--th:text用于文本显示:${}-->
     <p th:text="${name}">name</p>
     <p th:text="'Hello！ ' + ${name2} + '!'">hello world</p>
     <p th:text="|Hello！ ${name3}!|">hello world</p>
     <!--th:text用于文本显示:可进行简单计算-->
     <p th:text="9+7">2021</p>
 </div>
-<!--列表显示#{}-->
+<!--列表判断:${#lists.function(listObj)}-->
 <div th:if="${#lists.isEmpty(teachers)}">div节：teachers集合为空！</div>
 <div th:if="not ${#lists.isEmpty(students)}">
 <!--定义表格-->
@@ -61,7 +61,7 @@
     </tfoot>
 </table>
 </div>
-<!--th: include 类似于 insert ，但是不是插入片段 而是只插入此片段的内容【注：不推荐使用】-->
+<!--th: include 保留自己的主标签，类似于 insert ，但是不是插入片段 而是只插入此片段的内容【注：不推荐使用】-->
 <div th:include="footercommon::footer1"></div>
 <!--th: replace 用指定实际片段来替换主标签-->
 <div th:replace="footercommon::footer2(2015,2021)"></div>

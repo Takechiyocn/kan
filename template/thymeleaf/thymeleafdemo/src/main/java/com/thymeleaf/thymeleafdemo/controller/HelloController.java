@@ -19,13 +19,13 @@ public class HelloController {
         model.addAttribute("name3", "thymeleaf3");
 
         List<Student> students = new ArrayList<>();
-        students.add(new Student("张三", 1));
-        students.add(new Student("李四", 2));
-        students.add(new Student("王五", 3));
-        students.add(new Student("二麻子", 4));
-        students.add(new Student("三棒子", 5));
+        students.add(new Student(1, "张三"));
+        students.add(new Student(2, "李四"));
+        students.add(new Student(3, "王五"));
+        students.add(new Student(4, "二麻子"));
+        students.add(new Student(5, "三棒子"));
         model.addAttribute("students", students);
-        model.addAttribute("student", new Student("console student", 10));
+        model.addAttribute("student", new Student(10, "console student"));
 
         List<Teacher> teachers = new ArrayList<>();
         model.addAttribute("teachers", teachers);
