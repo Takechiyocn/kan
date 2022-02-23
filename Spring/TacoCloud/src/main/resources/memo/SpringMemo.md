@@ -180,11 +180,12 @@
       添加一个无参构造器（JPA）
       如果有final字段，应将force设置true以确保Lombok无参构造器会将final字段为null
       @NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
-      使用该注解后，@Data注解生成的有参构造器会被移除掉，因此需要有参构造器时需要显示指定。
+      使用该注解后，@Data注解生成的有参构造器会被移除掉，因此需要有参构造器时需要显式指定。
 
 * @RequiredArgsConstructor
 
       显示添加一个有参构造器。
+    ![LombokAnnotation.png](spring/LombokAnnotation.png)
 
 * @PrePersist注解
 
@@ -237,6 +238,13 @@
 * @Query注解
 
       Repository方法调用时要执行的查询。
+
+### MyBatis注解
+
+* @Mapper
+
+      把Mapper这个DAO交给Spring管理
+      不用写映射文件(xml文件)
 
 ### Spring框架
 
@@ -332,6 +340,8 @@ erDiagram
   Ingredient {
     varchar id
     varchar name
+    
+    
     varchar type 
   }
 ```

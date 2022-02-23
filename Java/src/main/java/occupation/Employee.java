@@ -30,6 +30,12 @@ public class Employee extends Person implements Comparable<Employee> {
     static {
         Random generator = new Random();
         /* set nextId to a random number between 0 to 10000 */
+        /* Random类和Math.Random()方法均会产生随机数重复的问题，可采用以下方法避免： */
+        /*  1. 数据库自增id，但这会增大数据库IO开销，降低性能 */
+        /*  2. 使用Redis存储id，每次使用时到Redis获取并加1，配合着分布式锁一同使用。同方案1一样，会增加IO开销，降低性能 */
+        /*  3. 使用开源的发号器，如Snowflake雪花算法等 */
+        /*  4. 使用UUID，但UUID生成是字符串，不是数字，有些场景不一定适用 */
+        /*  5. 使用ThreadLocalRandom：每个线程都会维护自己的seed种子 */
         nextId = generator.nextInt(10000);
     }
 

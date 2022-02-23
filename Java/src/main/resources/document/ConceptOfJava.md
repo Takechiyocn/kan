@@ -20,23 +20,74 @@
 
 ### 浮点数
 
-使用严格的浮点计算
+使用严格的浮点计算，浮点运算更加精确，不同的硬件平台执行结果一致。
+未指定严格的浮点计算，计算结果与编译器以及运行环境相关。
+
+* 可将类、接口及方法声明为strictfp类型
 
 ```java
+// 接口声明为strictfp类型
+strictfp interface StrictFPInterface {
+}
 
-public class Test() {
+// 类及类中方法声明为strictfp类型
+public strictfp class Test() {
     public static strictfp void main(String[] args) {
         System.out.println("use strict float computable standard to evaluate");
     }
 }
 ```
+* 不可将接口中的方法以及构造函数声明为strictfp类型
 
-### 修饰符access modifier
+```java
+    interface A {
+        // 错误使用：将接口中的方法声明为strictfp类型
+        strictfp void f();
+    }
 
-* public：对所有类可见
-* private：仅对本类可见（子类也不能访问超类的私有域/方法）
-* protected：对包和所有子类可见
-* 默认：对包可见（不需修饰符）
+    public class FpDemo2 {
+        // 错误使用：将构造函数声明为strictfp类型
+        strictfp FpDemo2() {
+        }
+    }
+```
+
+### 访问级别修饰符：Access Level Modifiers
+
+1. 在顶级
+    * public
+
+      类用public修饰，类对所有类均可见
+    * package-private(no-modifiers)
+
+      如果类没有修饰符(默认)，也称package-private，它只在自己的包中可见
+2. 在成员级别
+
+    * public
+      
+      成员用public修饰，类对所有类均可见
+    * protected
+
+      对包和所有子类可见，即protected=no-modifiers+subclass
+    * 默认(无修饰符，即package-private)
+
+      它只在自己的包中可见
+    * private
+       
+      仅对本类可见(子类也不能访问超类的私有域/方法)
+    ![Access-Levels.png](images/Access-Levels.png)
+        * 第一列：指示类本身是否有权访问由访问控制级别定义的成员。
+        * 第二列：指示与该类相同的包(不管其父级)中的类是否具有对成员的访问权限
+        * 第三列：指示在此包外部声明的该类的子类是否有权访问成员。
+        * 第四列：指示是否所有类都具有对成员的访问权限。
+
+    * 下表显示Alpha类的成员(成员变量，成员函数)对于应用于它们的每个访问修饰符的可见性
+    ![Package-Sample.png](images/Package-Sample.png)
+    ![Package-Sample-Visibility.png](images/Package-Sample-Visibility.png)
+        * 当Alpha类成员为public时，Alpha、Beta、Alphasub、Gamma均可访问该成员
+        * 当Alpha类成员为protected时，Alpha、Beta、Alphasub均可访问该成员
+        * 当Alpha类成员为默认时，Alpha、Beta均可访问该成员
+        * 当Alpha类成员为private时，Alpha可访问该成员
 
 ### 基础概念
 
@@ -457,10 +508,10 @@ lambda表达式就是闭包
 
 ```java
 private static int sumUp(int...values){
-        }
+}
 // 转化后的方法
 private static int sumUp(int[]values){
-        } 
+}
 ```
 
 ![img_8.png](images/img_8.png)
