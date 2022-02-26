@@ -59,22 +59,42 @@ public class EqualsInJava {
         System.out.println("e == f: " + (e == f));
         // true：指向相同的栈空间(该空间存放2)
         System.out.println("e == f: " + (e == g));
-        //
+
+        // 包装类：包装类均为不可变对象(对象值不可变，对象变量引用可变更)
+        // 不可变对象：对象一旦被创建后，对象所有的状态及属性在其生命周期内不会发生任何变化。
+        //   特点：线程安全
+        //        hasCode相同
+        //        不可变对象的引用可以被缓存
+        // --> 因为以上有点，实现了缓存池
         Integer n1 = new Integer(30);
         Integer n2 = new Integer(30);
+        // 缓存池：JDK1.8中Integer 缓存池的大小默认为 -128~127
+        //   对于Integer，Java8中可使用JVM的变量-XX:AutoBoxCacheMax=<size>来修改Integer缓存池中的数量
+        //   有效设置范围为127~Integer.Max_Value+128-1
+        //   设置AutoBoxCacheMax后，JVM会初始化一个java.lang.IntegerCache.high系统属性，
+        //      Integer缓存池根据该值调整缓存大小
         Integer n3 = 30;
         Integer n4 = 30;
+        // 缓存池
+        // valueOf()方法的实现：就是先判断值是否在缓存池中，如果在的话就直接返回缓存池的内容
+        Integer n5 = Integer.valueOf(30);
+        Integer n6 = Integer.valueOf(30);
         // false
         System.out.println("n1 == n2: " + (n1 == n2));
         // true：Integer类覆写equals方法
         System.out.println("n1.equals(n2): " + n1.equals(n2));
         // false
         System.out.println("n1 == n3: " + (n1 == n3));
-        // true：栈内存中指向同一空间
+        // true：缓存池中同一地址
         System.out.println("n3 == n4: " + (n3 == n4));
-        // true
+        // true：Integer类覆写equals方法
         System.out.println("n1.equals(n3): " + n1.equals(n3));
+        // true：缓存池中同一地址
+        System.out.println("n3 == n5: " + (n3 == n5));
+        // true：缓存池中同一地址
+        System.out.println("n5 == n6: " + (n5 == n6));
 
+        // 对象
         Value v1 = new Value();
         Value v2 = new Value();
         v1.i = v2.i = 100;

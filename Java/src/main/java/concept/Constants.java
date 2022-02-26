@@ -21,6 +21,12 @@ import java.util.ArrayList;
  *   常量赋值：
  *     编译时常量：编译时初始化时赋值
  *     运行时常量：运行时类构造方法里赋值
+ *
+ *   不可变对象：常量类且对象成员为常量类型，如包装类Long
+ *   特点：线程安全
+ *        hasCode相同
+ *        不可变对象的引用可以被缓存
+ *      --> 缓存池
  */
 public final class Constants {
 
