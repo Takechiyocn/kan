@@ -8,9 +8,9 @@ public class FatherClass {
 //    }
 
     // 自定义构造方法：带参数
-    public FatherClass(String str) {
-        System.out.println("Father class with customize constructor.");
-    }
+//    public FatherClass(String str) {
+//        System.out.println("Father class with customize constructor.");
+//    }
 
 
 }

@@ -14,18 +14,18 @@ public class SonClass extends FatherClass {
     //        2. 子类自定义构造方法
     //          -> 显示或隐式(编译器)调用父类默认构造方法
 
-    // 2. 子类自定义构造方法
-//    public SonClass() {
-//        // 编译器可以隐式调用父类默认构造方法
-////        super();
-//        System.out.println("Son class constructor with parameter.");
-//    }
+    // 子类自定义构造方法
+    public SonClass() {
+        // 编译器可以隐式调用父类默认构造方法
+        super();
+        System.out.println("Son class constructor with parameter.");
+    }
 
     // case2：父类没有默认的构造方法，父类自定义构造方法
     //        a. 子类必须显示调用父类自定义构造方法
-    public SonClass() {
-        super("test");
-    }
+//    public SonClass() {
+//        super("test");
+//    }
 
 
     public static void main(String[] args) {

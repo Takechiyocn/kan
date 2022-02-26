@@ -59,7 +59,7 @@ public class EnumClass {
      * 枚举类型实际上定义一个类，即枚举类型和类类型类似
      * 枚举常量为实例
      */
-    public static enum Size {
+    public enum Size {
         /**
          *
          */

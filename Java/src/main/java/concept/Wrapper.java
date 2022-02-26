@@ -19,7 +19,7 @@ public class Wrapper {
         // == 应用于对象包装器：比较两个包装器是否指向同一存储区域，结果不确定
         System.out.println(a == b);
         System.out.println(c == d);
-        // 该处equals被Integer类重写为自比较包装器对象值
+        // 该处equals被Integer类重写为比较包装器对象值
         System.out.println("Use equals:" + a.equals(b));
         System.out.println("Use equals:" + c.equals(d));
 

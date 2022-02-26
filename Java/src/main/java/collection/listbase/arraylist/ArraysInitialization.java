@@ -6,18 +6,20 @@ import occupation.Employee;
 import java.util.Arrays;
 
 /**
- * @description:数组初始化（分配内存空间，并为每个数组元素赋初始值）默认值 基本数据类型整形(byte, short, int, long)：0
- * 基本数据类型浮点型(float,double)：0.0
- * 基本数据类型字符型(char)：'\u0000'空字符
- * 基本数据类型布尔型(boolean)：false
- * 引用类型(类，数组，接口，String)：null
+ * @description: 数组初始化（分配堆内存空间，并为每个数组元素赋初始值）
+ * 默认值
+ *  基本数据类型整形(byte, short, int, long)：0
+ *  基本数据类型浮点型(float,double)：0.0
+ *  基本数据类型字符型(char)：'\u0000'空字符
+ *  基本数据类型布尔型(boolean)：false
+ *  引用类型(类，数组，接口，String)：null
  * @author: Kan
  * @date: 2021/3/1 0:53
  */
 @Slf4j
 public class ArraysInitialization {
     public static void main(String[] args) {
-        // 1。动态初始化：指定数组长度
+        // 1.动态初始化：指定数组长度
         int[] intArrayDynamicInitialization = new int[3];
         for (int i = 0; i < intArrayDynamicInitialization.length; i++) {
             intArrayDynamicInitialization[i] = (i + 1) * 10;
@@ -51,13 +53,12 @@ public class ArraysInitialization {
         }
         log.info("Length before:" + intArraySimpleStaticInitialization.length);
         log.info("Length after:" + arrayCopy.length);
+        log.info("Copied arrays equal?: " + (Arrays.equals(arrayCopy, intArraySimpleStaticInitialization)));
 
         // 克隆：两个变量指向不同地址
         int[] intArrayCloned = intArraySimpleStaticInitialization.clone();
         log.info("Array clone before:" + intArraySimpleStaticInitialization.length);
         log.info("Array clone after:" + intArrayCloned.length);
-        log.info("Cloned arrays equal: " + (intArrayCloned == intArraySimpleStaticInitialization));
-
-
+        log.info("Cloned arrays equal?: " + (intArrayCloned == intArraySimpleStaticInitialization));
     }
 }

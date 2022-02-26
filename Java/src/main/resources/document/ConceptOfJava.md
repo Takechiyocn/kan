@@ -1,4 +1,4 @@
-### 基本类型：
+### 基本类型(值类型)：
 
 8种基本类型：4种整形，2种浮点型，1种字符类型char，1种布尔类型
 
@@ -17,6 +17,12 @@
 *3. 字符类型*
 
 * char：2字节（16bit）
+
+*4. 布尔类型：通常只用1位(1bit)即可表示，具体看实现*
+
+* JVM中：boolean类型被编译为int类型，占4个字节
+* Oracle JVM中：编码为byte数组(8bit)，占1个字节
+* 非Oracle JVM中：不确定
 
 ### 浮点数
 
@@ -51,6 +57,12 @@ public strictfp class Test() {
         }
     }
 ```
+
+### 引用类型(复合数据类型)
+
+* 类类型
+* 数组
+* 接口类型
 
 ### 访问级别修饰符：Access Level Modifiers
 
@@ -241,6 +253,8 @@ public class Test() {
 
     }
 
+   Employee harry = new Employee();
+   
     // 访问静态变量 
     harry.setID();
     harry.ID = Employee.nextID; 
