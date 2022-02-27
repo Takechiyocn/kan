@@ -29,9 +29,11 @@
   ![ConstMemory.png](images/ConstMemory.png)
   * 定义变量时，栈内存存放的是常量池中常量对应的地址
 
-#### 本地方法区
+#### 本地方法区native method
 
 * 存储java代码和windows系统交互的方法
+* 本地方法
+  * 一个java方法的实现由非java语言提供
 
 #### 寄存器
 
