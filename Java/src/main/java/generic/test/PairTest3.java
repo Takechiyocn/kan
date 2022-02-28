@@ -14,9 +14,9 @@ import java.util.function.Supplier;
  * 1. 不能用基本类型实例化类型参数type parameter
  *     类型参数：<T, U>，<T extends Comparable>,即<>整体为类型参数
  *     类型变量：<T, U>，<T extends Comparable>中的T、U，放在访问修饰符后，返回类型之前
- *      -> TODO：Pair<T, U>表示Pair类的第一个和第二个域分别使用不同的类型
+ *      -> Pair<T, U>表示Pair类的第一个和第二个域分别使用不同的类型
  * 2. 运行时类型检查只适用于原始类型
- * 3. 不能创建参数化类型(此处String)的数组，即不支持泛型类型的数组
+ * 3. 不能创建参数化类型(此处String/Integer等)的数组，即不支持泛型类型的数组
  *     -> 参数化类型理解：即类型(参数)被参数化
  *        var table = new Pair<String>[10]; // Error
  * 4. 泛型与可变参数，消除泛型数组限制(上述3)，有风险。
@@ -63,7 +63,7 @@ public class PairTest3 {
         System.out.println("约束与局限性1：不能用基本类型实例化类型参数[" + gInt + "]");
 
         // 约束与局限性：
-        //   2. 运行时类型检查只是用于原始类型
+        //   2. 运行时类型检查只适用于原始类型(raw type，即类型擦除后的类型)
         //     -> 类型查询只产生原始类型
         String[] words = {"Mary", "had", "a", "little", "lamb"};
         // mm类型：Pair
@@ -86,13 +86,14 @@ public class PairTest3 {
         System.out.println("约束与局限性2：运行时类型检查只适用于原始类型[" + (mm.getClass() == employeePair.getClass()) + "]");
 
         // 约束与局限性：
-        //   3. 不能创建参数化(此处String)类型的数组，即不支持参数化类型的数组
+        //   3. 不能创建参数化(此处String/Integer等)类型的数组，即不支持参数化类型的数组
         //    -> 编译错误：generic array creation
-//        Pair<String>[] nn = new Pair<String>[10];
+//        Pair<Integer>[] nn = new Pair<Integer>[10];
         //      规避方法：
-        //        a. 声明通配类型数组，然后进行强制类型转换
+        //        a. 声明通配类型的泛型数组，然后进行强制类型转换
         //          -> 结果不安全
         Pair<String>[] table = (Pair<String>[]) new Pair<?>[10];
+        // 能赋值原因：范类型运行时只检查原始类型
         Object[] objArray = table;
         table[0] = new Pair<String>("1", "2");
         table[1] = new Pair<String>("3", "4");
@@ -146,7 +147,7 @@ public class PairTest3 {
         //  a. 通过供给型接口
         //     方法引用构造器：生成空字符串
         Pair<String> p = makePair(String::new);
-        // 构造其中如下定义会出错：T类型擦除为Object
+        // 泛型类Pair<T>的构造器中如下定义会出错：T类型擦除为Object
 //        first = new T();
         // 空字符串
         if (StringUtils.isBlank(p.getFirst())) {
@@ -173,7 +174,7 @@ public class PairTest3 {
          */
 
         // 约束与局限性7：泛型类中的类型变量在静态上下文中无效，即不能在静态变量或者静态方法中引用类型变量（静态方法中的参数可以为类型变量）
-        //  -> 原因：类型擦除后为运行时为同一个类，而静态变量又称为类变量，即一个类所有的对象共享静态变量。
+        //  -> 原因：类型擦除后类运行时为同一个类，而静态变量又称为类变量，即一个类所有的对象共享静态变量。
         //          类型变量(此处为域变量T xxx)由不同类型实例化后，具体指向不清楚。如Person和Student类型实例化后，instance指向不明
         // 参见下列内部类：class Singleton
 
@@ -260,16 +261,14 @@ public class PairTest3 {
         }
     }
 
-    /*
-    //
-    class Singleton<T> {
-        // 报错
-        private static T instance;
-        // 报错
-        public static T getInstance(){
-            if(instance != null)
-                return instance;
-        }
-    }
-    */
+    // 约束与局限性7：泛型类中的类型变量在静态上下文中无效，即不能在静态变量或者静态方法中引用类型变量（静态方法中的参数可以为类型变量）
+//    class Singleton<T> {
+//        // 报错
+//        private static T instance;
+//        // 报错
+//        public static T getInstance(){
+//            if(instance != null)
+//                return instance;
+//        }
+//    }
 }

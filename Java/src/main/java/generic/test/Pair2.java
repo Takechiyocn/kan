@@ -146,6 +146,5 @@ public class Pair2<E, U> {
         //   2. 实例化泛型数组实例：通过反射
         String[] vv = Pair2.minmax3("Tom", "Dick", "Harry");
         System.out.println(Arrays.toString(vv));
-
     }
 }

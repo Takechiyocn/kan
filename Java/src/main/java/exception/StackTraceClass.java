@@ -12,7 +12,7 @@ public class StackTraceClass {
 
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
-        System.out.println("Enter n:");
+        System.out.print("Enter n:");
 
         int n = in.nextInt();
         // 断言：允许在测试期间插入一些检查语句，代码发布时这些插入的检测语句会被自动移走。

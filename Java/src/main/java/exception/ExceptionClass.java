@@ -6,7 +6,7 @@ package exception;
 public class ExceptionClass {
     public static void main(String[] args) {
         try {
-            String name = "occupation.Employee";
+            String name = "occupation.EmployeeNotExist";
             Class cls = Class.forName(name);
         }
         catch(Exception e) {

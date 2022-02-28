@@ -20,7 +20,7 @@ public class TryReadException {
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            System.out.println(e.getMessage());
+            System.out.println("自定义错误消息：" + e.getMessage());
         } catch (IOException e) {
             e.printStackTrace();
         }

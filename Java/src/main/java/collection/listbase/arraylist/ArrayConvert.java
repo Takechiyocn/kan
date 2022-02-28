@@ -6,7 +6,7 @@ package collection.listbase.arraylist;
  * size()方法：泛型元素个数
  * @author moku
  */
-public class ArrayListConvert {
+public class ArrayConvert {
     public void arrayListConvert(int[] arr) {
         int temp;
 

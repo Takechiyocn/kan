@@ -7,15 +7,15 @@ import java.util.Scanner;
 /**
  * @description: 带资源的try语句实现了AutoCloseable类或其子类(如Closeable)时，
  * 调用结束后会自动调用close关闭资源
- * @author: Kan
- * @date: 2021/3/5 0:53
- */
-public class TryWithResources {
+                * @author: Kan
+                * @date: 2021/3/5 0:53
+                */
+        public class TryWithResources {
 
-    public void read(String filename) {
-        // Scanner实现了Closable接口，可以不用try final形式，会自动调用close关闭资源
-        // close关闭资源时抛出的异常会被抑制。
-        try (Scanner in = new Scanner(new FileInputStream(filename))) {
+            public void read(String filename) {
+                // Scanner实现了Closable接口，可以不用try final形式，会自动调用close关闭资源
+                // close关闭资源时抛出的异常会被抑制。
+                try (Scanner in = new Scanner(new FileInputStream(filename))) {
 
             // 1. 抛出FileNotFoundException异常
             while (in.hasNext()) {

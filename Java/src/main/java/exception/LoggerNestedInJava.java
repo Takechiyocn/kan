@@ -11,7 +11,9 @@ import java.util.logging.Logger;
 public class LoggerNestedInJava {
     public static void main(String[] args) {
         Logger.getGlobal().setLevel(Level.OFF);
-        Logger.getGlobal().info("Logger info test");
+        Logger.getGlobal().info("Logger info test: turn off logging");
+        Logger.getGlobal().setLevel(Level.INFO);
+        Logger.getGlobal().info("Logger info test: turn on info logging");
         System.out.println("Test");
     }
 }

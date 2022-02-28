@@ -94,8 +94,8 @@ public class Pair<T> {
     }
 
     /**
-     * Pair<T>的equals(T)方法在类型擦除后和Object的equals(Object)方法发生冲突（因为没有重载它）
-     * 重写时，equals方法签名的参数类型应该与被重写方法(此处Object的equals)的类型(Object类型)一直
+     * Pair<T>的equals(T)方法在类型擦除后和Object的equals(Object)方法发生冲突（因为没有重写）
+     * 重写时，equals方法签名的参数类型应该与被重写方法(此处Object的equals)的类型(Object类型)一致
      * 以下为Object equals 方法原型
      * public boolean equals(Object obj) {
      * return (this == obj);
@@ -166,7 +166,6 @@ public class Pair<T> {
      */
     public static <T> void voidReturnType(T... args) {
         System.out.println("泛型类型变量与返回类型不一致，返回类型：void");
-
     }
 
     /**

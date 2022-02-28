@@ -5,7 +5,7 @@ public class ArrayListConvertTest {
     public static void main(String[] args) {
 
         int[] arr = {1,2,3,4,5};
-        ArrayListConvert cvt = new ArrayListConvert();
+        ArrayConvert cvt = new ArrayConvert();
         cvt.arrayListConvert(arr);
 
         System.out.print("array[");

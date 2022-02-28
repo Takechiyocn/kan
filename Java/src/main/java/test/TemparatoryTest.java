@@ -8,8 +8,6 @@ public class TemparatoryTest {
         System.out.println(bl1.hashCode());
 
         method1(bl1);
-
-
     }
 
     public static void method1(final Boolean bool) {

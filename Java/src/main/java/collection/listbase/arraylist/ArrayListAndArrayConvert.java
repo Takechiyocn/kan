@@ -37,6 +37,7 @@ public class ArrayListAndArrayConvert {
         }};
 
         // 泛型实例之间没有关系继承关系
+        // 故不复合下转上规则，下列赋值会出错
 //        ArrayList<Employee> employees1 = managers;
     }
 
@@ -95,6 +96,7 @@ public class ArrayListAndArrayConvert {
         // 1. 不用指定数组长度
         String[] el2 = arrList2.toArray(new String[0]);
         // 2. 需要指定数组长度
+        //    返回范类型数组(转换后数组地址已保存在参数中，故该返回值可丢弃)
         arrList2.toArray(el);
         // 非常规测试用
         String[] el3 = new String[arrList2.size()];
@@ -102,8 +104,10 @@ public class ArrayListAndArrayConvert {
         for (String s : el) {
             log.info("ArrayList to array use ArrayList.toArray(array):" + s);
         }
-        // false
+        // false：String类覆写了String方法，但数组(String类型)为引用类型，故使用Object类的equals方法
         log.info("el == el2 ? :" + el.equals(el2));
+        // true：数组覆写equals方法
+        log.info("el == el2 ? :" + Arrays.equals(el, el2));
         // false
         log.info("el2 == el3 ? :" + el2.equals(el3));
         // true

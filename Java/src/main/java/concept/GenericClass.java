@@ -22,6 +22,7 @@ public class GenericClass {
         // 数组列表只是表明该数组列表拥有保存10个元素的潜力（实际重新分配空间将会超过100）
         // 未用add等方法追加元素前，数组列表中包含的实际元素数目为0
         ArrayList<String> arrayList = new ArrayList<>(10);
+        System.out.println("声明数组列表后，数组列表未分配空间，即size=" + arrayList.size());
         // 如果能确定数组可能存储的元素数量，可用ensureCapacity方法
         arrayList.ensureCapacity(100);
         // 如果确定数组列表的大小不再发生变化，可用trimToSize方法调整存储区域大小
@@ -35,11 +36,12 @@ public class GenericClass {
         Integer b = 100;
         Integer c = 1000;
         Integer d = 1000;
-        // TODO：出力时机奇怪？为什么在下面staff出力之后才出力该log
-        System.out.println(a == b);
-        System.out.println(c == d);
-        System.out.println("Equal compare:" + (a == b));
-        System.out.println("Equal compare:" + (c == d));
+        // a进入缓存池，b公用该缓存池
+        // Integer缓存池默认大小-127~128，因此c并未进入缓存池
+        System.out.println("Equal compare use ==:" + (a == b));
+        System.out.println("Equal compare use equals:" + a.equals(b));
+        System.out.println("Equal compare use ==:" + (c == d));
+        System.out.println("Equal compare use equals:" + c.equals(d));
 
         ArrayList<Employee> staff = new ArrayList<>();
         staff.add(new Employee("Carl Cracker", 75000, 1987, 12, 15));
@@ -56,12 +58,12 @@ public class GenericClass {
 
         ArrayList<Employee> findEl = find("Tony Tester");
         for (Employee e : findEl) {
-//            log.info("Found: name=" + e.getName() + ",salary=" + e.getSalary() + ",hireDay=" + e.getHireDay());
+            log.info("Found: name=" + e.getName() + ",salary=" + e.getSalary() + ",hireDay=" + e.getHireDay());
         }
     }
 
     /**
-     * 类型化与原始列表（没有使用泛型<></>）的兼容
+     * 类型化与原生态类型raw use（没有使用泛型<></>）的兼容
      * 调用元是静态static类型， 所以该方法也应该是静态
      * @param query
      * @return
