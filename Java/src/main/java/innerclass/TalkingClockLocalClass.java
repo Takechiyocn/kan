@@ -66,8 +66,8 @@ public class TalkingClockLocalClass {
 
             @Override
             public void actionPerformed(ActionEvent event) {
-                System.out.println("At the one, the time is " + new Date() + "Name:" + name + ",Subname:" +subname);
-                System.out.println("Name2:" + name2 + ",Subname2:" +subname2);
+                System.out.println("[innerLocalClassAccessByPara]At the one, the time is " + new Date() + ", Name:" + name + ",Subname:" +subname);
+                System.out.println("[innerLocalClassAccessByPara]Name2:" + name2 + ",Subname2:" +subname2);
                 // start方法销毁后，final类型的beep作用域并未消失，还在内存中
                 if (beep) {
                     Toolkit.getDefaultToolkit().beep();
@@ -76,7 +76,7 @@ public class TalkingClockLocalClass {
         }
 
         // 参数变量生命周期：该方法结束，即start()方法调用后
-        // 所以编译器有：将参数变量beep拷贝到TimerPrinter构造器中 的操作
+        // 所以编译器有：将参数变量beep拷贝到TimerPrinter构造器中的操作
         ActionListener actionListener = new TimerPrinter();
         new Timer(interval, actionListener).start();
     }
@@ -98,8 +98,8 @@ public class TalkingClockLocalClass {
 
             @Override
             public void actionPerformed(ActionEvent event) {
-                System.out.println("At the one, the time is " + new Date() + "Name:" + name + ",Subname:" +subname);
-                System.out.println("Name2:" + name2 + ",Subname2:" +subname2);
+                System.out.println("[innerLocalClassAccessByField]At the one, the time is " + new Date() + ", Name:" + name + ", Subname:" +subname);
+                System.out.println("[innerLocalClassAccessByField]Name2:" + name2 + ", Subname2:" +subname2);
                 if (beep) {
                     Toolkit.getDefaultToolkit().beep();
                 }

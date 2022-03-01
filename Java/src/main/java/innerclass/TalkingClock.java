@@ -27,6 +27,10 @@ public class TalkingClock {
         // 1.简称
 //        ActionListener actionListener = new TimerPrinter();
         // 2.全称
+        // this：类实例(调用元该对象)，即内部类实例化为：
+        //    A：外部类
+        //    B：内部类
+        //    实例化B： A.B b = new A().new B();
         ActionListener actionListener = this.new TimerPrinter();
         new Timer(interval, actionListener).start();
     }
@@ -52,11 +56,11 @@ public class TalkingClock {
         public void actionPerformed(ActionEvent e) {
             final String name3 = "moku3";
 
-            System.out.println("At the one , the time is " + new Date() + "Name:" + name + ",Subname:" +subname);
+            System.out.println("At the one, the time is " + new Date() + ", Name:" + name + ",Subname:" +subname);
             // 静态方法没有this，所以不能用this.getClass()
             // new Object(){}:建立Object的一个匿名子类的匿名对象
             // getEnclosingClass:得到起外围类，也就是包含这个静态方法的类
-            System.out.println("Inner class:" + new Object(){}.getClass().getEnclosingClass() + "Name2:" + name2 + ",Subname2:" +subname2);
+            System.out.println("Inner class:" + new Object(){}.getClass().getEnclosingClass() + ", Name2:" + name2 + ",Subname2:" +subname2);
 
             // 外围类对象域：生命周期直到对象销毁
             if (beep) {

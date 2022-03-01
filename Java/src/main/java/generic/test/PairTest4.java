@@ -20,7 +20,7 @@ public class PairTest4 {
 
         Pair<Manager> managerPair = new Pair<>(ceo, cfo);
         // 永远可以将**参数化类型(如Pair<Employee>)**转换为一个原始类型Pair
-        // 因为参数化类型时原始类型的子类型
+        // 因为参数化类型是原始类型的子类型
         Pair rawBuddies = managerPair;
         // 产生一个编译警告
         // 能调用原因：类型擦除后参数化类型和原始类型均为Object类型，因此可以转换

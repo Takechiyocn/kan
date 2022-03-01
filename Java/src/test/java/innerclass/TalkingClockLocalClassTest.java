@@ -11,7 +11,7 @@ public class TalkingClockLocalClassTest {
     public static void main(String[] args) {
 
         // 内部局部类1：访问外围类（包含类）域
-//        innerLocalClassAccessByField();
+        innerLocalClassAccessByField();
 
         // 内部局部类2：参数变量
         innerLocalClassAccessByPara();

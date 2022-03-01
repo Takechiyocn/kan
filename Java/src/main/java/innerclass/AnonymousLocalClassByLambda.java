@@ -11,11 +11,11 @@ import java.util.Date;
  */
 public class AnonymousLocalClassByLambda {
     public void start(int interval, boolean beep) {
-        new Timer(interval, event -> {
+        new Timer(interval, (event -> {
             System.out.println("Anonymous local class by lambda: " + new Date());
             if (beep) {
                 Toolkit.getDefaultToolkit().beep();
             }
-        }).start();
+        })).start();
     }
 }

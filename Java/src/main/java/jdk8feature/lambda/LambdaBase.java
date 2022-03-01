@@ -25,7 +25,7 @@ public class LambdaBase {
         test.threadPrint();
 
         // 创建线程：lambda表达式(Runnable是函数式接口)
-        test.threadPrintLambda("函数式接口创建线程");
+        test.threadPrintLambda("函数式接口创建线程:");
 
         // 函数式接口创建回调（Timer）
         test.timerPrint();
@@ -84,7 +84,7 @@ public class LambdaBase {
     public void threadPrintLambda(String text) {
         // lambda表达式实现Runnable接口的
         //    public abstract void run();
-        // 方法，该方法为执行任何操作。
+        // 方法，该方法未执行任何操作。
         // 解读：
         //  1. <( -> System.out.println("Hello, Lambda!" + text);>整体为函数式接口Runnable对象
         //  2. lambda实现了该接口方法run，即
@@ -97,7 +97,7 @@ public class LambdaBase {
                 () -> {
                     // lambda表达式的体与嵌套块有相同作用域，以下会报错
 //                    String text = "ss";
-                    System.out.println("Hello, Lambda!" + text);
+                    System.out.println(text + ":Hello, Lambda!" );
                 }
         );
         thread.start();
@@ -107,7 +107,7 @@ public class LambdaBase {
      * 函数式接口创建回调（Timer）
      */
     public void timerPrint() throws InterruptedException {
-        // 使用ActionListener的函数式接口(此时不必覆盖/重载函数：actionPerformed,因为函数式接口抽放方法已经定义具体实现)
+        // 使用函数式接口ActionListener(抽象方法actionPerformed由lambda覆写(实现))
 //        Timer t = new Timer(10000, e -> log.info("The time is " + new Date()));
 
         // 显示说明执行时机，Invoked when an action occurs.
@@ -123,7 +123,7 @@ public class LambdaBase {
      */
     public void print(String s, Consumer<String> consumer) {
         // accept方法接收1个参数，即函数式接口Consumer对象consumer：(str) -> System.out.println(msg+str)
-        consumer.accept("accept parameter");
+        consumer.accept("accept parameter" + s);
     }
 
     public void doPrint(String msg) {
@@ -139,8 +139,8 @@ public class LambdaBase {
         //  2. lambda实现了该接口方法accept，即
         //     <System.out.println(msg+str)> == accept方法体
         //  3. 如果该接口没有显示说明复写接口方法执行时机，则需自己执行该方法
-        print("name", (str) -> System.out.println(msg+str));
-        print("age", str -> System.out.println(msg+str+"2"));
+        print(" test", (str) -> System.out.println(msg+str));
+        print(" test", str -> System.out.println(msg+str+"2"));
     }
 
 }

@@ -31,7 +31,7 @@ public class Pair2<E, U> {
      * public <E> E getSecond() {...}
      * -> 此处新定义的类型变量覆盖泛型类定义的E（即返回类型E），新定义的类型变量以下略称为E2
      * -> return返回时 将进行强制类型转换，即新定义的类型变量E覆盖类定义的类型变量E
-     * 由于属于不同的类型变量，故不能转换，编译错误。
+     *    由于属于不同的类型变量，故不能转换，编译错误。
      * -> 解决方法：使用不同的类型变量
      * <p>
      * 将导致getSecond方法的类型变量<E>中的E和泛型类定义的类型变量进行强制类型转换
@@ -41,6 +41,7 @@ public class Pair2<E, U> {
     public E getSecond() {
         return elements[1];
     }
+
     // 使用不同的类型变量，但此处X未使用
     public <X> E getThird() {
         return elements[1];
@@ -88,7 +89,8 @@ public class Pair2<E, U> {
 
     /**
      * 1. 实例化泛型数组实例：通过函数式接口
-     * TODO：推测1：函数签名类型擦除后为通配类型（函数式接口Function能从给定的值生成指定类型的实例）？：Comparable[] minmax2(IntFunction<?[]>, Object...a)
+     * TODO：推测1：函数签名类型擦除后为通配类型（函数式接口Function能从给定的值生成指定类型的实例）？
+     * TODO：Comparable[] minmax2(IntFunction<Comparable[]>, Comparable...a)
      *
      * @param constr
      * @param a
@@ -134,7 +136,7 @@ public class Pair2<E, U> {
         // 解除约束：
         //   1. 实例化泛型数组实例：通过函数式接口
         // 构造器表达式(方法引用)：指定参数，构造一个指定长度的String数组
-        String[] tt = Pair2.minmiax2(String[]::new, "Tom", "Dick", "Harry");
+        String[] tt = Pair2.<String>minmiax2(String[]::new, "Tom", "Dick", "Harry");
         System.out.println(Arrays.toString(tt));
         // TODO：推测4：下列能赋值的原因：
         //              a: minmiax2返回String[]，String实现了Comparable接口，下转上  -> 可能性大
