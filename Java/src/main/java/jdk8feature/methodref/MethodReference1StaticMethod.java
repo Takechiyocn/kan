@@ -14,7 +14,7 @@ import java.util.List;
  * 静态方法引用        类名::staticMethod    (args) -> 类名.staticMethod(args)
  * 实例方法引用        inst::instMethod      (args) -> inst.instMethod(args)  --> 必须实例化
  * 对象方法引用        类名::instMethod      (inst,args) -> inst.instMethod(args)
- * 构建方法引用        类名::new             (args) -> new 类名(args)
+ * 构造/构建方法引用   类名::new             (args) -> new 类名(args)
  * @author moku
  */
 @Slf4j

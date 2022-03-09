@@ -23,8 +23,8 @@ public class SyncBank {
     }
 
     /**
-     * synchronized：导致线程阻塞(知道线程调用该方法结束)
-     * wait：线程等待（知道条件满足，即notifyAll();）
+     * synchronized：导致线程阻塞(直到线程调用该方法结束)
+     * wait：线程等待(直到条件满足，即notifyAll();)
      * @param from
      * @param to
      * @param amount
@@ -34,7 +34,7 @@ public class SyncBank {
         while (accounts[from] < amount) {
             // 阻塞当前线程，并放弃锁 -> 其他线程可进行转账操作，以此可能满足该条件
             // 线程1：进入上述条件的等待集
-            System.out.printf("***Thread await***：Transfer [%10.2f] from account[%d] to account[%d].", amount, from, to);
+            System.out.printf("***Thread await***：Transfer [%10.2f] from account[%d:%10.2f] to account[%d:%10.2f].", amount, from, accounts[from], to, accounts[to]);
             System.out.println();
             // 内部条件：添加线程到等待集
             // 内部锁只有单一条件，即只能在一处条件内设置条件对象
@@ -70,8 +70,9 @@ public class SyncBank {
      * @throws InterruptedException
      */
     public synchronized static void printInfo() throws InterruptedException {
-        // synchronized的
+        // synchronized
 
+        // 可重入互斥锁，又称独占锁
         Lock bankLock = new ReentrantLock();
         // 条件对象：无条件阻塞
         Condition sufficientFunds = bankLock.newCondition();

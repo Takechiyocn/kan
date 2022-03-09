@@ -20,6 +20,7 @@ public class Wildcard3 {
 //        Pair pair = p;
 //        Object obj = pair;
 //        p.setFirst(new File("test"));
+//        p.setFirst(pair);
         return p.getFirst() == null || p.getSecond() == null;
     }
 
@@ -39,17 +40,17 @@ public class Wildcard3 {
         // a.
         Pair<String> pair = new Pair<>("aa", null);
         if (hasNull(pair)) {
-            System.out.println("Has null element");
+            System.out.println("Contain null element");
         } else {
-            System.out.println("Hasn't null element");
+            System.out.println("Not contain null element");
         }
 
         // a.
-        Pair<String> pair2 = new Pair<>("aa", null);
+        Pair<String> pair2 = new Pair<>(null, null);
         if (hasNull(pair2)) {
-            System.out.println("Has null element");
+            System.out.println("Contain null element");
         } else {
-            System.out.println("Hasn't null element");
+            System.out.println("Not contain null element");
         }
 
         // c. 可用任意Object对象(Object obj1,obj2...)调用原始类的setObject方法
@@ -59,18 +60,17 @@ public class Wildcard3 {
         Pair rawString = stringObject;
         // 不安全的更改器方法
         rawString.setFirst(new File("test"));
+        // 运行时错误：类型转换错误ClassCastException
+//        String other = (String)rawString.getFirst();
 
         Employee[] el = {
                 new Employee("e1"),
                 new Employee("e2")
         };
         Pair<Employee> employeeObject = Pair.minmax(
-                el
-                // TODO：为什么匿名数组在此不能直接使用？
-//                {
-//                        new Employee("e1"),
-//                        new Employee("e2")
-//                }
+//                el
+                // 匿名数组
+                new Employee[]{new Employee("e1"), new Employee("e2")}
         );
         // 能赋值和设置(setFirst)原因：类型擦除后参数化类型和原始类型均为Object类型，因此可以转换
         //   -> 永远可以将*****参数化类型(如Pair<String>)*****转换为一个原始类型Pair

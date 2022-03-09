@@ -1,7 +1,7 @@
 package collection.listbase;
 
 /**
- * 数组列表ArrayList：封装了动态在分配的对象数组
+ * 数组列表ArrayList：封装了动态分配的对象数组
  * 动态数组：也可使用Vector
  * 特点：1.Vector类的所有方法都是同步
  *        数组列表方法不同步

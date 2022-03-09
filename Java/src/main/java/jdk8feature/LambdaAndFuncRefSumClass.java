@@ -42,7 +42,7 @@ public class LambdaAndFuncRefSumClass {
         BiFunction<Double, Double, Double> biFunction = Math::pow;
         log.info("Math pow 2 of 3 is " + biFunction.apply(2.0, 3.0));
 
-        // 使用ActionListener的函数式接口(此时不必覆盖/重载函数：actionPerformed)
+        // 使用ActionListener的函数式接口(actionPerformed被lambda表达式或方法引用实现覆盖)
 //        Timer t = new Timer(5000, e -> log.info("The time is " + new Date()));
         // println:方法引用(method reference)  <--> System.out.println(x)
 //        Timer t = new Timer(10000, e -> System.out.println(e));

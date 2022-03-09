@@ -57,7 +57,7 @@ public class ProfessionalComparator extends TraditionalComparator {
         // 避免null比较可用nullsFirst和nullsLast适配器
         //  nullsFirst，nullsLast方法需要一个比较器，而naturalOrder可为任何实现了Comparator的类建立比较器
         //    reverseOrder:自然顺序的逆序
-        //      naturalOrder()    <--> naturalOrder().reversed()
+        //      reverseOrder()    <--> naturalOrder().reversed()
         Arrays.sort(people, Comparator.comparing(Person::getDescription,
                 Comparator.nullsLast(Comparator.reverseOrder())));
         log.info("5.nullsLast and reversed order(指定比较器)");

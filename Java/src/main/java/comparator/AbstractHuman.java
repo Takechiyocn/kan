@@ -15,11 +15,11 @@ public abstract class AbstractHuman {
     private final String lastName;
 
     public AbstractHuman(String lastName, String middleName, String firstName) {
-        // 名
+        // 姓
         this.lastName = lastName;
         // 中间名
         this.middleName = middleName;
-        // 姓
+        // 名
         this.firstName = firstName;
     }
 

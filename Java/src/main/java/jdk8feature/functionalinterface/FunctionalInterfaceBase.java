@@ -85,7 +85,7 @@ public class FunctionalInterfaceBase {
         final boolean checkPerson = mainIns.checkPerson(userIn, user -> StringUtils.isNotBlank(user.getName()));
         System.out.println("断言型接口："+ checkPerson);
 
-        // ***定义函数式接口变量***
+        // ***定义函数式接口变量：返回值应为函数式接口抽象方法实现的返回值***
         Predicate<String> stringPredicate = (s) -> StringUtils.isNotBlank(s);
         System.out.println("函数式变量："+ stringPredicate.test("aa"));
 

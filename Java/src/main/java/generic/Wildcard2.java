@@ -71,7 +71,7 @@ public class Wildcard2 {
         Executive ex22 = new Executive("ex11");
         Pair<Executive> exp = new Pair<>(ex11, ex22);
         // 编译错误
-//        Pair<? super Manager> managerPair2 = exp;
+//        Pair<? super Manager> managerPair2 = ep;
 
         // 安全的更改器： --> 和通配符类型子类型配合使用，一个更改，一个获取？？？（都是对参数化类型子类型进行操作）
         //   编译器无法知道set方法的具体类型，因此不能接收参数化类型的超类型，只能接收参数化类型或其子类型对象
@@ -144,6 +144,8 @@ public class Wildcard2 {
             add(new Employee("employee6"));
         }};
         staff2.removeIf(evenHashCode);
+        // 通配符超类型限定：只能传递本类或超类
+//        staff2.removeIf(evenHashCode2);
         System.out.println("staff2:");
         staff2.forEach(x -> System.out.println(x + ":"+ x.hashCode()));
     }

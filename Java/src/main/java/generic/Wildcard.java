@@ -71,7 +71,7 @@ public class Wildcard {
          * 为什么要避免使用原始类型：原始类型隐藏危险 -> 不安全的更改器方法或不安全的访问器方法
          *  结论：
          *    1. ***** 使用泛型接口时，应该尽量避免使用原始类型 *****
-         *    2. 使用泛型接口绑定(不是通配符类型，子类型/超类型限定/绑定)时，应尽量避免使用原型接口(类型擦除后的接口)，应该同时使用类型参数选限定
+         *    2. 使用泛型接口绑定(不是通配符类型，子类型/超类型限定/绑定)时，应尽量避免使用原型接口(类型擦除后的接口)，应该同时使用类型参数限定
          *       如Comparable<T>接口， 声明方法时， <T extends Comparable<T>> Pair<T> min(Comparable[] a) {} 中的Comparable后的<T>
          */
         Pair<String> minmaxTest = Pair.minmax(new String[] {"Mary","Lily"});
@@ -100,7 +100,7 @@ public class Wildcard {
         Manager m3 = (Manager) wildcardBuddies.getFirst();
         m3.setBonus(1000);
         // 以下运行时类型转换错误
-//        Treasuer t3 = (Treasuer) wildcardBuddies.getFirst();
+//        Treasurer t3 = (Treasurer) wildcardBuddies.getFirst();
         System.out.println("e3:" + e3.getName());
         System.out.println("m3:" + m3.getName());
 //        System.out.println("t3:" +t3.getName());

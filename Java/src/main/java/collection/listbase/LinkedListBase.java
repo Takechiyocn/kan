@@ -8,8 +8,8 @@ import java.util.ListIterator;
 /**
  * 链表
  * 特点：1.自然有序的集合ordered collection
- * 2.高效插入和删除元素
- * 3.不支持快速随机访问
+ *      2.高效插入和删除元素
+ *      3.不支持快速随机访问
  */
 public class LinkedListBase {
 
@@ -28,7 +28,7 @@ public class LinkedListBase {
 
         // 链表集合：删除/追加 指定位置元素 更高效
         // 数组集合：访问 指定位置元素更高效
-        // LinkedList.remove()
+//         LinkedList.remove("s3");
         linkedListDeleteVisited0(staff);
 
         // Iterator.remove()
@@ -92,8 +92,9 @@ public class LinkedListBase {
      * @param staff
      */
     private static void linkedListDeleteVisited0(List<String> staff) {
-        // 当前集合元素：[s1, s2, s3, s4]
+        // 当前集合元素：[s1, s2, s3, s4, s5]
         staff.remove("s5");
+        // 当前集合元素：[s1, s2, s3, s4]
         forEachElementInList(staff, "After LinkedList.remove(), list");
     }
 
@@ -225,7 +226,7 @@ public class LinkedListBase {
      * hasNext();
      * next();
      * remove;
-     * forEachRemaining(); -> 遍历迭代器最后访问过得元素以后的元素
+     * forEachRemaining(); -> 遍历迭代器最后访问过的元素以后的元素
      *
      * @param staff
      */
@@ -252,7 +253,7 @@ public class LinkedListBase {
      * @param staff
      */
     private static void linkedListElementVisit(List<String> staff) {
-        // 当前集合元素：[s1, s2, s3]
+        // 当前集合元素：[s1, s2, s3, s4, s5]
         ListIterator<String> listIter = staff.listIterator();
         // 迭代器当前位置：s1之前
         String nextElement = listIter.next();
@@ -270,6 +271,8 @@ public class LinkedListBase {
         System.out.println("ListIterator.previous() = " + previousElement);
         // 访问剩下元素
         forEachRemainingCustomize(listIter2, "After ListIterator.previous(), Remaining List");
+        // 实例方法引用
+        staff.forEach(System.out::println);
     }
 
     /**

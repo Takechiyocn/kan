@@ -25,7 +25,7 @@ public class SyncBankTest {
 //                    double amount = INITIAL_BALANCE * 2;
                     try {
                         syncBank.transfer(fromAccount, toAccount, amount);
-//                        SyncBank.printInfo();
+                        SyncBank.printInfo();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }

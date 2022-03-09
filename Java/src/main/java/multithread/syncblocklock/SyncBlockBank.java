@@ -13,6 +13,10 @@ import java.util.Vector;
  */
 public class SyncBlockBank {
 
+    public double[] getAccounts() {
+        return accounts;
+    }
+
     // 处理器与编译器的内部处理机制导致不使用final可能导致各个线程的初始化值不一致
     // 即处理器能暂时在寄存器或本地内存缓冲区保存内存中的值。-> 不同处理器上的线程可能在同一位置取到不同值
     private final double[] accounts;
@@ -24,9 +28,11 @@ public class SyncBlockBank {
         Arrays.fill(accounts, initialBalance);
     }
 
+
+
     /**
      * synchronized(obj)：同步阻塞
-     * wait：线程等待（知道条件满足，即notifyAll();）
+     * wait：线程等待（直到条件满足，即notifyAll();）
      * @param from
      * @param to
      * @param amount
@@ -37,6 +43,8 @@ public class SyncBlockBank {
         // 同步阻塞
         synchronized (lock) {
             while (accounts[from] < amount) {
+                System.out.printf(Thread.currentThread() + "*** wait***：Transfer [%10.2f] from account[%d:%10.2f] to account[%d:%10.2f].", amount, from, accounts[from], to, accounts[to]);
+                System.out.println();
                 // 同步阻塞：进入等待状态
                 lock.wait();
             }
@@ -47,6 +55,7 @@ public class SyncBlockBank {
             System.out.printf("After transfer, total balance:%10.2f%n", getTotalBalance());
             // 解除等待线程的阻塞状态
             lock.notifyAll();
+            System.out.println(Thread.currentThread() + ":lock release.");
         }
     }
 

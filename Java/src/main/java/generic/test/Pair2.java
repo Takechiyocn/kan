@@ -133,7 +133,7 @@ public class Pair2<E, U> {
         // 错误2：运行时错误cast error
 //        String[] ss = minmax("Tom","Dick","Harry");
 
-        // 解除约束：
+        // 解除约束：刘备
         //   1. 实例化泛型数组实例：通过函数式接口
         // 构造器表达式(方法引用)：指定参数，构造一个指定长度的String数组
         String[] tt = Pair2.<String>minmiax2(String[]::new, "Tom", "Dick", "Harry");

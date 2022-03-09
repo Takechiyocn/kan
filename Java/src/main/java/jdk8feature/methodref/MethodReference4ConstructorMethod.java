@@ -39,7 +39,7 @@ public class MethodReference4ConstructorMethod {
         // 将字符串列表转换为Employee对象数组
         ArrayList<String> names = new ArrayList<>(Arrays.asList("EmployeeA","EmployeeB"));
         ArrayList<Double> salary = new ArrayList<>(){{
-            add(11.1);
+            this.add(11.1);
             add(22.2);
             add(12.0);
         }};
