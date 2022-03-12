@@ -23,7 +23,7 @@ public class TreeSetSample {
         System.out.println(parts);
 
         // 自定义比较器Comparator的compare方法：按照description排序
-        // TODO:方法函数
+        // 对象方法引用
         NavigableSet<Item> sortByDescription = new TreeSet<>(
                 Comparator.comparing(Item::getDescription)
         );

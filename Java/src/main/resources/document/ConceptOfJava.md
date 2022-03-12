@@ -87,6 +87,7 @@ public strictfp class Test() {
     * private
        
       仅对本类可见(子类也不能访问超类的私有域/方法)
+    
     ![Access-Levels.png](images/Access-Levels.png)
         * 第一列：指示类本身是否有权访问由访问控制级别定义的成员。
         * 第二列：指示与该类相同的包(不管其父级)中的类是否具有对成员的访问权限
@@ -553,15 +554,18 @@ private static int sumUp(int[]values){
 
 ![img_7.png](images/img_7.png)
 
-![img_9.png](images/img_9.png)
+### 集合框架接口
+![CollectionFrameInterface.png](images/CollectionFrameInterface.png)
 
-![img_10.png](images/img_10.png)
+### 集合框架中的类
+![ClassInCollectionFrame.png](images/ClassInCollectionFrame.png)
+### 散列表
 
-![img_11.png](images/img_11.png)
+![HashMap.png](images/HashMap.png)
+![HashMap2.png](images/HashMap2.png)
 
-![img_12.png](images/img_12.png)
-
-![img_13.png](images/img_13.png)
+### JarOptions
+![JarOptions.png](images/JarOptions.png)
 
 ### 线程状态
 

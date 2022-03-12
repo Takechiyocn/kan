@@ -21,7 +21,7 @@ public class LinkedListSummary {
             add("cc");
         }};
 
-        // 合并list
+        // 合并list：间隔插入
         ListIterator<String> list1Iter = list1.listIterator();
         Iterator<String> list2Iter = list2.iterator();
         while (list2Iter.hasNext()) {

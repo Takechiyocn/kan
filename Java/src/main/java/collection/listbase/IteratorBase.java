@@ -28,6 +28,7 @@ public class IteratorBase {
         // List
         // 特点：有序集合ordered collection
         // 访问：迭代器顺序访问，索引随机访问
+
         // 迭代器访问list：顺序访问
         // 适合：链表支持的集合（因为随机访问很慢），如LinkedList
         listIteratorAccess(coll);
@@ -73,7 +74,7 @@ public class IteratorBase {
         iter.forEachRemaining(element -> System.out.println("element by lambda: " + element));
         // 建立新的匿名迭代器：coll.iterator()
         coll.iterator().forEachRemaining(element -> System.out.println("element by lambda: " + element));
-        // TODO:foreach 针对集合
+        // foreach：Iterable接口方法，所有集合(List，Set，Queue)均可使用
         coll.forEach(element -> System.out.println("element by foreach lambda: " + element));
 
         // 容器元素删除：顺序删除迭代元素，然后遍历删除后剩下的元素
