@@ -1,4 +1,4 @@
-package algorithms;
+package algorithms.sort;
 
 /**
  * @description:归并排序
