@@ -17,7 +17,7 @@ import java.util.concurrent.*;
 public class ThreadExecutors {
 
     /**
-     * 可缓存无界线程池
+     * 可缓存无界线程池/直接提交任务队列
      *   1. 当线程池中线程空闲时间超过60s则自动回收该线程，核心线程数为0
      *   2. 当任务超过线程池的线程数则创建新线程
      *   3. 线程池上限为Integer.MAX_VALUE，可看作无限大
@@ -109,6 +109,12 @@ public class ThreadExecutors {
         }, 1, 2, TimeUnit.SECONDS);
     }
 
+    /**
+     * 单线程化线程池
+     * 特点：
+     *   1. 串行执行所有任务
+     *   2. 线程异常结束，新线程替代
+     */
     public void newSingleThreadPool() {
         ExecutorService executorService = Executors.newSingleThreadExecutor(new ThreadPoolFactory("SingleThreadPool"));
         for (int i = 0; i < 10; i++) {

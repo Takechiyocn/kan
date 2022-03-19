@@ -716,3 +716,8 @@ private static int sumUp(int[]values){
   
 #### 构造者builder风格接口
 
+#### Unsafe
+
+用于执行低级别、不安全操作的方法，如直接访问系统内存资源、自主管理内存资源等
+特点：使Java具备底层操作能力，提升运行效率
+

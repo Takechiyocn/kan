@@ -73,7 +73,12 @@
   * 查询结果返回客户端
 
 #### MYSQL工作流程
-![MYSQL_WorkFlow.png](mysql/MYSQL_WorkFlow.png)
+1. 客户端请求查询
+2. 服务器检查缓存，命中返回结果
+3. 服务器端SQL解析，预处理及优化后生成执行计划
+4. 调用存储引擎API执行
+5. 返回结果
+   ![MYSQL_WorkFlow.png](mysql/MYSQL_WorkFlow.png)
 
 ### MYSQL读写锁
 
@@ -183,10 +188,12 @@ MYSQL事务特点：事务内的语句要么全部执行成功，要么全部执
   
 * 数据修改产生redo log（用于修改提交），undo log（用于回滚）
 
+* 事务ID：transaction id
+
 * 版本链
 
     * row_id：聚簇索引id(通常使用主键或第一个非NULL列)
-    * trx_id：最新修改的事务id
+    * trx_id：最新修改的事务id,即事务ID
     * db_roll_ptr：指向undo segment中的undo log
     * trx_ids：活跃事务列表，ReadView初始化时当前未提交事务列表。对于本事务不可见
     * up_limit_id：当前**已提交**事务号+1
@@ -196,7 +203,9 @@ MYSQL事务特点：事务内的语句要么全部执行成功，要么全部执
       * 当事务号>=up_limit_id时，ReadView不可见
       * 即在创建Read View视图之后创建的事务对于该事务肯定是不可见的
     ![ReadView.png](mysql/ReadView.png)
-    * 版本链操作 
+    * 一致性视图Read View
+      * 事务启动时创建的视图
+    * 版本链操作
         1. 修改前
            ![UndoLogBefore.png](mysql/UndoLogBefore.png)
         2. 更新并提交事务
@@ -210,7 +219,7 @@ MYSQL事务特点：事务内的语句要么全部执行成功，要么全部执
            ```
             ![UndoLogUpdate.png](mysql/UndoLogUpdate.png)
            * select id = 1;
-           * 新生成ReadView
+           * 新生成ReadView(事务初次开始时生成)
            * trx_ids=100，不可见
            * trx_id=60小于up_limit_id(61)，返回该条记录
         4. 提交上述事务
@@ -221,9 +230,9 @@ MYSQL事务特点：事务内的语句要么全部执行成功，要么全部执
             ![UndoLogUpdate2.png](mysql/UndoLogUpdate2.png)
             * 隔离级别：提交读/不可重复读Read Committed
                 * select id = 1;
-                * 重新生成ReadView
+                * 重新生成ReadView(新事务)
                 * trx_ids=110，不可见
-                * trx_id=100小于up_limit_id(101)，返回该条记录            * 隔离级别：提交读/不可重复读Read Committed
+                * trx_id=100小于up_limit_id(101)，返回该条记录
             * 隔离级别：可重复读Read Repeatable
                 * select id = 1;
                 * 使用3生成的ReadView
@@ -232,7 +241,8 @@ MYSQL事务特点：事务内的语句要么全部执行成功，要么全部执
                 * 和第一次select结果一样，叫可重复读
 ### 数据库索引
 
-为了使查询数据效率更高
+为了使查询数据效率更高，小表通常采用全表扫描，无需索引
+索引应避免NULL列
 
 * 聚集索引/主键索引
 
@@ -406,11 +416,94 @@ UNIQUE(`username`)
 
 );
 ```
+#### InnoDB
+* MySQL默认事务型引擎，处理大量短期事务
+* 数据存储在表空间，表空间由一系列数据文件组成
+* 采用MVCC支持高并发
+* 默认隔离级别可重复读，并通过间隙锁(锁定涉及行及索引中间隙进行锁定防止幻行插入)防止幻读
+* 基于聚簇索引建立
 
+#### MyISAM
+* MySQL5.1之前默认引擎
+* 不支持事务和行锁(对整张表加锁，读加共享锁，写加排它锁)
 
+#### Memory
+* 快速访问且数据不被修改
+* 重启后数据丢失
+* 表级锁
+* 不支持BLOB和TEXT类型列，每行长度固定CHAR(VARCHAR会转换成CHAR)
+* 场景：查找或映射表，保存数据分析中产生的中间数据等
+* 如果MySQL查询时的临时表，内部使用Memory表，如果中间结果超出memory限制或BLOB/TEXT，则转换成MyISAM
 
-
-
+#### MySQL数据类型
+* 数据类型
+  * 整形：(m)显示宽度，不影响存储范围，unsigned范围加倍
+    * tinyint(m)：1byte
+    * smallint(m)：2byte
+    * mediumint(m)：3byte
+    * int(m)：4byte
+    * bigint(m)：8byte
+    * zerofill：空格替换为0
+      ```mysql
+        CREATE TABLE zerofill_tests(
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        v1 INT(2) ZEROFILL,
+        v2 INT(3) ZEROFILL,
+        v3 INT(5) ZEROFILL
+        );
+        -- 数据长度不足显示宽度时，空格补全
+        INSERT into zerofill_tests(v1,v2,v3) VALUES(1, 6, 9);
+        SELECT v1, v2, v3 from zerofill_tests
+        -- Result
+        -- v1:01
+        -- v2:001
+        -- v3:00009
+      ```
+  * 浮点型：存放近似值
+    * float(m,d)：单精度浮点型，8位精度(4字节)，m个总数，d个小数
+      * 精确到23位小数
+    * double(m,d)：双精度浮点型，16位精度(8字节)
+      * 24~54位小数
+    * 特点：
+      * 小数超过设定值，四舍五入
+      * 小数位都是0，不保存
+      * 小数位不足设定值，0补位
+  * 定点数：存放精确值
+    * 
+  * 
+  * 
+  * 字符串
+    * CHAR
+      * 定长，删除末尾空格
+      * 场景
+        * 短字符串或所有值都接近同一长度
+        * 列更新频繁->不产生碎片
+    * VARCHAR
+      * 可变，不删除末尾空格
+      * 需额外1/2个额外字节记录数据长度
+        * 最大长度不超过255用1个字节
+      * 场景
+        * 字符串最大长度比平均长度大很多
+        * 列更新少->产生碎片
+        * UTF8等复杂字符集
+        * 每个字符都使用不同字节数存储
+    * DATETIME
+      * 保存大范围值1001~9999，精度秒
+      * 8字节存储空间，日期和时间封装在整数中，与时区无关
+    * TIMESTAMP
+      * 保存小范围值1970~2038
+      * 4字节存储空间，依赖于时区  
+    
+* 数据类型优化
+  * 使用最小数据类型，如CHAR
+  * 简单数据类型
+    * 如整形替代字符串(字符串类型开销大，字符集和校对规则)
+    * 整形IP存储
+      * inet_aton('73.115.134.73'):字符串地址转换成网络地址(整形)
+      * inet_ntoa(1232307785):网络地址(整形)转换成字符串地址
+    * 内建类型如date，time，datetime而不使用字符串
+  * 避免NULL
+    * 数据库难于优化，尤其对于索引(还会使用更多存储空间)
   
 
 

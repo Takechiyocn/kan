@@ -19,6 +19,11 @@ import java.util.concurrent.*;
  *     4. 优先任务队列
  *   threadFactory：任务工厂，用于创建线程，通常使用默认即可
  *   handler：拒绝策略；当任务太多来不及处理时，如何拒绝任务
+ * 线程池数量NThreads：
+ *  NCpu=CPU数量
+ *  UCpu=目标CPU使用率，0<UCpu<1
+ *  W/C=任务等待时间与任务计算时间的比率
+ *  NThreads=NCpu*UCpu*(1+W/C)
  * @author moku
  */
 public class ThreadPoolExecutors {
@@ -51,7 +56,7 @@ public class ThreadPoolExecutors {
     }
 
     /**
-     * 有界任务队列ArrayBlockingQueue
+     * 有界任务队列ArrayBlockingQueue：为防止资源耗尽，通常采用有界任务队列+自定义拒绝策略
      * 执行过程：
      *  1. 执行新任务时，线程池创建新线程，直到线程数量=corePoolSize
      *  2. 将新任务添加到等待队列，直到等待队列满(ArrayBlockingQueue初始化容量)
@@ -113,7 +118,6 @@ public class ThreadPoolExecutors {
      */
     private static void priorityBlockingQueue() {
         // 优先级队列默认容量11
-
         ExecutorService pool = new ThreadPoolExecutor(
                 1,
                 2,
@@ -143,10 +147,8 @@ public class ThreadPoolExecutors {
             this.priority = i;
         }
 
-        // 当前对象和其他对象做比较，当前优先级大就返回-1，优先级小就返回1,
-
         /**
-         * 前对象和其他对象做比较:值越小优先级越高
+         * 当前对象和其他对象做比较:值越小优先级越高
          *  1： 表示当前对象大于o对象
          *  0： 表示当前对象等于o对象
          *  -1： 表示当前对象小于o对象
@@ -168,6 +170,123 @@ public class ThreadPoolExecutors {
         }
     }
 
+    /**
+     * handler拒绝策略
+     *   1. AbortPolish：直接抛出异常
+     *   2. CallerRunPolish：线程池数量达到上限后，把任务队列中的任务放在调用者线程当中执行
+     *   3. DiscardOldestPolish：丢弃任务队列中最老的一个任务(最先被添加的任务，即马上要执行的任务)，并尝试再次提交
+     *   4. DiscardPolish：丢弃无法处理的任务，不予任何处理。业务场景需允许任务丢失
+     *   5. 自定义拒绝策略
+     */
+    public static void customRejectedExceptionHandler() {
+        ExecutorService pool = new ThreadPoolExecutor(
+                1,
+                2,
+                1000,
+                TimeUnit.MILLISECONDS,
+                new ArrayBlockingQueue<Runnable>(5),
+                Executors.defaultThreadFactory(),
+                new RejectedExecutionHandler() {
+                    @Override
+                    public void rejectedExecution(Runnable r, ThreadPoolExecutor executor) {
+                        System.out.println("执行了自定义拒绝策略");
+                    }
+                }
+        );
+        for (int i = 0; i < 10; i++) {
+            pool.execute(() -> {
+                try {
+                    // 让线程阻塞，使后续任务进入缓存队列
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.println("Thread name:" + Thread.currentThread().getName());
+            });
+        }
+    }
+
+    /**
+     * 自定义线程工厂
+     */
+    public static void customThreadFactory() {
+        ExecutorService pool = new ThreadPoolExecutor(
+                2,
+                4,
+                1000,
+                TimeUnit.MILLISECONDS,
+                new ArrayBlockingQueue<Runnable>(5),
+                (Runnable r) -> {
+                    System.out.println("线程" + r.hashCode() + "创建");
+                    return new Thread(r, "threadPool" + r.hashCode());
+                },
+                new ThreadPoolExecutor.AbortPolicy()
+        );
+        for (int i = 0; i < 10; i++) {
+            pool.execute(() ->
+                    System.out.println("ThreadName:" + Thread.currentThread().getName())
+            );
+        }
+    }
+
+    private static class ThreadTask2 implements Runnable {
+        public String taskName;
+
+        public ThreadTask2(String taskName) {
+            this.taskName = taskName;
+        }
+
+        public void setTaskName(String taskName) {
+            this.taskName = taskName;
+        }
+
+        public String getTaskName() {
+            return taskName;
+        }
+
+        @Override
+        public void run() {
+            System.out.println("TaskName" + this.getTaskName() + "---ThreadName:" + Thread.currentThread().getName());
+        }
+    }
+
+    /**
+     * ThreadPoolExecutor扩展
+     */
+    public static void threadPoolExecutorExtend() {
+        ExecutorService pool = new ThreadPoolExecutor(
+                2,
+                4,
+                1000,
+                TimeUnit.MILLISECONDS,
+                new ArrayBlockingQueue<Runnable>(5),
+                (Runnable r) -> {
+                    System.out.println("线程" + r.hashCode() + "创建");
+                    return new Thread(r, "threadPool" + r.hashCode());
+                },
+                new ThreadPoolExecutor.CallerRunsPolicy()) {
+            @Override
+            protected void beforeExecute(Thread t, Runnable r) {
+                System.out.println("准备执行：" + ((ThreadTask2) r).getTaskName());
+            }
+
+            @Override
+            protected void afterExecute(Runnable r, Throwable t) {
+                System.out.println("执行完毕：" + ((ThreadTask2) r).getTaskName());
+            }
+
+            @Override
+            protected void terminated() {
+                System.out.println("线程池退出");
+            }
+        };
+        for (int i = 0; i < 10; i++) {
+            pool.execute(new ThreadTask2("Task" + i));
+        }
+        // 安全关闭线程池：线程池中所有任务执行完毕后退出
+        pool.shutdown();
+    }
+
     public static void main(String[] args) {
         // 直接提交任务队列
 //        synchronousQueue();
@@ -179,9 +298,15 @@ public class ThreadPoolExecutors {
 //        linkedBlockingQueue();
 
         // 优先任务队列
-        priorityBlockingQueue();
+//        priorityBlockingQueue();
+
+        // 自定义拒绝策略
+//        customRejectedExceptionHandler();
+
+        // 自定义线程工厂
+//        customThreadFactory();
+
+        // ThreadPoolExecutor扩展
+        threadPoolExecutorExtend();
     }
-
-
-
 }
