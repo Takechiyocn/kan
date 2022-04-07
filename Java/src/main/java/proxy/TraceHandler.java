@@ -16,11 +16,11 @@ import java.lang.reflect.Method;
  *      5.代理类一定是public和final的。
  * @author moku
  */
-public class TraceHanlder implements InvocationHandler {
+public class TraceHandler implements InvocationHandler {
 
     private Object target;
 
-    public TraceHanlder(Object t) {
+    public TraceHandler(Object t) {
         this.target = t;
     }
 

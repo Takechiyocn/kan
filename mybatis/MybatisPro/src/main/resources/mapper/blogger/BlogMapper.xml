@@ -46,6 +46,9 @@
             </collection>
         </collection>
     </resultMap>
+    <update id="updateBlog" parameterType="Blog">
+        update tb_blog SET blog_title = #{title} WHERE blog_id = "1"
+    </update>
 
     <select id="getBlog" parameterType="int" resultMap="blogMap">
         select

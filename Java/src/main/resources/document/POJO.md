@@ -5,6 +5,8 @@
 ![ApplicationLayer.png](pojo/ApplicationLayer.png)
 
 * 开放 API 层：可直接封装 Service 接口暴露成 RPC 接口；通过 Web 封装成 http 接口；网关控制层等。
+  * RPC(Remote Procedure Call Protocol)：远程过程调用协议。客户端在不知道调用细节的情况下，调用远程计算机上的某个对象
+  * RPC只是协议，并非实现
 * 终端显示层：各个端的模板渲染并执行显示的层。当前主要是 velocity 渲染，JS 渲染，JSP 渲染，移 动端展示等。
 * Web 层：主要是对访问控制进行转发，各类基本参数校验，或者不复用的业务简单处理等。
 * Service 层：相对具体的业务逻辑服务层。

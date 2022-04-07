@@ -3,7 +3,6 @@ package proxy;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.Random;
 
 /**
@@ -17,15 +16,16 @@ public class ProxyClassMain {
         for (int i = 0; i < 5; i++) {
             Integer value = i + 1;
             // 生成调用处理器(准备对Integer型的value进行代理)
-            InvocationHandler handler = new TraceHanlder(value);
+            InvocationHandler handler = new TraceHandler(value);
             // 类加载器
             ClassLoader loader = null;
             // 需要实现的接口
             Class[] interfaces = new Class[]{
                     // 接口1：Comparable接口
-                    Comparable.class,
-                    // 接口2：Comparator接口
-                    Comparator.class
+                    Comparable.class
+//                    ,
+//                    // 接口2：Comparator接口
+//                    Comparator.class
             };
             /**
              * 代理Comparable对象
@@ -51,6 +51,7 @@ public class ProxyClassMain {
 
         // 过程：
         //   1. Integer类实现了Comparable<Integer>
+        //      -> 如果Integer类未实现comparable接口，则需自己实现
         //   2. 运行时调用，泛型类被取消，代理将他们构造为Comparable类的类对象
         //   3. binarySearch调用方式： if(elements[i].compareTo(key) < 0...)
         //   4. 由于数组中填充了代理对象，所以compareTo调用TraceHandler类中的invoke方法。

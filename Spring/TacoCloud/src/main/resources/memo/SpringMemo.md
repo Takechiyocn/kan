@@ -1,5 +1,67 @@
 ## Spring
 
+### Spring框架结构
+
+![SpringFrameworkStructure.png](spring/SpringFrameworkStructure.png)
+
+* 核心容器
+
+      核心容器提供框架的基本功能SpringCore。
+      核心容器的主要组件是BeanFactory，它是工厂模式的实现。
+      BeanFactory使用控制反转的模式(IOC)将应用程序的配置和依赖性规范与实际的应用程序代码分开。
+
+* Spring上下文
+
+      Spring上下文是一个配置文件，向Spring提供上下文信息。
+      Spring上下文包括包括企业服务，如JNDI、EJB、电子邮件、国际化、校验和调度功能。
+
+* Spring AOP
+
+      Spring AOP为基于Spring的应用程序中的对象提供了事务管理服务。
+
+* EJB组件(非Spring特性，AOP替换该功能)
+
+      TODO
+
+* Spring DAO
+
+      异常层次结构：简化了错误处理，并极大降低了需要编写的异常代码数量(如打开和关闭连接)。     
+      通用DAO：JDBC DAO抽象层提供了异常层次结构，可管理异常处理和不同数据库服务提供商抛出的错误信息。
+      Spring DAO：面向JDBC的异常遵从通用DAO异常层次结构。
+
+* Spring ORM
+
+      Spring框架插入了若干个ORM框架，从而提供了ORM的对象关系工具。
+      如JDO、Hibernate、iBatisSQL MAP。
+      所有上述框架都遵从Spring的通用事务和DAO异常层次结构。
+
+* Spring WEB模块
+
+      Web上下文模块建立在应用程序上下文模块之上，为基于Web的应用提供上下文。
+      Web模块还简化了处理大部分请求以及将请求参数绑定到域对象的工作。
+
+* Spring MVC框架
+
+      MVC模型：由javabean构成
+      MVC视图：接口，负责现实模型
+      MVC控制器：表示逻辑代码，是Controller的实现
+
+非入侵式：Spring应用中的对象不依赖于特定的Spring类
+
+#### 优点
+
+    1.低侵入式设计，代码污染极低
+    
+    2.独立于各种应用服务器，基于Spring框架的应用，可以真正实现Write Once,Run Anywhere的承诺
+    
+    3.Spring的DI机制降低了业务对象替换的复杂性，提高了组件之间的解耦
+    
+    4.Spring的AOP支持允许将一些通用任务如安全、事务、日志等进行集中式管理，从而提供了更好的复用
+    
+    5.Spring的ORM和DAO提供了与第三方持久层框架的良好整合，并简化了底层的数据库访问
+    
+    6.Spring并不强制应用完全依赖于Spring，开发者可自由选用Spring框架的部分或全部
+
 ### <font color=FF0000>Keywords</font>
 
 #### 组件
@@ -55,7 +117,7 @@
     DSL(Domain-Specified Language)：通过方法签名描述。
     如findByDeliveryZip(String)
 
-![img.png](spring/SpringDataRepositoryAnalyze.png)
+![SpringDataRepositoryAnalyze.png](spring/SpringDataRepositoryAnalyze.png)
 
 ####  模板引擎
   > [服务端模板引擎：Thymeleaf](https://www.thymeleaf.org/ 'Thymeleaf.org')

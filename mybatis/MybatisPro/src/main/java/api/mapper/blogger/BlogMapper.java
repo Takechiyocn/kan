@@ -9,4 +9,6 @@ import java.util.List;
 public interface BlogMapper {
 
     List<Blog> getBlog(Integer id);
+
+    void updateBlog(Blog blog);
 }

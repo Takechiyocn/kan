@@ -23,7 +23,7 @@ public class UserDaoImpl implements UserDao {
         try {
             // 1.通过工厂获取会话
             sqlSession = Factory.getSession();
-            // 2.通过代会话操作数据库
+            // 2.通过会话操作数据库
             sqlSession.insert("addUser", user);
             // 3.提交事务：增删改都需要提交事务
             sqlSession.commit();

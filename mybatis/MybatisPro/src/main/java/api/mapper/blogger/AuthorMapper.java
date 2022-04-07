@@ -11,4 +11,6 @@ public interface AuthorMapper {
     List<Author> getAuthor(Integer id);
 
     int deleteAuthorById(Integer id);
+
+    void updateAuthorById(Author author);
 }

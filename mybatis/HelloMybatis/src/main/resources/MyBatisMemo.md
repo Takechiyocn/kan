@@ -34,12 +34,12 @@
 
 #### SQL标签
 
-![SqlTag.png](SqlTag.png)
+![SqlTag.png](images/SqlTag.png)
 
 #### JdbcType与JavaType关系
 
 |JDBC Type|Java Type|
-|--|--|
+|---|---|
 CHAR|String  
 VARCHAR|String  
 LONGVARCHAR|String  

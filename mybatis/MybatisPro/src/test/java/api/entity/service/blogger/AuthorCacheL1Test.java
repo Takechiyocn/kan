@@ -63,6 +63,7 @@ public class AuthorCacheL1Test {
         logger.info("author:{}", object);
 
         // 清空一级缓存：关闭会话
+        // 由于Author映射文件设置了二级缓存，该用例测试时，需注二级缓存设置
         session.close();
         session = sqlSessionFactory.openSession();
         mapper = session.getMapper(AuthorMapper.class);

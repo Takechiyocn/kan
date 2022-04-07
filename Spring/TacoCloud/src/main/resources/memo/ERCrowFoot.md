@@ -8,30 +8,30 @@
 
 * 主键(PrimaryKey)
   
-  ![img.png](crowfoot/PrimaryKey.png)
+  ![PrimaryKey.png](crowfoot/PrimaryKey.png)
   
 * 外键(ForeignKey)
   
-  ![img.png](crowfoot/ForeignKey.png)
+  ![ForeignKey.png](crowfoot/ForeignKey.png)
   
 * 标识每个实体的属性(Attribute)
 * 标识实体之间的关系(Relationship)
 * 基数(Cardinality):一个实与另一个实体的关系里面，某方可能出现次数
     * 1:1
-      ![img_1.png](crowfoot/C1-1.png)
+      ![C1-1.png](crowfoot/C1-1.png)
     * 1:n
-      ![img.png](crowfoot/C1-n.png)
+      ![C1-n.png](crowfoot/C1-n.png)
     * n:n(在物理ERD中被分成一对一对多的关系)
-      ![img.png](crowfoot/Cn-n.png)
+      ![Cn-n.png](crowfoot/Cn-n.png)
 
 ##### 模型
 
 * 概念数据模型：概念ERD（业务分析人员用于展示业务对象）
-  ![img.png](crowfoot/ConceptModule.png)
+  ![ConceptModule.png](crowfoot/ConceptModule.png)
 * 逻辑数据模型：逻辑ERD（业务分析人员用于展示业务对象）
-  ![img.png](crowfoot/LogicModule.png)
+  ![LogicModule.png](crowfoot/LogicModule.png)
 * 物理数据模型：物理ERD（数据库设计人员用）
-  ![img.png](crowfoot/PhysiModule.png)
+  ![PhysiModule.png](crowfoot/PhysiModule.png)
 
 |ERD功能|概念|逻辑|物理|
 |--|--|--|--|

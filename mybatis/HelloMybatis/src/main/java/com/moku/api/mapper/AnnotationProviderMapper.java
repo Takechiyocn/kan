@@ -22,12 +22,18 @@ import java.util.List;
  */
 public interface AnnotationProviderMapper {
 
+    /**
+     * 根据条件查询结果(ResultMap中的第一条记录)
+     *
+     * @param employeeId
+     * @return
+     */
     @SelectProvider(type = AnnotationProvider.class, method = "queryEmployee")
     @ResultMap("annotation_employee_map")
     Employee getEmployee(long employeeId);
 
     /**
-     * 根据条件查询结果
+     * 根据条件查询结果(ResultMap中的所有记录)
      *
      * @param employee
      * @return

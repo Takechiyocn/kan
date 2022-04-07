@@ -14,6 +14,9 @@
         <result property="bio" column="author_bio"/>
         <result property="favouriteSection" column="author_favourite_section"/>
     </resultMap>
+    <update id="updateAuthorById" parameterType="Author">
+        UPDATE tb_author SET author_bio = #{bio} WHERE author_id = #{id}
+    </update>
 
     <select id="getAuthor" parameterType="int" resultMap="authorMap">
         SELECT * FROM tb_author WHERE author_id=#{id}
