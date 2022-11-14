@@ -1,14 +1,16 @@
 package multithread;
 
 /**
- * volatile关键字：为实例域的同步访问提供一种免锁机制。
+ * volatile关键字：用于线程间做信号量，为实例域的同步访问提供一种免锁机制。
  *                volatile域使编译器和虚拟机知道该域是可能被另一个线程并发更新。
+ *                保证变量对所有线程的可见性
+ *                禁止指令重排序优化
+ *                -> 不保证原子性
  * 原子atomic操作：不可分割的操作，即不会因为线程调度被打断的操作
  * @author moku
  */
 public class VolatileSync {
 
-    // TODO:为什么此处声明为volatile变量合理？即为什么volatile变量可以从多个线程安全读取一个域
     private volatile boolean done;
 
     public boolean isDone() {
@@ -19,7 +21,7 @@ public class VolatileSync {
         done = true;
     }
 
-    // volatile变量不能提供原子性：不能确保翻转域中的值，即不能保证读取、翻转和写入不被中断
+    // volatile变量不能提供原子性：不能确保翻转域(下述done = !done)中的值，即不能保证读取、翻转和写入不被中断
     public void flipDone() {
         done = !done;
     }

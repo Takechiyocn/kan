@@ -9,7 +9,7 @@
        * Controller中可调用一些Service和DAO进行数据操作
     3. 生成Handler和HandlerInterceptor并以一个HandlerExecutionChain处理器执行链返回
 3. 执行处理(获取ModelAndView)
-    1. DispatcherServlet使用Handler找到HandlerAdapter
+    1. DispatcherServlet使用Handler找到HandlerAdapter并执行业务前相应处理(表单验证、数据类型转换)
     2. 通过HandlerAdapter调用Handler方法
     3. 将请求参数绑定到方法的形参上，执行方法处理请求并得到逻辑视图ModelAndView
 4. 视图解析
@@ -167,8 +167,14 @@ CGLib动态代理：类未实现接口时使用，在运行时动态生成某个
     优点：IOC让程序员不再关注如何创建对象，而关注创建对象后的操作，把对象的创建、初始化、销毁等工作交给Spring容器
     通俗理解，对于某个具体对象而言，传统是它控制其他对象，现在是所有对象都被Spring控制，称控制反转
 
+### DI(Dependency Injection依赖注入)
 
+    Spring通过DI动态的向某个对象提供其他所需要的对象(通过反射实现)
 
-
+### 注解DI
+* @Repository ：dao层
+* @Service：service层
+* @Controller：web层
+* @Resource
 
 

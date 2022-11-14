@@ -15,17 +15,19 @@
 *Object类中equals()方法的源码*
 
 ```java
+
     public boolean equals(Object obj){
         return(this==obj);
-        }
+    }
 
-public class Demo {
-    /*因为Student这个JavaBean没有重写关于属性值相等的equals()方法
-    ,所以默认比较的是地址值,从而输出结果为false*/
-    public static void main(String[] args) {
-        Student stu1 = new Student("awu", 22);
-        Student stu2 = new Student("awu", 22);
-        System.out.println(stu1.equals(stu2));
+    public class Demo {
+        /*因为Student这个JavaBean没有重写关于属性值相等的equals()方法
+        ,所以默认比较的是地址值,从而输出结果为false*/
+        public static void main(String[] args) {
+            Student stu1 = new Student("awu", 22);
+            Student stu2 = new Student("awu", 22);
+            System.out.println(stu1.equals(stu2));
+        }
     }
 ```
 
@@ -42,17 +44,18 @@ public class Demo {
 
 1. 如果两个对象的hashCode()返回值相同（即这个位置有元素）
 
-* 两个对象通过equals()比较，如果返回值为true,则不放入。
-* 如果返回值为false,则这个时候会以链表的形式在同一个位置上存放两个元素，这会使得HashSet的性能降低，因为不能快速定位了。
+    a. 两个对象通过equals()比较，如果返回值为true,则不放入。
+   
+    b. 如果返回值为false,则这个时候会以链表的形式在同一个位置上存放两个元素，这会使得HashSet的性能降低，因为不能快速定位了。
 
 2. 如果两个对象的hashCode()返回值不同（即这个位置没有元素）
 
-* 两个对象通过equals()比较，如果返回值为true 这个时候HashSet会把这两个对象都存进去，这就和Set集合不重复的规则相悖了。
+    c. 两个对象通过equals()比较，如果返回值为true 这个时候HashSet会把这两个对象都存进去，这就和Set集合不重复的规则相悖了。
 
 所以，我们重写了equals()方法时，要按照b,c规则重写hashCode()方法！
-（其实就是如果只重写了equals方法，两个对象equals返回了true，但是如果没有重写hashCode方法，集合还是会插入元素。这样集合中就出现了重复元素了。）
+（**其实就是如果只重写了equals方法，两个对象equals返回了true，但是如果没有重写hashCode方法，集合还是会插入元素。这样集合中就出现了重复元素了。**）
 
-### 二、在什么情况下需要重写hashCode()方法和equals()方法? (When)
+#### 二、在什么情况下需要重写hashCode()方法和equals()方法? (When)
 
 当我们自定义的一个类，想要把它的实例保存在以Hash散列查找的集合中时,我们就需要重写这两个方法。
 
@@ -103,10 +106,10 @@ public class Student {
         if (getClass() != obj.getClass())
             return false;
         final Student other = (Student) obj;
-        if (name.equals(other.name)) {
+        if (!name.equals(other.name)) {
             return false;
         }
-        if (age.equals(other.age)) {
+        if (!age.equals(other.age)) {
             return false;
         }
         return true;
@@ -150,7 +153,7 @@ public class Demo {
 }
 ```
 
-### 三、如何重写这两个方法？(How)
+#### 三、如何重写这两个方法？(How)
 
 ```java
 public class Student {
@@ -199,10 +202,10 @@ public class Student {
         if (getClass() != obj.getClass())
             return false;
         final Student other = (Student) obj;
-        if (name.equals(other.name)) {
+        if (!name.equals(other.name)) {
             return false;
         }
-        if (age.equals(other.age)) {
+        if (!age.equals(other.age)) {
             return false;
         }
         return true;

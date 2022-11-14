@@ -6,6 +6,10 @@ package com.kan.ioc.initial.entities;
  * @author moku
  */
 public class HelloIoc {
+    // 无参构造
+    public HelloIoc() {
+        System.out.println("HelloIoc默认无参构造器");
+    }
 
     public void sayHello() {
         System.out.println("Hello IOC");

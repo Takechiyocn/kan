@@ -1,4 +1,4 @@
-### JPA
+### JPA(Java Persistence API持久层API)
 
 #### 默认命名策略：ImprovedNamingStrategy
 

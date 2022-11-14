@@ -49,6 +49,22 @@ public class ThreadExecutors {
     }
 
     /**
+     * 单线程化线程池
+     * 特点：
+     *   1. 串行执行所有任务
+     *   2. 线程异常结束，新线程替代
+     */
+    public void newSingleThreadPool() {
+        ExecutorService executorService = Executors.newSingleThreadExecutor(new ThreadPoolFactory("SingleThreadPool"));
+        for (int i = 0; i < 10; i++) {
+            executorService.submit(() -> {
+                System.out.println("SingleThreadPool");
+                System.out.println(Thread.currentThread().getName());
+            });
+        }
+    }
+
+    /**
      * 定时周期线程池
      *   1. 可指定线程数大小，最大线程数Integer.MAX_VALUE
      *   2. 线程核心数可指定
@@ -107,21 +123,5 @@ public class ThreadExecutors {
                 System.out.println("======================================");
             }
         }, 1, 2, TimeUnit.SECONDS);
-    }
-
-    /**
-     * 单线程化线程池
-     * 特点：
-     *   1. 串行执行所有任务
-     *   2. 线程异常结束，新线程替代
-     */
-    public void newSingleThreadPool() {
-        ExecutorService executorService = Executors.newSingleThreadExecutor(new ThreadPoolFactory("SingleThreadPool"));
-        for (int i = 0; i < 10; i++) {
-            executorService.submit(() -> {
-                System.out.println("SingleThreadPool");
-                System.out.println(Thread.currentThread().getName());
-            });
-        }
     }
 }

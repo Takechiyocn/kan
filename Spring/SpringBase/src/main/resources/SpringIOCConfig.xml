@@ -8,12 +8,12 @@
     id:唯一标识符
     class:类的全类名
       -->
-    <bean id="helloIoc" class="com.kan.ioc.initial.entities.HelloIoc" ></bean>
+    <bean id="helloIoc" scope="prototype" class="com.kan.ioc.initial.entities.HelloIoc" ></bean>
     <!-- 别名属性  name：和bean的 id 属性对应 -->
     <alias name="helloIoc" alias="helloIoc2"/>
 
     <!--
-        创建对象的第二种方式：利用静态工厂方法
+        创建对象的第二种方式：利用静态工厂方法(静态工厂方法内部需自己实现)
         factory-method：(工厂方法)静态工厂类的获取对象的静态方法
         class:静态工厂类的全类名
       -->
@@ -23,8 +23,9 @@
         创建对象的第三种方式：利用实例工厂方法
         factory-bean:指定当前Spring中包含工厂方法的beanID
         factory-method:工厂方法名称
+        lazy-init:延迟到getBean时才创建对象
       -->
     <bean id="instanceFactory" class="com.kan.ioc.initial.factory.HelloInstanceFactory"></bean>
-    <bean id="instance" factory-bean="instanceFactory" factory-method="getInstance"></bean>
+    <bean id="instance" lazy-init="true" factory-bean="instanceFactory" factory-method="getInstance"></bean>
 
 </beans>

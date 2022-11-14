@@ -567,67 +567,7 @@ private static int sumUp(int[]values){
 ### JarOptions
 ![JarOptions.png](images/JarOptions.png)
 
-### 线程状态
-
 81 042-311-7000
-
-* 新创建New
-* 可运行Runnable
-* 被阻塞Blocked
-* 等待Waiting
-* 计时等待Timed waiting
-* 被终止Terminated
-
-### 新创建线程
-
-> 使用new操作符创建一个新线程时：该线程还没有开始运行，即它的状态时new
-
-### 可运行线程
-
-> 调用start方法时，线程处于runnable状态。
-
-> 可运行线程可能正在运行也可能没有运行。取决于操作系统给线程提供的运行时间。
-> 即一个可运行线程不必始终保持运行。
-
-### 被阻塞线程
-
-> （引用）线程获取内部对象锁（非java.util.concurrent库中的所），且该锁被其他线程持有，则该线程进入阻塞状态
-
-> 当该内部对象锁被释放且线程调度器允许本线程持有它的时候，该线程阻塞状态解除变成非阻塞状态
-
-### 等待线程
-
-> 当线程等待另一个线程通知调度器一个条件时，它自己进入等待状态。
->* 调用Object.wait方法
->* Thread.join：等待终止指定的线程（即被等待线程结束后，该线程才能进入runnable状态）
->* 等待java.util.concurrent库中的Lock或Condition时
-
-### 计时等待
-
-> 调用带有超时参数的方法时，该线程进入计时等待（如下列方法设置超时参数时）
->* Thread.sleep
->* Object.wait
->* Thread.join：等待指定的线程死亡或者经过指定的毫秒数
->* Lock.tryLock
->* Condition.await
-
-> 这一状态一直保持到期满或者接收到适当的通知
-
-### 被终止线程
-
-> run方法正常退出而自然死亡
-
-> 一个没有捕获的异常终止了run方法而意外死亡
->* stop方法可杀死一个线程，调用该方法抛出ThreadDeath错误对象。该方法已过时
-
-![img.png](images/ThreadStatus.png)
-
-### 守护线程
-
-> 用途：为其他线程提供服务，必须在线程启动前调用
-> * 如计时线程：定时发送计时器嘀嗒信号给其他线程或清空过时的高速缓存项的线程。
->
-> * 当只剩下守护线程时时，虚拟机退出。
 
 ### 未捕获异常处理器
 

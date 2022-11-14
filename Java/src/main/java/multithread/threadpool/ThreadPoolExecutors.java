@@ -53,6 +53,9 @@ public class ThreadPoolExecutors {
         for (int i = 0; i < 3; i++) {
             pool.execute(() -> System.out.println("直接提交任务队列(SynchronousQueue)：" + Thread.currentThread().getName()));
         }
+
+        // 安全关闭线程池：线程池中所有任务执行完毕后退出
+        pool.shutdown();
     }
 
     /**
@@ -104,6 +107,8 @@ public class ThreadPoolExecutors {
             pool.execute(() ->
                     System.out.println(Thread.currentThread().getName()));
         }
+
+        pool.shutdown();
     }
 
     /**
@@ -119,7 +124,7 @@ public class ThreadPoolExecutors {
     private static void priorityBlockingQueue() {
         // 优先级队列默认容量11
         ExecutorService pool = new ThreadPoolExecutor(
-                1,
+                2,
                 2,
                 1000,
                 TimeUnit.MILLISECONDS,
@@ -281,6 +286,7 @@ public class ThreadPoolExecutors {
             }
         };
         for (int i = 0; i < 10; i++) {
+            // CallerRunsPolicy:线程池数量达到上限后，把任务队列中的任务放在调用者线程当中执行
             pool.execute(new ThreadTask2("Task" + i));
         }
         // 安全关闭线程池：线程池中所有任务执行完毕后退出
@@ -288,7 +294,7 @@ public class ThreadPoolExecutors {
     }
 
     public static void main(String[] args) {
-        // 直接提交任务队列
+        // 直接提交任务队列/可缓存无界线程池
 //        synchronousQueue();
 
         // 有界任务队列
@@ -301,12 +307,12 @@ public class ThreadPoolExecutors {
 //        priorityBlockingQueue();
 
         // 自定义拒绝策略
-//        customRejectedExceptionHandler();
+        customRejectedExceptionHandler();
 
         // 自定义线程工厂
 //        customThreadFactory();
 
         // ThreadPoolExecutor扩展
-        threadPoolExecutorExtend();
+//        threadPoolExecutorExtend();
     }
 }
