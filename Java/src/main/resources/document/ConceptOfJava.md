@@ -211,22 +211,26 @@ public class Test() {
 
 遍历辅助字符单元
 
-    int cp = sentence.codePointAt(i);
-    if (Character.isSupplementaryCodePoint(cp)) {
-        i += 2;
-    } else {
-        i++;
-    }
+```java
+int cp = sentence.codePointAt(i);
+if (Character.isSupplementaryCodePoint(cp)) {
+    i += 2;
+} else {
+    i++;
+}
+```
 
 系统时间
 
-    System.out.printf("%1$s %2$tB %2$td, %2$tY\n", "current date: ", new Date());
+```java
+System.out.printf("%1$s %2$tB %2$td, %2$tY\n", "current date: ", new Date());
+System.out.printf("%s %tB %<te, %<tY\n", "current date: ", new Date());
+```
 
-    System.out.printf("%s %tB %<te, %<tY\n", "current date: ", new Date());
-
-匿名数组
-
-    new int[] {1, 2, 3}
+~~匿名数组~~静态初始化简写形式
+```java
+new int[] {1, 2, 3}
+```
 
 对象变量：
 
@@ -321,7 +325,7 @@ public class Test() {
     由对象导出的一个整形数值
 
 * (字符串)String类型的散列码由字符串内容导出
-* StringBuilder(StringBuffer)类没有自定义的hashCode方法，其散列码由Object类的默认hasCode方法导出对象的存储地址
+* StringBuilder(StringBuffer)类没有自定义的hashCode方法，其散列码由Object类的默认hashCode方法导出对象的存储地址
 
 **关键字super**
 
@@ -366,14 +370,19 @@ public class Test() {
 
 3. 检测class是否相等
 
-* 比较this于otherObject是否属于同一个类。如果equals的语义在每个子类中有所改变，用getClass检测
-
-  if (getClass != otherObject.getClass()) return false;
-
-* 如果所有子类拥有统一的语义，使用instanceof检测
-
-  if (!(otherObject instanceof Employee)) return false;
-
+    * 比较this于otherObject是否属于同一个类。如果equals的语义在每个子类中有所改变，用getClass检测
+    
+        ```java
+        if (getClass != otherObject.getClass()) 
+            return false;
+        ```
+    
+    * 如果所有子类拥有统一的语义，使用instanceof检测
+    
+        ```java
+        if (!(otherObject instanceof Employee)) 
+            return false;
+        ```
 
 4. type conversion
 
@@ -381,16 +390,22 @@ public class Test() {
 
 5. 检测域是否相等
 
-* 使用＝＝比较基本类型，使用equals比较对象
+    * 使用==比较基本类型，使用equals比较对象
 
-* == 比较引用类型时，比较的是地址，当且仅当两个应用变量对象只想同一个对象时才返回true
+    * == 比较引用类型时，比较的是地址，当且仅当两个应用变量对象指向同一个对象时才返回true
 
-  return Objects.equals(name, other.name)
-  && (salary == other.salary)
-  && (Objects.equals(hireDay, other.hireDay)); // 超类为Object的类对象用超类的equals // 基本类型直接用＝＝ // name.equals(other.name); if
-  case of both fields are null
+        ```java
+        /**
+         * 超类为Object的类对象用超类的equals
+         * 基本类型直接用==
+         * name.equals(other.name); <- 如果name为null则报空指针异常
+         */
+        return Objects.equals(name, other.name)
+                && (salary == other.salary)
+                && (Objects.equals(hireDay, other.hireDay)); 
+        ```
 
-6. 如果子类中重新定义euqlas，要在其中包含调用super.equals(other)
+6. 如果子类中重新定义equals，要在其中包含调用super.equals(other)
 
 **子类定义equals方法**
 
@@ -400,20 +415,42 @@ public class Test() {
 
 * 比较子类域是否相等
 
-  class Manger extends Employee { ... public boolean equals(Object otherObject) { if (!super.equals(otherObject)) {
-  return false; } // type conversion Manger other = (Manger)otherObject; return bonus == other.bonus; } }
-
+    ```java
+    class Manger extends Employee {
+        @Override
+        public boolean equals(Object otherObject) {
+            if (!super.equals(otherObject)) {
+                return false;
+            }
+            // type conversion
+            Manger other = (Manger)otherObject; 
+            return bonus == other.bonus; 
+        }
+    }
+    ```
 
 * 只要对象与一个字符串操作符“＋”连接起来，Java编译就会自动地调用toString方法， 以获取这个对象的字符串描述
 
-  Point p = new Point(10,20); String message = "The current position is " + p; // automatically invokes p.toString()
+    ```java
+    Point p = new Point(10,20);
+    // automatically invokes p.toString()
+    String message = "The current position is " + p;
+    ```
 
 * Object类定义的toString方法，用于发音输出对象所述的类名和散列码
 
-  System.out.println(System.out); →java.io.PrintStream@2f684 // PrintStream，String类的设计者没有覆盖toString方法，调用的是Object类方法 //
-  数组继承了object类的toString方法，将按照旧格式打印 // int[] arr = {1, 2, 4, 6}; // String s = "" + arr; →[I@1a345e0]  I: integer //
-  String s = Arrays.toString(arr); →[1, 2, 4, 6]
-  // 静态方法Arrays.toString
+    ```java
+    // PrintStream，String类的设计者没有覆盖toString方法，调用的是Object类方法 
+    // 数组继承了object类的toString方法，将按照旧格式打印
+    // java.io.PrintStream@2f684
+    System.out.println(System.out);  
+    int[] arr = {1, 2, 4, 6};
+    // I: integer
+    String s = "" + arr; →[I@1a345e0]
+    // 静态方法Arrays.toString
+    // [1, 2, 4, 6]
+    String s = Arrays.toString(arr); 
+    ```
 
 **Class类方法**
 

@@ -32,10 +32,15 @@
 ```
 
 **那么为什么在重写equals方法的时候需要重写hashCode方法呢？**
-*主要是Object.hashCode的通用约定：*
+
+Object类希望所有对象都能实现hashCode方法，方便快速查找对象
+
+*Object.hashCode的通用约定：*
 
 1. 在java应用程序运行时，无论何时（对象的当前状态不变）多次调用同一个对象时的hashCode()方法， 这个对象的hashCode()方法的返回值必须是相同的一个int值.
 2. 如果两个对象equals()返回值为true,则他们的hashCode()也必须返回相同的int值.
+   
+   对于重写后的equals方法返回true时，如果不重写hashCode方法，则两个对象的hashCode不一致(默认hashCode值跟对象存储位置有关)，此时不满足约定
 3. 如果两个对象equals()返回值为false,则他们的hashCode()返回值也必须不同.
 
 *为什么要这样约定*
@@ -53,7 +58,7 @@
     c. 两个对象通过equals()比较，如果返回值为true 这个时候HashSet会把这两个对象都存进去，这就和Set集合不重复的规则相悖了。
 
 所以，我们重写了equals()方法时，要按照b,c规则重写hashCode()方法！
-（**其实就是如果只重写了equals方法，两个对象equals返回了true，但是如果没有重写hashCode方法，集合还是会插入元素。这样集合中就出现了重复元素了。**）
+（**其实就是如果只重写了equals方法，两个对象equals返回了true，但是如果没有重写hashCode方法，因为默认hashCode跟对象(而不是对象内容/参数值)的存储位置有关，所以集合还是会插入元素。这样集合中就出现了重复元素了。**）
 
 #### 二、在什么情况下需要重写hashCode()方法和equals()方法? (When)
 
