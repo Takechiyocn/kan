@@ -1,4 +1,4 @@
-package collection.listbase;
+package container.collection.queuebase;
 
 /**
  * 双端队列Deque:可在队列头部和尾部同时添加或删除元素

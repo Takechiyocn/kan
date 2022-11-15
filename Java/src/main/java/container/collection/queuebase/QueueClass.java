@@ -1,4 +1,4 @@
-package collection.listbase;
+package container.collection.queuebase;
 
 import org.jetbrains.annotations.NotNull;
 import org.omg.CosTrading.Link;

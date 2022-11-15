@@ -1,4 +1,4 @@
-package collection.setbase;
+package container.collection.setbase;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -61,7 +61,7 @@ public class HashSetBase {
         System.out.println(sitesCount);
 
         // 获取元素: for-each
-        for (String i : sites) {
+    for (String i : sites) {
             System.out.println(i);
         }
 

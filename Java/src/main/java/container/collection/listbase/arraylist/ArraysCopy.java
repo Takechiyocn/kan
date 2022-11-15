@@ -1,4 +1,4 @@
-package collection.listbase.arraylist;
+package container.collection.listbase.arraylist;
 
 import java.util.Arrays;
 import java.util.Scanner;
@@ -24,7 +24,6 @@ public class ArraysCopy {
         System.arraycopy(orginal, 0, target, 0, target.length);
         long end_time = System.nanoTime();
         System.out.println("使用System.arraycopy方法耗时:" + (end_time - start_time));
-
     }
 
     public static void testArraysCopyOf(String[] orginal) {

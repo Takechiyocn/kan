@@ -1,4 +1,4 @@
-package collection.listbase;
+package container.collection.listbase;
 
 /**
  * 数组列表ArrayList：封装了动态分配的对象数组

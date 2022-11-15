@@ -1,4 +1,4 @@
-package collection.listbase.arraylist;
+package container.collection.listbase.arraylist;
 
 import lombok.extern.slf4j.Slf4j;
 import occupation.Employee;
@@ -28,9 +28,8 @@ public class ArraysInitialization {
             log.info("Initialize arrays dynamic:" + i);
         }
 
-        // 2.静态初始化（匿名数组）：数组长度不指定(编译器默认计算)
-        int[] intArrayStaticInitialization;
-        intArrayStaticInitialization = new int[]{100, 200, 300};
+        // 2.静态初始化（/*匿名数组*/）：数组长度不指定(编译器默认计算)
+        int[] intArrayStaticInitialization = new int[]{100, 200, 300};
         for (int i : intArrayStaticInitialization) {
             log.info("Initialize arrays static:" + i);
         }

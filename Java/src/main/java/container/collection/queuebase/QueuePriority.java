@@ -1,4 +1,4 @@
-package collection.listbase;
+package container.collection.queuebase;
 
 import java.time.LocalDate;
 import java.util.PriorityQueue;

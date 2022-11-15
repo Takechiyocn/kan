@@ -1,4 +1,4 @@
-package collection.listbase.arraylist;
+package container.collection.listbase.arraylist;
 
 import java.util.ArrayList;
 import java.util.Arrays;

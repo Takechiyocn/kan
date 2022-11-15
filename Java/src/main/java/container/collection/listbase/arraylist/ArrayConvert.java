@@ -1,4 +1,4 @@
-package collection.listbase.arraylist;
+package container.collection.listbase.arraylist;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -8,7 +8,7 @@ import java.util.Collections;
  * <p>
  * length属性：数组长度
  * length()方法：字符串长度
- * size()方法：泛型元素个数
+ * size()方法：泛型/集合元素个数
  *
  * @author moku
  */
