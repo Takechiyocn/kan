@@ -10,7 +10,7 @@ Java集合类型分为Collection和Map，它们是集合的根接口，这两个
 
 Collection基本结构
 ![CollectionBasicStructure.png](collectionmap/CollectionBasicStructure.png)
-
+![CollectionBasicStructure2.png](JVM/CollectionBasicStructure2.png)
 
 ### Map
 
