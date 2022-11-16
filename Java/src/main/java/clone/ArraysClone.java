@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 /**
  * @description: 所有的数组类型都有public的clone方法(Arrays实现了Object的clone方法)
- * 克隆后两个数组指向不同引用
+ *               克隆后两个数组指向不同引用
  * @author: Kan
  * @date: 2021/2/28 1:59
  */

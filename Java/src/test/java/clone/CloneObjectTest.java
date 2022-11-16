@@ -17,13 +17,16 @@ public class CloneObjectTest {
             CloneObject copy = original.deepCopy();
             copy.raiseSalary(10);
             copy.setHireDay(2010, 2, 2);
-            log.info("Original: name=" + original.getName() + ",hireDay=" + original.getHireDay() + ",salary=" + original.getSalary());
-            log.info("Copy: name=" + copy.getName() + ",hireDay=" + copy.getHireDay() + ",salary=" + copy.getSalary());
+            // String:不变对象
+            copy.setName("B");
+            log.info("Deep copy(original): name=" + original.getName() + ",hireDay=" + original.getHireDay() + ",salary=" + original.getSalary());
+            log.info("Deep copy(new): name=" + copy.getName() + ",hireDay=" + copy.getHireDay() + ",salary=" + copy.getSalary());
 
             Employee el = new Employee("test");
-            // 由于Object中的clone没有方法体，故不能直接使用clone
-            // TODO: 关于protected子类权限问题。 object的子类代码中可以访问object。而不是子类对象可以访问object的方法。
-            //  比如B是A的子类，A有一个protected的方法one,B中代码可以访问A。但是如果有一个C类，在其中有B的对象b，b.one()就不对了
+            // protected权限的Object.clone方法：包和子类(代码中，非子类对象)可见
+            // 比如B是A的子类，A有一个protected的方法aMethod,B中代码可以访问aMethod。但是如果有一个C类，在其中有B的对象b，b.aMethod()就不对了
+            // 以下Employee类(中方法)可访问继承自Object的clone方法
+            // 如Employee实现Cloneable接口并重写clone方法，以下方法可执行
 //            Employee el2 = el.clone();
             System.out.println(el);
         } catch (CloneNotSupportedException e) {

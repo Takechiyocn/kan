@@ -7,7 +7,7 @@ import java.util.GregorianCalendar;
  * @description: 默认克隆操作为浅拷贝，不会克隆对象中引用的其他对象。
  *               如果需要深拷贝，则需实现Cloneable接口并重新定义clone方法，指定public修饰符
  *               Cloneable接口（标记接口tagging interface/记号接口marker interface）
- *               该接口没有clone方法，clone方法继承自超类Object且为private。
+ *               该接口没有clone方法，clone方法继承自超类Object且为protected。
  *               标记接口不包含任何方法，唯一作用是允许在类型查询中使用instanceof
  *
  *               标记接口：没有方法的接口
@@ -60,7 +60,8 @@ public class CloneObject implements Cloneable {
     }
 
     /**
-     * 浅拷贝也需要实现Cloneable接口
+     * 浅拷贝也需要实现implement Cloneable接口，实现该接口即可调用
+     *
      */
     public CloneObject shallowCopy() throws CloneNotSupportedException {
         return (CloneObject) super.clone();
