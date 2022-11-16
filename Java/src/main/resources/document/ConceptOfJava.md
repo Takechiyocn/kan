@@ -73,7 +73,7 @@ public strictfp class Test() {
     * package-private(no-modifiers)
 
       如果类没有修饰符(默认)，也称package-private，它只在自己的包中可见
-2. 在成员级别
+2. 在成员级别(按行看容易理解:成员为public等修饰符时的访问权限)
 
     * public
       
@@ -88,7 +88,7 @@ public strictfp class Test() {
        
       仅对本类可见(子类也不能访问超类的私有域/方法)
     
-    ![Access-Levels.png](images/Access-Levels.png)
+        ![Access-Levels.png](images/Access-Levels.png)
         * 第一列：指示类本身是否有权访问由访问控制级别定义的成员。
         * 第二列：指示与该类相同的包(不管其父级)中的类是否具有对成员的访问权限
         * 第三列：指示在此包外部声明的该类的子类是否有权访问成员。

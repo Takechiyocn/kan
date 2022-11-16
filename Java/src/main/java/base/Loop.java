@@ -31,7 +31,7 @@ public class Loop {
             add(new Employee("e4"));
         }};
 
-        // 传统for循环(List集合才有get方法,HashSet实现Set接口)
+        // 1. 传统for循环(List集合才有get方法,HashSet实现Set接口)
         Iterator<Employee> iterator = employeeHashSet.iterator();
         for (int i = 0; i < employeeHashSet.size() && iterator.hasNext(); i++) {
             System.out.println("Iterator by Collection:" + iterator.next());
@@ -44,7 +44,7 @@ public class Loop {
             System.out.println("New Iterator by Collection:" + iterator.next());
         }
 
-        // 增强for循环(foreach):遍历单值集合
+        // 2. 增强for循环(foreach):遍历单值集合
         // 增强for循环可操作任何实现了Iterable接口的对象
         for (Employee e : employeeHashSet2) {
             System.out.println("Iterator by Collection(for-each):" + e);

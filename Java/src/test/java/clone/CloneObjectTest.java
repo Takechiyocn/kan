@@ -12,9 +12,9 @@ import occupation.Employee;
 public class CloneObjectTest {
     public static void main(String[] args) {
         try {
-            CloneObject original = new CloneObject("A", 20000);
+            DeepClone original = new DeepClone("A", 20000);
             original.setHireDay(2000, 1, 1);
-            CloneObject copy = original.deepCopy();
+            DeepClone copy = original.deepCopy();
             copy.raiseSalary(10);
             copy.setHireDay(2010, 2, 2);
             // String:不变对象

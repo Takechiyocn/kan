@@ -16,7 +16,7 @@ import java.util.Scanner;
  *
  * @author moku
  */
-public class ArraysCopy {
+public class ArraysCopyMeasurement {
 
     public static void testSystemArrayCopy(String[] orginal) {
         long start_time = System.nanoTime();

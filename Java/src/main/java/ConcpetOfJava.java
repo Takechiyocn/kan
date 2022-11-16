@@ -179,8 +179,6 @@ public class ConcpetOfJava {
         //   --> 静态方法没有this，对于静态方法类名的获取：
         //      --> new Object(){}.getClass().getEnclosingClass();
 
-
-        // TODO：protected使用
         // TODO: 反射/代理/克隆
 
 

@@ -14,12 +14,12 @@ import java.util.GregorianCalendar;
  * @author: Kan
  * @date: 2021/2/28 1:10
  */
-public class CloneObject implements Cloneable {
+public class DeepClone implements Cloneable {
     private String name;
     private double salary;
     private Date hireDay;
 
-    public CloneObject(String n, double s) {
+    public DeepClone(String n, double s) {
         name = n;
         salary = s;
         hireDay = new Date();
@@ -63,15 +63,15 @@ public class CloneObject implements Cloneable {
      * 浅拷贝也需要实现implement Cloneable接口，实现该接口即可调用
      *
      */
-    public CloneObject shallowCopy() throws CloneNotSupportedException {
-        return (CloneObject) super.clone();
+    public DeepClone shallowCopy() throws CloneNotSupportedException {
+        return (DeepClone) super.clone();
     }
 
     /**
      * 深拷贝
      */
-    public CloneObject deepCopy() throws CloneNotSupportedException {
-        CloneObject cloned = (CloneObject) super.clone();
+    public DeepClone deepCopy() throws CloneNotSupportedException {
+        DeepClone cloned = (DeepClone) super.clone();
 
         // 克隆可变域
         // String对象属于一个不可变的类，所以name不必克隆
