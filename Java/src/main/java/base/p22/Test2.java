@@ -20,7 +20,7 @@ public class Test2 extends MyObject2 {
 //        obj.clone(); // Compile Error ----（1）
 
         Test2 tobj = new Test2();
-        // 调用包和protected方法/成员：不同包：子类实例只能访问继承来的protected方法/成员
+        // 不同包：子类实例只能访问继承来的protected方法/成员
         tobj.clone(); // Complie OK ----（2）
     }
 
@@ -34,7 +34,7 @@ public class Test2 extends MyObject2 {
     public class Test3 {
       public static void main(String args[]) {
         MyObject3 obj = new MyObject3();
-        // 调用包和protected方法/成员：不同包：子类实例只能访问继承来的protected方法/成员
+        // 不同包：子类实例只能访问继承来的protected方法/成员
         // 此处为Test3继承的Object.clone方法
         obj.clone(); // Compile OK ------（1）
       }

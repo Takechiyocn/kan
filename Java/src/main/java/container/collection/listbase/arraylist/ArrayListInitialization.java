@@ -34,7 +34,13 @@ public class ArrayListInitialization {
 
     // 1. ArrayList<T>(Arrays.asList(arrays))
     public static ArrayList<String> initialArrayList() {
+        // Arrays.asList返回原数组支持的固定大小的列表
+        // 将Arrays.asList作为new ArrayList参数可解除这种限制
         ArrayList<String> arrayList = new ArrayList<>(Arrays.asList("A", "B", "C"));
+        System.out.println(arrayList.size());
+        // 可增加list元素
+        arrayList.add("D");
+        System.out.println(arrayList.size());
         return arrayList;
 //        return new ArrayList<>(Arrays.asList("A", "B", "C"));
     }
@@ -58,6 +64,10 @@ public class ArrayListInitialization {
             add("C");
         }};
         return arrayList3;
+    }
+
+    public static void main(String[] args) {
+        initialArrayList();
     }
 }
 

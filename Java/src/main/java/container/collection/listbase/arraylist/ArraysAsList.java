@@ -20,7 +20,7 @@ public class ArraysAsList {
         // Array to ArrayList: use Arrays.asList
         arrayToArrayList();
 
-        arrayToArrayList2();
+//        arrayToArrayList2();
     }
 
     private static void arrayToArrayList() {
@@ -31,7 +31,7 @@ public class ArraysAsList {
 
         int[] data = {1, 2, 3, 4, 5};
         // Arrays.asList参数原型为泛型变长参数，基本类型不能作为泛型的参数，应使用基本类型对应的包装类型
-        // 此处数组泛型化，转换后list列表里有一个类型为int的数组
+        // 此处数组泛型化，转换后list列表里有一个类型为int的数组元素
         List intList = Arrays.asList(data);
 
         // Arrays.asList()返回的列表是由原始数组支持的固定大小的列表
@@ -42,6 +42,8 @@ public class ArraysAsList {
         // 输出数组列表第一个元素的类型(此处为数组)，JVM无法输出数组(array)类型，只可通过java.lang.reflect访问数组类
         // 输出:class [I
         System.out.println(intList.get(0).getClass());
+        // 获取数组第一个元素：List中第一个元素(数组)的第一个元素
+        System.out.println("基本类型数组使用asList时，返回List的第一个元素为基本类型数组：" + ((int[])intList.get(0))[0]);
 
         Integer[] wrapperInt = {1, 2, 3, 4, 5};
         List integerList = Arrays.asList(wrapperInt);

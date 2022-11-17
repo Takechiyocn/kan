@@ -35,6 +35,10 @@ public class ArrayListAndArrayConvert {
             add(new Manager("cfo",11,1990,1,1));
             add(new Manager("ceo",11,1990,1,1));
         }};
+        // 定义未使用编译器警告
+        // Warning:Contents of collection 'employees' are updated, but never queried
+        System.out.println(employees.size());
+        System.out.println(managers.size());
 
         // 泛型实例之间没有关系继承关系
         // 故不复合下转上规则，下列赋值会出错
@@ -104,13 +108,13 @@ public class ArrayListAndArrayConvert {
         for (String s : el) {
             log.info("ArrayList to array use ArrayList.toArray(array):" + s);
         }
-        // false：String类覆写了String方法，但数组(String类型)为引用类型，故使用Object类的equals方法
+        // false：String类覆写了equals方法，但数组(String类型)为引用类型，故使用Object类的equals方法
         log.info("el == el2 ? :" + el.equals(el2));
         // true：数组覆写equals方法
         log.info("el == el2 ? :" + Arrays.equals(el, el2));
         // false
         log.info("el2 == el3 ? :" + el2.equals(el3));
         // true
-        log.info("el == el3 ? :" + el3.equals(el4));
+        log.info("el3 == el4 ? :" + el3.equals(el4));
     }
 }
