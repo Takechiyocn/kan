@@ -1,5 +1,7 @@
 package container.collection.setbase;
 
+import common.ConstantsBase;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.*;
@@ -32,8 +34,8 @@ public class HashSetBase {
         }
 
         Iterator<String> iter = words.iterator();
-        // 获取元素
-        for (int i = 0; i < 3 && iter.hasNext(); i++) {
+        // 获取固定长度元素
+        for (int i = 0; i < ConstantsBase.INTEGER_3 && iter.hasNext(); i++) {
             System.out.println(iter.next());
         }
         System.out.println("...");
@@ -41,7 +43,6 @@ public class HashSetBase {
         // 元素数量：HashSet.size()
         System.out.println("Words size:" + words.size() + ", Total time:" + totalTime + " milliseconds");
 
-        // TODO：键的集聚
         hashSetBaeMethod();
     }
 
@@ -61,13 +62,18 @@ public class HashSetBase {
         System.out.println(sitesCount);
 
         // 获取元素: for-each
-    for (String i : sites) {
+        for (String i : sites) {
             System.out.println(i);
         }
 
         // 删除元素：remove
         sites.remove("Google");
         System.out.println("After remove" + sites);
+        // public void println(Object x) {}
+        //  --> 1. String.valueOf(x) TODO:String.valueOf/System.out.println()
+        //  --> 2. print(string)
+        //  --> 3. println()
+        System.out.println(sites);
 
         // 删除所有元素：clear
         sites.clear();

@@ -25,6 +25,8 @@ public class ArraysInitialization {
         for (int i : intArrayDynamicInitialization) {
             log.info("Initialize arrays dynamic:" + i);
         }
+        // 输出数组元素地址 [I@37f8bb67
+        System.out.println(intArrayDynamicInitialization);
 
         // 2.静态初始化（/*匿名数组*/）：数组长度不指定(编译器默认计算)
         int[] intArrayStaticInitialization = new int[]{100, 200, 300};

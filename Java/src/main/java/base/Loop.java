@@ -1,5 +1,6 @@
 package base;
 
+import container.iterator.IteratorBase;
 import occupation.Employee;
 
 import java.util.Arrays;
@@ -66,10 +67,10 @@ public class Loop {
 
         /**
          * Stream实现迭代器Iterator，底层实现仍为普通的for循环
-         * {@link container.collection.listbase.IteratorBase#listIteratorAccess} ：遍历迭代器剩下元素}
-         * {@link container.collection.listbase.IteratorBase#listIteratorAccess(Collection)} ：遍历迭代器剩下元素}
-         * @see container.collection.listbase.IteratorBase#listIteratorAccess} ：遍历迭代器剩下元素
-         * @see container.collection.listbase.IteratorBase#listIteratorAccess(Collection)} ：遍历迭代器剩下元素
+         * {@link IteratorBase#listIteratorAccess} ：遍历迭代器剩下元素}
+         * {@link IteratorBase#listIteratorAccess(Collection)} ：遍历迭代器剩下元素}
+         * @see IteratorBase#listIteratorAccess} ：遍历迭代器剩下元素
+         * @see IteratorBase#listIteratorAccess(Collection)} ：遍历迭代器剩下元素
          */
         Iterator<String> iterator = Arrays.stream(arrays).iterator();
         while (iterator.hasNext()) {

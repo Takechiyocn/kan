@@ -40,8 +40,8 @@ public class ArrayListAndArrayConvert {
         System.out.println(employees.size());
         System.out.println(managers.size());
 
-        // 泛型实例之间没有关系继承关系
-        // 故不复合下转上规则，下列赋值会出错
+        // 泛型实例之间没有继承关系
+        // 故不符合下转上规则，下列赋值会出错
 //        ArrayList<Employee> employees1 = managers;
     }
 
