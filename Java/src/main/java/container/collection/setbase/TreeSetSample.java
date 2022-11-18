@@ -8,6 +8,7 @@ import java.util.*;
  * 树集：可保存实现了Comparable接口的类对象
  *      也可保存在构造器中提供的Comparator对象(自定义Comparator比较器)
  *      -> 因为树集是有序的，所以需要比较器实现
+ * @author moku
  */
 public class TreeSetSample {
 
@@ -70,6 +71,7 @@ class Item implements Comparable<Item> {
 
     @Override
     public int compareTo(@NotNull Item o) {
+        // TODO:此处重写TreeSet默认Comparable接口中的compareTo方法，如何确定先按partNumber排序，再按description排序
         int diff = Integer.compare(this.partNumber, o.partNumber);
         return diff != 0 ? diff : description.compareTo(o.description);
     }

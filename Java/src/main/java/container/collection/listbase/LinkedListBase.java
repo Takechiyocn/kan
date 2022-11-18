@@ -48,7 +48,7 @@ public class LinkedListBase {
         //   1. LinkedList.add追加元素到链表尾部
         linkedListAddToEnd(staff);
         //   2. Iterator子集：ListIterator
-        linkedListAddToAfterNext(staff);
+        linkedListAddToAfterNextOrPrevious(staff);
 
         // 替换链表元素：LinkedList.set
         linkedListReplaceVisited(staff);
@@ -59,11 +59,10 @@ public class LinkedListBase {
         // LinkedList.get()
         // 链表随机访问:效率低(内部实现：从头开始，越过n-1个元素)
         // get内部微小优化：如果index大于size()/2,从列表尾端开始搜索
-        System.out.println("LinkedList.get()" + staff.get(4));
+        System.out.println("LinkedList.get()：" + staff.get(4));
 
         // LinkedList索引:ListIterator.previousIndex,ListIterator.nextIndex
         linkedListIndex(staff);
-
     }
 
     /**
@@ -79,10 +78,12 @@ public class LinkedListBase {
 
         listIter.next();
         // 返回下一次调用next方法时返回元素的整数索引
+        // 当前迭代器位置："sa1-replaced"和"sa2-replaced2"之间
         int nextIndex = listIter.nextIndex();
         System.out.println("ListIterator.nextIndex: " + nextIndex);
 
         // 返回下一次调用previous方法时返回元素的整数索引
+        // 当前迭代器位置："sa1-replaced"和"sa2-replaced2"之间
         int preIndex = listIter.previousIndex();
         System.out.println("ListIterator.previousIndex: " + preIndex);
 
@@ -90,82 +91,6 @@ public class LinkedListBase {
         // 效率低
         System.out.println("LinkedList.listIterator(n):" + staff.listIterator(1).next());
         System.out.println("LinkedList.get(n):" + staff.get(1));
-
-    }
-
-    /**
-     * LinkedList.remove
-     *
-     * @param staff
-     */
-    private static void linkedListDeleteVisited(List<String> staff) {
-        // 当前集合元素：[s1, s2, s3, s4, s5]
-        staff.remove("s5");
-        // 当前集合元素：[s1, s2, s3, s4]
-        forEachElementInList(staff, "After LinkedList.remove(), list");
-    }
-
-    /**
-     * Iterator.remove:删除且只能删除next最后访问过的元素，其他操作后remove未定义即unspecified
-     * Iterator抽象方法：
-     * hasNext();
-     * next();
-     * remove;
-     * forEachRemaining(); -> 遍历迭代器最后访问过的元素以后的元素
-     *
-     * @param staff
-     */
-    private static void linkedListDeleteVisited2(List<String> staff) {
-        Iterator<String> iter = staff.iterator();
-        iter.next();
-        String second = iter.next();
-
-        // 当前集合元素：[s1, s2, s3, s4]
-        // 当前迭代器位置："s3"之前
-        // 删除最后访问的元素s2
-        iter.remove();
-        // 当前集合元素：[s1, s3, s4]
-
-        // 不能连续多次调用remove，以下将报错
-//        iter.remove();
-        forEachElementInList(staff, "After Iterator.remove(), List");
-    }
-
-    /**
-     * ListIterator.remove:删除且只能删除next()或者previous()最后访问过的元素
-     *
-     * @param staff
-     */
-    private static void linkedListDeleteVisited3(List<String> staff) {
-        ListIterator<String> listIter = staff.listIterator();
-
-        // 当前集合元素：[s1, s3, s4]
-        // 当前迭代器位置："s1"之前
-        listIter.next();
-        listIter.remove();
-        forEachElementInList(staff, "After ListIterator.remove() with next(), List");
-
-        // 当前集合元素：[s3, s4]
-        // 当前迭代器位置："s3"之前
-        listIter.next();
-        // 当前迭代器位置："s3"和"s4"之间
-        // 遍历元素：s3
-        listIter.previous();
-        // 当前迭代器位置："s3"之前
-        listIter.remove();
-        forEachElementInList(staff, "After ListIterator.remove() with previous(), List");
-
-        // 不能连续多次调用remove，以下将报错
-//        listIter.remove();
-
-        // ***remove：next或者previous处理之后，没有使用add方法时才能使用***
-        //  -> 使用add方法之后，迭代器位置不确定，即迭代器当前状态不明(上述add后的当前迭代器位置都是想定的)
-        // 当前集合元素：[s4]
-        // 当前迭代器位置："s4"之前
-        listIter.add("sa1");
-        // 当前迭代器位置："s4"之前
-        // 不能remove未经过next或previous访问过得元素，以下将报错
-//        listIter.remove();
     }
 
     /**
@@ -179,7 +104,7 @@ public class LinkedListBase {
         // 当前集合元素：[sa1, sa2, sa30, sa3, s4, s6]
         // 当前迭代器位置：“sa1”之前
         listIter.next();
-        // 当前迭代器位置：“sa1-replaced”和"sa2"之间
+        // 当前迭代器位置：“sa1”和"sa2"之间
         listIter.set("sa1-replaced");
         forEachElementInList(staff, "After ListIterator.set() with next(), list");
 
@@ -205,7 +130,7 @@ public class LinkedListBase {
      *
      * @param staff
      */
-    private static void linkedListAddToAfterNext(List<String> staff) {
+    private static void linkedListAddToAfterNextOrPrevious(List<String> staff) {
         // Iterator没有add方法原因：对于自然有序的集合由迭代器添加元素到指定位置才有意义
         //                        而集(Set)类型元素无序，所以在Iterator中实现add方法没有意义。
         ListIterator<String> listIter = staff.listIterator();
@@ -235,8 +160,10 @@ public class LinkedListBase {
         listIter.add("sa30");
 
         // 当前集合元素：[sa1, sa2, sa30, sa3, s4, s6]
-        // 迭代器当前位置：sa4和s4之间
+        // 迭代器当前位置：sa30和sa3之间
         forEachElementInList(staff, "After ListIterator.add() with previous(), list");
+        // 输出sa3
+        System.out.println(listIter.next());
     }
 
     /**
@@ -249,7 +176,88 @@ public class LinkedListBase {
         //   1. LinkedList.add追加元素到链表尾部
         staff.add("s6");
         // 当前集合元素：[sa1, s4, s6]
+        // 指定位置添加元素
+//        staff.add(1, "sa5");
+        // 当前集合元素：[sa1, s4, s6]
         forEachElementInList(staff, "After LinkedList.add(), list");
+    }
+
+    /**
+     * LinkedList.remove
+     *
+     * @param staff
+     */
+    private static void linkedListDeleteVisited(List<String> staff) {
+        // 当前集合元素：[s1, s2, s3, s4, s5]
+        staff.remove("s5");
+        // 当前集合元素：[s1, s2, s3, s4]
+        forEachElementInList(staff, "After LinkedList.remove(), list");
+    }
+
+    /**
+     * Iterator.remove:删除且只能删除next最后访问过的元素，其他操作后remove未定义即unspecified
+     * Iterator抽象方法：
+     *   hasNext();
+     *   next();
+     *   remove;
+     *   forEachRemaining(); -> 遍历迭代器最后访问过的元素以后的元素
+     *
+     * @param staff
+     */
+    private static void linkedListDeleteVisited2(List<String> staff) {
+        Iterator<String> iter = staff.iterator();
+        // 跳过第一个元素s1
+        iter.next();
+        String second = iter.next();
+
+        // 当前集合元素：[s1, s2, s3, s4]
+        // 当前迭代器位置："s3"之前
+        // 删除最后访问的元素s2
+        iter.remove();
+        // 当前集合元素：[s1, s3, s4]
+
+        // 不能连续多次调用remove，以下将报错
+//        iter.remove();
+        forEachElementInList(staff, "After Iterator.remove(), List");
+    }
+
+    /**
+     * ListIterator.remove:
+     *   删除且只能删除next()或者previous()最后访问过的元素，
+     *   并且next()或previous()调用后没有使用add方法添加元素
+     *
+     * @param staff
+     */
+    private static void linkedListDeleteVisited3(List<String> staff) {
+        ListIterator<String> listIter = staff.listIterator();
+
+        // 当前集合元素：[s1, s3, s4]
+        // 当前迭代器位置："s1"之前
+        listIter.next();
+        listIter.remove();
+        forEachElementInList(staff, "After ListIterator.remove() with next(), List");
+
+        // 当前集合元素：[s3, s4]
+        // 当前迭代器位置："s3"之前
+        listIter.next();
+        // 当前迭代器位置："s3"和"s4"之间
+        // 遍历元素：s3
+        listIter.previous();
+        // 当前迭代器位置："s3"之前
+        listIter.remove();
+        forEachElementInList(staff, "After ListIterator.remove() with previous(), List");
+
+        // 不能连续多次调用remove，以下将报错
+//        listIter.remove();
+
+        // ***remove：next或者previous处理之后，没有使用add方法时才能使用***
+        //  -> 使用add方法之后，迭代器位置不确定，即迭代器当前状态不明(上述add后的当前迭代器位置都是假象理论上的位置)
+        // 当前集合元素：[s4]
+        // 当前迭代器位置："s4"之前
+        listIter.add("sa1");
+        // 当前迭代器位置："s4"之前
+        // 不能remove未经过next或previous访问过得元素，以下将报错
+//        listIter.remove();
     }
 
     /**
@@ -278,7 +286,10 @@ public class LinkedListBase {
         // 访问剩下元素
         forEachRemainingCustomize(listIter2, "After ListIterator.previous(), Remaining List");
         // 实例方法引用
+        // TODO：有无可能更改格式？
+        System.out.println("实例方法引用Start");
         staff.forEach(System.out::println);
+        System.out.println("实例方法引用End");
     }
 
     /**
@@ -287,7 +298,7 @@ public class LinkedListBase {
      * @param listIter
      */
     public static void forEachRemainingCustomize(ListIterator<String> listIter, String desc) {
-        iteratorElement(listIter, desc);
+        iterateElement(listIter, desc);
     }
 
     /**
@@ -303,21 +314,25 @@ public class LinkedListBase {
     /**
      * 遍历指定迭代器的所有元素
      *
-     * @param iter
-     * @param desc
+     * @param iter 迭代器
+     * @param desc 描述字符
      */
-    public static void iteratorElement(Iterator<String> iter, String desc) {
-
-//                iter.forEachRemaining(e -> {
-//            // TODO:访问iter
-//            if (iter.hasNext()) {
-//                System.out.print(e + ",");
-//            } else {
-//                System.out.println(e + "]");
-//            }
-//        });
-
+    public static void iterateElement(Iterator<String> iter, String desc) {
         System.out.print(desc + "[");
+
+        // 迭代元素方法1：使用迭代器自带方法forEachRemaining
+        // forEachRemaining消费者模型，内部调用hasNext
+        // iterator当前位置:s1,s2之间
+        if (iter.hasNext()) {
+            System.out.print(iter.next());
+        }
+        // iterator当前位置:s2，s3之间
+        // 进入lambda表达式时肯定有元素(iter.hasNext由forEachRemaining确定非NULL)
+        iter.forEachRemaining(e -> System.out.print("," + e));
+        System.out.println("]");
+
+        // 迭代元素方法2：自定义迭代方法
+        // forEachRemaining迭代后，当前位置处于集合末尾
         while (iter.hasNext()) {
             System.out.print(iter.next());
             if (iter.hasNext()) {

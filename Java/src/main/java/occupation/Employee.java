@@ -134,7 +134,7 @@ public class Employee extends Person implements Comparable<Employee> {
     /**
      * calculate salary raise by percent
      *
-     * @param byPercent bypercent
+     * @param byPercent byPercent
      */
     public void raiseSalary(double byPercent) {
         double raise = salary * byPercent / 100;

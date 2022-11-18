@@ -7,7 +7,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 /**
- * 树集：有序集合sorted collection
+ * 树集：有序集合sorted collection(默认Comparable接口确定大小或初始化Set时提供的Comparator接口)
  *      任意顺序插入元素，对集合进行遍历时，将会对值按照排序后的顺序出力
  *      添加元素比散列表慢，比数组或链表快
  *      查找新元素正确位置平均时长：log2n次比较，如一棵树包含1000个元素，添加新元素大约需要比较10次

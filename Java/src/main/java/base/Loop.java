@@ -10,6 +10,11 @@ import java.util.Iterator;
 
 /**
  * 增强for循环(foreach):遍历单值集合或数组
+ * 优点：a.简洁
+ *      b.效率和for循环相同
+ *      c.不用关心下标，减少出错概率
+ * 缺点：a.不能同时遍历多个集合
+ *      b.遍历时无法修改和删除集合/数组数据
  *
  * @author moku
  */
