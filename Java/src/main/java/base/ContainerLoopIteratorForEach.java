@@ -18,7 +18,7 @@ import java.util.Iterator;
  *
  * @author moku
  */
-public class Loop {
+public class ContainerLoopIteratorForEach {
 
     /**
      * @description 迭代器遍历集合

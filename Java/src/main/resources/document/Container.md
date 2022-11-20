@@ -71,3 +71,12 @@ public ListIterator<E> listIterator;
 ---|---|---
 安全性|方法为异步操作，非线程安全|方法为同步操作，线程安全
 数据|可为空(null)|不能为空(null)
+
+### HashMap扩容
+
+* 初始化容量(扩充)为16
+* 当保存内容容量超过了域值(初始16)*0.75时，成倍(左移运算符1<<)地进行容量扩充
+
+```java
+static final int DEFAULT_INITIAL_CAPACITY = 1 << 4; // aka 16
+```

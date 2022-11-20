@@ -76,7 +76,11 @@ public class ArrayListAndArrayConvert {
     }
 
     /**
-     *
+     * 集合.toArray：性能不高，通常用以下方法输出集合元素
+     *   a. Iterator
+     *   b. ListIterator
+     *   c. Enumeration
+     *   d. 增强for循环
      */
     public static void arrayListToArray() {
         // 1. array = arrList.toArray(new String[0])
