@@ -2,102 +2,249 @@
 
 一种自平衡的二叉查找树，从根到叶子的最长路径不会超过最短路径的2倍
 
-特点
+特性(规则)
 
 1. 结点是红色或者黑色
 2. 根结点是黑色
 3. 每个叶子结点都是黑色的空节点(NIL结点)
 4. 每个红色结点的(左右)两个子节点都是黑色(即叶子到根的所有路径上不能有两个连续的红色结点)
 5. 从任一结点到其每个叶子结点(NIL结点)的所有路径都包含相同数目的黑色结点
-![BSTree.png](algorithm/redblacktree/RedBlackTree.png)
+![RedBlackTree.png](algorithm/redblacktree/RedBlackTree.png)
+   
+### 应用
+
+1. TreeSet
+2. HashSet
+3. HashMap(JDK8)
   
-### 插值
+### 增加结点
 
 * 向红黑树插入值为14的新结点：满足红黑树特点
 
-    ![BSTreeInsert.png](algorithm/redblacktree/RedBlackTreeInsert.png)
+    ![RedBlackTreeInsert.png](algorithm/redblacktree/RedBlackTreeInsert.png)
   
 * 向红黑树插入值为21的新结点：不满足特点4
 
-    ![BSTreeInsert2.png](algorithm/redblacktree/RedBlackTreeInsert2.png)
+    ![RedBlackTreeInsert2.png](algorithm/redblacktree/RedBlackTreeInsert2.png)
   
     调整：
     * 变色：为了符合红黑树规则，把红色结点变为黑色或者把黑色结点变为红色
       
       矛盾：相关路径上多出一个黑色结点(X)，打破规则5
       
-      ![BSTreeChangeColor.png](algorithm/redblacktree/RedBlackTreeChangeColor.png)
+      ![RedBlackTreeChangeColor.png](algorithm/redblacktree/RedBlackTreeChangeColor.png)
       
     * 旋转
         * 左旋转：逆时针旋转红黑树的两个结点，父节点被自己的右孩子取代，自己成为新结点的左孩子
-          ![BSTreeLeftWhirl.png](algorithm/redblacktree/RedBlackTreeLeftWhirl.png)
+          ![RedBlackTreeLeftWhirl.png](algorithm/redblacktree/RedBlackTreeLeftWhirl.png)
         * 右旋转：顺时针旋转红黑树的两个结点，父节点被自己的左节点取代，自己称为新结点的右孩子
-          ![BSTreeRightWhirl.png](algorithm/redblacktree/RedBlackTreeRightWhirl.png)
+          ![RedBlackTreeRightWhirl.png](algorithm/redblacktree/RedBlackTreeRightWhirl.png)
   
     
 ### 红黑树调整
+
+**变色、左旋转(以冲突父结点为轴)、右旋转(以冲突组父结点为轴/影响黑色结点数目)**
 
 1. 局面1：新结点(A)位于树根，没有父结点(空心三角形代表结点下面的子树)
     
     矛盾：违反规则2
    
-   ![BSTreePhase1.png](algorithm/redblacktree/RedBlackTreePhase1.png)
+   ![RedBlackTreePhase1.png](algorithm/redblacktree/RedBlackTreePhase1.png)
    
     对策：新结点变为黑色
     
-    ![BSTreePhase1Solution.png](algorithm/redblacktree/RedBlackTreePhase1Solution.png)
+    ![RedBlackTreePhase1Solution.png](algorithm/redblacktree/RedBlackTreePhase1Solution.png)
 
 2. 局面2：新结点(B)的父结点是黑色
 
    矛盾：无
 
-    ![BSTreePhase2.png](algorithm/redblacktree/RedBlackTreePhase2.png)
+    ![RedBlackTreePhase2.png](algorithm/redblacktree/RedBlackTreePhase2.png)
 
    对策：满足规则，不做调整
 
 3. 局面3：新结点(D)的父结点和叔叔结点是红色
+    
+    *不能直接将结点D变为黑色，这样将会导致结点D路径多一个黑色
 
    矛盾：违反规则4
 
-    ![BSTreePhase3.png](algorithm/redblacktree/RedBlackTreePhase3.png)
+    ![RedBlackTreePhase3.png](algorithm/redblacktree/RedBlackTreePhase3.png)
 
    对策：
    * 1.父结点变为黑色->父结点路径多一个黑色结点(违反规则5)
-     ![BSTreePhase3SolutionStep1.png](algorithm/redblacktree/RedBlackTreePhase3SolutionStep1.png)
+     ![RedBlackTreePhase3SolutionStep1.png](algorithm/redblacktree/RedBlackTreePhase3SolutionStep1.png)
      
    * 2.父结点的父结点变为红色(违反规则4)
-     ![BSTreePhase3SolutionStep2.png](algorithm/redblacktree/RedBlackTreePhase3SolutionStep2.png)
+     ![RedBlackTreePhase3SolutionStep2.png](algorithm/redblacktree/RedBlackTreePhase3SolutionStep2.png)
      
    * 3.叔叔结点变为黑色(局部符合红黑树规则)
-     ![BSTreePhase3SolutionStep3.png](algorithm/redblacktree/RedBlackTreePhase3SolutionStep3.png)
+     ![RedBlackTreePhase3SolutionStep3.png](algorithm/redblacktree/RedBlackTreePhase3SolutionStep3.png)
 
 4. 局面4：新结点(D)的父结点是红色，叔叔结点是黑色或者没有叔叔结点，且新结点是父结点的右孩子，父结点(B)是祖父节点的左孩子
 
    矛盾：违反规则4
 
-    ![BSTreePhase4.png](algorithm/redblacktree/RedBlackTreePhase4.png)
+    ![RedBlackTreePhase4.png](algorithm/redblacktree/RedBlackTreePhase4.png)
 
    对策：
-    * 1.父结点为轴，做一次左旋转
-    ![BSTreePhase4SolutionStep1.png](algorithm/redblacktree/RedBlackTreePhase4SolutionStep1.png)
+    * 1.父结点(B)为轴，做一次左旋转
+    ![RedBlackTreePhase4SolutionStep1.png](algorithm/redblacktree/RedBlackTreePhase4SolutionStep1.png)
 
     * 2.进入局面5继续下一步
-
 
 5. 局面5：新结点(D)的父结点是红色，叔叔结点是黑色或者没有叔叔结点，且新结点是父结点的左孩子，父结点(B)是祖父节点的左孩子
 
    矛盾：违反规则4
    
-    ![BSTreePhase5.png](algorithm/redblacktree/RedBlackTreePhase5.png)
+    ![RedBlackTreePhase5.png](algorithm/redblacktree/RedBlackTreePhase5.png)
 
    对策：
     * 1.祖父结点(A)为轴，做一次右旋转
-    ![BSTreePhase5SolutionStep1.png](algorithm/redblacktree/RedBlackTreePhase5SolutionStep1.png)
+    ![RedBlackTreePhase5SolutionStep1.png](algorithm/redblacktree/RedBlackTreePhase5SolutionStep1.png)
 
    * 2.结点B变为黑色，结点A变为红色
-     ![BSTreePhase5SolutionStep2.png](algorithm/redblacktree/RedBlackTreePhase5SolutionStep2.png)
+     ![RedBlackTreePhase5SolutionStep2.png](algorithm/redblacktree/RedBlackTreePhase5SolutionStep2.png)
     
+### 增加结点范例
 
+局面3：给定二叉树，插入新结点21
 
+![RedBlackTreePhase3Sample.png](algorithm/redblacktree/RedBlackTreePhase3Sample.png)
 
+二叉树调整：
 
+1. 符合局面3，按照局面3对策处理-->新结点25违反规则4
+   ![RedBlackTreePhase3SampleSolution.png](algorithm/redblacktree/RedBlackTreePhase3SampleSolution.png)
+2. 局面5的镜像，按照局面5对策的镜像(相反)处理，即以祖父节点(13)为轴进行左旋转
+   ![RedBlackTreePhase5SampleReverseSolution.png](algorithm/redblacktree/RedBlackTreePhase5SampleReverseSolution.png)
+3. 变色调整
+   ![RedBlackTreePhase5SampleReverseSolution2.png](algorithm/redblacktree/RedBlackTreePhase5SampleReverseSolution2.png)
+
+### 删除结点
+
+* 范例：违反规则4、5
+    ![RedBlackTreeDeleteSampleStep1.png](RedBlackTreeDeleteSampleStep1.png)
+    ![RedBlackTreeDeleteSampleStep2.png](RedBlackTreeDeleteSampleStep2.png)
+  
+* 对策：结点6变成黑色
+
+#### 删除结点规范
+
+1. 如果待删除结点有两个非空孩子结点，转化成只有一个孩子(或者没有孩子)的情况
+
+    ![img_6.png](algorithm/redblacktree/img_6.png)
+   
+    对策：   
+    1. 将仅大于8的结点10复制到结点8位置
+    
+        ![img_7.png](algorithm/redblacktree/img_7.png)
+   
+    2. 继续下面处理
+   
+2. 根据待删除结点和其唯一子结点颜色，分情况处理
+
+    1. 待删除结点是红色，子结点是黑色
+    ![img_8.png](algorithm/redblacktree/img_8.png)
+       
+        对策：
+       
+        1. 直接删除结点
+       
+            ![img_9.png](algorithm/redblacktree/img_9.png)
+
+   2. 待删除结点是黑色，子结点是红色
+      
+      ![img_10.png](algorithm/redblacktree/img_10.png)
+
+      对策：
+      
+      1. 删除结点
+
+            ![img_11.png](algorithm/redblacktree/img_11.png)  
+
+      2. 该路径少一个黑色结点，将结点2变色
+
+            ![img_12.png](algorithm/redblacktree/img_12.png)  
+
+   3. 双黑结点(待删除结点是黑色，子结点也是黑色，或者子结点为空叶子结点)
+    
+        ![img_13.png](algorithm/redblacktree/img_13.png)
+
+      **以下情况均为子结点顶替父结点之后的子情况(此时子结点路径少了一个黑色结点)**
+      
+      1. 子情况1(共同减少结点)：结点2变为红黑树的根结点
+    
+            ![img_14.png](algorithm/redblacktree/img_14.png)
+
+            对策：
+
+            1. 无需调整，因为所有路径都减少了一个黑色结点
+      
+      2. 子情况2(共同减少结点)：结点2的父亲、兄弟、侄子结点都是黑色
+
+            ![img_15.png](algorithm/redblacktree/img_15.png)
+
+         对策：
+
+          1. 将结点2的兄弟结点变为红色：结点B所在路也径少一个黑色结点(同结点2一样)
+    
+                ![img_16.png](algorithm/redblacktree/img_16.png)
+    
+          2. 上述操作将导致结点A路径少一个黑色结点(相对结点A的兄弟结点而言)，递归结点A：让结点A扮演原结点2的角色递归重新判断
+
+      3. 子情况3(结点2变相增加父节点)：结点2的兄弟是红色
+
+         ![img_17.png](algorithm/redblacktree/img_17.png)
+
+         对策：
+
+          1. 以结点2的父结点A为轴，进行左旋转
+             
+                ![img_18.png](algorithm/redblacktree/img_18.png)
+
+          2. 结点B变黑色(不影响上层节点/结点B父结点)，结点A变红色(不影响C结点)
+    
+                ![img_19.png](algorithm/redblacktree/img_19.png)
+
+          3. 此时可转换成子情况4/5/6中的一种 
+
+      4. 子情况4：结点2父结点是红色，兄弟和侄子结点是黑色
+
+         ![img_20.png](algorithm/redblacktree/img_20.png)
+
+         对策：
+
+          1. 结点2的父结点A变黑色，兄弟结点B变红色
+
+             ![img_21.png](algorithm/redblacktree/img_21.png)
+
+      5. 子情况5：结点2父结点随意，兄弟结点B是黑色右孩子，左侄子结点是黑色，右侄子结点是黑色
+
+         ![img_22.png](algorithm/redblacktree/img_22.png)
+
+         对策：
+
+          1. 以结点2的兄弟结点B进行右旋转
+
+             ![img_23.png](algorithm/redblacktree/img_23.png)
+
+          2. 结点C变黑色，结点B变红色
+
+             ![img_24.png](algorithm/redblacktree/img_24.png)
+
+          3. 此时可变成情况6
+
+      6. 子情况6(结点2变相增加父结点)：结点2父结点随意，兄弟结点B是黑色右孩子，左侄子结点是黑色，右侄子结点是红色
+
+         ![img_25.png](algorithm/redblacktree/img_25.png)
+
+         对策：
+
+          1. 以结点2的兄弟结点A进行左旋转
+
+             ![img_26.png](algorithm/redblacktree/img_26.png)
+
+          2. 结点A和结点B颜色交换，结点D变为黑色
+
+             ![img_27.png](algorithm/redblacktree/img_27.png)

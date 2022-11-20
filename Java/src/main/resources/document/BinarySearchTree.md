@@ -29,6 +29,26 @@ c. 左、右子树也分别称为二叉排序树
 当新插入结点始终处在一侧子树(左/右)时，查找性能极差，几乎变成了线性查找
 ![BSTreeSample3.png](algorithm/bstree/BSTreeSample3.png)
 
+### 二叉树结点删除(TODO)
+
+1. 待删除结点没有子结点
+  ![BSTreeDeleteNoNode.png](algorithm/bstree/BSTreeDeleteNoNode.png)
+  对策：直接删除
+   ![BSTreeDeleteNoNodeSample.png](algorithm/bstree/BSTreeDeleteNoNodeSample.png)
+
+2. 待删除结点有一个孩子
+  ![BSTreeDeleteOneNode.png](algorithm/bstree/BSTreeDeleteOneNode.png)
+   对策：孩子结点取代被删除结点，孩子结点以下结点关系无需变更
+   ![BSTreeDeleteOneNodeSample.png](algorithm/bstree/BSTreeDeleteOneNodeSample.png)
+
+3. 待删除结点有两个孩子
+  ![BSTreeDeleteTwoNode.png](algorithm/bstree/BSTreeDeleteTwoNode.png)
+   对策：
+    1. 选择与删除结点最接近的结点来取代被删除结点，
+   如存在多个相似值(此处结点3、6)，习惯选取仅大于删除结点的结点
+   ![BSTreeDeleteTwoNodeSampleStep1.png](algorithm/bstree/BSTreeDeleteTwoNodeSampleStep1.png)
+    2. 删除多余结点
+    ![BSTreeDeleteTwoNodeSampleStep2.png](algorithm/bstree/BSTreeDeleteTwoNodeSampleStep2.png)
 
 
 

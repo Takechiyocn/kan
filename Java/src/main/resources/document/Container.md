@@ -17,7 +17,7 @@ Collection基本结构
 ### Map
 
 Map基本结构
-![MapBasicStructure.png](MapBasicStructure.png)
+![MapBasicStructure.png](container/MapBasicStructure.png)
 
 ### Java集合接口
 

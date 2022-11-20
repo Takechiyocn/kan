@@ -184,7 +184,7 @@ public class MySharedObject {
 
 ![img.png](JMM/ThreadStatus.png)
 
-![ThreadStatus2.png](ThreadStatus2.png)
+![ThreadStatus2.png](JMM/ThreadStatus2.png)
 
 #### 守护线程
 
