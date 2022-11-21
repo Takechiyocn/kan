@@ -10,8 +10,8 @@
 
 #### Java内存模型逻辑视图
 
-![JMMLogicView.png](JMM/JMMLogicView.png)
-![img_3.png](imgtmp/img_3.png)
+![JMMLogicView.png](../JMM/JMMLogicView.png)
+![img_3.png](../imgtmp/img_3.png)
 
     线程栈：线程拥有自己的线程栈，线程栈包含线程调用方法当前执行点相关信息，称调用栈(call stack)。
     线程间互不可见，且拥有相互独立的本地变量。
@@ -36,7 +36,7 @@
 * 方法区：
   * 存放JVM加载的类、常量及静态变量等信息
 
-![JMM1.png](JMM/JMM1.png)
+![JMM1.png](../JMM/JMM1.png)
       
 ```java
 public class MyRunnable implements Runnable() {
@@ -82,12 +82,12 @@ public class MySharedObject {
 
 #### Java内存模型和硬件内存架构之间的桥接
 
-![JMMAndHard.png](JMM/JMMAndHard.png)
+![JMMAndHard.png](../JMM/JMMAndHard.png)
 
 * 共享对象可见性
 
   如果两个或多个线程共享一个对象，而没有正确使用volatile声明或同步(synchronized)或final字段，那么一个线程对共享对象的更新可能对其他线程不可见。
-    ![JMMObjectVisible.png](JMM/JMMObjectVisible.png)
+    ![JMMObjectVisible.png](../JMM/JMMObjectVisible.png)
   
         可使用volatile避免上述冲突，volatile关键字可保证直接从主存中读取一个变量，
         如果该变量被修改，总是会被写回主存中
@@ -97,7 +97,7 @@ public class MySharedObject {
 
   多个线程共享同一对象，且多个线程更新该共享对象中的变量时，可能出现竞态条件
 
-    ![JMMRaceConditions.png](JMM/JMMRaceConditions.png)
+    ![JMMRaceConditions.png](../JMM/JMMRaceConditions.png)
   
         可使用Java同步块解决上述冲突
         Java同步块可保证同一时刻只有一个线程进入代码临界区，还可保证同步块中所有被访问的变量将会从主存中读入，
@@ -105,9 +105,9 @@ public class MySharedObject {
 
 #### CPU、缓存、主存
 
-![CPUAndMemory.png](JMM/CPUAndMemory.png)
+![CPUAndMemory.png](../JMM/CPUAndMemory.png)
 
-![JVMMemory.png](JMM/JVMMemory.png)
+![JVMMemory.png](../JMM/JVMMemory.png)
 
 #### long、double特殊规则
 
@@ -182,9 +182,9 @@ public class MySharedObject {
 > 一个没有捕获的异常终止了run方法而意外死亡
 >* stop方法可杀死一个线程，调用该方法抛出ThreadDeath错误对象。该方法已过时
 
-![img.png](JMM/ThreadStatus.png)
+![img.png](../JMM/ThreadStatus.png)
 
-![ThreadStatus2.png](JMM/ThreadStatus2.png)
+![ThreadStatus2.png](../JMM/ThreadStatus2.png)
 
 #### 守护线程
 
@@ -195,9 +195,9 @@ public class MySharedObject {
 
 #### 主存与JMM
 
-![ThreadAssign.png](imgtmp/img.png)
+![ThreadAssign.png](../imgtmp/img.png)
 
-![ThreadAssign2.png](imgtmp/img_1.png)
+![ThreadAssign2.png](../imgtmp/img_1.png)
 
 #### 主内存与工作内存交互
 
@@ -212,7 +212,7 @@ JMM定义8种原子操作完成主存与工作内存的交互
 * write：作用于主存，把store获取的值放入主存变量中
 * unlock：把主存中处于锁定状态的变量释放出来，释放后的变量才可被其他线程锁定
 
-  ![img_2.png](imgtmp/img_2.png)
+  ![img_2.png](../imgtmp/img_2.png)
 
 操作规则
 

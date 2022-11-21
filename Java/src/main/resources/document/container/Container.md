@@ -10,14 +10,14 @@ Java集合类型分为Collection和Map，它们是集合的根接口，这两个
 ### Collection
 
 Collection基本结构
-![CollectionBasicStructure.png](container/CollectionBasicStructure.png)
-![CollectionBasicStructure2.png](container/CollectionBasicStructure2.png)
-![CollectionBasicStructure3.png](container/CollectionBasicStructure3.png)
+![CollectionBasicStructure.png](images/CollectionBasicStructure.png)
+![CollectionBasicStructure2.png](images/CollectionBasicStructure2.png)
+![CollectionBasicStructure3.png](images/CollectionBasicStructure3.png)
 
 ### Map
 
 Map基本结构
-![MapBasicStructure.png](container/MapBasicStructure.png)
+![MapBasicStructure.png](images/MapBasicStructure.png)
 
 ### Java集合接口
 
@@ -55,15 +55,16 @@ public E set(int index,E element);
 public ListIterator<E> listIterator;
 ```
 
-### ArrayList和LinkedList区别
+### ArrayList、LinkedList、HashMap区别
 
-区别|ArrayList|LinkedList
----|---|---
+区别|ArrayList|LinkedList|HashMap
+---|---|---|---
 实现|基于数组实现|基于链表实现
-空间开辟|频繁进行空间开辟(数组扩容)|不需要
-元素访问(按索引)|随机高效O(1)|顺序高效，随机O(n)
-元素插入(按索引)|数组扩容&数组元素移动|相对高效
-数据存储|小数据|大数据或频繁移动、删除元素时
+空间开辟|频繁进行空间开辟(数组扩容)|不需要|[JDK7数组+链表][JDK8红黑树]
+元素访问(按索引)|随机高效O(1)|顺序高效，随机O(n)|-
+元素插入(按索引)|数组扩容&数组元素移动|相对高效|-
+数据存储|小数据|大数据|-
+使用场景|查询次数多(查询效率高)，且插入、删除元素次数少|查询次数不多，且频繁移动/插入、删除元素|查询/插入/删除元素效率高
 
 ### HashMap和HashTable区别
 
@@ -71,6 +72,7 @@ public ListIterator<E> listIterator;
 ---|---|---
 安全性|方法为异步操作，非线程安全|方法为同步操作，线程安全
 数据|可为空(null)|不能为空(null)
+性能|性能高|性能低
 
 ### HashMap扩容
 

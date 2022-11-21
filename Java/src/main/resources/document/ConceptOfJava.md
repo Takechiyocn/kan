@@ -592,7 +592,7 @@ private static int sumUp(int[]values){
 ![img_7.png](images/img_7.png)
 
 ### 集合框架接口
-![CollectionFrameInterface.png](container/CollectionFrameInterface.png)
+![CollectionFrameInterface.png](container/images/CollectionFrameInterface.png)
 
 ### 集合框架中的类
 ![ClassInCollectionFrame.png](images/ClassInCollectionFrame.png)

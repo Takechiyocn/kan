@@ -9,7 +9,7 @@
         即通过接口、抽象类来定义一个相对稳定的抽象层，
         将相同的可变因素封装在具体实现类中。
     
-![WindowsDisplay.png](images/WindowsDisplay.png)
+![WindowsDisplay.png](../images/WindowsDisplay.png)
 
 #### 单一职责原则
 

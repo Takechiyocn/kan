@@ -11,14 +11,14 @@
 * 业务数据大小->如存储文件很大则没有必要使用缓存
 
 #### Redis读逻辑
-![img_4.png](imgtmp/img_4.png)
+![img_4.png](../imgtmp/img_4.png)
 
 1. 第一次读取Redis失败(此时内存没有数据)，从数据库读取数据并写入Redis
 2. 第二次直接从Redis读取数据
 
 #### Redis写逻辑
 
-![img_5.png](imgtmp/img_5.png)
+![img_5.png](../imgtmp/img_5.png)
 
 更新或写入操作需要多个Redis操作，即如果业务数据写次数远大于读次数则没有必要使用Redis
 
@@ -27,7 +27,7 @@
 需要高速读写的场合使用它进行快速读写
 
 ##### 高速读写请求操作
-![img_6.png](imgtmp/img_6.png)
+![img_6.png](../imgtmp/img_6.png)
 
 1. Redis读写：请求到达服务器，只是将业务数据在Redis进行读写
 2. 持久化：请求操作完Redis读写后，判断高速读写业务是否结束(通常在秒杀商品为0/红包金额为0时成立)
@@ -51,28 +51,28 @@
 2. 序列化对象存入Redis缓存
 3. 取出时，通过转换器将序列化之后对象反序列化回对象
 
-![img_7.png](imgtmp/img_7.png)
+![img_7.png](../imgtmp/img_7.png)
 
 #### 集群
-![img_8.png](imgtmp/img_8.png)
+![img_8.png](../imgtmp/img_8.png)
 * 扩大缓存容量
 * 提升吞吐量 
 
 #### 主从复制
 
 ##### 一主一从
-![img_9.png](imgtmp/img_9.png)
+![img_9.png](../imgtmp/img_9.png)
 
 * 数据高可用：Master负责接收客户写请求，并同步到Slave实现数据备份；当Master挂了提升Slave为Master
 * 提高查询效率：忙碌时可将部分查询转发给Slave，即Master负责读写或者只负责写，Slave负责读
 
 ##### 一主多从
-![img_10.png](imgtmp/img_10.png)
+![img_10.png](../imgtmp/img_10.png)
 
 * Master进行数据备份工作量变大
 
 ##### Master/slave chains架构
-![img_11.png](imgtmp/img_11.png)
+![img_11.png](../imgtmp/img_11.png)
 
 #### Redis是什么
 
@@ -89,7 +89,7 @@
          7. 可作为消息中间件，支持发布订阅
 
 ##### Redis数据类型内存管理
-![img_12.png](imgtmp/img_12.png)
+![img_12.png](../imgtmp/img_12.png)
 
 1. String
 
@@ -121,7 +121,7 @@
        常用命令：zadd、zrange、zrem、zcard等
        sorted set可通过用户提供一个优先级(score)的参数来为成员排序，并且时插入有序的即自动排序。
        内部实现：内部使用HashMap和跳跃表skipList保证数据的存储和有序
-![img_13.png](imgtmp/img_13.png)
+![img_13.png](../imgtmp/img_13.png)
 
 #### Redis缓存
 
@@ -235,7 +235,7 @@ public static String getData(String key) throws InterruptedException {
 
 #### Redis淘汰策略
 
-![img_14.png](imgtmp/img_14.png)
+![img_14.png](../imgtmp/img_14.png)
 
 Redis4.0加入了LFU(least frequency use)淘汰策略，包括volatile-lfu和allkeys-lfu，通过统计访问频率，将访问频率最少，即最不经常使用的KV淘汰。
 

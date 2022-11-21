@@ -48,4 +48,4 @@
 * 静态显式类型 ：Java/C
 * 静态隐式类型 ：Ocaml, Haskell
 
-![img_1.png](images/img_1.png)
+![img_1.png](../images/img_1.png)

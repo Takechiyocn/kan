@@ -33,7 +33,7 @@ END CASE
 
 表结构如下：a 值为null, b值为1
 
-![img_6.png](images/img_6.png)
+![img_6.png](../images/img_6.png)
 
 现在实现，如果a值为null 则取b值，否则取a值
 

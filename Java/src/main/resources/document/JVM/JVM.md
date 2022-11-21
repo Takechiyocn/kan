@@ -26,7 +26,7 @@
 * 保存字节码文件，也就是.class文件
 * 常量池
 
-  ![ConstMemory.png](images/ConstMemory.png)
+  ![ConstMemory.png](../images/ConstMemory.png)
   * 定义变量时，栈内存存放的是常量池中常量对应的地址
 
 #### 本地方法区native method
@@ -41,7 +41,7 @@
 
 #### 数组动态初始化内存分布
 
-![JVMMemoryOfDynamicArray.png](images/JVMMemoryOfDynamicArray.png)
+![JVMMemoryOfDynamicArray.png](../images/JVMMemoryOfDynamicArray.png)
 
 #### 执行顺序
 1. 代码载入内存，到方法区
@@ -49,8 +49,8 @@
 3. 堆内存：new int型数组时，堆内存分配空间并初始化该对象(默认值)
 4. 栈内存：在main方法里分配一块空间(步骤2中分配的空间内分配)，用以存放数组名及new出来对象的堆内存地址
 
-![JVMMemoryOfDynamicArrays.png](images/JVMMemoryOfDynamicArrays.png)
+![JVMMemoryOfDynamicArrays.png](../images/JVMMemoryOfDynamicArrays.png)
 
 #### 数组静态初始化内存分布
 
-![JVMMemoryOfStaticArrays.png](images/JVMMemoryOfStaticArrays.png)
+![JVMMemoryOfStaticArrays.png](../images/JVMMemoryOfStaticArrays.png)

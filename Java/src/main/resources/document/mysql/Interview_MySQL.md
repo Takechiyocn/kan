@@ -2,7 +2,7 @@
 
 ### MySQL逻辑架构
 
-![MYSQL_Logic_Infrastructure.png](mysql/MYSQL_Logic_Infrastructure.png)
+![MYSQL_Logic_Infrastructure.png](images/MYSQL_Logic_Infrastructure.png)
 
 * **连接层**
   
@@ -78,7 +78,7 @@
 3. 服务器端SQL解析，预处理及优化后生成执行计划
 4. 调用存储引擎API执行
 5. 返回结果
-   ![MYSQL_WorkFlow.png](mysql/MYSQL_WorkFlow.png)
+   ![MYSQL_WorkFlow.png](images/MYSQL_WorkFlow.png)
 
 ### MYSQL读写锁
 
@@ -144,7 +144,7 @@ MYSQL事务特点：事务内的语句要么全部执行成功，要么全部执
     某个事务在读取某个范围内的记录时，会产生幻行
     
     幻读是指在一个事务内读取到了别的事务修改的数据，导致前后读取不一致
-    ![img_15.png](imgtmp/img_15.png)
+    ![img_15.png](../imgtmp/img_15.png)
   
 * 提交读/不可重复读Read Committed ->侧重于修改，对策：MVCC
 
@@ -205,23 +205,23 @@ MYSQL事务特点：事务内的语句要么全部执行成功，要么全部执
     * low_limit_id：当前**最大**事务号+1
       * 当事务号>=up_limit_id时，ReadView不可见
       * 即在创建Read View视图之后创建的事务对于该事务肯定是不可见的
-    ![ReadView.png](mysql/ReadView.png)
+    ![ReadView.png](images/ReadView.png)
     * 一致性视图Read View(事务开始时生成)
       * 不可重复读：每次读取数据前都生成一个Read View
       * 可重复读：第一次读取数据时生成一个Read View
     * 版本链操作
         1. 修改前
-           ![UndoLogBefore.png](mysql/UndoLogBefore.png)
+           ![UndoLogBefore.png](images/UndoLogBefore.png)
         2. 更新并提交事务
            ```mysql
            update user set name = '强哥1' where id = 1;
            ```
-             ![UndoLogUpdateCommit.png](mysql/UndoLogUpdateCommit.png)
+             ![UndoLogUpdateCommit.png](images/UndoLogUpdateCommit.png)
         3. 更新但不提交事务
            ```mysql
            update user set name = '强哥2' where id = 1;
            ```
-            ![UndoLogUpdate.png](mysql/UndoLogUpdate.png)
+            ![UndoLogUpdate.png](images/UndoLogUpdate.png)
            * select id = 1;
            * 新生成ReadView(事务初次开始时生成)
            * trx_ids=100，不可见
@@ -231,7 +231,7 @@ MYSQL事务特点：事务内的语句要么全部执行成功，要么全部执
              ```mysql
              update user set name = '强哥3' where id = 1;
              ```
-            ![UndoLogUpdate2.png](mysql/UndoLogUpdate2.png)
+            ![UndoLogUpdate2.png](images/UndoLogUpdate2.png)
             * 隔离级别：提交读/不可重复读Read Committed
                 * select id = 1;
                 * 重新生成ReadView(新事务)
@@ -273,7 +273,7 @@ Full-Text索引|支持|支持|不支持|
     对每一行数据，存储引擎对所有索引列计算一个哈希码并存储在索引中
     MySQL哈希表(buckets):哈希值+指向数据行的指针
 
-![HashCluster.png](mysql/HashCluster.png)
+![HashCluster.png](images/HashCluster.png)
 
     哈希冲突：散列码相同，需多次遍历冲突数据直到找到相应数据
     哈希索引效率低下：大量数据时，hash表变得庞大，每次查找都需要遍历哈希表，性能下降
@@ -423,14 +423,14 @@ MyISAM支持。基于相似度查询，即关键字匹配查询
     ```
 *  表数据
 
-    ![StudentContents.png](mysql/StudentContents.png)
+    ![StudentContents.png](images/StudentContents.png)
 
     * 主键索引：id
     * 非聚集索引：name，age
     
 * 聚集索引磁盘存储结构
 
-    ![AssembleIndex.png](mysql/AssembleIndex.png)
+    ![AssembleIndex.png](images/AssembleIndex.png)
 
     * 叶子结点：存储表里所有行数据
     * 每个数据页在不同磁盘上面
@@ -443,7 +443,7 @@ MyISAM支持。基于相似度查询，即关键字匹配查询
     
 * 非聚集索引
 
-    ![NonAssembleIndex.png](mysql/NonAssembleIndex.png)
+    ![NonAssembleIndex.png](images/NonAssembleIndex.png)
 
     * 叶子结点：存储聚集索引键
     * 数据查找（查找name=小徐）
@@ -476,7 +476,7 @@ MyISAM支持。基于相似度查询，即关键字匹配查询
     * 叶子结点包含所有数据和指向这些数据的指针
     * 叶子结点形成了自小向大的链表
     
-    ![B+TreeSample.png](mysql/B+TreeSample.png)
+    ![B+TreeSample.png](images/B+TreeSample.png)
 
     * 一个节点可存放多个数据，查找一个节点时候可以有多个元素，提高查找效率
     * 数据库索引很大，通常以文件形式存储在磁盘中，查找数据有磁盘I/O消耗，B+树可以减少与磁盘交互(因为一次查找可以得到多个数据)，增大命中率
@@ -488,13 +488,13 @@ MyISAM支持。基于相似度查询，即关键字匹配查询
         从根结点一直查找到叶子结点，即使中间结点有相应元素也需要继续查找(因为数据存储在叶子结点)
         
         查找元素3：
-        ![B+TreeSingleElementSearch.png](mysql/B+TreeSingleElementSearch.png)
+        ![B+TreeSingleElementSearch.png](images/B+TreeSingleElementSearch.png)
     
     * 范围查找
     
         直接从链表查
         查找元素3到元素8
-        ![B+TreeRangeElementSearch.png](mysql/B+TreeRangeElementSearch.png)
+        ![B+TreeRangeElementSearch.png](images/B+TreeRangeElementSearch.png)
   
 #### 联合主键
 
@@ -769,7 +769,7 @@ CHARACTER SET name|指定一个一个字符集
 1. 读写分离是将数据库分为主从库，一个主库用于写数据，多个从库用于读数据操作，主从库之间通过某种机制进行数据同步，称为读写分离架构或者分组架构
 2. 一个主从同步集群称为一个“分组”
 
-    ![img.png](mysql/ReadWriteSeperate.png)
+    ![img.png](images/ReadWriteSeperate.png)
 
        读写分离作用：用于解决数据库读性能瓶颈
        大多数业务读多写少，数据库读会首先成为数据库性能瓶颈，此时如果想提升数据库读性能，

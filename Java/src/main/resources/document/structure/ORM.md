@@ -40,10 +40,10 @@
         }
     ```
 #### 对象关系映射ORM
-![OrmSample.png](orm/OrmSample.png)
+![OrmSample.png](../orm/OrmSample.png)
 
 #### ORM结构
-![ORM.png](orm/ORM.png)
+![ORM.png](../orm/ORM.png)
 
 #### Java典型ORM
 
