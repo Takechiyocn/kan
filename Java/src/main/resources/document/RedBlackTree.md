@@ -148,6 +148,7 @@
  ![RedBlackTreePhase5SolutionStep2.png](algorithm/redblacktree/RedBlackTreePhase5SolutionStep2.png)
 
 #### 增加结点调整总结：1根2父黑3红(变色)4右(新结点父结点左旋转)5左(新结点祖父节点右旋转)
+1根腹黑红柚左
 
 #### 范例
 
@@ -284,7 +285,31 @@
 
  ![img_27.png](algorithm/redblacktree/img_27.png)
 
-#### 删除结点调整总结：1根2全(变色)3兄4(父节点左旋)父5左侄(父结点右旋)6右侄(父节点左旋)
+#### 删除结点调整总结：1根2全少(变色)3兄4(顶替节点的父节点左旋)父5左侄(顶替节点的父结点右旋)6右侄(顶替节点的父节点左旋)
+1根全少兄父左右
+
+#### 删除范例
+
+给定红黑树，删除结点17
+![RedBlackTreeDeleteSample.png](RedBlackTreeDeleteSample.png)
+
+1. 结点25复制到待删除结点17
+   ![RedBlackTreeDeleteSampleP1.png](RedBlackTreeDeleteSampleP1.png)
+   
+2. 待删除结点25是黑色，且子结点为空叶子结点(双黑结点)
+   
+    删除结点25，空叶子结点顶替父结点(删除的结点25)
+    ![RedBlackTreeDeleteSampleP2.png](RedBlackTreeDeleteSampleP2.png)
+   
+3. 符合子情况5的镜像
+    ![RedBlackTreeDeleteSampleP3.png](RedBlackTreeDeleteSampleP3.png)
+   
+4. 顶替节点的兄弟结点15为轴左旋转，变色=>变成子情况6的镜像
+    ![RedBlackTreeDeleteSampleP4.png](RedBlackTreeDeleteSampleP4.png)
+   
+5. 右旋转，变色
+    ![RedBlackTreeDeleteSampleP5.png](RedBlackTreeDeleteSampleP5.png)
+    ![RedBlackTreeDeleteSampleP6.png](RedBlackTreeDeleteSampleP6.png)
 
 ### 应用
 
