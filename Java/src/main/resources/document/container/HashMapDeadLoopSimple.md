@@ -38,7 +38,7 @@ JDK1.7版本中，扩容+头插法+链表+多线程并发导致HashMap死循环
 
     对于T1：结点B下一结点是A，即B.next = A;
 
-    对于T2：结点A下一结点是B，即A.next = A;
+    对于T2：结点A下一结点是B，即A.next = B;
    
     ![HashMapDeadLoopStep3.png](images/HashMapDeadLoopStep3.png)
 

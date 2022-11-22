@@ -37,7 +37,7 @@ public class HashMapBase {
         // 输出：4
         System.out.println("Map中key存在时，返回旧value：" + map.put("four", 44));
 
-        Map<String, Integer> map2 = new HashMap<>();
+        HashMap<String, Integer> map2 = new HashMap<>();
         System.out.println(map2.size());
     }
 }
