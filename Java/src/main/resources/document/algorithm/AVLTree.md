@@ -1,6 +1,6 @@
 ## AVLTree
 
-平衡二叉树
+平衡二叉搜索树(Self-balancing binary search tree)又称AVL树
 
 区别|红黑树|AVL树
 ---|---|---

@@ -31,6 +31,7 @@ void transfer(Entry[] newTable, boolean rehash) {
         while (null != e) {
             // 记录当前节点的next节点
             Entry<K, V> next = e.next;
+            // rehash需要重新计算所有key，效率低
             if (rehash) {
                 e.hash = null == e.key ? 0 : hash(e.key);
             }
@@ -45,12 +46,19 @@ void transfer(Entry[] newTable, boolean rehash) {
     }
 }
 
+// 判断是否需要重新计算hash值
 final boolean initHashSeedAsNeeded(int capacity) {
+  // hashSeed：HashMap初始化时设为0、currentAltHashing=false
   boolean currentAltHashing = hashSeed != 0;
+  // sun.misc.VM.isBooted()：虚拟机是否已经加载完成，完成为true
+  // 初始容量和本地方法返回值altThreshold大小(通常该值较大)比较
+  // Hashing=false
   boolean useAltHashing = sun.misc.VM.isBooted() &&
           (capacity >= Holder.ALTERNATIVE_HASHING_THRESHOLD);
+  // switching = false ^ false = false
   boolean switching = currentAltHashing ^ useAltHashing;
   if (switching) {
+    // HashMap容量未超过指定值，不用rehash，故不需要新的hashSeed
     hashSeed = useAltHashing
       ? sun.misc.Hashing.randomHashSeed(this)
       : 0;

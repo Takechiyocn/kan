@@ -57,14 +57,24 @@ public ListIterator<E> listIterator;
 
 ### ArrayList、LinkedList、HashMap区别
 
-区别|ArrayList|LinkedList|HashMap|AVLTreeBS|Tree
+区别|ArrayList|LinkedList|HashMap|AVLTree|BSTree
 ---|---|---|---|---|---
 实现|基于数组实现|基于链表实现
 空间开辟|频繁进行空间开辟(数组扩容)|不需要|数组+[JDK7:链表][JDK8:链表/红黑树]
-元素访问(按索引)|随机高效O(1)|顺序高效，随机O(n)|O(logN)|O(logN)|O(logN)~O(N)
+元素访问(按索引)|随机高效O(1)|顺序高效，随机O(n)|O(logN)~O(n)※|O(logN)|O(logN)~O(N)
 元素插入(按索引)|数组扩容&数组元素移动|相对高效|-
 数据存储|小数据|大数据|-
 使用场景|查询次数多(查询效率高)，且插入、删除元素次数少|查询次数不多，且频繁移动/插入、删除元素|查询/插入/删除元素效率高|频繁查找(增删看树调整程度)|
+
+※ key获取hash值定位到桶：O(1)
+
+※ 桶内元素：
+
+ * NULL(没有元素)：O(1)
+   
+ * 链表：O(n)
+   
+ * 红黑树：O(log(n))
 
 ### HashMap和HashTable区别
 
