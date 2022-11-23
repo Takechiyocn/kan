@@ -57,12 +57,12 @@ public class QueueClass {
  * 循环数组实现队列
  * @param <E>
  */
-class CirculeArrayQueue<E> implements Queue<E> {
+class CircleArrayQueue<E> implements Queue<E> {
     private int head;
     private int tail;
     private E[] elements;
 
-    CirculeArrayQueue(int capacity) {}
+    CircleArrayQueue(int capacity) {}
 
     @Override
     public boolean add(E e) {

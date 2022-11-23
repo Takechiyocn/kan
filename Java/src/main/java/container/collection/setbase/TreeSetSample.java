@@ -69,10 +69,16 @@ class Item implements Comparable<Item> {
         return Objects.hash(description, partNumber);
     }
 
+    /**
+     * 重写TreeSet默认Comparable接口中的compareTo方法
+     * @Params:   [o] 比较对象
+     * @Returns:  int 比较结果
+     */
     @Override
     public int compareTo(@NotNull Item o) {
-        // TODO:此处重写TreeSet默认Comparable接口中的compareTo方法，如何确定先按partNumber排序，再按description排序
         int diff = Integer.compare(this.partNumber, o.partNumber);
+        // diff!=0时即partNumber不一致则直接返回结果(大于0或者小于0)
+        // 否则继续比较description
         return diff != 0 ? diff : description.compareTo(o.description);
     }
 }

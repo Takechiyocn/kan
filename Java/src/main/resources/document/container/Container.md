@@ -26,7 +26,7 @@ Map基本结构
 Iterator接口|集合的输出接口，用于遍历Collection集合中的元素，Iterator对象称为迭代器。迭代器接口是集合Collection接口的父接口，实现类实现Collection接口时必须实现Iterator接口。
 Collection接口|List、Set、Queue的父接口，单值数据操作的最大接口。单值指集合中的每个元素都是一个对象。
 Queue接口|Java提供的队列实现，类似于List。
-Dueue接口|Queue的子接口，双端队列。
+Deque接口|Queue的子接口，双端队列。
 List接口|~~有序~~重复集合。可精确控制每个元素的插入位置，用户可使用索引(类似数组下标)访问List中的元素。
 Set接口|无重复元素。
 Map接口|存放一对值的最大接口，以key-value形式保存。
@@ -84,11 +84,15 @@ public ListIterator<E> listIterator;
 数据|可为空(null)|不能为空(null)
 性能|性能高|性能低
 
-### HashMap扩容
+### 队列
 
-* 初始化容量(扩充)为16
-* 当保存内容容量超过了域值(初始16)*0.75时，成倍(左移运算符1<<)地进行容量扩充
+#### 优先级队列
 
-```java
-static final int DEFAULT_INITIAL_CAPACITY = 1 << 4; // aka 16
-```
+特点
+
+1. 根据优先级进行排序，优先级高的先出队列
+
+2. 数字类型优先级队列：数字越小优先级越高
+
+3. 字符串类型优先级队列：ASCII位置越小优先级越高(字符0~9、A~Z、a~z)
+    

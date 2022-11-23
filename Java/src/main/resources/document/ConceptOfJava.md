@@ -515,14 +515,13 @@ lambda表达式就是闭包
   ![img_2.png](images/img_2.png)
   ![img_3.png](images/img_3.png)
 
-**TODO：包装器类**
+### 异常
 
-**异常**
+#### 异常层次结构
 
-*异常层次结构*
 ![img_4.png](images/img_4.png)
 
-### JAVA三种处理系统错误的机制
+#### JAVA三种处理系统错误的机制
 
 1. 抛出异常
 2. 使用断言
