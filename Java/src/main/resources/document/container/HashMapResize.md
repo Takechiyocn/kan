@@ -31,7 +31,14 @@ HashMap.size() >= threshold时扩容
 
 * loadFactor：负载因子(默认0.75)
 
-* newCapacity：扩容后容量/数组长度
+* newCapacity：扩容后容量/数组长度，为前次容量的2倍
+
+    * 此时newCapacity类似节点总数？
+  
+        ```java
+        // resize时建立新表(数组)：长度为Entry节点总数
+        Entry[] newTable = new Entry[newCapacity];
+        ```
 
 #### 扩容方式
 
@@ -44,21 +51,34 @@ HashMap使用位运算扩容即2的次幂/倍数扩容：
         * 原因：不同hash(hash = hash(key)经过&处理导致first相同，即元素位置(数组index)相同
           
           ```java
-          // 添加元素时计算该元素在集合中位置
-          // n：HashMap数组长度
-          (first = tab[(n - 1) & (hash = hash(key))]
+          // 添加元素时计算该元素在集合中位置(以下为缩略代码)
+          // length：HashMap数组长度
+          e = table[(length - 1) & (hash = hash(key))]
           ```
 2. 位运算高效(取模运算速度较低故不使用)
 
 #### hash碰撞
 
-HashMap同一位置存放多对key-value(链表上处于上下不同位置)的现象
+HashMap增加元素时，计算出的新元素位置和既有元素位置(数组index)相同，导致链表长度增加的现象，
+即HashMap同一位置(slot：槽位/数组index)存放多对key-value(多节点链表)
 
-hash碰撞发生后，后加入的值插入位置
+#### hash碰撞结果
 
-* JDK1.7：头插法加入表头
+* 单节点(链表) -> 多节点链表
+
+* hash碰撞发生后，后加入的元素
+
+    * JDK1.7：头插法加入表头
+    
+        * 扩容rehash时，旧链表迁移到新链表时，如果数组索引不变，则链表元素倒置：多线程迁移时将生成环
       
-* JDK1.8：插入表尾
+    * JDK1.8：插入表尾
+        
+        * 扩容rehash，检查原hash值新增bit
+    
+            * 新增bit=0：索引不变
+
+            * 新增bit=1：索引=元索引+oldCap
 
 hash碰撞范例
 
