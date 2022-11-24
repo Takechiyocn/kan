@@ -30,16 +30,17 @@ public class IteratorExceptionAvoid {
         ListIterator lit = list.listIterator();
         while (lit.hasNext()) {
             String string = (String) lit.next();
-            //
             if (string.equals("world")) {
+                // 使用迭代器修改元素，而非集合直接修改
                 lit.add("javaee");
             }
         }
 
-        // 解决方案2：集合遍历元素，集合修改元素（普通的for）：使用集合进行结构性修改，即元素跟在集合最后一个元素之后。
+        // 解决方案2：集合遍历元素，集合修改元素（标准for循环）：使用集合进行结构性修改，即元素跟在集合最后一个元素之后。
         for (int i = 0; i < list.size(); i++) {
             String s = (String) list.get(i);
             if (s.equals("world")) {
+                // 使用集合进行结构性修改
                 list.add("javaee2");
             }
         }

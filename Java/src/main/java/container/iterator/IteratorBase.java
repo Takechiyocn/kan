@@ -22,7 +22,7 @@ public class IteratorBase {
 
         // 集合基本接口：
         //  1. Collection
-        //     Set接口等同于Collection接口，但集（Set）的add方法不允许增加重复元素 -> 要重新定义集的equals方法和hashCode方法
+        //     集（Set）的add方法不允许增加重复元素 -> 要重新定义集的equals方法和hashCode方法
         //  2. Map
 
         // List
