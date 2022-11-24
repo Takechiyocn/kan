@@ -1,6 +1,8 @@
 package container.map;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -39,5 +41,26 @@ public class HashMapBase {
 
         HashMap<String, Integer> map2 = new HashMap<>();
         System.out.println(map2.size());
+
+        // HashMap由put维护键值对，应避免使用containsKey()方法
+        // 未优化
+        Map<String, List<Integer>> map3 = new HashMap<>();
+        List<Integer> valueList;
+        // containsKey：底层调用getNode()
+        if(map3.containsKey("a")) {
+            // get()：底层调用getNode()
+            valueList = map3.get("a");
+        } else {
+            valueList = new ArrayList<>();
+        }
+        valueList.add(1);
+
+        // 优化
+        Map<String, List<Integer>> map4 = new HashMap<>();
+        List<Integer> valueList2 = map4.get("a");
+        if (null == valueList2) {
+            valueList2 = new ArrayList<>();
+        }
+        valueList2.add(1);
     }
 }

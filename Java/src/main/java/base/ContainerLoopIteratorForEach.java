@@ -37,7 +37,7 @@ public class ContainerLoopIteratorForEach {
             add(new Employee("e4"));
         }};
 
-        // 1. 传统for循环(List集合才有get方法,HashSet实现Set接口)
+        // 1. 标准for循环(List集合才有get方法,HashSet实现Set接口)
         Iterator<Employee> iterator = employeeHashSet.iterator();
         for (int i = 0; i < employeeHashSet.size() && iterator.hasNext(); i++) {
             System.out.println("Iterator by Collection:" + iterator.next());

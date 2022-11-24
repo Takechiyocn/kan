@@ -53,7 +53,7 @@ public class IteratorBase {
     public static void listIteratorAccess(Collection<String> coll) {
 
         Iterator<String> iter = coll.iterator();
-        //  容器元素遍历1：传统循环迭代器
+        //  容器元素遍历1：迭代器
         //  与其他非Java迭代器区别：
         //     其他：如C++，迭代器根据数组索引建模。即给定迭代器，可查看指定位置上元素，类似给定数组索引i，可查看数组元素a[i]
         //     Java:顺序迭代，即只能顺序查看
@@ -62,7 +62,7 @@ public class IteratorBase {
             System.out.println("element: " + element);
         }
 
-        //  容器元素遍历2：for each(带有迭代器的循环)
+        //  容器元素遍历2：增强for循环(带有迭代器的循环:编译器优化成迭代器遍历)
         //              -> for each循环可与任何实现了Iterable接口的对象一起工作
         //                 interface iterable { Iterator<E> iterator(); }
         for (String element : coll) {
@@ -70,7 +70,7 @@ public class IteratorBase {
         }
 
         //  容器元素遍历3：lambda表达式
-        // iter迭代器在传统循环中已经迭代到末尾，故下列语句不输出元素
+        // iter迭代器在迭代器中已经迭代到末尾，故下列语句不输出元素
         iter.forEachRemaining(element -> System.out.println("element by lambda: " + element));
         // 建立新的匿名迭代器：coll.iterator()
         coll.iterator().forEachRemaining(element -> System.out.println("element by lambda: " + element));

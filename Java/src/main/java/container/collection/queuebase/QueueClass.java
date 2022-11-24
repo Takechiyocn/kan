@@ -3,10 +3,7 @@ package container.collection.queuebase;
 import org.jetbrains.annotations.NotNull;
 import org.omg.CosTrading.Link;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * 队列:接口与实现分离
@@ -50,6 +47,12 @@ public class QueueClass {
         el.poll();
         // 查找元素: element, 列表为空，抛出异常NoSuchElementException
         System.out.println(el.element());
+
+        // LinkedList实现了Queue接口，Queue窄化了对LinkedList方法的访问
+        // 即只能访问Queue接口中定义的方法，不能直接访问LinkedList的非Queue方法)
+        Queue<LinkedList> el2 = new ArrayDeque<>();
+        // 不能访问LinkedList中定义的方法
+//        el2.get(0);
     }
 }
 

@@ -76,6 +76,31 @@ public ListIterator<E> listIterator;
    
  * 红黑树：O(log(n))
 
+### Vector和ArrayList区别
+
+区别|Vector|ArrayList
+---|---|---
+实现|数组|数组
+安全性|方法同步，线程安全|线程非安全
+扩容|指定增长因子扩容(否则2倍扩容)|1.5倍扩容(当前长+当前长/2)
+性能|性能高|性能低(线程同步)
+
+※ 不推荐Vector原因
+
+  * vector线程安全，效率低，只能尾部增删，效率更低
+
+  * 空间满后扩容一倍，ArrayList扩容一半
+
+  * 分配内存需要连续的存储空间，数据太多容易内存分配失败
+
+### HashSet、TreeSet和LinkedHashSet
+
+区别|HashSet|TreeSet|LinkedHashSet
+---|---|---|---
+用途|通用的存储数据的集合|主要用于排序|用于保证FIFO即有序的集合(先进先出)
+速度|插入数据最快|较慢|最慢(内部实现排序)
+null数据|允许|允许|不允许
+
 ### HashMap和HashTable区别
 
 区别|HashMap|Hashtable
@@ -95,4 +120,48 @@ public ListIterator<E> listIterator;
 2. 数字类型优先级队列：数字越小优先级越高
 
 3. 字符串类型优先级队列：ASCII位置越小优先级越高(字符0~9、A~Z、a~z)
+
+### RandomAccess接口
+
+标记接口，内部不存在任何方法
+
+集合中RandomAccess标记接口用于标记该集合具备随机访问的能力，而不是提供了随机访问的能力
+
+集合通过RandomAccess标记接口来标记该结合自身支持随机访问，以便在一些框架或算法中根据是否实现了
+
+该接口而做出更好的决策(方法实现)
+
+* ArrayList底层由数组实现，支持随机访问(get)，故该集合实现了RandomAccess接口
+
+* LinkedList的底层由链表实现，因此它不支持随机访问，只支持顺序访问
+
+    * 链表(伪)随机访问(get):效率低(内部实现：从头开始，越过n-1个元素)
     
+    * get内部微小优化：如果index大于size()/2,从列表尾端开始搜索
+
+## 集合各子类使用场景
+
+可按照以下步骤判断使用哪个集合子类
+
+1. 元素唯一
+
+    1.  Set
+    
+        1. 排序？
+    
+            1. 是：TreeSet或LinkedHashSet
+    
+            2. 否：HashSet
+    
+2. 元素不唯一
+
+    1. 安全？
+    
+        1. 是：Vector
+    
+        2. 否：ArrayList或LinkedList
+    
+            1. 查询多：ArrayList
+               
+            2. 增删多：LinkedList
+
