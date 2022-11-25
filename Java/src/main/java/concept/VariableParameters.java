@@ -11,6 +11,7 @@ public class VariableParameters {
         double[] values = new double[]{2, 3.11, -1.0};
         System.out.println(max(values));
         System.out.println(max(1, 2, 3, 4));
+        // Object数组可存储不同数据结构（此处1转换成相应包装类Integer）
         System.out.printf("%d,%s", new Object[]{1, "test"});
     }
 

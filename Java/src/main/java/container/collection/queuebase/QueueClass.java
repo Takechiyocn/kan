@@ -32,19 +32,20 @@ public class QueueClass {
         //  b. poll:列表为空，返回null
         System.out.println(el.remove());
         System.out.println(el.poll());
-        System.out.println(el);
+        System.out.println("删除元素后：" + el);
 
         // 查找元素:从表前端
         //  a. element:列表为空，抛出异常NoSuchElementException
         //  b. peek:列表为空，返回null
         System.out.println(el.element());
-        System.out.println(el);
+        System.out.println("当前元素：" + el);
         System.out.println(el.peek());
-        System.out.println(el);
+        System.out.println("当前元素：" + el);
 
         el.poll();
         el.poll();
-        el.poll();
+        System.out.println("空队列peek()：" + el.peek());
+        System.out.println("空队列poll()：" + el.poll());
         // 查找元素: element, 列表为空，抛出异常NoSuchElementException
         System.out.println(el.element());
 

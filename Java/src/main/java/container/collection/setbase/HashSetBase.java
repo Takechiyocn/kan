@@ -9,6 +9,7 @@ import java.util.*;
 /**
  * 散列集HashSet：
  *    一个没有重复元素的无序集合,基于HashMap来实现，实际为HashMap实例
+ *    存储元素时，将值作为HashMap的key存储
  * <p>
  * 散列码：散列表为每个对象计算一个整数，该整数称为散列码
  *
