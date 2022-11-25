@@ -10,7 +10,7 @@
 
 #### Java内存模型逻辑视图
 
-![JMMLogicView.png](../JMM/JMMLogicView.png)
+![JMMLogicView.png](images/JMMLogicView.png)
 ![img_3.png](../imgtmp/img_3.png)
 
     线程栈：线程拥有自己的线程栈，线程栈包含线程调用方法当前执行点相关信息，称调用栈(call stack)。
@@ -36,7 +36,7 @@
 * 方法区：
   * 存放JVM加载的类、常量及静态变量等信息
 
-![JMM1.png](../JMM/JMM1.png)
+![JMM1.png](images/JMM1.png)
       
 ```java
 public class MyRunnable implements Runnable() {
@@ -82,12 +82,12 @@ public class MySharedObject {
 
 #### Java内存模型和硬件内存架构之间的桥接
 
-![JMMAndHard.png](../JMM/JMMAndHard.png)
+![JMMAndHard.png](images/JMMAndHard.png)
 
 * 共享对象可见性
 
   如果两个或多个线程共享一个对象，而没有正确使用volatile声明或同步(synchronized)或final字段，那么一个线程对共享对象的更新可能对其他线程不可见。
-    ![JMMObjectVisible.png](../JMM/JMMObjectVisible.png)
+    ![JMMObjectVisible.png](images/JMMObjectVisible.png)
   
         可使用volatile避免上述冲突，volatile关键字可保证直接从主存中读取一个变量，
         如果该变量被修改，总是会被写回主存中
@@ -97,7 +97,7 @@ public class MySharedObject {
 
   多个线程共享同一对象，且多个线程更新该共享对象中的变量时，可能出现竞态条件
 
-    ![JMMRaceConditions.png](../JMM/JMMRaceConditions.png)
+    ![JMMRaceConditions.png](images/JMMRaceConditions.png)
   
         可使用Java同步块解决上述冲突
         Java同步块可保证同一时刻只有一个线程进入代码临界区，还可保证同步块中所有被访问的变量将会从主存中读入，
@@ -105,9 +105,9 @@ public class MySharedObject {
 
 #### CPU、缓存、主存
 
-![CPUAndMemory.png](../JMM/CPUAndMemory.png)
+![CPUAndMemory.png](images/CPUAndMemory.png)
 
-![JVMMemory.png](../JMM/JVMMemory.png)
+![JVMMemory.png](images/JVMMemory.png)
 
 #### long、double特殊规则
 
@@ -182,9 +182,9 @@ public class MySharedObject {
 > 一个没有捕获的异常终止了run方法而意外死亡
 >* stop方法可杀死一个线程，调用该方法抛出ThreadDeath错误对象。该方法已过时
 
-![img.png](../JMM/ThreadStatus.png)
+![img.png](images/ThreadStatus.png)
 
-![ThreadStatus2.png](../JMM/ThreadStatus2.png)
+![ThreadStatus2.png](images/ThreadStatus2.png)
 
 #### 守护线程
 
