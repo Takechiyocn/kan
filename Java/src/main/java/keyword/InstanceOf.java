@@ -9,9 +9,12 @@ import java.util.List;
 
 /**
  * boolean result = obj instanceof Class:
- * obj:必须为引用类型或空类型null
- * Class:表示一个类或者一个接口
- * 判断结果:当obj为Class对象，或者是其直接或间接子类，或者是其接口的实现类，则返回true，否则返回false
+ *   obj:必须为引用类型或空类型null
+ *   Class:表示一个类或者一个接口
+ * 以下返回true，除此之外返回false:
+ *   1. obj为Class对象
+ *   2. obj为Class的直接或间接子类
+ *   3. obj为接口的实现类
  * 编译器会检查 obj 是否能转换成右边的class类型，如果不能转换则直接报错，如果不能确定类型，则通过编译，具体看运行时检查。
  * https://www.cnblogs.com/ysocean/p/8486500.html
  * @author moku

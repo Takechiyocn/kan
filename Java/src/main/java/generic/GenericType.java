@@ -17,7 +17,7 @@ import java.util.Arrays;
  * @date: 2021/2/23 22:37
  */
 @Slf4j
-public class GenericClass {
+public class GenericType {
     public static void main(String[] args) {
         // 数组列表只是表明该数组列表拥有保存10个元素的潜力
         // 未用add等方法追加元素前，数组列表中包含的实际元素数目为0

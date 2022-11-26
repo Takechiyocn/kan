@@ -1,21 +1,23 @@
-package generic;
+package generic.rawtype;
 
 /**
- * 定义泛型类型时，自动提供了一个相应的原始类型
- * 即
- * 1. 原始类型名字/类名：删除类型参数后的泛型类型名
- * 2. 擦除(erased)类型变量，并替换为限定(extends继承的接口/类， 如 <T extends Comparable>中的Comparable接口)类型（无限定的变量用Object替换）
+ * 定义泛型类型时，自动提供了一个相应的原始类型，原始类型可按照以下步骤获取：
+ *   1. 原始类型名字/类名：删除类型参数后的泛型类型名
+ *   2. 擦除(erased)类型变量，并做以下替换
+ *      a. 有限定类型，替换为相应限定类型(extends继承的接口/类，如<T extends Comparable>中的Comparable接口)
+ *      b. 无限定类型，替换为Object
+ * @author moku
  */
-public class PairRawType {
+public class GenericTypeCommonRawType {
     private Object first;
     private Object second;
 
-    public PairRawType() {
+    public GenericTypeCommonRawType() {
         this.first = null;
         this.second = null;
     }
 
-    public PairRawType(Object first, Object second) {
+    public GenericTypeCommonRawType(Object first, Object second) {
         this.first = first;
         this.second = second;
     }

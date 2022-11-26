@@ -1,12 +1,15 @@
-package generic;
+package generic.rawtype;
+
+import generic.GenericTypeCommon;
 
 import java.time.LocalDate;
 
-public class DateInterval extends Pair<LocalDate> {
+public class DateInterval extends GenericTypeCommon<LocalDate> {
 
     @Override
     public void setSecond(LocalDate second) {
-        if (second.compareTo(getFirst()) >= 0) {
+        LocalDate first = this.getFirst();
+        if ((null == first) || second.compareTo(first) >= 0) {
             super.setSecond(second);
         }
     }
@@ -25,18 +28,18 @@ public class DateInterval extends Pair<LocalDate> {
 
         DateInterval interval = new DateInterval();
         // 子类型转父类型
-        Pair<LocalDate> pair = interval;
-        // 类型擦除后，pair引用DateInterval对象，所以应该调用DateInterval类的方法
-        // 类型擦除引发多态，即Pair的setSecond(Object)与本类的setSecond(LocalDate)冲突
-        //   因为是继承， 父类的setSecond方法本应与子类的setSecond方法一样(方法签名一致)
+        GenericTypeCommon<LocalDate> gt = interval;
+        // 类型擦除后，gt引用DateInterval对象，所以应该调用DateInterval类的方法
+        // 类型擦除引发多态，即GenericTypeCommon的setSecond(Object)与本类的setSecond(LocalDate)冲突
+        //   因为是继承关系，父类的setSecond方法本应与子类的setSecond方法一样(方法签名一致)
         //  --> 编译器在本类中生成一个桥方法(bridge method)
         //      @Override
         //      public void setSecond(Object second) { setSecond(Date) second };
         // 执行过程：
         //    1.父类只有一个setSecond(Object)方法
-        //    2.pair引用为DateInterval类型，此时应调用子类重载的setSecond(Object)方法（桥方法）
+        //    2.gt引用为DateInterval类型，此时应调用子类重载的setSecond(Object)方法（桥方法）
         //    3.桥方法调用方法原始类型
         // 此处的setSecond(Object)和setSecond(LocalDate)方法被说成具有协变的返回类型(covariant return types)
-        pair.setSecond(LocalDate.now());
+        gt.setSecond(LocalDate.now());
     }
 }

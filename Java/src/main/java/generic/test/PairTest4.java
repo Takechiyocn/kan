@@ -1,6 +1,6 @@
 package generic.test;
 
-import generic.Pair;
+import generic.GenericTypeCommon;
 import occupation.Manager;
 
 import java.io.File;
@@ -18,10 +18,10 @@ public class PairTest4 {
         Manager ceo = new Manager("ceo",11,1990,1,1);
         Manager cfo = new Manager("cfo",11,1990,1,1);
 
-        Pair<Manager> managerPair = new Pair<>(ceo, cfo);
+        GenericTypeCommon<Manager> managerPair = new GenericTypeCommon<>(ceo, cfo);
         // 永远可以将**参数化类型(如Pair<Employee>)**转换为一个原始类型Pair
         // 因为参数化类型是原始类型的子类型
-        Pair rawBuddies = managerPair;
+        GenericTypeCommon rawBuddies = managerPair;
         // 产生一个编译警告
         // 能调用原因：类型擦除后参数化类型和原始类型均为Object类型，因此可以转换
         rawBuddies.setFirst(new File("test"));

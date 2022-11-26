@@ -2,7 +2,9 @@ package concept;
 
 /**
  * @ClassName Mod
- * @Description 取模取余
+ * @Description 取模取余：取模和取余在计算的目标上是一致的，只是商的不同，导致结果不同
+ *              1. 被除数、除数同号：结果相同
+ *              2. 被除数、除数不同号：结果不同
  * @Author moku
  * @Date 2022/11/22 1:56
  * @Version 1.0

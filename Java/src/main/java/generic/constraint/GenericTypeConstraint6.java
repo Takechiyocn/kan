@@ -1,4 +1,4 @@
-package generic.test;
+package generic.constraint;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
@@ -6,15 +6,15 @@ import java.util.function.IntFunction;
 
 /**
  * 约束与局限性6：不能实例化泛型数组实例，即不能使用new T[](...)来构造泛型对象
- * -> 可以声明域为泛型数组，但不能直接实例化
- * -> minmax中，类型擦除后数组为Comparable，不是本意
+ *   -> 可以声明域为泛型数组，但不能直接实例化
+ *   -> minmax中，类型擦除后数组为Comparable，不是本意
  * 解除约束：
- * 1. 实例化泛型数组实例：通过函数式接口
- * 2. 实例化泛型数组实例：通过反射
+ *   1. 实例化泛型数组实例：通过函数式接口
+ *   2. 实例化泛型数组实例：通过反射
  *
  * @param <E>
  */
-public class Pair2<E, U> {
+public class GenericTypeConstraint6<E, U> {
 
     /**
      * 声明泛型数组(未实例化)，数组为私有域
@@ -46,15 +46,16 @@ public class Pair2<E, U> {
     public <X> E getThird() {
         return elements[1];
     }
+
     // 返回不同类型的类型变量
     public <X> X getForth() {
         return (X)elements[1];
     }
 
-    public Pair2() {
+    public GenericTypeConstraint6() {
         // 小技巧：用Object掩盖泛型类型，以此实例化泛型数组
         // 此处强制类型转换是一个假象：类型擦除后使其无法察觉，即擦除后没有强制类型转换
-        // 类型擦除后：Object[] ?? = Object[] ?? --> OK
+        // 类型擦除后：Object[] obj1 = Object[] obj2 --> OK
         elements = (E[]) new Object[10];
     }
 
@@ -128,7 +129,7 @@ public class Pair2<E, U> {
         return (T[]) mm;
     }
 
-    public static void main(String[] args) {
+    public static void confirm() {
 
         // 错误2：运行时错误cast error
 //        String[] ss = minmax("Tom","Dick","Harry");
@@ -136,17 +137,17 @@ public class Pair2<E, U> {
         // 解除约束：
         //   1. 实例化泛型数组实例：通过函数式接口
         // 构造器表达式(方法引用)：指定参数，构造一个指定长度的String数组
-        String[] tt = Pair2.<String>minmiax2(String[]::new, "Tom", "Dick", "Harry");
+        String[] tt = GenericTypeConstraint6.<String>minmiax2(String[]::new, "Tom", "Dick", "Harry");
         System.out.println(Arrays.toString(tt));
         // TODO：推测4：下列能赋值的原因：
         //              a: minmiax2返回String[]，String实现了Comparable接口，下转上  -> 可能性大
         //              b: minmiax2返回Comparable接口类型 -> 可能性小
-        Comparable[] uu = Pair2.minmiax2(String[]::new, "Tom", "Dick", "Harry");
+        Comparable[] uu = GenericTypeConstraint6.minmiax2(String[]::new, "Tom", "Dick", "Harry");
         System.out.println(Arrays.toString(uu));
 
         // 解除约束：
         //   2. 实例化泛型数组实例：通过反射
-        String[] vv = Pair2.minmax3("Tom", "Dick", "Harry");
+        String[] vv = GenericTypeConstraint6.minmax3("Tom", "Dick", "Harry");
         System.out.println(Arrays.toString(vv));
     }
 }

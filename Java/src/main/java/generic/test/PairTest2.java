@@ -1,6 +1,6 @@
 package generic.test;
 
-import generic.Pair;
+import generic.GenericTypeCommon;
 
 /**
  *
@@ -8,7 +8,7 @@ import generic.Pair;
 public class PairTest2 {
     public static void main(String[] args) {
         String[] words = {"Mary", "had", "a", "little", "lamb"};
-        Pair<String> mm = ArrayAlg.minmax(words);
+        GenericTypeCommon<String> mm = ArrayAlg.minmax(words);
         System.out.println("min=" + mm.getFirst());
         System.out.println("max=" + mm.getSecond());
     }
@@ -18,7 +18,7 @@ public class PairTest2 {
  * 内部类实例化泛型函数
  */
 class ArrayAlg {
-    public static Pair<String> minmax(String[] a) {
+    public static GenericTypeCommon<String> minmax(String[] a) {
         if (a == null || a.length == 0) {
             return null;
         }
@@ -32,6 +32,6 @@ class ArrayAlg {
                 max = s;
             }
         }
-        return new Pair<>(min, max);
+        return new GenericTypeCommon<>(min, max);
     }
 }

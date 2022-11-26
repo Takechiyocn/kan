@@ -1,4 +1,4 @@
-package generic;
+package generic.rawtype;
 
 import java.io.Serializable;
 

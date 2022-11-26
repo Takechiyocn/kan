@@ -11,9 +11,9 @@ import java.util.function.Predicate;
 /**
  * 通配符的超类型限定:类似消费型函数式接口(只提供，写入泛型对象)Consumer，无返回值
  *  ->超类限定： 对超类进行限定， ？表示该通配符类型为超类
- *  ->Pair<? super XX>的继承关系跟Pair<? extends>相反
+ *  ->GenericTypeCommon<? super XX>的继承关系跟Pair<? extends>相反
  *  对于类型参数传递：
- *    a. 泛型继承角度来看，只能传递本类型对象或子类型对象，如Pair<Employee>、Pair<Object>
+ *    a. 泛型继承角度来看，只能传递本类型对象或子类型对象，如Pair<Employee>、GenericTypeCommon<Object>
  *    b. 从参数化类型角度来看，只能传递本类或超类对象，如参数化类型Manager的超类Employee、Object对象
  * 与通配符的子类型限定相反：
  *   a. 安全的更改器方法：只能传递类型参数类型或其子类型，如Manager或Executive；与类型参数传递相反
@@ -29,7 +29,7 @@ public class Wildcard2 {
      * @param m
      * @param result
      */
-    public static void minmaxBonus(Manager[] m, Pair<? super Manager> result) {
+    public static void minmaxBonus(Manager[] m, GenericTypeCommon<? super Manager> result) {
         if (m.length == 0) {
             return;
         }
@@ -63,15 +63,15 @@ public class Wildcard2 {
          */
         Employee e11 = new Employee("employee1");
         Employee e22 = new Employee("employee2");
-        Pair<Employee> ep = new Pair<>(e11, e22);
+        GenericTypeCommon<Employee> ep = new GenericTypeCommon<>(e11, e22);
         // 传递超类型
-        Pair<? super Manager> managerPair = ep;
+        GenericTypeCommon<? super Manager> managerPair = ep;
         // 传递子类型
         Executive ex11 = new Executive("ex11");
         Executive ex22 = new Executive("ex11");
-        Pair<Executive> exp = new Pair<>(ex11, ex22);
+        GenericTypeCommon<Executive> exp = new GenericTypeCommon<>(ex11, ex22);
         // 编译错误
-//        Pair<? super Manager> managerPair2 = ep;
+//        GenericTypeCommon<? super Manager> managerPair2 = ep;
 
         // 安全的更改器： --> 和通配符类型子类型配合使用，一个更改，一个获取？？？（都是对参数化类型子类型进行操作）
         //   编译器无法知道set方法的具体类型，因此不能接收参数化类型的超类型，只能接收参数化类型或其子类型对象
@@ -82,14 +82,14 @@ public class Wildcard2 {
 
 //        Executive ex1 = new Executive("ex1");
 //        Executive ex2 = new Executive("ex2");
-        Pair<Executive> executivePair = new Pair<Executive>();
+        GenericTypeCommon<Executive> executivePair = new GenericTypeCommon<Executive>();
         // 不能传递类型参数的子类型对象，此处Pair<Executive>为Pair<? super Manager>超类型
         // 下列类型转换错误
 //        minmaxBonus(mm, executivePair);
 
 //        Employee e1 = new Employee("employee1");
 //        Employee e2 = new Employee("employee2");
-        Pair<Employee> employeePair = new Pair<>();
+        GenericTypeCommon<Employee> employeePair = new GenericTypeCommon<>();
         // 可以传递子类型对象Pair<Employee>或Pair<Object>
         // 用法1: 类似消费型函数式接口(只提供，写入泛型对象)Consumer，无返回值
         minmaxBonus(mm, employeePair);
@@ -112,7 +112,7 @@ public class Wildcard2 {
                 LocalDate.of(1815, 12, 10),
                 LocalDate.of(1910, 6, 22),
         };
-        LocalDate localDateMin = Pair.min2(birthdays);
+        LocalDate localDateMin = GenericTypeCommon.min2(birthdays);
         System.out.println("min测试:LocalDate min=" + localDateMin);
 
         /**

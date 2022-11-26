@@ -106,7 +106,7 @@ public strictfp class Test() {
 
 * 隐式参数（implicit）：出现在方法名前的类对象，亦即方法调用的目标或者接收者
 * 静态域（所有对象共有）：private static int nextId;
-* 域常量（只能初始化一次）：private final int id;
+* 常量域（只能初始化一次）：private final int id;
 * 静态常量：public static final double PI = 3.14;
 * 静态方法：一种不能向对象实施操作的方法，也就是说没有隐藏参数(this参数)。如：Math.pow(x, a)
     * 静态方法不能访问实例域， 但是可以访问静态域。

@@ -74,8 +74,8 @@ public class PrintfSample {
      * 自定义泛型方法
      * 尖括号内T：范型的类型变量
      * 调用泛型方法时，方法名前的尖括号中放入具体类型
-     * 如：Pair.<String>getMiddle("john","abc");
-     * 如：Pair.<double>getMiddle(3.14,172,0);
+     * 如：GenericTypeCommon.<String>getMiddle("john","abc");
+     * 如：GenericTypeCommon.<double>getMiddle(3.14,172,0);
      *
      * @param a
      * @param <T>
