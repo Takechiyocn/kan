@@ -50,7 +50,7 @@
     }
     ```
    
-    ![JavaBeanDBMapping.png](images/JavaBeanDBMapping.png)
+    ![JavaBeanDBMapping.png](images/bean/JavaBeanDBMapping.png)
 
 2. 封装逻辑的JavaBean
 

@@ -14,7 +14,7 @@ public class ConstantsBase {
     public static final String INTEGER_PARAMETER = "int";
 
     /**
-     * integer
+     * Integer
      */
     public static final int INTEGER_1 = 1;
     public static final int INTEGER_2 = 2;

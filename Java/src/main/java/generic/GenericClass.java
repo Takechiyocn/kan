@@ -1,4 +1,4 @@
-package concept;
+package generic;
 
 import occupation.Employee;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +19,7 @@ import java.util.Arrays;
 @Slf4j
 public class GenericClass {
     public static void main(String[] args) {
-        // 数组列表只是表明该数组列表拥有保存10个元素的潜力（实际重新分配空间将会超过100）
+        // 数组列表只是表明该数组列表拥有保存10个元素的潜力
         // 未用add等方法追加元素前，数组列表中包含的实际元素数目为0
         ArrayList<String> arrayList = new ArrayList<>(10);
         System.out.println("声明数组列表后，数组列表未分配空间，即size=" + arrayList.size());
@@ -37,7 +37,7 @@ public class GenericClass {
         Integer c = 1000;
         Integer d = 1000;
         // a进入缓存池，b公用该缓存池
-        // Integer缓存池默认大小-127~128，因此c并未进入缓存池
+        // Integer缓存池默认大小-128~127，因此c并未进入缓存池
         System.out.println("Equal compare use ==:" + (a == b));
         System.out.println("Equal compare use equals:" + a.equals(b));
         System.out.println("Equal compare use ==:" + (c == d));
