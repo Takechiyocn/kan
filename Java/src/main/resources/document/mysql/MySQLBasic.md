@@ -18,13 +18,15 @@
 * 要识别运行服务器中的任何对象，您需要(数据库名称对象名称)
   在MySQL中创建一个Schema和创建一个Database的效果是一样的
 
-* 在Oracle：
+*在Oracle：*
 
 * server instance == database == catalog == 所有数据由同一个执行引擎管理
 * schema == 数据库中的命名空间，与用户帐户相同
 * user == schema owner == 命名的帐户，与模式相同，谁可以连接到数据库，谁拥有模式和可能在其他模式中使用对象
 * 要识别运行服务器中的任何对象，您需要(模式名称对象名称)
+  
   在Oracle数据库中不能新建一个schema，要想创建一个schema，只能通过创建一个用户的方法解决， 在创建一个用户的同时为这个用户创建一个与用户名同名的schema并作为该用户的缺省schema。
+  
   即schema的个数同user的个数相同，而且schema名字同user名字一一 对应并且相同
 
 ### Mysql大小写敏感问题
@@ -43,7 +45,7 @@
 ### Mysql版本
 
 ```mysql
-  mysql -V;
+mysql -V;
 status;
 select version();
 ```
@@ -52,18 +54,18 @@ select version();
 
 * 服务状态查看(可先通过services.msc查看版本号(服务名)，powershell管理者查看)
 
-```mysql
+  ```mysql
   net start
-mysql80(版本号);
-mysqld --console;
-```
+  mysql80(版本号);
+  mysqld --console;
+  ```
 
 * 服务停止
 
-```mysql
+  ```mysql
   net stop
-mysql80;
-```
+  mysql80;
+  ```
 
 ###  
 
@@ -71,48 +73,62 @@ mysql80;
 
 ### 关键字
 
-* having：过滤分组，而where过滤指定的行而不是分组（where没有分组概念）
+* having：过滤分组
+  
+* where：过滤指定的行而不是分组（where没有分组概念）
 
-区别
+### 建表
+  
+```mysql
+-- 连接
+-- mysql -h主机地址 -u用户名 -p用户密码
+-- git bash连接数据库
+-- winpty mysql -h主机地址 -u用户名 -p用户密码
+-- 查看所有数据库
+show databases;
+-- 选择指定数据库
+use XXXX;
+-- 查看当前选择的数据库1:show tables的第一行
+show tables;
+-- 查看当前选择的数据库2:select database()
+select database();
+-- 查看当前选择的数据库3:status中查看
+status;
+-- 查看表结构
+desc XXXX;
+describe XXXX;
+-- 查看表字段全部信息
+SHOW FULL COLUMNS FROM orders;
 
-    where过滤行
-    having过滤分组
+-- 建库、建表、赋权限
+-- 建库
+create databse XXXX;
+-- 删库
+drop database XXXX;
+-- 建表
+create table XXXX(字段列表);
+-- 删表
+drop table XXXX；
+-- 修改表名
+alter table table1 rename [to/as] table2;
+-- 修改表名：迁移表
+rename table users.student to mybatis2.student;
 
-### 基本查询
+-- 增加主键
+alter table table_name add primary key(column_name);
+-- 删除主键
+--  1. 如有自增，先删除自增
+alter table table_name change id id int;
+--  2. 删除主键
+alter table table_name drop primary key;
+-- 增加自增
+alter table table_name modify id int auto_increment;
+-- 增加字段为主键并自增
+alter table table_name add column column_name column_type primary key auto_increment;
 
-* 连接
-  
-      mysql -h主机地址 -u用户名 -p用户密码
-  
-* 查看所有数据库
-  
-      show databases;
-  
-* 选择指定数据库
-  
-      use XXXX;
-  
-* 查看当前选择的数据库1:show tables的第一行
-  
-      show tables;
-      select database();
-      status;
-  
-* 查看表结构
-  
-      desc XXXX;
-      describe XXXX;
-  
-* 查看表字段全部信息
-
-      SHOW FULL COLUMNS FROM orders;
-
-* 建库、建表、赋权限
-
-  * 建库
-  
-        create databse XXXX;
-  * 删库
-    
-        drop database XXXX;
-  
+-- 删除字段
+alter table table_name drop column column_name;
+-- 增加字段
+alter table table_name add column column_name column_type;
+alter table table_name add column(column_name column_type, column2 column2Type);
+```
