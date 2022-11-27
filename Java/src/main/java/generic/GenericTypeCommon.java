@@ -20,7 +20,11 @@ package generic;
  *   4.为保持类型安全性，必要时插入强制类型转换
  * 泛型用处：
  *   主要目标是允许泛型代码和遗留代码之间能够互操作
- * 约束与局限性： {@link generic.GenericTypeConstraint}
+ * 约束与局限性：{@link generic.GenericTypeConstraint}
+ * 通配符限定：{@link generic.wildcard.WildcardSubType}
+ *           {@link generic.wildcard.WildcardSupperType}
+ *           {@link generic.wildcard.WildcardNoType}
+ *           {@link generic.wildcard.WildcardTypeCapture}
  *
  * @author: Kan
  * @date: 2021/3/10 0:24

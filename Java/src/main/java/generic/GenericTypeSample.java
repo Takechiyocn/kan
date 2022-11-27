@@ -1,6 +1,4 @@
-package generic.test;
-
-import generic.GenericTypeCommon;
+package generic;
 
 import java.time.LocalDate;
 
@@ -9,7 +7,7 @@ import java.time.LocalDate;
  * @author: Kan
  * @date: 2021/3/10 0:30
  */
-public class PairTest {
+public class GenericTypeSample {
     public static void main(String[] args) {
         String[] words = {"Mary", "had", "a", "little", "lamb"};
         // 泛型实现String对比

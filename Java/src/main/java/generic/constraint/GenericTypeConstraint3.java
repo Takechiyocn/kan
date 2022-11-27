@@ -19,6 +19,7 @@ public class GenericTypeConstraint3 {
     public static void confirm() {
         // 编译错误：generic array creation
         // GenericTypeCommon<Integer>[] gArray = new GenericTypeCommon<Integer>[10];
+        // a. 声明通配类型的泛型数组，然后进行强制类型转换
         GenericTypeCommon<String>[] gtArray = (GenericTypeCommon<String>[]) new GenericTypeCommon<?>[10];
         // 能赋值原因：范类型运行时只检查原始类型
         Object[] objArray = gtArray;

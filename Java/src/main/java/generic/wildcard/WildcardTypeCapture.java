@@ -1,5 +1,6 @@
-package generic;
+package generic.wildcard;
 
+import generic.GenericTypeCommon;
 import occupation.Employee;
 import occupation.Manager;
 
@@ -8,10 +9,10 @@ import static generic.wildcard.WildcardSupperType.minmaxBonus;
 /**
  * 捕获通配符
  * 约束：编译器必须能够确信通配符表达的是单个、确定的类型
- *   -> ArrayList<GenericTypeCommon<T>中的T则不能捕获ArrayList<GenericTypeCommon<?>中的通配符，
- *      因为数组列表可以保存多个Pair<?>，分别针对不同的类型
+ *   -> ArrayList<GenericTypeCommon<T>>中的T则不能捕获ArrayList<GenericTypeCommon<?>中的通配符，
+ *      因为数组列表可以保存多个GenericTypeCommon<?>，分别针对不同的类型
  */
-public class Wildcard4 {
+public class WildcardTypeCapture {
 
     /**
      * 交换成对元素
@@ -60,10 +61,10 @@ public class Wildcard4 {
         mm[1].setBonus(2000);
         Employee e1 = new Employee("employee1");
         Employee e2 = new Employee("employee2");
-        GenericTypeCommon<Employee> employeePair = new GenericTypeCommon<>();
-        System.out.println("交换前：First["+ employeePair.getFirst() + "], Second[" + employeePair.getSecond() + "]");
-        // 交换元素：使之-> 最大->first， 最小->second
-        maxminBonus(mm, employeePair);
-        System.out.println("交换后：First["+ employeePair.getFirst() + "], Second[" + employeePair.getSecond() + "]");
+        GenericTypeCommon<Employee> gtEmployee = new GenericTypeCommon<>();
+        System.out.println("交换前：First["+ gtEmployee.getFirst() + "], Second[" + gtEmployee.getSecond() + "]");
+        // 交换元素：最大=first，最小=second
+        maxminBonus(mm, gtEmployee);
+        System.out.println("交换后：First["+ gtEmployee.getFirst() + "], Second[" + gtEmployee.getSecond() + "]");
     }
 }

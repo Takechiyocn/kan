@@ -1,23 +1,22 @@
-package generic.test;
-
-import generic.GenericTypeCommon;
+package generic;
 
 /**
  *
+ * @author moku
  */
-public class PairTest2 {
+public class GenericTypeInInnerClass {
     public static void main(String[] args) {
         String[] words = {"Mary", "had", "a", "little", "lamb"};
-        GenericTypeCommon<String> mm = ArrayAlg.minmax(words);
-        System.out.println("min=" + mm.getFirst());
-        System.out.println("max=" + mm.getSecond());
+        GenericTypeCommon<String> gt = InnerClass.minmax(words);
+        System.out.println("min=" + gt.getFirst());
+        System.out.println("max=" + gt.getSecond());
     }
 }
 
 /**
  * 内部类实例化泛型函数
  */
-class ArrayAlg {
+class InnerClass {
     public static GenericTypeCommon<String> minmax(String[] a) {
         if (a == null || a.length == 0) {
             return null;
