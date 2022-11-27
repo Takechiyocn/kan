@@ -3,7 +3,7 @@ package generic;
 import occupation.Employee;
 import occupation.Manager;
 
-import static generic.Wildcard2.minmaxBonus;
+import static generic.wildcard.WildcardSupperType.minmaxBonus;
 
 /**
  * 捕获通配符

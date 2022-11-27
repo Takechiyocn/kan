@@ -1,5 +1,6 @@
-package generic;
+package generic.wildcard;
 
+import generic.GenericTypeCommon;
 import occupation.Employee;
 
 import java.io.File;
@@ -7,7 +8,7 @@ import java.io.File;
 /**
  * 无限定通配符
  */
-public class Wildcard3 {
+public class WildcardNoType {
 
     /**
      * 特点：

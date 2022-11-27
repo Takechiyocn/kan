@@ -19,8 +19,8 @@ import generic.constraint.GenericTypeConstraint6;
  *         a. 声明通配类型数组，然后进行强制类型转换
  *         b. 通过可变参数与泛型结合
  *     -> 泛型数组列表：安全
- * 5. 不能实例化类型变量/不能实例化泛型<T>实例，即不能用new T(...)
- * 6. 不能实例化泛型数组实例，即不能使用new T[](...)来构造泛型对象
+ * 5. 泛型类中，不能实例化泛型<T>实例/不能实例化类型变量，即不能用new T(...)
+ * 6. 泛型类中，不能实例化泛型数组实例，即不能使用new T[](...)来构造泛型对象
  *     -> 可实例化泛型类型的数组，即泛型类型确定化，与新建对象如new Employee类似。
  *        --> 消除泛型数组限制(上述6)
  *            a. 实例化泛型数组实例：通过函数式接口
@@ -71,6 +71,18 @@ public class GenericTypeConstraint {
         //  -> 原因：类型擦除后类运行时为同一个类，而静态变量又称为类变量，即一个类所有的对象共享静态变量。
         //          类型变量(此处为域变量T xxx)由不同类型实例化后，具体指向不清楚。如Person和Student类型实例化后，instance指向不明
         // 参见下列内部类：class Singleton
+//        class Singleton<T> {
+//            // 报错
+//            private static T instance;
+//            // 报错
+//            public static T getInstance(){
+//                if(instance != null) {
+//                    return instance;
+//                } else {
+//                    return null;
+//                }
+//            }
+//        }
 
         // 约束与局限性8：不能抛出或捕获泛型类的实例，泛型类也不能扩展Throwable
 
@@ -94,15 +106,4 @@ public class GenericTypeConstraint {
 //        abstract class Manager extends Employee1 implements Comparable<Manager> {
 //        }
     }
-
-    // 约束与局限性7：泛型类中的类型变量在静态上下文中无效，即不能在静态变量或者静态方法中引用类型变量（静态方法中的参数可以为类型变量）
-//    class Singleton<T> {
-//        // 报错
-//        private static T instance;
-//        // 报错
-//        public static T getInstance(){
-//            if(instance != null)
-//                return instance;
-//        }
-//    }
 }

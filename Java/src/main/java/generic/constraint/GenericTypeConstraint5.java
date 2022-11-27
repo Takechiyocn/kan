@@ -8,7 +8,7 @@ import java.util.function.Supplier;
 /**
  * @ClassName GenericTypeConstraint5
  * @Description 约束与局限性5：
- *                 不能实例化泛型实例，即不能使用new T(...)来构造泛型对象
+ *                 泛型类中，不能实例化泛型实例，即不能使用new T(...)来构造泛型对象
  *                 规避方法：
  *                   a. 通过供给型接口Supplier
  *                   b. 通过反射

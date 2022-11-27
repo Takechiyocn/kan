@@ -7,12 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * @description: 泛型
- *               数组列表ArrayList
- *               泛型类（generic class）
- *               添加元素：obj.add(new Object(...))
- *               改变数组元素：obj.set(i, new Object(...))  --> 只能替换数组列表中已经存在的元素内容
- *               访问数组元素：obj.get(i)
+ * @description: 泛型概述
  * @author: Kan
  * @date: 2021/2/23 22:37
  */

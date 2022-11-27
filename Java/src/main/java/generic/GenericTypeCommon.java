@@ -20,18 +20,7 @@ package generic;
  *   4.为保持类型安全性，必要时插入强制类型转换
  * 泛型用处：
  *   主要目标是允许泛型代码和遗留代码之间能够互操作
- * 约束与局限性：
- *   6. 不能实例化泛型<T>数组
- *      -> 可实例化泛型类型的数组，即泛型类型确定化，与新建对象如new Employee类似。
- *        --> 消除泛型数组限制(上述6)
- *        a. 实例化泛型数组实例：通过函数式接口
- *        b. 实例化泛型数组实例：通过反射
- *   7. 泛型类中的类型变量在静态上下文中无效，即不能在静态变量或者静态方法中引用类型变量（静态方法中的参数可以为类型变量）
- *   8. 不能抛出或捕获泛型类的实例，泛型类也不能扩展Throwable
- *   9：消除对受查异常的检查，即让编译器认为是一个非受查异常
- *      {@link exception.ExceptionWithGeneric}
- *   10：注意擦除后的冲突
- *      {@link GenericTypeCommon#equals2(Object)}}
+ * 约束与局限性： {@link generic.GenericTypeConstraint}
  *
  * @author: Kan
  * @date: 2021/3/10 0:24
@@ -72,11 +61,12 @@ public class GenericTypeCommon<T> {
      * GenericTypeCommon<T>的equals(T)方法在类型擦除后和Object的equals(Object)方法发生冲突（因为没有重写）
      * 重写时，equals方法签名的参数类型应该与被重写方法(此处Object的equals)的类型(Object类型)一致
      * 以下为Object equals 方法原型
-     * public boolean equals(Object obj) {
-     * return (this == obj);
-     * }
+     *   public boolean equals(Object obj) {
+     *       return (this == obj);
+     *   }
      */
-//    boolean equals(T value) {
+//    @Override
+//    public boolean equals(T value) {
 //        return first.equals(value) && second.equals(value);
 //    }
     public boolean equals2(T value) {

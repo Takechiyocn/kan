@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.function.IntFunction;
 
 /**
- * 约束与局限性6：不能实例化泛型数组实例，即不能使用new T[](...)来构造泛型对象
+ * 约束与局限性6：泛型类中，不能实例化泛型数组实例，即不能使用new T[](...)来构造泛型对象
  *   -> 可以声明域为泛型数组，但不能直接实例化
  *   -> minmax中，类型擦除后数组为Comparable，不是本意
  * 解除约束：
@@ -34,7 +34,7 @@ public class GenericTypeConstraint6<E, U> {
      *    由于属于不同的类型变量，故不能转换，编译错误。
      * -> 解决方法：使用不同的类型变量
      * <p>
-     * 将导致getSecond方法的类型变量<E>中的E和泛型类定义的类型变量进行强制类型转换
+     * 将导致getSecond方法的类型参数<E>中的类型变量E和泛型类定义的类型变量进行强制类型转换
      *
      * @return
      */
@@ -84,7 +84,7 @@ public class GenericTypeConstraint6<E, U> {
         // 此处强制类型转换是一个假象：类型擦除后使其无法察觉，即擦除后没有强制类型转换
         // 类型擦除后：(T[]) mm 变为 Object[] mm  --> OK
         //     返回时：Object[] mm 内部强制转换为限定类型 Comparable[] ??  （上转下NG） --> NG:cast error
-        //  TODO: 编译能通过原因：有强制类型转换(此时T为未知类型)且不涉及到类型擦除？，运行时调用虚拟机才涉及到类型擦除（此时T为Comparable类型）？
+        //  TODO: 编译能通过原因：有强制类型转换((T[])、此时T为未知类型)且不涉及到类型擦除？，运行时调用虚拟机才涉及到类型擦除（此时T为Comparable类型）？
         return (T[]) mm;
     }
 
@@ -98,7 +98,7 @@ public class GenericTypeConstraint6<E, U> {
      * @param <T>
      * @return
      */
-    public static <T extends Comparable> T[] minmiax2(IntFunction<T[]> constr, T... a) {
+    public static <T extends Comparable> T[] minmax2(IntFunction<T[]> constr, T... a) {
 
         // TODO: 推测2：由于使用函数式接口，类型擦除后下列变量T变为调用元的String类型？，a依旧为Object类型？
         T[] mm = constr.apply(2);
@@ -132,22 +132,22 @@ public class GenericTypeConstraint6<E, U> {
     public static void confirm() {
 
         // 错误2：运行时错误cast error
-//        String[] ss = minmax("Tom","Dick","Harry");
+//        String[] sArray = minmax("Tom","Dick","Harry");
 
         // 解除约束：
         //   1. 实例化泛型数组实例：通过函数式接口
         // 构造器表达式(方法引用)：指定参数，构造一个指定长度的String数组
-        String[] tt = GenericTypeConstraint6.<String>minmiax2(String[]::new, "Tom", "Dick", "Harry");
-        System.out.println(Arrays.toString(tt));
+        String[] sArray2 = GenericTypeConstraint6.<String>minmax2(String[]::new, "Tom", "Dick", "Harry");
+        System.out.println(Arrays.toString(sArray2));
         // TODO：推测4：下列能赋值的原因：
         //              a: minmiax2返回String[]，String实现了Comparable接口，下转上  -> 可能性大
         //              b: minmiax2返回Comparable接口类型 -> 可能性小
-        Comparable[] uu = GenericTypeConstraint6.minmiax2(String[]::new, "Tom", "Dick", "Harry");
-        System.out.println(Arrays.toString(uu));
+        Comparable[] cArray = GenericTypeConstraint6.minmax2(String[]::new, "Tom", "Dick", "Harry");
+        System.out.println(Arrays.toString(cArray));
 
         // 解除约束：
         //   2. 实例化泛型数组实例：通过反射
-        String[] vv = GenericTypeConstraint6.minmax3("Tom", "Dick", "Harry");
-        System.out.println(Arrays.toString(vv));
+        String[] sArray3 = GenericTypeConstraint6.minmax3("Tom", "Dick", "Harry");
+        System.out.println(Arrays.toString(sArray3));
     }
 }

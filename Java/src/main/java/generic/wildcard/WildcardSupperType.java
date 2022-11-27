@@ -1,5 +1,6 @@
-package generic;
+package generic.wildcard;
 
+import generic.GenericTypeCommon;
 import occupation.Employee;
 import occupation.Executive;
 import occupation.Manager;
@@ -10,19 +11,20 @@ import java.util.function.Predicate;
 
 /**
  * 通配符的超类型限定:类似消费型函数式接口(只提供，写入泛型对象)Consumer，无返回值
- *  ->超类限定： 对超类进行限定， ？表示该通配符类型为超类
- *  ->GenericTypeCommon<? super XX>的继承关系跟Pair<? extends>相反
+ *   ->超类限定： 对超类进行限定， ？ super表示该通配符类型为超类
+ *   ->GenericTypeCommon<? super XX>的继承关系跟GenericTypeCommon<? extends XX>相反
  *  对于类型参数传递：
- *    a. 泛型继承角度来看，只能传递本类型对象或子类型对象，如Pair<Employee>、GenericTypeCommon<Object>
+ *    a. 泛型继承角度来看，只能传递本类型对象或子类型对象，如GenericTypeCommon<Employee>、GenericTypeCommon<Object>
  *    b. 从参数化类型角度来看，只能传递本类或超类对象，如参数化类型Manager的超类Employee、Object对象
  * 与通配符的子类型限定相反：
- *   a. 安全的更改器方法：只能传递类型参数类型或其子类型，如Manager或Executive；与类型参数传递相反
+ *   a. 安全的更改器方法：更改时只能传递类型参数类型或其子类型，如Manager或Executive；与类型参数传递相反
  *   b. 不安全的访问器方法：不能保证返回对象类型，只能赋给Object
  * 用法：
- *   a. 解除泛型类型参数化对象之间无关联限制，对泛型接口的绑定进行支持
- *   b. 对函数式接口类型进行支持
+ *   a. 安全的更改器
+ *   b. 解除泛型类型参数化对象之间无关联限制，对泛型接口的绑定进行支持
+ *   c. 对函数式接口类型进行支持
  */
-public class Wildcard2 {
+public class WildcardSupperType {
 
     /**
      * 用法1: 类似消费型函数式接口(只提供，写入泛型对象)Consumer，无返回值
@@ -61,48 +63,48 @@ public class Wildcard2 {
         /**
          * 安全的更改器方法测试
          */
-        Employee e11 = new Employee("employee1");
-        Employee e22 = new Employee("employee2");
-        GenericTypeCommon<Employee> ep = new GenericTypeCommon<>(e11, e22);
+        Employee e1 = new Employee("employee1");
+        Employee e2 = new Employee("employee2");
+        Manager m1 = new Manager("m2");
+        Manager m2 = new Manager("m2");
+        Executive ex1 = new Executive("ex2");
+        Executive ex2 = new Executive("ex2");
+        GenericTypeCommon<Employee> gtEmployee = new GenericTypeCommon<>(e1, e2);
+        GenericTypeCommon<Manager> gtManager = new GenericTypeCommon<>(m1, m2);
+        GenericTypeCommon<Executive> gtExecutive = new GenericTypeCommon<>(ex1, ex2);
         // 传递超类型
-        GenericTypeCommon<? super Manager> managerPair = ep;
-        // 传递子类型
-        Executive ex11 = new Executive("ex11");
-        Executive ex22 = new Executive("ex11");
-        GenericTypeCommon<Executive> exp = new GenericTypeCommon<>(ex11, ex22);
-        // 编译错误
-//        GenericTypeCommon<? super Manager> managerPair2 = ep;
+        GenericTypeCommon<? super Manager> gtManager2 = gtEmployee;
+        // 传递本类型(无意义，必然成功)
+        GenericTypeCommon<? super Manager> gtManager3 = gtManager;
+        // 传递子类型：编译错误
+//        GenericTypeCommon<? super Manager> gtManager2 = gtExecutive;
+//        minmaxBonus(mm, gtExecutive);
+        // 传递超类型
+        // 用法1: 类似消费型函数式接口(只提供，写入泛型对象)Consumer，无返回值
+        minmaxBonus(mm, gtEmployee);
 
         // 安全的更改器： --> 和通配符类型子类型配合使用，一个更改，一个获取？？？（都是对参数化类型子类型进行操作）
         //   编译器无法知道set方法的具体类型，因此不能接收参数化类型的超类型，只能接收参数化类型或其子类型对象
-        managerPair.setFirst(ex11);
-        // 不安全的访问器：不能保证返回对象类型
-        // 以下编译错误
-//        Executive ex22 = managerPair.getFirst();
-
-//        Executive ex1 = new Executive("ex1");
-//        Executive ex2 = new Executive("ex2");
-        GenericTypeCommon<Executive> executivePair = new GenericTypeCommon<Executive>();
-        // 不能传递类型参数的子类型对象，此处Pair<Executive>为Pair<? super Manager>超类型
-        // 下列类型转换错误
-//        minmaxBonus(mm, executivePair);
-
-//        Employee e1 = new Employee("employee1");
-//        Employee e2 = new Employee("employee2");
-        GenericTypeCommon<Employee> employeePair = new GenericTypeCommon<>();
-        // 可以传递子类型对象Pair<Employee>或Pair<Object>
-        // 用法1: 类似消费型函数式接口(只提供，写入泛型对象)Consumer，无返回值
-        minmaxBonus(mm, employeePair);
+        //   1. 设置参数化类型的超类型对象：NG
+//        gtManager2.setFirst(e1);
+        //   2. 设置参数化类型本类型对象：OK
+        gtManager2.setFirst(m1);
+        //   3. 设置参数化类型的子类型对象：OK
+        gtManager2.setFirst(ex1);
+        // 不安全的访问器：不能保证返回对象类型 -> 以下编译错误
+//        Employee e3 = gtManager2.getFirst();
+//        Manager m3 = gtManager2.getFirst();
+//        Executive ex3 = gtManager2.getFirst();
 
         /**
          * 用法2：解除泛型类型参数化对象之间无关联限制，对泛型接口的绑定进行支持
          *
          * 绑定（绑定为什么不用关键字implements相关，绑定更贴近子类的概念）extends Comparable<T>接口时：
-         *   表示类型变量T实现了Comparable接口，所以相当于T直接重写Override Comparable的compareTo方法），而不是其超类实现该接口。
+         *   表示类型变量T实现了Comparable接口，所以相当于T直接重写(Override)Comparable的compareTo方法，而不是其超类实现该接口。
          *   如{@link occupation.Employee#compareTo(Employee)}
          * 使用类型参数限定<T>后，由于参数化类型LocalDate没有重写compareTo方法，
          * 而是其超类重写了该方法且参数化类型为ChronoLocalDate,即Comparable<ChronoLocalDate>
-         * ***类型参数限定***(所谓限定即, 将类型参数调用元限定为固定类型，如String，LocalDate)要求LocalDate类型的Comparable实现，
+         * ***类型参数限定***(所谓限定,即将类型参数调用元限定为固定类型，如String，LocalDate)要求LocalDate类型的Comparable实现，
          * 即Comparable<LocalDate>，这将导致语法错误
          *   public static <T extends Comparable<T>> T min2(T[] a) {}
          * 需要通过通配符类型超类型限制消除该错误
