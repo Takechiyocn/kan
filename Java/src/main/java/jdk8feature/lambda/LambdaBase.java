@@ -12,7 +12,7 @@ import java.util.function.Consumer;
  *               定义：对于只有一个抽象方法的接口，需要这种接口的对象时，
  *                    可以提供一个lambda表达式，这种接口称为函数式接口，可以用@FunctionalInterface修饰一下
  *               特点：1. Lambda并不是任何地方都可以使用，Lambda表达式需要“函数式接口”的支持。
- *                    2. 未使用 @FunctionalInterfaces注解的接口未必就不是函数式接口，
+ *                    2. 未使用@FunctionalInterface注解的接口未必就不是函数式接口，
  *                    3. 一个接口是不是函数式接口的条件只有一条，即接口中只有一个抽象方法的接口（Object类中的方法不算）。
  *                       而使用@FunctionalInterface注解修饰了的接口就一定是函数式接口，添加@FunctionalInterface注解可以帮助我们检查是否是函数式接口。
  * @author moku
@@ -21,7 +21,7 @@ import java.util.function.Consumer;
 public class LambdaBase {
     public static void main(String[] args) throws InterruptedException {
         LambdaBase test = new LambdaBase();
-        // 创建线程：匿名内部类
+        // 创建线程：匿名内部类/局部内部类实现
         test.threadPrint();
 
         // 创建线程：lambda表达式(Runnable是函数式接口)
@@ -31,7 +31,7 @@ public class LambdaBase {
         test.timerPrint();
 
         // 语法格式1：无参数，无返回值(Runnable接口)
-        test.threadPrintLambda("语法格式1");
+        test.threadPrintLambda("语法格式1:无参数，无返回值");
 
         // 语法格式2：1个参数，无返回值(Consumer消费型接口)
         test.doPrint("语法格式2:1个参数，无返回值");
@@ -46,8 +46,7 @@ public class LambdaBase {
         // 语法格式5：lambda表达式的数据类型可以省略不写（JVM编译器通过上下文可以推断出数据类型）
         System.out.println(test2.multi(10, 5));
 
-        // 语法格式6：无个参数，有返回值(供给型Supplier接口)
-
+        // 语法格式6：无参数，有返回值(供给型Supplier接口)
     }
 
     /**
@@ -63,7 +62,7 @@ public class LambdaBase {
         });
         thread.start();
 
-        // 方法2：内部局部类
+        // 方法2：局部内部类
         class CustomThread implements Runnable {
             @Override
             public void run() {
@@ -86,7 +85,7 @@ public class LambdaBase {
         //    public abstract void run();
         // 方法，该方法未执行任何操作。
         // 解读：
-        //  1. <( -> System.out.println("Hello, Lambda!" + text);>整体为函数式接口Runnable对象
+        //  1. () -> {System.out.println("Hello, Lambda!" + text);}整体为函数式接口Runnable对象
         //  2. lambda实现了该接口方法run，即
         //     <System.out.println(msg+str)> == run方法体
         //  3. thread的start方法执行后，新启一个线程执行run方法
@@ -97,7 +96,7 @@ public class LambdaBase {
                 () -> {
                     // lambda表达式的体与嵌套块有相同作用域，以下会报错
 //                    String text = "ss";
-                    System.out.println(text + ":Hello, Lambda!" );
+                    System.out.println(text + "Hello, Lambda!" );
                 }
         );
         thread.start();
@@ -138,9 +137,9 @@ public class LambdaBase {
         //        };
         //  2. lambda实现了该接口方法accept，即
         //     <System.out.println(msg+str)> == accept方法体
-        //  3. 如果该接口没有显示说明复写接口方法执行时机，则需自己执行该方法
-        print(" test", (str) -> System.out.println(msg+str));
+        //  3. 如果该接口没有显示说明复写接口方法执行时机(非回调)，则需自己执行该方法
+        //  4. lambda表达式的数据类型可以省略不写（JVM编译器通过上下文可以推断出数据类型）
+        print(" test", (String str) -> System.out.println(msg+str));
         print(" test", str -> System.out.println(msg+str+"2"));
     }
-
 }

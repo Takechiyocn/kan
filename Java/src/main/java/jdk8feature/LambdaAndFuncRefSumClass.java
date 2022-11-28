@@ -11,7 +11,7 @@ import java.util.function.BiFunction;
  *               定义：对于只有一个抽象方法的接口，需要这种接口的对象时，
  *                    可以提供一个lambda表达式，这种接口称为函数式接口，可以用@FunctionalInterface修饰一下
  *               特点：1. Lambda并不是任何地方都可以使用，Lambda表达式需要“函数式接口”的支持。
- *                    2. 未使用 @FunctionalInterfaces注解的接口未必就不是函数式接口，
+ *                    2. 未使用 @FunctionalInterface注解的接口未必就不是函数式接口，
  *                    3. 一个接口是不是函数式接口的条件只有一条，即接口中只有一个抽象方法的接口（Object类中的方法不算）。
  *                       而使用@FunctionalInterface注解修饰了的接口就一定是函数式接口，添加@FunctionalInterface注解可以帮助我们检查是否是函数式接口。
  * @author: Kan

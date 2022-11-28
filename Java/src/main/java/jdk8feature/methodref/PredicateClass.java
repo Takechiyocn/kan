@@ -18,6 +18,8 @@ public class PredicateClass {
       System.out.println("Before remove, size:" + str.size());
       // 静态方法引用
       str.removeIf(Objects::isNull);
+      // lambda表达式
+      str.removeIf(e -> Objects.isNull(e));
       System.out.println("After remove, size:" + str.size());
    }
 }

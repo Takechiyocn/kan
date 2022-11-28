@@ -12,9 +12,20 @@ package innerclass;
  *      1. 普通内部类(推荐？) {@link innerclass.InnerClassNormal}
  *      2. 静态内部类：又称静态嵌套类 {@link innerclass.InnerClassStatic}
  *    b. Oracle不推荐使用(非静态内部类) {@link innerclass.InnerClassStatic}
- *      1. 局部内部类：又称局部类 {@link innerclass.InnerClassLocal}
- *      2. 匿名内部类 {@link innerclass.InnerClassAnonymous}
- *                  {@link innerclass.InnerClassAnonymousLambda}
+ *      1. 局部内部类(定义在方法体内)：又称局部类 {@link innerclass.InnerClassLocal}
+ *      2. 匿名内部类(定义在初始化赋值)：
+ *         a. 常规匿名内部类 {@link innerclass.InnerClassAnonymous}
+ *            FunctionalInterface obj = new FunctionalInterface {
+ *              // 此处实现可视为一个FunctionalInterface对象
+ *              @Override
+ *              // 抽象方法实现
+ *            }
+ *            同匿名数组：int[] intArrayStaticInitialization = new int[]{100, 200, 300};
+ *         b. lambda匿名内部类 {@link innerclass.InnerClassAnonymousLambda}
+ *            //  此处实现可视为一个FunctionalInterface对象
+ *            (抽象方法参数xxx) -> {
+ *               // 抽象方法实现
+ *            }
  *
  *  内部类和局部(内部)类特点：
  *    1.外围类域成员类型没有限制，内部类域成员不能为静态

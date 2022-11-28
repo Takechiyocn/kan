@@ -16,10 +16,10 @@ public class ActionEventLocal {
      * @param actionEvent
      */
     public void greet(ActionEvent actionEvent)  {
-        System.out.println("Hello, world! Event:" + actionEvent);
+        System.out.println("Hello, world! Event:[" + actionEvent + "]");
     }
 
     public void greet2(Supplier<String> msg, ActionEvent actionEvent)  {
-        System.out.println("Hello, world! Event:" + actionEvent);
+        System.out.println("Hello, world! Event:[" + actionEvent + "] and Msg:" + msg.get());
     }
 }

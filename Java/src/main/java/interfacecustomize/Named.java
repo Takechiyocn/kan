@@ -23,7 +23,7 @@ public interface Named {
 
     /**
      * 实现类应覆盖该方法
-     * 默认方法以外的方法不能有方法体
+     * 默认方法以外的方法不能有方法体：TODO：Comparator.java中有非默认方法存在方法体
      * 以下方法省略public
      * @return
      */

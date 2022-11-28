@@ -20,6 +20,8 @@ public class MethodReference2InstanceMethod extends ActionEventLocal {
     public static void main(String[] args) {
 
         Person person = new Person("user name", 22);
+        person.setMessage("msg set OK.");
+
         // 函数式接口变量
         Supplier<String> supplier1 = () -> person.getName();
         //  -> 未明确说明复写方法get(此处：() -> person.getName())的执行时机，
@@ -46,13 +48,22 @@ public class MethodReference2InstanceMethod extends ActionEventLocal {
         Timer t2 = new Timer(5000, (e) -> super.greet(e));
         Timer t3 = new Timer(5000, (e) -> super.greet2(person::getMessage,e));
 
+
+        // 方法引用时，谁调用谁负责参数的传递：此处Timer到时后发送一个信号给注册到Timer的监听器listener:System.out::println
+        // 实例方法引用
+        Timer tt = new Timer(10000, System.out::println);
+
         // ActionListener接口的抽象方法必须复写，即下列方法必须实现（带有参数）
         // super的greet方法必须有该参数
         //   public void actionPerformed(ActionEvent e);
-        Timer tt = new Timer(2000, super::greet);
-        // TODO: 实例方法引用带有参数
-//        Timer tt2 = new Timer(2000, super::greet2);
-        tt.start();
+        Timer tt2 = new Timer(2000, super::greet);
+        tt2.start();
+
+        // TODO: 实例方法引用带有参数，无法实现：方法引用参数由调用者隐式传递给方法
+//        Timer tt3 = new Timer(2000, super::greet2);
+
+        t3.start();
+
         JOptionPane.showConfirmDialog(null, "Quit?");
     }
 }

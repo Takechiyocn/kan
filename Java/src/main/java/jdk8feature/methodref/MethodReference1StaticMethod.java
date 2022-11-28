@@ -68,7 +68,7 @@ public class MethodReference1StaticMethod {
         List<Integer> list = Arrays.asList(22, 11, 10, 80, 35);
         // default void sort(Comparator<? super E> c) {}
         // 用Integer的静态方法实现Comparator的compare方法，即
-        //   Comparator.compare = Integer::compare;
+        //   Comparator.compare() = Integer::compare;
         list.sort(Integer::compare);
         log.info("静态方法引用2" + list.toString());
     }
