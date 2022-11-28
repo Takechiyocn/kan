@@ -13,25 +13,25 @@ import java.util.Date;
  * @author: Kan
  * @date: 2021/3/4 22:22
  */
-public class TalkingClockLocalClass {
+public class InnerClassLocal {
     // 外围类域类型：没有限制
     private static int interval;
     private boolean beep;
     private static final String name = "moku";
     private String subname = "kan";
 
-    public TalkingClockLocalClass(int interval, boolean beep) {
+    public InnerClassLocal(int interval, boolean beep) {
         this.interval = interval;
         this.beep = beep;
     }
 
-    public TalkingClockLocalClass() {
+    public InnerClassLocal() {
         this.interval = 1000;
         this.beep = false;
     }
 
     /**
-     * 局部类：为什么可以局部类可以访问参数变量
+     * 局部类：为什么局部类可以访问参数变量
      *        -> 由于生命周期不同，start调用后，内部变量会被销毁，就会出现内部类非法引用，但是作用域范围相关(该内部类的作用域就在该方法体内)
      *           因此下列参数应定义为final boolean beep(因为不是包装类型，java按引用传递，不能改变引用指向，可改变引用指向的地址存放的值)，
      *           但JDK1.8后编译器将局部变量默认为final型，因此可以省略final关键字
@@ -54,7 +54,7 @@ public class TalkingClockLocalClass {
 
             // 内部类域成员不能为静态
             // 可以为内部类声明静态常量(static final)
-            private static final String NAME = "aa";
+            private static final String NAME = "[inner definition2]";
             private static final int AGE = 10;
             public static final char CHAR_TEST= 'c';
             // 静态常量编译时确定值，而new只有在运行时堆中开辟空间创建对象。
@@ -62,12 +62,15 @@ public class TalkingClockLocalClass {
 //        private static final Person PERSON_TEST = new Person("user",12);
 //        private static String name0 = "moku2";
             private static final String name2 = "moku2";
+            // 默认final类型，无法二次修改
             private String subname2 = "kan2";
+            // 二次修改报错
+//            subname2 = "kan22";
 
             @Override
             public void actionPerformed(ActionEvent event) {
-                System.out.println("[innerLocalClassAccessByPara]At the one, the time is " + new Date() + ", Name:" + name + ",Subname:" +subname);
-                System.out.println("[innerLocalClassAccessByPara]Name2:" + name2 + ",Subname2:" +subname2);
+                System.out.println("[局部内部类访问外围类成员2]At the one, the time is " + new Date() + ", Name outer:" + name + ", Name inner:" + NAME  + ", Subname:" +subname);
+                System.out.println("[局部内部类访问内部类成员2]Name2:" + name2 + ", Subname2:" +subname2);
                 // start方法销毁后，final类型的beep作用域并未消失，还在内存中
                 if (beep) {
                     Toolkit.getDefaultToolkit().beep();
@@ -86,7 +89,7 @@ public class TalkingClockLocalClass {
 
             // 内部类域成员不能为静态
             // 可以为内部类声明静态常量(static final)
-            private static final String NAME = "aa";
+            private static final String NAME = "[inner definition]";
             private static final int AGE = 10;
             public static final char CHAR_TEST= 'c';
             // 静态常量编译时确定值，而new只有在运行时堆中开辟空间创建对象。
@@ -98,8 +101,8 @@ public class TalkingClockLocalClass {
 
             @Override
             public void actionPerformed(ActionEvent event) {
-                System.out.println("[innerLocalClassAccessByField]At the one, the time is " + new Date() + ", Name:" + name + ", Subname:" +subname);
-                System.out.println("[innerLocalClassAccessByField]Name2:" + name2 + ", Subname2:" +subname2);
+                System.out.println("[局部内部类访问外围类成员]At the one, the time is " + new Date() + ", Name outer:" + name + ", Name inner:" + NAME  + ", Subname:" +subname);
+                System.out.println("[局部内部类访问内部类成员]Name2:" + name2 + ", Subname2:" +subname2);
                 if (beep) {
                     Toolkit.getDefaultToolkit().beep();
                 }
@@ -110,4 +113,19 @@ public class TalkingClockLocalClass {
         ActionListener actionListener = new TimerPrinter();
         new Timer(interval, actionListener).start();
     }
+
+    public static void main(String[] args) {
+
+        // 局部内部类：访问外围类（包含类）成员
+        InnerClassLocal icl1 = new InnerClassLocal(2000, true);
+        icl1.start();
+
+        // 局部内部类：参数变量
+        InnerClassLocal icl2 = new InnerClassLocal();
+        icl2.start(2000, true);
+
+        JOptionPane.showConfirmDialog(null, "Quit?");
+        System.exit(0);
+    }
+
 }

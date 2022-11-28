@@ -11,7 +11,7 @@ import java.util.Date;
  * @author: Kan
  * @date: 2021/3/4 22:49
  */
-public class TalkingClockAnonymousLocalClass {
+public class InnerClassAnonymous {
     // 外围类域类型：没有限制
     private static int interval;
     private boolean beep;
@@ -23,7 +23,7 @@ public class TalkingClockAnonymousLocalClass {
         ActionListener listener = new ActionListener() {
             // 内部类域成员不能为静态
             // 可以为内部类声明静态常量(static final)
-            private static final String NAME = "aa";
+            private static final String NAME = "[inner definition]";
             private static final int AGE = 10;
             public static final char CHAR_TEST= 'c';
             // 静态常量编译时确定值，而new只有在运行时堆中开辟空间创建对象。
@@ -35,13 +35,20 @@ public class TalkingClockAnonymousLocalClass {
 
             @Override
             public void actionPerformed(ActionEvent event) {
-                System.out.println("At the one, the time is " + new Date() + "Name:" + name + ",Subname:" +subname);
-                System.out.println("Name2:" + name2 + ",Subname2:" +subname2);
+                System.out.println("At the one, the time is " + new Date() + ", Name outer:" + name + ", Name inner:" + NAME  + ", Subname:" +subname);
+                System.out.println("Name2:" + name2 + ", Subname2:" +subname2);
                 if (beep) {
                     Toolkit.getDefaultToolkit().beep();
                 }
             }
         };
         new Timer(interval, listener).start();
+    }
+
+    public static void main(String[] args) {
+        InnerClassAnonymous ica = new InnerClassAnonymous();
+        ica.start(2000, true);
+
+        JOptionPane.showConfirmDialog(null, "Quit??");
     }
 }

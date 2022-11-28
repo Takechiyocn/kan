@@ -14,7 +14,7 @@ package innerclass;
  * @author: Kan
  *
  */
-public class StaticInnerClass {
+public class InnerClassStatic {
     /**
      * 静态内部类
      */
@@ -57,5 +57,15 @@ public class StaticInnerClass {
         }
 
         return new Pair(min, max);
+    }
+
+    public static void main(String[] args) {
+        double[] values = new double[20];
+        for (int i = 0; i < 20; i++) {
+            values[i] = 100 * Math.random();
+        }
+
+        InnerClassStatic.Pair p = InnerClassStatic.minmax(values);
+        System.out.println("Min:" + InnerClassStatic.Pair.getFirst() + ", Max:" + p.getSecond());
     }
 }
