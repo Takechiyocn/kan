@@ -2,9 +2,15 @@
 
 ### Java内存模型
 
-* Java内存模型主要将Java虚拟机划分为方法区、堆和线程栈
+* Java内存模型主要指JVM内存模型，JVM内存区域
   
-* 主要内容
+  * 线程私有区域：程序计数器、虚拟机栈、本地方法区/栈
+    
+  * 线程共享区域：JAVA堆、方法区(运行时常量池)
+    
+  * 直接内存
+  
+* JMM主要作用范围
   
   1. JMM描述了线程如何与内存交互
      
@@ -17,14 +23,20 @@
 ![JMMLogicView.png](images/JMMLogicView.png)
 ![JMMLogicView2.png](images/JMMLogicView2.png)
 
-    线程栈：线程拥有自己的线程栈，线程栈包含线程调用方法当前执行点相关信息，称调用栈(call stack)。
-    线程间互不可见，且拥有相互独立的局部变量。
+> 线程栈：线程拥有自己的线程栈，线程栈包含线程调用方法当前执行点相关信息，称调用栈(call stack)。
+  线程间互不可见，且拥有相互独立的局部变量。
 
 #### JVM内存
 
+![JVMAndMemory.png](images/JVMAndMemory.png)
+
+![JVMAndMemory2.png](images/JVMAndMemory2.png)
+
+![JVMAndMemoryGraph.png](images/JVMAndMemoryGraph.png)
+
 ##### JVM内存分类
 
-* 线程私有(可略称为线程栈)
+* 线程私有区域可略称为线程栈)
 
   * 虚拟机栈(先进后出)
   
@@ -46,22 +58,30 @@
   
   * 本地方法栈(Native Method Stack)
     
-      * 非java语言提供的(java)方法实现
-        
-      * java代码和windows交互的方法
+      * 为本地方法(C语言等)服务的栈
+
+        ※ 虚拟机栈为Java方法服务  
     
   * 程序计数器
 
     内存区域，记录线程当前要执行的指令地址
 
-* 线程共享    
+* 线程共享区域
 
-  * 方法区
+  * 方法区/永久代
   
-    * 存放JVM加载的类、常量及静态变量等信息
+    * 存放JVM加载的类、常量及静态变量、即时编译器编译后的代码(JIT代码缓存)等信息
   
     * 运行时常量池
-
+  
+      * 包含字面常量和符号引用
+      
+        * 符号引用：以一组符号(任何形式的字面量)描述索引用的目标
+  
+          * 编译时，java类不知道引用类的实际内存地址，用符号引用代替
+  
+          * 装载时，虚拟机可获取引用类的实际内存地址，此时将符号替换为实际内存地址，即直接引用地址
+  
       * 定义变量时，栈内存存放的是常量池中常量对应的地址
 
         ![ConstMemory.png](images/ConstMemory.png)
@@ -85,6 +105,20 @@
         * 引用类型(类，数组，接口，String):null
   
     * 数据使用完毕后不会被立即回收，在垃圾回收机制空闲时回收
+
+* 直接内存
+
+  直接内存不属于JVM(运行时数据区)，可使用基于NIO申请的堆外内存
+  
+  NIO实现方式
+    
+    * Channel
+    
+    * Buffer
+  
+  NIO可使用Native函数直接分配堆外内存，并使用DirectByteBuffer对象作为这块内存的引用进行操作
+
+  优点：避免Java堆和Native堆中来回复制数据，提高性能
 
 ##### JVM内存范例
 
@@ -196,7 +230,7 @@ JMM定义8种原子操作完成主存与工作内存的交互
   
 * unlock：把主存中处于锁定状态的变量释放出来，释放后的变量才可被其他线程锁定
 
-    ![img_2.png](../imgtmp/img_2.png)
+    ![ThreadAssign3.png](images/ThreadAssign3.png)
 
 操作规则
 
@@ -344,3 +378,99 @@ JMM定义8种原子操作完成主存与工作内存的交互
 > * 如计时线程：定时发送计时器嘀嗒信号给其他线程或清空过时的高速缓存项的线程。
 >
 > * 当只剩下守护线程时，虚拟机退出。
+
+## 垃圾回收
+
+![JVMGC.png](images/JVMGC.png)
+
+### 内存-线程共享
+
+#### 方法区/永久代
+
+主要针对常量池的回收和类型的卸载，收益一般较小
+
+※ JDK8永久代被元数据区(元空间)取代，本质类似，但元空间不在虚拟机中，使用本地内存
+
+HotSpot中方法的变化：
+
+* jdk1.6及之前：有永久代（permanent generation） ，静态变量存放在 永久代上。
+  
+* jdk1.7：有永久代，但已经逐步“去永久代”，字符串常量池、静态变量移除，保存在堆中。
+  
+* jdk1.8及之后： 无永久代，类型信息、字段、方法、常量保存在本地内存的元空间，但字符串常量池、静态变量仍留在堆空间。
+
+    ![JDK6MethodArea.png](images/JDK6MethodArea.png)
+
+    ![JDK7MethodArea.png](images/JDK7MethodArea.png)
+
+    ![JDK8MethodArea.png](images/JDK8MethodArea.png)
+
+#### Java堆(从GC角度):类实例区
+
+![JVMHeapInGC.png](images/JVMHeapInGC.png)
+
+1. 新生代Young
+   
+    存放新生对象，由于创建对象频繁，新生代会频繁触发MinorGC进行垃圾回收
+   
+    1.  Eden区
+  
+        1. 存储Java新生对象(对象占内存过大则分配到老年代)
+  
+        2. Eden区内存不够触发MinorGC，对新生代进行一次垃圾回收
+    
+    2. Survivor From区
+  
+        上轮GC幸存者，本轮GC被扫描者
+    
+    3. Survivor To区
+  
+        保留了一次MinorGC过程中的幸存者
+
+2.  老年代Old
+
+    存放生命周期长的对象，老年对象稳定，MajorGC执行频率低
+
+    Major触发条件
+
+    1. 老年代空间不够(一般MinorGC后)
+  
+    2. 内存过大对象分配连续空间失败
+
+### 堆垃圾回收算法
+
+#### 新生代：MinorGC
+
+MinorGC采用复制算法
+
+过程：复制->清空->互换
+ 
+1. eden、survivorFrom复制到survivorTo区，年龄+1
+
+    Eden区、SurvivorFrom区中**存活**对象复制到SurvivorTo区并将对象年龄+1
+
+    1. 对象年龄达到老年标准，则放到老年区
+  
+    2. SurvivorTo区域不够，则放到老年区
+
+      ※ 回收非存活对象，筛选老年标准对象(长期存活且稳定)
+
+2. 清空eden、survivorFrom
+
+3. SurvivorTo和SurvivorFrom互换
+
+    一次MinorGC后，年龄未达到老年标准的留在SurvivorFrom区
+
+#### 老年代：MajorGC
+
+MinorGC采用标记清除算法
+
+1. 标出存活对象，回收没有标记的对象
+
+    * 标记再回收，耗时长
+    
+    * 产生内存碎片，为减少内存损耗，一般先合并或标记方便下次直接分配
+    
+    * MajorGC后空间依然不够则抛出OOM(Out Of Memory)
+    
+
