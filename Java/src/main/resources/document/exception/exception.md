@@ -132,3 +132,7 @@ clearAssertionStatus
    Java自带：java.util.logging.Logger
 
 2. slf4j
+
+3. 自定义日志系统
+
+详见LogUtil

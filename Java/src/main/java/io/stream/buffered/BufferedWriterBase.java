@@ -1,4 +1,4 @@
-package io.buffer;
+package io.stream.buffered;
 
 import java.io.*;
 
@@ -12,8 +12,8 @@ import java.io.*;
 public class BufferedWriterBase {
     public static void main(String[] args) throws IOException {
 
-        BufferedWriter bw = new BufferedWriter(new FileWriter("src/main/java/io/buffer/file/bw.txt"));
-        BufferedWriter bw2 = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("src/main/java/io/buffer/file/bw2.txt")));
+        BufferedWriter bw = new BufferedWriter(new FileWriter("src/main/java/io/stream/buffered/file/bw.txt"));
+        BufferedWriter bw2 = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("src/main/java/io/stream/buffered/file/bw2.txt")));
 
         bw.write("hello world!");
         bw2.write("hello world!");

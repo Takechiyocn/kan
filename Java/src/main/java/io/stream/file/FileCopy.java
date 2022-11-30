@@ -1,4 +1,4 @@
-package io.file;
+package io.stream.file;
 
 import java.io.*;
 
@@ -20,8 +20,8 @@ public class FileCopy {
     }
 
     private static void fileCopyByFrFw() throws IOException {
-        FileReader fr = new FileReader("src/main/java/io/file/file/copyFrom.txt");
-        FileWriter fw = new FileWriter("src/main/java/io/file/file/copyToChars.txt", false);
+        FileReader fr = new FileReader("src/main/java/io/stream/file/file/copyFrom.txt");
+        FileWriter fw = new FileWriter("src/main/java/io/stream/file/file/copyToChars.txt", false);
 
         char[] cbuf = new char[1024 * 1024];
         int rCount = 0;
@@ -36,8 +36,8 @@ public class FileCopy {
     }
 
     private static void fileCopyByFisFos() throws IOException {
-        FileInputStream fis = new FileInputStream("src/main/java/io/file/file/copyFrom.txt");
-        FileOutputStream fos = new FileOutputStream("src/main/java/io/file/file/copyToStream.txt", false);
+        FileInputStream fis = new FileInputStream("src/main/java/io/stream/file/file/copyFrom.txt");
+        FileOutputStream fos = new FileOutputStream("src/main/java/io/stream/file/file/copyToStream.txt", false);
 
         // 1M
         byte[] b = new byte[1024 * 1024];

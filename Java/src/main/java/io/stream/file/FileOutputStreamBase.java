@@ -1,4 +1,4 @@
-package io.file;
+package io.stream.file;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -15,7 +15,7 @@ public class FileOutputStreamBase {
     public static void main(String[] args) throws IOException {
 
         // true：追加写
-        FileOutputStream fos = new FileOutputStream("src/main/java/io/file/file/fos.txt", true);
+        FileOutputStream fos = new FileOutputStream("src/main/java/io/stream/file/file/fos.txt", true);
         // 写出整个数组：a=97,b,c,d
         byte[] bytes = {97, 98, 99, 100};
         fos.write(bytes);

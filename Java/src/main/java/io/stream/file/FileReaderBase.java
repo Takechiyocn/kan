@@ -1,4 +1,4 @@
-package io.file;
+package io.stream.file;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -13,7 +13,7 @@ import java.io.IOException;
 public class FileReaderBase {
     public static void main(String[] args) throws IOException {
 
-        FileReader fr = new FileReader("src/main/java/io/file/file/fr.txt");
+        FileReader fr = new FileReader("src/main/java/io/stream/file/file/fr.txt");
         char[] cbuf = new char[10];
 
         int rCount = 0;

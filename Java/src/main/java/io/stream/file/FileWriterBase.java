@@ -1,4 +1,4 @@
-package io.file;
+package io.stream.file;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -13,7 +13,7 @@ import java.io.IOException;
 public class FileWriterBase {
     public static void main(String[] args) throws IOException {
 
-        FileWriter fw = new FileWriter("src/main/java/io/file/file/fw.txt", true);
+        FileWriter fw = new FileWriter("src/main/java/io/stream/file/file/fw.txt", true);
         char[] cbuf = {'我','是','中','国','人'};
 
         fw.write(cbuf);

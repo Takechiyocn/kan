@@ -1,4 +1,4 @@
-package io.file;
+package io.stream.file;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -24,7 +24,7 @@ public class FileInputStreamBase {
     }
 
     private static void fileInputStreamLoopReadSpecified() throws IOException {
-        FileInputStream fis = new FileInputStream("src/main/java/io/file/file/fis.txt");
+        FileInputStream fis = new FileInputStream("src/main/java/io/stream/file/file/fis.txt");
 
         int i = 0;
         int rCount = 0;
@@ -47,7 +47,7 @@ public class FileInputStreamBase {
 
     private static void fileInputStreamLoopRead() throws IOException {
         FileInputStream fis = null;
-        fis = new FileInputStream("src/main/java/io/file/file/fis.txt");
+        fis = new FileInputStream("src/main/java/io/stream/file/file/fis.txt");
 
         int i = 0;
         while (true) {
@@ -62,7 +62,7 @@ public class FileInputStreamBase {
     }
 
     private static void fileInputStreamRead() throws IOException {
-        FileInputStream fis = new FileInputStream("src/main/java/io/file/file/fis.txt");
+        FileInputStream fis = new FileInputStream("src/main/java/io/stream/file/file/fis.txt");
         // 读取一个字节，失败返回-1
         int r = fis.read();
         int r2 = fis.read();
