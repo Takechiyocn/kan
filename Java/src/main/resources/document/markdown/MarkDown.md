@@ -44,6 +44,10 @@ amp:ampersand(&amp记号的名称)
 
 \!惊叹号
 
+### html特殊符号
+
+![HtmlSigns.png](images/HtmlSigns.png)
+
 ### 表格
 
 对齐方式|左对齐(默认)|中间对齐|右对齐

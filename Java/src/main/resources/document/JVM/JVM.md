@@ -2,9 +2,213 @@
 
 ![JVM.png](images/JVM.png)
 
-# Java代码的执行TODO
+# Java代码的执行
 
-## TODO
+## 代码编译
+
+将源代码编译为字节码class文件
+
+## 类加载
+
+### 类加载机制
+
+![ClassLoading.png](images/ClassLoading.png)
+
+#### 加载Loading
+
+在内存中生成一个代表这个类的java.lang.Class对象，作为方法区中这个类的各种数据的入口
+
+※ 可自定义类加载器
+
+加载对象
+
+1. Class文件
+
+2. ZIP包(如jar包和war包)
+
+3. 运行时计算生成(动态代理)
+
+4. 其他文件生成(如将JSP文件转换成对应Class类)
+
+#### 验证Verification
+
+验证Class文件的字节流中包含的信息是否符合当前虚拟机的要求，且不会危害虚拟机自身安全
+
+#### 准备Preparation
+
+为类变量分配内存并设置初始值，即在方法区中分配变量所使用的的空间并设置初始值
+
+> 初始值含义
+> 
+> (静态)常量：public static final v = 8080;
+> 
+> 静态变量：public static v = 8080;
+> 
+> 初始值|常量|静态变量
+> ---|---|---
+> 编译阶段|生成ConstantValue属性|※
+> 准备阶段|ConstantValue赋给v(8080)|初始值0
+> 
+> ※ 程序编译后，赋值指令put static被存放于类构造器&lt;client&gt;方法中
+> 
+> ※ 即静态变量准备阶段不赋值
+
+#### 解析Resolution
+
+将常量池中的符号引用替换为直接引用
+
+##### 符号引用
+
+以一组符号(任何形式的字面量)描述所引用的目标
+
+> 如(符合虚拟机规范)
+> 1. CONSTANT_Class_info
+> 
+> 2. CONSTANT_Field_info
+> 
+> 3. CONSTANT_Method_info
+
+* 编译时，java类不知道引用目标的实际内存地址，用符号引用代替
+
+* 类装载的解析阶段，虚拟机可获取引用目标的实际内存地址，此时将符号引用替换为实际内存地址，即直接引用地址
+
+##### 直接引用
+
+一种能够确定目标位置的方式
+
+* 指向目标的指针
+
+* 相对偏移量
+
+* 能间接定位到目标的句柄
+
+#### 初始化
+
+执行类构造器&lt;client&gt;方法的过程
+
+##### &lt;client&gt;方法
+
+由编译器自动收集类中的类变量的赋值操作和静态语句块中的语句合并而成
+
+特点：
+
+1. 子&lt;client&gt;方法执行前，父类&lt;client&gt;方法已经执行完毕
+
+2. 如果类中静态变量没有赋值且没有静态语句块，编译器可不为这个类生成&lt;client&gt;方法
+
+##### 不执行初始化场景
+
+1. 通过子类引用父类的静态字段，只会触发父类的初始化，而不会触发子类的初始化
+   
+2. 定义对象数组，不会触发该类的初始化
+   
+3. 常量在编译期间会存入调用类的常量池中，本质上并没有直接引用定义常量的类，不会触发定义常量所在的类。
+   
+4. 通过类名获取Class 对象，不会触发类的初始化
+   
+5. 通过Class.forName 加载指定类时，如果指定参数initialize 为false 时，也不会触发类初
+   始化，其实这个参数是告诉虚拟机，是否要对类进行初始化
+   
+6. 通过ClassLoader 默认的loadClass 方法，也不会触发初始化动作
+
+#### 使用
+
+#### 卸载
+
+### 类加载器ClassLoader
+
+实现将类加载阶段中通过一个类的全限定名来获取描述该类的二进制字节流这个动作的代码称为类加载器
+
+![ClassLoader.png](images/ClassLoader.png)
+
+#### 启动类加载器(Bootstrap ClassLoader)
+
+主要加载java的核心类库(到虚拟机内存中)，即加载lib目录下的所有class
+
+* 加载JAVA_HOME/lib目录中的类
+
+* 或通过-Xbootclasspath参数指定路径中的，且被虚拟机认可(按文件名识别，如rt.jar)的类
+
+#### 扩展类加载器(Extension ClassLoader)
+
+* 加载JAVA_HOME/lib/ext目录中的类
+
+* 或通过java.ext.dirs系统变量指定路径中的类
+
+#### 应用程序/系统类加载器(Application ClassLoader)
+
+加载用户路径(classpath)上的类库
+
+### 加载模式
+
+JVM通过双亲委派模型进行类的加载，用户可通过java.lang.ClassLoader实现自定义类加载器
+
+#### 双亲委派模型(1.8及以前)
+
+![ParentsDelegation.png](images/ParentsDelegation.png)
+
+1. 一个类收到类加载请求，不自己加载，而将这个请求委派给父类去完成(每层类加载器都如此直到启动类)
+
+2. 父类无法完成加载请求，子类尝试加载
+
+优点：
+
+* 避免类重复加载
+
+* 保护程序安全性，防止核心API被修改
+
+#### 模块下的类加载器(1.9及之后版本)
+
+![ParentsDelegationModule.png](images/ParentsDelegationModule.png)
+
+JDK9基于模块化的构建，JDK9之后扩展类加载器被平台类加载器取代
+
+1. 平台类即应用程序类加载器收到加载请求，判断该类是否属于某一系统模块
+
+2. 属于：优先委派给负责那个模块的加载器完成加载
+
+3. 不属于：委派给父类加载器
+
+##### 类加载器归属
+
+1. 启动类加载器负责加载的模块
+
+    ![ParentsDelegationModule1.png](images/ParentsDelegationModule1.png)
+
+2. 平台类加载器负责加载的模块
+
+    ![ParentsDelegationModule2.png](images/ParentsDelegationModule2.png)
+
+3. 应用程序类加载器负责加载的模块
+
+    ![ParentsDelegationModule3.png](images/ParentsDelegationModule3.png)
+
+#### 动态模型系统OSGI
+
+OSGI(Open Service Gateway Initiative)，面向Java的动态模型系统
+
+##### 动态改变构造
+
+OSGi 服务平台提供在多种网络设备上无需重启的动态改变构造的功能。为了最小化耦合度和促使
+这些耦合度可管理，OSGi 技术提供一种面向服务的架构，它能使这些组件动态地发现对方
+
+##### 模块化编程与热插拔
+
+OSGi 旨在为实现Java 程序的模块化编程提供基础条件，基于OSGi 的程序很可能可以实现模块级
+的热插拔功能，当程序升级更新时，可以只停用、重新安装然后启动程序的其中一部分
+
+## 执行class
+
+### 解释执行
+
+### 编译执行(JIT即时编译器)
+
+HotSpot相关
+
+1. client compiler
+
+2. server compiler
+
 
 # 内存管理
 
@@ -84,13 +288,7 @@
   
     * 运行时常量池
   
-      * 包含字面常量和符号引用
-      
-        * 符号引用：以一组符号(任何形式的字面量)描述索引用的目标
-  
-          * 编译时，java类不知道引用类的实际内存地址，用符号引用代替
-  
-          * 装载时，虚拟机可获取引用类的实际内存地址，此时将符号替换为实际内存地址，即直接引用地址
+      * 包含字面常量和符号引用     
   
       * 定义变量时，栈内存存放的是常量池中常量对应的地址
 

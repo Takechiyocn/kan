@@ -13,7 +13,19 @@ public abstract class ExceptionWithGeneric {
     public abstract void body() throws Exception;
 
     public Thread toThread() {
-        return new Thread() {
+        // 匿名内部类?
+//        return new Thread() {
+//            @Override
+//            public void run() {
+//                try {
+//                    body();
+//                } catch (Throwable t) {
+//                    ExceptionWithGeneric.<RuntimeException>throwAs(t);
+//                }
+//            }
+//        };
+        // 匿名内部类
+        return new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -22,7 +34,7 @@ public abstract class ExceptionWithGeneric {
                     ExceptionWithGeneric.<RuntimeException>throwAs(t);
                 }
             }
-        };
+        });
     }
 
     /**
@@ -44,10 +56,11 @@ public abstract class ExceptionWithGeneric {
      * @param args
      */
     public static void main(String[] args) {
+        // 匿名内部类
         new ExceptionWithGeneric() {
             @Override
             public void body() throws Exception {
-                Scanner in = new Scanner(new File("test"), "UTF-8");
+                Scanner in = new Scanner(new File("fileNotExist.log"), "UTF-8");
                 while (in.hasNext()) {
                     System.out.print(in.next());
                 }
