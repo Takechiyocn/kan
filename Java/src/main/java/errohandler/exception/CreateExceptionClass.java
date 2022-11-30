@@ -1,4 +1,4 @@
-package exception;
+package errohandler.exception;
 
 import java.io.IOException;
 

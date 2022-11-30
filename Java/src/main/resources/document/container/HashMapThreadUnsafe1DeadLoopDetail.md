@@ -67,7 +67,7 @@ final boolean initHashSeedAsNeeded(int capacity) {
 }
 
 static int indexFor(int h, int length) {
-  // assert Integer.bitCount(length) == 1 : "length must be a non-zero power of 2";
+  // assertsystem Integer.bitCount(length) == 1 : "length must be a non-zero power of 2";
   return h & (length-1);
 }
 ```

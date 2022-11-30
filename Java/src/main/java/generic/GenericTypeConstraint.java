@@ -1,6 +1,6 @@
 package generic;
 
-import exception.ExceptionWithGeneric;
+import errohandler.exception.ExceptionWithGeneric;
 import generic.constraint.*;
 import generic.constraint.GenericTypeConstraint6;
 
