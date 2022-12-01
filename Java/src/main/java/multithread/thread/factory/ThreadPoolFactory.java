@@ -1,4 +1,4 @@
-package multithread.threadpool;
+package multithread.thread.factory;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -10,7 +10,6 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author moku
  */
 public class ThreadPoolFactory implements ThreadFactory {
-
     private AtomicInteger threadIndex = new AtomicInteger(0);
     private String threadNamePrefix;
 
@@ -24,6 +23,4 @@ public class ThreadPoolFactory implements ThreadFactory {
        thread.setName(threadNamePrefix + "-xxljob-" + threadIndex.getAndIncrement());
        return thread;
     }
-
-
 }

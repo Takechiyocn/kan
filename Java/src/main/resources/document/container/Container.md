@@ -159,7 +159,6 @@ Queue接口|抛出异常|返回特殊值null
 删除队首|remove()|poll()
 查询队首元素|element()|peek()
 
-
 ##### 优先级队列
 
 特点

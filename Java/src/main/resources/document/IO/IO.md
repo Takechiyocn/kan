@@ -1,103 +1,159 @@
-## Java IO
+# 同步IO
 
-Input/Output：输入输出流(以内存为参照)
+## 阻塞IO(同步阻塞)
 
-通过IO可以完成硬盘文件的读写
+阻塞IO过程
 
-![IOInfrastructure.png](images/IOInfrastructure.png)
+![BIO.png](images/BIO.png)
 
-![IOInfrastructure2.png](images/IOInfrastructure2.png)
+1. 用户线程发起read操作
+   
+2. 如果内存数据未准备好，则用户线程被阻塞
+   
+3. 直到内存数据准备好并从内核缓冲区拷贝至用户空间后，read指令返回
 
-### 字节流/字符流区别
+## 非阻塞IO(同步非阻塞)
 
-区别|字节流|字符流
----|---|---
-读取方式|字节方式(1byte=8bit)|字符方式
-读取类型|任意类型※1|文本文件
-第一次读取※2|"a"|'a'
-第二次读取※2|"中"的一半|'中'字符
-第三次读取※2|"中"的另一半|-
+![NIO.png](images/NIO.png)
 
-※1 文本文件、图片、声音文件、视频文件
+非阻塞IO过程
 
-※2 读取文本：a中国bo张三fe
+1. 用户线程发起read操作
 
-### 字节流
+2. 如果内存数据未准备好，内核返回EWOULDBLOCK错误，继续轮询polling内核数据状态(是否准备好)
 
-![InputStreamArchitecture.png](images/InputStreamArchitecture.png)
+3. 数据准备好，从内核缓冲区拷贝至用户空间后，read指令返回
 
-![OutputStreamArchitecture.png](images/OutputStreamArchitecture.png)
+※ 应用程序对内存轮询影响性能
 
-### 字符流
+## 多路复用IO(同步非阻塞的一种)
 
-![ReaderArchitecture.png](images/ReaderArchitecture.png)
+![NewIO.png](images/NewIO.png)
 
-![WriterArchitecture.png](images/WriterArchitecture.png)
+多路复用IO过程
 
-### 常用流
+1. 用户线程发起read操作
 
-#### 文件专属
+2. 内存数据未准备好，不对内存进行轮询，可做其他事情
 
-```java
-java.io.FileInputStream   (用得最多)
-java.io.FileOutputStream  (用得最多)
-java.io.FileReader
-java.io.FileWriter
-```
+3. 内核数据准备好，以事件机制通知应用程序
 
-#### 转换流：字节流转换成字符流
+### select
 
-```java
-java.io.InputStreamReader
-java.io.OutputStreamWriter
-```
+### poll
 
-#### 缓冲流专属
+### epoll
 
-```java
-java.io.BufferedInputStream
-java.io.BufferedOutputStream
-java.io.BufferedReader
-java.io.BufferedWriter
-```
+### Channel(通道)
 
-#### 数据流专属
+### Buffer(缓冲区)
+
+## 同步非阻塞模型
+
+不创建线程去IO，而发出请求给acceptor，acceptor轮询多个socket状态，当socket有读写事件时，才调用实际的IO读写操作。
+
+多路复用IO模型中，一个线程可管理多个socket，系统无需建立新进程或线程，socket读写事件发生时才使用IO资源，减少资源占用率(select,poll,epoll)
 
 ```java
-java.io.DataInputStream
-java.io.DataOutputStream
+// 套接字socket=ip+端口，可理解为一个数据载体
+data=socket.read()
 ```
 
-#### 标准输出流
+# 异步IO(AIO) 
 
-```java
-java.io.PrintStream
-java.io.PrintWriter
-```
+异步非阻塞
+![AIO.png](images/AIO.png)
 
-#### 对象专属流：掌握
+## 异步IO模型
 
-```java
-java.io.ObjectInputStream
-java.io.ObjectOutputStream
-```
+1. 用户线程发起read操作，立即返回
 
-### 序列化/反序列化
+2. 内核完成数据读取及拷贝
+   
+   数据准备完成后，内核将数据从内核缓冲区拷贝到用户空间
 
-序列化
+3. 通知用户(发送信号给用户线程)，用户对数据进行处理
 
-    Java对象存储到文件中，将Java对象保存下来的过程
+# BIO/newIO/AIO区别
 
-反序列化
+## 同步阻塞
 
-    将硬盘上的数据重新恢复到内存当中，恢复成Java对象的过程
+一个线程维护一个连接，该线程从读请求到数据处理全部过程，线程被阻塞
 
-#### Java区分类
+## 同步非阻塞
 
-1. 类名：类名不一致，不是同一个类
+非阻塞(期间)：用户线程发出的读请求不会阻塞当前用户线程(用户线程还是会去判断数据是否准备完毕)
 
-2. 版本号：类名一致时，再通过版本号进行区分
+阻塞期间：内核数据复制到用户空间时阻塞
 
-    自动生成序列化版本号：代码修改，版本号发生变化
+## 区别
 
-    -> 提供固定不变的序列化版本号
+区别|BIO|newIO|AIO
+---|---|---|---
+读取主体※1|用户线程|用户线程|内核线程
+阻塞有无|阻塞※2|阻塞+非阻塞|非阻塞
+
+※1 指从内核缓冲区读取到用户空间(外部文件读取到内核缓冲区由内核线程完成)   
+
+※2 连接全程等待
+
+### BIO
+
+客户端Socket连接请求:服务端线程=1:1
+
+未分配到处理线程的连接被阻塞或者拒绝，即一个连接一个线程
+
+![BIO2.png](images/BIO2.png)
+
+特点：
+
+1. 一个独立线程维护一个socket连接，连接数量增多，虚拟机造成一定压力
+
+2. 使用流读取数据(流是阻塞的)，当没有读/写数据时线程等待造成资源浪费
+
+### NIO
+
+服务器端保存一个Socket连接列表，对这个列表进行轮询
+
+* Socket端口有数据可读：调用该socket连接的相应读操作
+   
+* Socket端口有数据可写：调用该socket连接的相应写操作
+   
+* Socket端口连接中断：关闭该端口
+
+-> 进行IO操作(读/写)请求时，一个请求一个线程处理
+
+#### NIO实现
+
+![NIO2.png](images/NIO2.png)
+
+* 远程连接对应一个通道channel
+
+* (文件/网络)数据读写通过buffer，且读写非阻塞
+
+* selector：通道管理器
+
+* 数据读写：buffer->channel
+
+过程
+
+1. 创建通道channel并注册到selector中
+
+2. 注册事件到通道
+
+   1. 客户端连接服务端时间
+   
+   2. 服务端接收客户端连接时间
+   
+   3. 读/写事件
+   
+3. selector轮询方式调用select函数
+
+   1. 有通道事件：返回，新建IO线程处理
+   
+   2. 无通道事件：阻塞继续轮询
+
+### AIO
+
+AIO是异步非阻塞IO，进程读取数据时只负责发送跟接收指令，数据的准备工作由操作系统完成
+

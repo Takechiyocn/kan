@@ -2,7 +2,7 @@
 
 ### 应用分层
 
-![ApplicationLayer.png](../pojo/ApplicationLayer.png)
+![ApplicationLayer.png](../pojo/images/ApplicationLayer.png)
 
 * 开放 API 层：可直接封装 Service 接口暴露成 RPC 接口；通过 Web 封装成 http 接口；网关控制层等。
   * RPC(Remote Procedure Call Protocol)：远程过程调用协议。客户端在不知道调用细节的情况下，调用远程计算机上的某个对象
@@ -98,7 +98,7 @@
 > 控制层(controller-action)，业务层/服务层(bo-manager-service)，实体层(po-entity)，
 > dao(dao)，视图对象(Vo-)，视图层(view-jsp/html)
 
-![VoRelationship.png](../pojo/VoRelationship.png)
+![VoRelationship.png](../pojo/images/VoRelationship.png)
 
 
 ### Alibaba领域模型命名规约

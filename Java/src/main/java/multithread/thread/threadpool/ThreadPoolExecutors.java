@@ -1,4 +1,4 @@
-package multithread.threadpool;
+package multithread.thread.threadpool;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -59,6 +59,37 @@ public class ThreadPoolExecutors {
     }
 
     /**
+     * 无界任务队列LinkedBlockingQueue
+     * 执行过程：
+     *  1. 执行新任务时，线程池创建新线程，直到线程数量=corePoolSize
+     *  2. 将新任务添加到等待队列，无数量限制(maximumPoolSize参数无效)
+     * 线程池创建的最大线程数量：corePoolSize
+     * 缺点：注意任务提交与任务处理之间的协调，否则将导致队列任务无法处理一直增长，消耗完系统资源
+     */
+    private static void linkedBlockingQueue() {
+        ExecutorService pool = new ThreadPoolExecutor(
+                2,
+                10,
+                10000,
+                TimeUnit.MILLISECONDS,
+                new LinkedBlockingDeque<Runnable>(),
+                Executors.defaultThreadFactory(),
+                new ThreadPoolExecutor.AbortPolicy()
+        );
+        // 运行结果：
+        //   pool-1-thread-1
+        //   pool-1-thread-2
+        //   pool-1-thread-1
+        // 解析：核心线程池=2，即线程池同时存在最大2个线程，第三个任务使用空闲(任务一已执行完毕)的线程1执行任务
+        for (int i = 0; i < 3; i++) {
+            pool.execute(() ->
+                    System.out.println(Thread.currentThread().getName()));
+        }
+
+        pool.shutdown();
+    }
+
+    /**
      * 有界任务队列ArrayBlockingQueue：为防止资源耗尽，通常采用有界任务队列+自定义拒绝策略
      * 执行过程：
      *  1. 执行新任务时，线程池创建新线程，直到线程数量=corePoolSize
@@ -83,32 +114,6 @@ public class ThreadPoolExecutors {
             pool.execute(() ->
                     System.out.println(Thread.currentThread().getName()));
         }
-    }
-
-    /**
-     * 无界任务队列LinkedBlockingQueue
-     * 执行过程：
-     *  1. 执行新任务时，线程池创建新线程，直到线程数量=corePoolSize
-     *  2. 将新任务添加到等待队列，无数量限制(maximumPoolSize参数无效)
-     * 线程池创建的最大线程数量：corePoolSize
-     * 缺点：注意任务提交与任务处理之间的协调，否则将导致队列任务无法处理一直增长，消耗完系统资源
-     */
-    private static void linkedBlockingQueue() {
-        ExecutorService pool = new ThreadPoolExecutor(
-                1,
-                2,
-                1000,
-                TimeUnit.MILLISECONDS,
-                new LinkedBlockingDeque<Runnable>(),
-                Executors.defaultThreadFactory(),
-                new ThreadPoolExecutor.AbortPolicy()
-        );
-        for (int i = 0; i < 3; i++) {
-            pool.execute(() ->
-                    System.out.println(Thread.currentThread().getName()));
-        }
-
-        pool.shutdown();
     }
 
     /**
@@ -294,25 +299,25 @@ public class ThreadPoolExecutors {
     }
 
     public static void main(String[] args) {
-        // 直接提交任务队列/可缓存无界线程池
+        // 直接提交任务队列
 //        synchronousQueue();
-
-        // 有界任务队列
-//        arrayBlockingQueue();
 
         // 无界任务队列
 //        linkedBlockingQueue();
+
+        //有界任务队列
+//        arrayBlockingQueue();
 
         // 优先任务队列
 //        priorityBlockingQueue();
 
         // 自定义拒绝策略
-        customRejectedExceptionHandler();
+//        customRejectedExceptionHandler();
 
         // 自定义线程工厂
 //        customThreadFactory();
 
         // ThreadPoolExecutor扩展
-//        threadPoolExecutorExtend();
+        threadPoolExecutorExtend();
     }
 }

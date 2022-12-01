@@ -6,7 +6,7 @@ import org.omg.CosTrading.Link;
 import java.util.*;
 
 /**
- * 队列:接口与实现分离
+ * 队列:接口与实现分离(先进先出)
  *   接口：Queue<E>
  *   实现：
  *     a. 循环数组。高效，循环数组是一个有界集合，即容量有限。

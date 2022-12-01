@@ -1,4 +1,6 @@
-package multithread.threadpool;
+package multithread.thread.threadpool;
+
+import multithread.thread.factory.ThreadPoolFactory;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -7,22 +9,22 @@ import java.util.concurrent.*;
 /**
  * 方法对比
  *  工厂方法	                corePoolSize    maximumPoolSize	    keepAliveTime	workQueue
- *  newCachedThreadPool	    0	            Integer.MAX_VALUE	60s             SynchronousQueue
- *  newFixedThreadPool	    nThreads	    nThreads	        0	            LinkedBlockingQueue
- *  newSingleThreadExecutor	1	            1	                0	            LinkedBlockingQueue
- *  newScheduledThreadPool	corePoolSize	Integer.MAX_VALUE	0	            DelayedWorkQueue
+ *  newCachedThreadPool	    0	            Integer.MAX_VALUE	60s             SynchronousQueue:直接提交任务队列
+ *  newFixedThreadPool	    nThreads	    nThreads	        0	            LinkedBlockingQueue:无界队列
+ *  newSingleThreadExecutor	1	            1	                0	            LinkedBlockingQueue:无界队列
+ *  newScheduledThreadPool	corePoolSize	Integer.MAX_VALUE	0	            DelayedWorkQueue:
  *
  * @author moku
  */
 public class ThreadExecutors {
 
     /**
-     * 可缓存无界线程池/直接提交任务队列
+     * 可缓存无界线程池
      *   1. 当线程池中线程空闲时间超过60s则自动回收该线程，核心线程数为0
      *   2. 当任务超过线程池的线程数则创建新线程
      *   3. 线程池上限为Integer.MAX_VALUE，可看作无限大
      */
-    public void newCacheThreadPool() {
+    public void newCachedThreadPool() {
         // 创建可缓存无界线程池，可指定线程工厂，也可使用默认线程工厂
         ExecutorService executorService = Executors.newCachedThreadPool(new ThreadPoolFactory("CachedThread"));
         for (int i = 0; i < 10; i++) {
@@ -73,8 +75,8 @@ public class ThreadExecutors {
      * schedule(Callable callable, long delay, TimeUnit unit)，延迟一定时间后执行Callable任务
      * scheduleAtFixedRate(Runnable command, long initialDelay, long period, TimeUnit unit)，延迟一定时间后，以间隔period时间的频率周期性地执行任务
      * scheduleWithFixedDelay(Runnable command, long initialDelay, long delay,TimeUnit unit)，与scheduleAtFixedRate()方法很类似，
-     * 但是不同的是scheduleWithFixedDelay()方法的周期时间间隔是以上一个任务执行结束到下一个任务开始执行的间隔，而scheduleAtFixedRate()方法的周期时间间隔是以上一个任务开始执行到下一个任务开始执行的间隔，
-     * 也就是这一些任务系列的触发时间都是可预知的。
+     *   但是不同的是scheduleWithFixedDelay()方法的周期时间间隔是以上一个任务执行结束到下一个任务开始执行的间隔，而scheduleAtFixedRate()方法的周期时间间隔是以上一个任务开始执行到下一个任务开始执行的间隔，
+     *   也就是这一些任务系列的触发时间都是可预知的。
      */
     public void newScheduledThreadPool() {
         ScheduledExecutorService executorService = Executors.newScheduledThreadPool(5, new ThreadPoolFactory("ScheduledThreadPool"));
