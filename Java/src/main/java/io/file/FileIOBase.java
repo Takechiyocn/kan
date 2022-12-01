@@ -69,11 +69,5 @@ public class FileIOBase {
         System.out.println("文件最后一次修改时间：" + f.lastModified());
         // 文件字节大小
         System.out.println("文件大小：" + f.length());
-        // 获取目录下所有文件
-        File f3 = new File("src/main/java/io/file/");
-        File[] files = f3.listFiles();
-        for (File f4 : files) {
-            System.out.println(f4.getName());
-        }
     }
 }
