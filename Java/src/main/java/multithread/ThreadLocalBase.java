@@ -9,7 +9,7 @@ import java.util.concurrent.ThreadLocalRandom;
  *
  * @author moku
  */
-public class ThreadLocalClass {
+public class ThreadLocalBase {
 
     // SimpleDateFormat不是线程安全
     public static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");

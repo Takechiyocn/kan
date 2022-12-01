@@ -3,12 +3,13 @@ package multithread;
 /**
  * @author moku
  */
-public class MultiThreadBase {
+public class ThreadBase {
 
     public static void main(String[] args) throws InterruptedException {
 
         System.out.println("Thread 1");
 
+        // run() = try{} catch{}
         Runnable r = () -> {
             try {
                 // 阻塞新线程

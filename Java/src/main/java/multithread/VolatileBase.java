@@ -1,15 +1,13 @@
 package multithread;
 
 /**
- * volatile关键字：用于线程间做信号量，为实例域的同步访问提供一种免锁机制。
- *                volatile域使编译器和虚拟机知道该域是可能被另一个线程并发更新。
- *                保证变量对所有线程的可见性
- *                禁止指令重排序优化
+ * volatile关键字：变量可见性，禁止指令重排
+ *                一种免锁同步访问机制，volatile变量直接从主存读写最新值
  *                -> 不保证原子性
  * 原子atomic操作：不可分割的操作，即不会因为线程调度被打断的操作
  * @author moku
  */
-public class VolatileSync {
+public class VolatileBase {
 
     private volatile boolean done;
 

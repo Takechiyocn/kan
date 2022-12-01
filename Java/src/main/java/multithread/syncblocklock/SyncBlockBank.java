@@ -28,11 +28,9 @@ public class SyncBlockBank {
         Arrays.fill(accounts, initialBalance);
     }
 
-
-
     /**
      * synchronized(obj)：同步阻塞
-     * wait：线程等待（直到条件满足，即notifyAll();）
+     * wait：线程等待(直到条件满足，即notifyAll();)
      * @param from
      * @param to
      * @param amount

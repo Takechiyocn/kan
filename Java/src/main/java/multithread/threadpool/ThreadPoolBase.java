@@ -10,5 +10,5 @@ package multithread.threadpool;
  *
  * @author moku
  */
-public class ThreadPool {
+public class ThreadPoolBase {
 }

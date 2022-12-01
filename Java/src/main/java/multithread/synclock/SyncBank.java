@@ -39,7 +39,7 @@ public class SyncBank {
             // 内部条件：添加线程到等待集
             // 内部锁只有单一条件，即只能在一处条件内设置条件对象
             wait();
-            // 线程进入等待知道被通知或者经过指定时间
+            // 线程进入等待直到被通知或者经过指定时间
 //            wait(1000);
         }
         System.out.print(Thread.currentThread() + ":");
@@ -82,10 +82,10 @@ public class SyncBank {
             sufficientFunds.await();
 //            wait();
             System.out.println("内部锁：Bank.class对象被锁住->其他线程无法调用该方法或其他同步静态方法");
-            // 因为无条件阻塞，此处阻塞解除无效
+            // 因为无条件阻塞，此处解除等待线程的阻塞状态无效
             sufficientFunds.signalAll();
         } finally {
-            // 因为无条件阻塞，此处阻塞解除无效
+            // 因为无条件阻塞，此处释放锁无效 TODO：该函数执行完毕后自动释放？
             bankLock.unlock();
         }
     }
