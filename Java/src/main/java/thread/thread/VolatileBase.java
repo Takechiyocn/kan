@@ -1,4 +1,4 @@
-package multithread;
+package thread.thread;
 
 /**
  * volatile关键字：变量可见性，禁止指令重排

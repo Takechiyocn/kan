@@ -1,4 +1,4 @@
-package multithread.thread.factory;
+package thread.multithread.thread.factory;
 
 import org.jetbrains.annotations.NotNull;
 

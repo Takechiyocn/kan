@@ -1,4 +1,4 @@
-package multithread.monitor;
+package thread.multithread.monitor;
 
 /**
  * 监视器monitor：无需程序员考虑如何加锁的情况下，保证多线程的安全性

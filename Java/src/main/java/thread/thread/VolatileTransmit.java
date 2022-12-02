@@ -1,4 +1,4 @@
-package multithread;
+package thread.thread;
 
 /**
  * 传递性：如果A happens-before B, B happens-before C，那 A happens-before C

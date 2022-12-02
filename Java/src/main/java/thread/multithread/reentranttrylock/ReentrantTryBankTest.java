@@ -1,6 +1,6 @@
-package multithread.reentrantlock;
+package thread.multithread.reentranttrylock;
 
-public class ReentrantBankTest {
+public class ReentrantTryBankTest {
 
     // 账户数
     public static final int NACCOUTS = 100;
@@ -12,16 +12,16 @@ public class ReentrantBankTest {
 
     public static void main(String[] args) {
 
-        ReentrantBank reentrantBank = new ReentrantBank(NACCOUTS, INITIAL_BALANCE);
+        ReentrantTryBank reentrantTryBank = new ReentrantTryBank(NACCOUTS, INITIAL_BALANCE);
 
         for (int i = 0; i < NACCOUTS; i++) {
             int fromAccount = i;
             Runnable r = () -> {
                 while (true) {
-                    int toAccount = (int) (reentrantBank.size() * Math.random());
+                    int toAccount = (int) (reentrantTryBank.size() * Math.random());
                     double amount = MAX_AMOUNT * Math.random();
                     try {
-                        reentrantBank.transfer(fromAccount, toAccount, amount);
+                        reentrantTryBank.transfer(fromAccount, toAccount, amount);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }

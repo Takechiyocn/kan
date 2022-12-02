@@ -1,4 +1,4 @@
-package multithread.synblockwait;
+package thread.multithread.synblockwait;
 
 public class SyncBlockWaitBankTest {
 

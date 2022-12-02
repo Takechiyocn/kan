@@ -1,4 +1,4 @@
-package multithread.synblockwait;
+package thread.multithread.synblockwait;
 
 import java.util.Arrays;
 import java.util.concurrent.locks.Condition;
@@ -32,7 +32,7 @@ public class SyncBlockWaitBank {
      */
     public synchronized void transfer(int from, int to, double amount) throws InterruptedException {
         while (accounts[from] < amount) {
-            // 阻塞当前线程，并放弃锁 -> 其他线程可进行转账操作，以此可能满足该条件
+            // 阻塞当前线程，并释放锁 -> 其他线程可进行转账操作，以此可能满足该条件
             // 线程1：进入上述条件的等待集
             System.out.printf("***Thread await***：Transfer [%10.2f] from account[%d:%10.2f] to account[%d:%10.2f].", amount, from, accounts[from], to, accounts[to]);
             System.out.println();

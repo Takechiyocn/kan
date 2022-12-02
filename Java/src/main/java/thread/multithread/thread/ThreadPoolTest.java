@@ -1,6 +1,6 @@
-package multithread.thread;
+package thread.multithread.thread;
 
-import multithread.thread.threadpool.ThreadExecutors;
+import thread.multithread.thread.threadpool.ThreadExecutors;
 
 /**
  * @author moku
