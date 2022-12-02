@@ -21,7 +21,7 @@ public class SyncBlockBank {
     // 即处理器能暂时在寄存器或本地内存缓冲区保存内存中的值。-> 不同处理器上的线程可能在同一位置取到不同值
     private final double[] accounts;
     // 用于使每个Java对象持有锁
-    private Object lock = new Object();
+    private Object obj = new Object();
 
     public SyncBlockBank(int n, double initialBalance) {
         this.accounts = new double[n];
@@ -39,12 +39,12 @@ public class SyncBlockBank {
     public void transfer(int from, int to, double amount) throws InterruptedException {
 
         // 同步阻塞
-        synchronized (lock) {
+        synchronized (obj) {
             while (accounts[from] < amount) {
                 System.out.printf(Thread.currentThread() + "*** wait***：Transfer [%10.2f] from account[%d:%10.2f] to account[%d:%10.2f].", amount, from, accounts[from], to, accounts[to]);
                 System.out.println();
                 // 同步阻塞：进入等待状态
-                lock.wait();
+                obj.wait();
             }
             System.out.print(Thread.currentThread() + ":");
             accounts[from] -= amount;
@@ -52,7 +52,7 @@ public class SyncBlockBank {
             accounts[to] += amount;
             System.out.printf("After transfer, total balance:%10.2f%n", getTotalBalance());
             // 解除等待线程的阻塞状态
-            lock.notifyAll();
+            obj.notifyAll();
             System.out.println(Thread.currentThread() + ":lock release.");
         }
     }
