@@ -1,4 +1,4 @@
-package multithread.syncblocklock;
+package multithread.syncblock;
 
 import java.util.Arrays;
 import java.util.Vector;

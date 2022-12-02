@@ -1,8 +1,8 @@
 ## JavaIO
 
-Java的基本IO(传统IO)都是阻塞IO，通过IO可以完成硬盘文件的读写
+IO指数据的输入输出Input/Output(通常以内存为参照)，通过IO可以完成文件/网络数据的读写
 
-Input/Output：输入输出流(以内存为参照)
+Java的基本IO(传统IO)都是阻塞IO
 
 ※ Java调用：同步调用、异步调用
 

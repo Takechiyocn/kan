@@ -1,4 +1,4 @@
-package multithread.synclock;
+package multithread.synblockwait;
 
 import java.util.Arrays;
 import java.util.concurrent.locks.Condition;
@@ -13,11 +13,11 @@ import java.util.concurrent.locks.ReentrantLock;
  *        3. 每个锁仅有单一的条件 -> 业务可能不满足
  * @author moku
  */
-public class SyncBank {
+public class SyncBlockWaitBank {
 
     private final double[] accounts;
 
-    public SyncBank(int n, double initialBalance) {
+    public SyncBlockWaitBank(int n, double initialBalance) {
         this.accounts = new double[n];
         Arrays.fill(accounts, initialBalance);
     }
@@ -48,8 +48,11 @@ public class SyncBank {
         accounts[to] += amount;
         // 调用使用相同锁（ReentrantLock）的方法：getTotalBalance
         System.out.printf("After transfer, total balance:%10.2f%n", getTotalBalance());
-        // 解除等待线程的阻塞状态
+        // 唤醒等待(调用wait方法等待)同一个锁的所有线程，
+        //   即将全部线程由等待池移动到锁池，参与锁竞争，竞争成功则继续执行，否则继续等待锁的释放
+        // notifyAll只能释放当前线程的一把锁
         notifyAll();
+        // notify()只随机唤醒一个线程到锁池
     }
 
     public synchronized double getTotalBalance() {
@@ -72,20 +75,22 @@ public class SyncBank {
     public synchronized static void printInfo() throws InterruptedException {
         // synchronized
 
-        // 可重入互斥锁，又称独占锁
+        // 可重入锁
         Lock bankLock = new ReentrantLock();
-        // 条件对象：无条件阻塞
+        // 资金条件对象
         Condition sufficientFunds = bankLock.newCondition();
+        // 获取锁
         bankLock.lock();
         try {
+            // 资金条件对象：此处无条件阻塞(无判断条件)
             // 阻塞线程并添加线程到等待集
             sufficientFunds.await();
 //            wait();
             System.out.println("内部锁：Bank.class对象被锁住->其他线程无法调用该方法或其他同步静态方法");
-            // 因为无条件阻塞，此处解除等待线程的阻塞状态无效
+            // 因为无条件阻塞，无法唤醒其他线程获取锁(因为是条件锁，无法确定等待池条件线程对象)
             sufficientFunds.signalAll();
         } finally {
-            // 因为无条件阻塞，此处释放锁无效 TODO：该函数执行完毕后自动释放？
+            // 因为无条件阻塞，此处释放锁无效 -> 所有线程在此处被阻塞后处于等待状态(测试函数执行100次相互转账)
             bankLock.unlock();
         }
     }

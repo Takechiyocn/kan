@@ -1,9 +1,10 @@
-package multithread.syncblocklock;
+package multithread.synblockwait;
 
-public class SyncBlockBankTest {
+public class SyncBlockWaitBankTest {
 
     // 账户数
     public static final int NACCOUTS = 100;
+//    public static final int NACCOUTS = 10;
     // 账户初始化金额
     public static final double INITIAL_BALANCE = 1000;
     // 转账最大金额
@@ -12,16 +13,19 @@ public class SyncBlockBankTest {
 
     public static void main(String[] args) {
 
-        SyncBlockBank syncBlockBank = new SyncBlockBank(NACCOUTS, INITIAL_BALANCE);
+        SyncBlockWaitBank syncBlockWaitBank = new SyncBlockWaitBank(NACCOUTS, INITIAL_BALANCE);
 
         for (int i = 0; i < NACCOUTS; i++) {
             int fromAccount = i;
             Runnable r = () -> {
                 while (true) {
-                    int toAccount = (int) (syncBlockBank.size() * Math.random());
+                    int toAccount = (int) (syncBlockWaitBank.size() * Math.random());
                     double amount = MAX_AMOUNT * Math.random();
+                    // 阻塞所有线程
+//                    double amount = INITIAL_BALANCE * 2;
                     try {
-                        syncBlockBank.transfer(fromAccount, toAccount, amount);
+                        syncBlockWaitBank.transfer(fromAccount, toAccount, amount);
+                        SyncBlockWaitBank.printInfo();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
