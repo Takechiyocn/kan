@@ -34,7 +34,7 @@
 
 ## JUC结构
 
-![JUCInfrastructure.png](JUCInfrastructure.png)
+![JUCInfrastructure.png](images/JUCInfrastructure.png)
 
 ### tools(工具类)
 
@@ -57,6 +57,12 @@ JDK提供的锁机制
 主要提供线程安全的集合
 
 ## Lock锁
+
+Lock接口
+![LockInterface.png](images/LockInterface.png)
+
+Lock实现类
+![LockImplementClass.png](images/LockImplementClass.png)
 
 ### 传统synchronized
 
@@ -85,3 +91,52 @@ Java中的关键字，是一种同步锁。修饰对象：
 4. 类
 
     作用范围：synchronized后面括号括起来的部分(内部方法看如何定义而定)，作用对象是这个累的所有对象
+
+### ReentrantLock构造器
+
+```java
+public ReentrantLock() {
+    sync = new NonfairSync(); //无参默认非公平锁
+}
+public ReentrantLock(boolean fair) {
+    sync = fair ? new FairSync() : new NonfairSync();//传参为true为公平锁
+}
+```
+
+#### 公平锁
+
+十分公平，可以先来后到，一定要排队
+
+#### 非公平锁
+
+十分不公平，可以插队(默认)
+
+#### synchronized和Lock区别
+
+区别|synchronized|Lock
+---|---|---
+来源|内置Java关键字|Java类
+锁状态|无法判断获取锁的状态|可判断是否获取到了锁
+锁释放|自动释放|手动释放(不释放产生死锁)
+等待|线程1(获得锁，阻塞)线程2(等待)|不一定等待下去
+场景|可重入/不可中断/非公平|可重入/不可中断/非公平(可自己设置)
+场景|适合锁少量的代码同步问题|适合锁大量的同步代码
+
+#### Condition
+
+精准的通知和环形线程，依赖于Lock接口的接口，基本方法await()和signal()
+
+生成Condition：lock.Condition()
+
+调用Condition的await和signal方法必须在lock保护之内，即lock.lock和lock.unlock之间
+
+Condition方法和Object方法
+
+* Condition.await()，对应Object.wait()
+
+* Condition.signal()，对应Object.notify()
+
+* Condition.signalAll()，对应Object.notifyAll()
+
+    ![ConditionAndObjectMonitor.png](images/ConditionAndObjectMonitor.png)
+
