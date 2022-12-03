@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  *
  * 复制数组
- *   1. Arrays.copyOf
+ *   1. Arrays.copyOf:底层调用System.arraycopy
  *     -> 小数组复制效率高
  *   2. Arrays.copyOfRange
  *     -> 效率中庸

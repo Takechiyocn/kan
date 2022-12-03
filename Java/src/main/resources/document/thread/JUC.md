@@ -119,8 +119,8 @@ public ReentrantLock(boolean fair) {
 锁状态|无法判断获取锁的状态|可判断是否获取到了锁
 锁释放|自动释放|手动释放(不释放产生死锁)
 等待|线程1(获得锁，阻塞)线程2(等待)|不一定等待下去
-场景|可重入/不可中断/非公平|可重入/不可中断/非公平(可自己设置)
-场景|适合锁少量的代码同步问题|适合锁大量的同步代码
+其他|可重入/不可中断/非公平|可重入/不可中断/非公平(可自己设置)
+场景|适合锁少量的代码同步问题|适合锁大量的同步代码，性能高
 
 #### Condition
 
@@ -139,4 +139,51 @@ Condition方法和Object方法
 * Condition.signalAll()，对应Object.notifyAll()
 
     ![ConditionAndObjectMonitor.png](images/ConditionAndObjectMonitor.png)
+
+## collections
+
+### list
+
+list不安全
+
+#### ArrayList解决方案
+
+1. 使用Vector
+   
+2. List<String> l = Collections.synchronizedList(new ArrayList());
+   
+3. List<String> l = new CopyOnWriteArrayList<>();// 写复制
+
+    原理：
+
+    1. 容器添加元素时，当前容器Object[]进行copy到新容器Object[] newElements
+       
+    2. 新容器里添加元素
+    
+    3. 原容器引用指向新容器(并发时读不需加锁/当前容器不会添加元素)
+
+使用场景
+
+    Vector:
+    synchronizedList:
+    CopyOnWriteArrayList:读多写少(白名单、黑名单、商品类目的访问和更新场景)，集合不大
+                         底层使用可重入锁：synchronized和lock区别
+
+### set
+
+set不安全
+
+#### HashSet底层
+
+```java
+public HashSet() {
+    map = new HashMap<>();
+}
+
+// add 的本质就是 map 的 key key是无法重复的
+public boolean add(E e) {
+    return map.put(e, PRESENT)==null;
+}
+private static final Object PRESENT = new Object();//这是一个不变的值
+```
 

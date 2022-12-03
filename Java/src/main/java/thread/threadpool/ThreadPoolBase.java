@@ -1,4 +1,4 @@
-package thread.multithread.thread.threadpool;
+package thread.threadpool;
 
 /**
  * 为什么使用线程池

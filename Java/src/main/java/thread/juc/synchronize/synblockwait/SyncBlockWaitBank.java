@@ -1,4 +1,4 @@
-package thread.multithread.synblockwait;
+package thread.juc.synchronize.synblockwait;
 
 import java.util.Arrays;
 import java.util.concurrent.locks.Condition;

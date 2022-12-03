@@ -29,7 +29,21 @@ public class VectorBase {
         vectorIndex();
 
         // 遍历
+        vectorLoop();
+    }
 
+    private static void vectorLoop() {
+        Vector<Integer> v = new Vector() {{
+            addElement(1);
+            addElement(2);
+            addElement(3);
+            addElement(4);
+        }};
+        System.out.println("Vector loop all:" + v);
+
+        for (Integer i : v) {
+            System.out.println("Vector loop: " + i);
+        }
     }
 
     /**

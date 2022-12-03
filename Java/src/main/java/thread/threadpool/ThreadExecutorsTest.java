@@ -1,11 +1,9 @@
-package thread.multithread.thread;
-
-import thread.multithread.thread.threadpool.ThreadExecutors;
+package thread.threadpool;
 
 /**
  * @author moku
  */
-public class ThreadPoolTest {
+public class ThreadExecutorsTest {
     public static void main(String[] args) {
 
         ThreadExecutors executors = new ThreadExecutors();

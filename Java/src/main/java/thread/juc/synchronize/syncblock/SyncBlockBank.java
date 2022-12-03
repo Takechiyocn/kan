@@ -1,4 +1,4 @@
-package thread.multithread.syncblock;
+package thread.juc.synchronize.syncblock;
 
 import java.util.Arrays;
 import java.util.Vector;

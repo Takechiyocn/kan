@@ -1,4 +1,4 @@
-package thread.multithread.reentranttrylock;
+package thread.juc.locks.reentranttrylock;
 
 public class ReentrantTryBankTest {
 

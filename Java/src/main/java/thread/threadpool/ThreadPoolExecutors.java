@@ -1,4 +1,4 @@
-package thread.multithread.thread.threadpool;
+package thread.threadpool;
 
 import org.jetbrains.annotations.NotNull;
 

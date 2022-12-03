@@ -1,6 +1,6 @@
-package thread.multithread.thread.threadpool;
+package thread.threadpool;
 
-import thread.multithread.thread.factory.ThreadPoolFactory;
+import thread.threadpool.factory.ThreadPoolFactory;
 
 import java.text.DateFormat;
 import java.util.Date;
