@@ -187,3 +187,21 @@ public boolean add(E e) {
 private static final Object PRESENT = new Object();//这是一个不变的值
 ```
 
+#### HashSet解决方案
+
+1. Set<String> set = Collections.synchronizeSet(new HashSet<>())
+
+2. Set<String> set = new CopyOnWriteArraySet(new HashSet<>());
+
+#### HashMap不安全
+
+多线程HashMap扩容时产生环，后续get相应元素会产生异常
+
+HashMap死循环常用解决方案
+
+* 使用线程安全容器ConcurrentHashMap替代(推荐使用)
+  
+* 使用线程安全容器Hashtable替代(性能低，不建议使用)
+  
+* 使用synchronized或Lock加锁HashMap之后再进行操作，相当于多线程排队(麻烦，不建议使用)
+
