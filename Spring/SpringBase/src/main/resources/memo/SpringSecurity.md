@@ -18,10 +18,10 @@
 
 #### HttpSecurity保护路径配置方法
 
-![HttpSecurityRoutineSetting.png](spring/HttpSecurityRoutineSetting.png)
+![HttpSecurityRoutineSetting.png](images/HttpSecurityRoutineSetting.png)
 
 #### SpEL表达式：Spring Security对Spring表达式语言的扩展
-![SpEL.png](spring/SpEL.png)
+![SpEL.png](images/SpEL.png)
 
 #### CSRF
 

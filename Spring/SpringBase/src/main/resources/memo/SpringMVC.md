@@ -1,22 +1,39 @@
 ### Spring MVC
+
 #### Spring MVC处理流程
+
 1. 初始化处理
+   
     1. Web容器启动通知Spring初始化容器，加载Bean的定义信息并初始化所有单例Bean
+       
     2. 遍历容器中的Bean，获取每一个Controller中所有方法访问的URL，将URL和所有对应的Controller保存到Map集合(HandlerMapping)中
-2. 请求处理(生成处理器执行链)
-    1. 所有请求转发给前端处理器DispatcherServlet处理
-    2. DispatcherServlet请求HandlerMapping找出被@Controller注解修饰的Bean和被@RequestMapping修饰的方法和类
-       * Controller中可调用一些Service和DAO进行数据操作
-    3. 生成Handler和HandlerInterceptor并以一个HandlerExecutionChain处理器执行链返回
-3. 执行处理(获取ModelAndView)
-    1. DispatcherServlet使用Handler找到HandlerAdapter并执行业务前相应处理(表单验证、数据类型转换)
-    2. 通过HandlerAdapter调用Handler方法
-    3. 将请求参数绑定到方法的形参上，执行方法处理请求并得到逻辑视图ModelAndView
-4. 视图解析
-    1. DispatcherServlet使用视图解析器ViewResolver对ModelAndView进行解析，得到View物理视图
-    2. 对视图渲染并填充数据到视图中
-    3. 返回客户端
     
+2. 请求处理(生成处理器执行链)
+   
+    1. 所有请求转发给前端处理器DispatcherServlet处理
+       
+    2. DispatcherServlet请求HandlerMapping找出被@Controller注解修饰的Bean和被@RequestMapping修饰的方法和类
+       
+       * Controller中可调用一些Service和DAO进行数据操作
+       
+    3. 生成Handler和HandlerInterceptor并以一个HandlerExecutionChain处理器执行链返回
+    
+3. 执行处理(获取ModelAndView)
+   
+    1. DispatcherServlet使用Handler找到HandlerAdapter并执行业务前相应处理(表单验证、数据类型转换)
+       
+    2. 通过HandlerAdapter调用Handler方法
+       
+    3. 将请求参数绑定到方法的形参上，执行方法处理请求并得到逻辑视图ModelAndView
+    
+4. 视图解析
+   
+    1. DispatcherServlet使用视图解析器ViewResolver对ModelAndView进行解析，得到View物理视图
+       
+    2. 对视图渲染并填充数据到视图中
+       
+    3. 返回客户端
+
 #### Spring MVC组件
 
 * DispatcherServlet
@@ -49,7 +66,7 @@
   
 * ModelAndView
 
-    装在模型数据和视图信息，Handler处理结果并返回给DispatcherServlet
+    装载模型数据和视图信息，Handler处理结果并返回给DispatcherServlet
   
 * ViewResolver
 
@@ -91,7 +108,7 @@
 
 面向切面编程，简单说就是将重复代码提取出来，在需要执行的时候使用动态代理技术，在不修改源码的基础上对源码进行增强
 
-![SpringAOP.png](spring/SpringAOP.png)
+![SpringAOP.png](images/SpringAOP.png)
 
 #### 分类
 
@@ -125,8 +142,8 @@ CGLib动态代理：类未实现接口时使用，在运行时动态生成某个
 
 #### AOP相关术语
 
-![SpringAOPAdviceNormal.png](spring/SpringAOPAdviceNormal.png)
-![SpringAOPAdviceUnNormal.png](spring/SpringAOPAdviceUnNormal.png)
+![SpringAOPAdviceNormal.png](images/SpringAOPAdviceNormal.png)
+![SpringAOPAdviceUnNormal.png](images/SpringAOPAdviceUnNormal.png)
 
 * Aspect
 
@@ -158,7 +175,7 @@ CGLib动态代理：类未实现接口时使用，在运行时动态生成某个
 
     织入，指把增强advice应用到目标对象target来创建代理对象proxy的过程
 
-  ![SpringAOPConcept.png](spring/SpringAOPConcept.png)
+  ![SpringAOPConcept.png](images/SpringAOPConcept.png)
 
 ### IOC(Inversion of Control控制反转)
 
@@ -172,9 +189,12 @@ CGLib动态代理：类未实现接口时使用，在运行时动态生成某个
     Spring通过DI动态的向某个对象提供其他所需要的对象(通过反射实现)
 
 ### 注解DI
-* @Repository ：dao层
-* @Service：service层
-* @Controller：web层
-* @Resource
 
+* @Repository ：dao层
+  
+* @Service：service层
+  
+* @Controller：web层
+  
+* @Resource
 

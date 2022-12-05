@@ -1,52 +1,58 @@
 ## Spring
 
+一个轻量级的控制反转和面向切面变成的框架
+
 ### Spring框架结构
 
-![SpringFrameworkStructure.png](spring/SpringFrameworkStructure.png)
+![SpringFrameworkStructure.png](images/SpringFrameworkStructure.png)
 
-* 核心容器
+![SpringFrameworkStructure2.png](images/SpringFrameworkStructure2.png)
 
-      核心容器提供框架的基本功能SpringCore。
-      核心容器的主要组件是BeanFactory，它是工厂模式的实现。
-      BeanFactory使用控制反转的模式(IOC)将应用程序的配置和依赖性规范与实际的应用程序代码分开。
+### Spring核心组件
 
-* Spring上下文
+![SpringComponent.png](images/SpringComponent.png)
 
-      Spring上下文是一个配置文件，向Spring提供上下文信息。
-      Spring上下文包括包括企业服务，如JNDI、EJB、电子邮件、国际化、校验和调度功能。
+#### 核心容器
 
-* Spring AOP
+    核心容器SpringCore提供框架的基本功能。
+    核心容器的主要组件是BeanFactory，它是工厂模式的实现。
+    BeanFactory使用控制反转的模式(IOC)将应用程序的配置和依赖性规范与实际的应用程序代码分开。
 
-      Spring AOP为基于Spring的应用程序中的对象提供了事务管理服务。
+#### Spring上下文
 
-* EJB组件(非Spring特性，AOP替换该功能)
+    Spring上下文是一个配置文件，向Spring提供上下文信息。
+    Spring上下文包括包括企业服务，如JNDI、EJB、电子邮件、国际化、校验和调度功能。
 
-      TODO
+#### Spring AOP
 
-* Spring DAO
+    Spring AOP为基于Spring的应用程序中的对象提供了事务管理服务。
 
-      异常层次结构：简化了错误处理，并极大降低了需要编写的异常代码数量(如打开和关闭连接)。     
-      通用DAO：JDBC DAO抽象层提供了异常层次结构，可管理异常处理和不同数据库服务提供商抛出的错误信息。
-      Spring DAO：面向JDBC的异常遵从通用DAO异常层次结构。
+#### EJB组件(非Spring特性，AOP替换该功能)
 
-* Spring ORM
+    TODO
 
-      Spring框架插入了若干个ORM框架，从而提供了ORM的对象关系工具。
-      如JDO、Hibernate、iBatisSQL MAP。
-      所有上述框架都遵从Spring的通用事务和DAO异常层次结构。
+#### Spring DAO
 
-* Spring WEB模块
+    异常层次结构：简化了错误处理，并极大降低了需要编写的异常代码数量(如打开和关闭连接)。     
+    通用DAO：JDBC DAO抽象层提供了异常层次结构，可管理异常处理和不同数据库服务提供商抛出的错误信息。
+    Spring DAO：面向JDBC的异常遵从通用DAO异常层次结构。
 
-      Web上下文模块建立在应用程序上下文模块之上，为基于Web的应用提供上下文。
-      Web模块还简化了处理大部分请求以及将请求参数绑定到域对象的工作。
+#### Spring ORM
 
-* Spring MVC框架
+    Spring框架插入了若干个ORM框架，从而提供了ORM的对象关系工具。
+    如JDO、Hibernate、iBatisSQL MAP。
+    所有上述框架都遵从Spring的通用事务和DAO异常层次结构。
 
-      MVC模型：由javabean构成
-      MVC视图：接口，负责现实模型
-      MVC控制器：表示逻辑代码，是Controller的实现
+#### Spring WEB模块
 
-非入侵式：Spring应用中的对象不依赖于特定的Spring类
+    Web上下文模块建立在应用程序上下文模块之上，为基于Web的应用提供上下文。
+    Web模块还简化了处理大部分请求以及将请求参数绑定到域对象的工作。
+
+#### Spring MVC框架
+
+    MVC模型：由javabean构成
+    MVC视图：接口，负责现实模型
+    MVC控制器：表示逻辑代码，是Controller的实现
 
 #### 优点
 
@@ -64,13 +70,13 @@
 
 ### <font color=FF0000>Keywords</font>
 
+#### 非入侵式
+
+    Spring应用中的对象不依赖于特定的Spring类
+
 #### 组件
 
-    负责整个应用功能的一部分，也称为~~bean~~。
-
-####  ~~不要~~
-
-    ~~not work here!~~
+    负责整个应用功能的一部分，也称为~~bean~~
 
 ####  *容器container*
 
@@ -78,7 +84,7 @@
     作用：创建和管理应用组件。
     如何管理组件：通过依赖注入。
 
-![容器(图片未显示前)](spring/Container.png 'title')
+![容器(图片未显示前)](images/Container.png 'title')
 
 ####  **依赖注入DI(dependency injection)**
 
@@ -117,7 +123,7 @@
     DSL(Domain-Specified Language)：通过方法签名描述。
     如findByDeliveryZip(String)
 
-![SpringDataRepositoryAnalyze.png](spring/SpringDataRepositoryAnalyze.png)
+![SpringDataRepositoryAnalyze.png](images/SpringDataRepositoryAnalyze.png)
 
 ####  模板引擎
   > [服务端模板引擎：Thymeleaf](https://www.thymeleaf.org/ 'Thymeleaf.org')
@@ -247,7 +253,7 @@
 * @RequiredArgsConstructor
 
       显示添加一个有参构造器。
-    ![LombokAnnotation.png](spring/LombokAnnotation.png)
+    ![LombokAnnotation.png](images/LombokAnnotation.png)
 
 * @PrePersist注解
 
@@ -353,7 +359,7 @@
 
 #### Spring MVC请求映射注解
 
-![SpringMVC请求映射注解](spring/SpringMVCRequestReflectionAnnoation.png)
+![SpringMVC请求映射注解](images/SpringMVCRequestReflectionAnnoation.png)
 
 [comment]: <> (** 构造型注解：stereotype @Repository:Spring组件扫描ComponentScan会自动发现类并将其初始化为Spring应用上下文中的bean，)
 
@@ -407,4 +413,4 @@ erDiagram
     varchar type 
   }
 ```
-![TacoER.png](spring/TacoEntity.png)
+![TacoER.png](images/TacoEntity.png)

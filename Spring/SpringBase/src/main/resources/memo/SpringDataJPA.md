@@ -13,7 +13,7 @@
 * repository方法是由一个动词(find/get/read/count)、一个可选的主题（Subject）、关键词By以及一个断言所组成的。如findByDeliveryZip：动词是find，断言是DeliveryZip，主题并没有指定，暗含的主题是Order。
 
 * Spring Data解析repository方法签名来确定要执行的查询
-![RepositoryAnalyse.png](spring/RepositoryAnalyse.png)
+![RepositoryAnalyse.png](images/RepositoryAnalyse.png)
   
 #### Spring Data方法签名操作符
 
@@ -39,4 +39,4 @@
 
 #### Spring属性配置
 
-![SpringConfiguration.png](spring/SpringConfiguration.png)
+![SpringConfiguration.png](images/SpringConfiguration.png)

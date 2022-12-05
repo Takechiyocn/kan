@@ -91,86 +91,86 @@ ExecutorService executorService = Executors.newCachedThreadPool(new ThreadPoolFa
 
 实现：
 
-* 饿汉式：类加载时初始化创建单例对象，线程安全，不适用该对象时导致内存浪费
+* 饿汉式：类加载时初始化创建单例对象，线程安全，不使用该对象时导致内存浪费
 
-```java
-public class HungrySingleton {
-    private HungrySingleton() {};
-    private static HungrySingleton instance = new HungrySingleton();
-    public static HungrySingleton getInstance() {
-        return instance;
-    }
-}
-```
-
-* 懒汉式：外部调用时才加载，线程不安全(可加锁保证安全，但效率低)。
-
-```java
-public class LazySingleton {
-    private LazySingleton() {};
-    private static LazySingleton instance;
-    public static LazySingleton getInstance() {
-        if (instance == null) {
-            instance = new LazySingleton();
+    ```java
+    public class HungrySingleton {
+        private HungrySingleton() {};
+        private static HungrySingleton instance = new HungrySingleton();
+        public static HungrySingleton getInstance() {
+            return instance;
         }
-        return instance;
     }
-}
-```
+    ```
 
-* 双重检查锁：使用volatile和多重检查来减小锁范围，提升效率
+* 懒汉式：外部调用时才加载，线程不安全(可加锁保证安全，但效率低)
 
-```java
-public class DoubleCheckingSingleton {
-    private DoubleCheckingSingleton() {};
-    private static DoubleCheckingSingleton instance;
-    public static DoubleCheckingSingleton getInstance() {
-        if (instance == null) {
-            synchronized (DoubleCheckingSingleton.class) {
-                if (instance == null) {
-                    instance = new DoubleCheckingSingleton();
+    ```java
+    public class LazySingleton {
+        private LazySingleton() {};
+        private static LazySingleton instance;
+        public static LazySingleton getInstance() {
+            if (instance == null) {
+                instance = new LazySingleton();
+            }
+            return instance;
+        }
+    }
+    ```
+
+* 双重检查锁：使用volatile/synchronized和多重检查来减小锁范围，提升效率
+
+    ```java
+    public class DoubleCheckingSingleton {
+        private DoubleCheckingSingleton() {};
+        private static DoubleCheckingSingleton instance;
+        public static DoubleCheckingSingleton getInstance() {
+            if (instance == null) {
+                synchronized (DoubleCheckingSingleton.class) {
+                    if (instance == null) {
+                        instance = new DoubleCheckingSingleton();
+                    }
                 }
             }
+            return instance;
         }
-        return instance;
     }
-}
-```
+    ```
 
 * 静态内部类：解决饿汉式内存浪费和懒汉式线程安全
 
-```java
-public class StaticSingleton {
-    private StaticSingleton() {};
-    public static StaticSingleton getInstance() {
-        return StaticClass.instance;
+    ```java
+    public class StaticSingleton {
+        private StaticSingleton() {};
+        public static StaticSingleton getInstance() {
+            return StaticClass.instance;
+        }
+        private static class StaticClass() {
+            private static final StaticSingleton instance = new StaticSingleton();
+        }
     }
-    private static class StaticClass() {
-        private static final StaticSingleton instance = new StaticSingleton();
-    }
-}
-```
+    ```
 
 * 枚举：线程安全，可防止反序列化重新创建新对象，防止多次实例化，防止反射破解单例
 
-```java
-class Resource() {}
-public enum EnumSingleton {
-    // 创建枚举对象，该对象为单例(内部特性)
-    INSTANCE;
-    private Resource instance;
-    private EnumSingleton() {
-      instance = new Resource();
+    ```java
+    class Resource() {}
+    public enum EnumSingleton {
+        // 创建枚举对象，该对象为单例(内部特性)
+        INSTANCE;
+        private Resource instance;
+        private EnumSingleton() {
+          instance = new Resource();
+        }
+        public Resouce getInstance() {
+            return instance;
+        }
     }
-    public Resouce getInstance() {
-        return resource;
+    // 调用
+    public static void main(String[] args) {
+        Resouce resouce = EnumSingleton.INSTANCE.getInstance();
     }
-}
-// 调用
-public static void main(String[] args) {
-    Resouce resouce = EnumSingleton.INSTANCE.getInstance();
-}
-```
+    ```
 
 #### 结构型
 

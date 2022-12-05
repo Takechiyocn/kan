@@ -40,10 +40,10 @@
         }
     ```
 #### 对象关系映射ORM
-![OrmSample.png](../orm/OrmSample.png)
+![OrmSample.png](orm/OrmSample.png)
 
 #### ORM结构
-![ORM.png](../orm/ORM.png)
+![ORM.png](orm/ORM.png)
 
 #### Java典型ORM
 
@@ -53,7 +53,7 @@
   
 * MyBatis
 
-      半自动的框架(懂数据库的人 才能操作) 必须要自己写sql
+      半自动的框架(懂数据库的人才能操作)，必须要自己写sql
   
 * JPA
 

@@ -10,7 +10,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * @author moku
  */
 public class TestIOCSingleton {
-    // spring 容器默认产生对象是单例的 scope="singleton"
+    // 容器默认产生对象是单例的 scope="singleton"
     public static void main(String[] args) {
         ApplicationContext context =
                 new ClassPathXmlApplicationContext("SpringIOCConfig.xml");

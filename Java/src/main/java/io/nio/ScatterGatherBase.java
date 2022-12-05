@@ -8,7 +8,7 @@ import java.nio.channels.FileChannel;
 
 /**
  * @ClassName ScatterGatherBase
- * @Description TODO
+ * @Description 分散读取、聚集写入
  * @Author moku
  * @Date 2022/12/5 11:57
  * @Version 1.0
