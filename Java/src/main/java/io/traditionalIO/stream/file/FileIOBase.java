@@ -1,4 +1,4 @@
-package io.file;
+package io.traditionalIO.stream.file;
 
 import java.io.File;
 import java.io.IOException;

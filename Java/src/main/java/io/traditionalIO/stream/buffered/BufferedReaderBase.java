@@ -1,4 +1,4 @@
-package io.stream.buffered;
+package io.traditionalIO.stream.buffered;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

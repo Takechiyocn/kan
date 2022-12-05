@@ -42,6 +42,8 @@ Java的基本IO(传统IO)都是阻塞IO
 
 ### 常用流
 
+![NormalIO.png](images/NormalIO.png)
+
 #### 文件专属
 
 ```java

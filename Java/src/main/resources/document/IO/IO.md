@@ -26,6 +26,111 @@
 
 ※ 应用程序对内存轮询影响性能
 
+### Buffer(缓冲区)
+
+通过Channel管道运输着存储数据的Buffer缓冲区来实现数据处理
+
+简单理解：
+
+* Channel管道：运输，比作铁路
+
+* Buffer缓冲区：数据，比作火车(运载着货物)
+
+区别|传统IO流|新IO
+---|---|---
+数据传输方向|单向|双向(因为有Channel)
+
+#### Buffer类核心变量
+
+![NIOBufferVariable.png](images/NIOBufferVariable.png)
+
+* 容量Capacity
+
+    缓冲区能够容纳的数据元素的最大数量(底层数组，不能改变)
+
+* 上界Limit
+
+  (当前)缓冲区里的数据总数
+
+* 位置Position
+
+    下一个要被读或写的元素的位置，由相应的get()和put()更新
+
+* 标记Mark
+
+    备忘位置，用于记录上一次读写的位置
+
+#### flip()函数
+
+又称"切换成读模式"，每当要从缓存区的时候读取数据时，就调用flip()"切换成读模式"
+
+![NIOBufferFlip.png](images/NIOBufferFlip.png)
+
+### Channel(通道)
+
+![NIOChannel.png](images/NIOChannel.png)
+
+只负责数据传输，不负责数据操作
+
+获取通道方式
+
+* getChannel方法
+
+    * 本地IO
+    
+        * FileInputStream/FileOutputStream
+    
+        * RandomAccessFile
+    
+    * 网络IO
+    
+        * Socket
+          
+        * ServerSocket
+          
+        * DatagramSocket
+    
+    
+* 静态方法open()
+
+* Files工具类newByteChannel()方法 
+
+### 直接缓冲区/费直接缓冲区
+
+#### 非直接缓冲区
+
+需要经历一个copy阶段(内核空间copy到用户空间)
+
+![NIODirectBuffer.png](images/NIODirectBuffer.png)
+
+#### 直接缓冲区
+
+不需要经过copy井段，内存映射文件
+
+![NIOUnDirectBuffer.png](images/NIOUnDirectBuffer.png)
+
+#### 直接缓冲区创建
+
+* 缓冲区创建的时候分配的是直接缓冲区
+
+* FileChannel上调用map()方法，将文件直接映射到内存中创建
+
+![NIODirectBufferCreate.png](images/NIODirectBufferCreate.png)
+
+### scatter/gather和字符集
+
+#### 分散读取scatter
+
+将一个通道中的数据分散读取到多个缓冲区中
+
+![NIOScatter.png](images/NIOScatter.png)
+
+#### 聚集写入gather
+
+将多个缓冲区的数据集中写入到一个通道中
+
+![NIOGather.png](images/NIOGather.png)
+
 ## 多路复用IO(同步非阻塞的一种)
 
 ![NewIO.png](images/NewIO.png)
@@ -43,10 +148,6 @@
 ### poll
 
 ### epoll
-
-### Channel(通道)
-
-### Buffer(缓冲区)
 
 ## 同步非阻塞模型
 
@@ -74,7 +175,7 @@ data=socket.read()
 
 3. 通知用户(发送信号给用户线程)，用户对数据进行处理
 
-# BIO/newIO/AIO区别
+# BIO/NIO/AIO区别
 
 ## 同步阻塞
 
@@ -88,10 +189,12 @@ data=socket.read()
 
 ## 区别
 
-区别|BIO|newIO|AIO
+区别|BIO|NIO|AIO
 ---|---|---|---
+读取方式|面向流(Stream Oriented)|面向缓冲区(Buffered Oriented)|面向缓冲区(Buffered Oriented)
 读取主体※1|用户线程|用户线程|内核线程
 阻塞有无|阻塞※2|阻塞+非阻塞|非阻塞
+-|无|选择器(Selector)|-
 
 ※1 指从内核缓冲区读取到用户空间(外部文件读取到内核缓冲区由内核线程完成)   
 

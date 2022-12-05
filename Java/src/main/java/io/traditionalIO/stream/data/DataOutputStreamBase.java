@@ -1,4 +1,4 @@
-package io.stream.data;
+package io.traditionalIO.stream.data;
 
 import java.io.DataOutputStream;
 import java.io.FileOutputStream;
