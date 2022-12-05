@@ -9,7 +9,7 @@
         <property name="url" value="http://g.com"/>
     </bean>
 
-    <!-- 执行前 -->
+    <!-- 代理类：执行前 -->
     <bean id="hijackBeforeMethodBean" class="com.kan.aop.proxy.business.interfaces.impl.HijackBeforeMethodImpl"></bean>
     <bean id="customerServiceBeforeProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
         <property name="target" ref="customerService"></property>
@@ -20,7 +20,7 @@
         </property>
     </bean>
 
-    <!-- 执行后(正常) -->
+    <!-- 代理类：执行后(正常) -->
     <bean id="hijackAfterMethodBean" class="com.kan.aop.proxy.business.interfaces.impl.HijackAfterMethodImpl"></bean>
     <bean id="customerServiceAfterProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
         <property name="target" ref="customerService"></property>
@@ -31,7 +31,7 @@
         </property>
     </bean>
 
-    <!-- 执行后(异常) -->
+    <!-- 代理类：执行后(异常) -->
     <bean id="hijackThrowExceptionBean" class="com.kan.aop.proxy.business.interfaces.impl.HijackThrowExceptionImpl"></bean>
     <bean id="customerServiceThrowProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
         <property name="target" ref="customerService"></property>
@@ -42,9 +42,13 @@
         </property>
     </bean>
 
-    <!-- 环绕通知 -->
+    <!-- 代理类：环绕通知 -->
     <bean id="hijackAroundMethodBean" class="com.kan.aop.proxy.business.interfaces.impl.HijackAroundMethodImpl"></bean>
     <bean id="customerServiceAroundProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <!--
+            JDK动态代理，目标对象：customerService
+            代理类：hijackAroundMethodBean
+        -->
         <property name="target" ref="customerService"></property>
         <property name="interceptorNames">
             <list>

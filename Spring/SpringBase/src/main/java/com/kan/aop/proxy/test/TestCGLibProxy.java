@@ -17,9 +17,10 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  *      b. 没有代理对象：返回目标对象(不做代理)
  *         i. 目标类未实现接口，Spring容器采用CGLib代理
  *         ii. 目标类实现接口，Spring容器采用JDK动态代理
+ *  此处采用CGLib代理
  * @author moku
  */
-public class TestJDKDynamicProxyXML {
+public class TestCGLibProxy {
     public static void main(String[] args) {
         ApplicationContext context = new ClassPathXmlApplicationContext("SpringAOPConfig.xml");
         UserService userService = (UserService) context.getBean("userService");

@@ -7,7 +7,7 @@ import com.kan.aop.proxy.business.transactions.MyTransaction;
 /**
  * 静态代理
  *   优点：业务类UserServiceImpl只需关注业务逻辑本身，保证业务重用性
- *   缺点：1. 代理对象的一个接口只服务于一种类型的对象，如果代理方法很多
+ *   缺点：1. 代理对象的一个接口只服务于一种类型的对象，如果代理方法很多(同一类型内的方法)
  *           则需为每一种方法进行代理，程序规模稍大时无法胜任
  *        2. 如果接口增加方法如UserService增加修改方法UpdateUser()，则所有实现类和代理类均需实现(重写Override)该方法
  */

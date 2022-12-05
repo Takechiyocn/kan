@@ -5,7 +5,7 @@ import com.kan.aop.proxy.business.interfaces.impl.UserServiceImpl;
 import com.kan.aop.proxy.staticproxy.proxy.ProxyUser;
 import com.kan.aop.proxy.business.transactions.MyTransaction;
 
-public class TestStaticProxyApp {
+public class TestStaticProxy {
 
     public static void main(String[] args) {
         MyTransaction transaction = new MyTransaction();

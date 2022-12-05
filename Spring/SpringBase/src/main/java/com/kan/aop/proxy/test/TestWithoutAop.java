@@ -15,6 +15,7 @@ public class TestWithoutAop {
         try {
             cust.printThrowException();
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

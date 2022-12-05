@@ -9,17 +9,17 @@ public class TestWithAop {
         CustomerService cust = (CustomerService) appContext.getBean("customerServiceBeforeProxy");
         CustomerService cust2 = (CustomerService) appContext.getBean("customerServiceAfterProxy");
         CustomerService cust3 = (CustomerService) appContext.getBean("customerServiceThrowProxy");
-        CustomerService cust4 = (CustomerService) appContext.getBean("customerServiceAroundProxy");
+//        CustomerService cust4 = (CustomerService) appContext.getBean("customerServiceAroundProxy");
 
         System.out.println("*************************");
-        cust4.printName();
+        cust.printName();
         System.out.println("*************************");
-        cust4.printUrl();
+        cust.printUrl();
         System.out.println("*************************");
 //        cust4.printThrowException();
 //        System.out.println("*************************");
         try {
-            cust4.printThrowException();
+            cust.printThrowException();
         } catch (Exception e) {
         }
     }

@@ -110,13 +110,13 @@
 
 ![SpringAOP.png](images/SpringAOP.png)
 
-#### 分类
+#### AOP分类
 
 JDK动态代理：类实现接口时使用
     
 CGLib动态代理：类未实现接口时使用，在运行时动态生成某个类的子类，final标记的类不能使用
 
-#### 注解
+#### AOP注解
 
 * @Aspect
 
@@ -140,10 +140,11 @@ CGLib动态代理：类未实现接口时使用，在运行时动态生成某个
 
     和@AfterReturning只会有一个执行
 
-#### AOP相关术语
-
 ![SpringAOPAdviceNormal.png](images/SpringAOPAdviceNormal.png)
+
 ![SpringAOPAdviceUnNormal.png](images/SpringAOPAdviceUnNormal.png)
+
+#### AOP相关术语
 
 * Aspect
 
@@ -173,7 +174,7 @@ CGLib动态代理：类未实现接口时使用，在运行时动态生成某个
 
 * Weaving
 
-    织入，指把增强advice应用到目标对象target来创建代理对象proxy的过程
+    织入，指把增强/通知advice应用到目标对象target来创建代理对象proxy的过程
 
   ![SpringAOPConcept.png](images/SpringAOPConcept.png)
 

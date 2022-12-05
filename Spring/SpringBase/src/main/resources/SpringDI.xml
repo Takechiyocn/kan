@@ -31,16 +31,16 @@
         </property>
         <property name="maps">
             <map>
-                <entry key="map1" value="map1 value"></entry>
-                <entry key="map2">
+                <entry key="key1" value="map1 value"></entry>
+                <entry key="key2">
                     <ref bean="students"></ref>
                 </entry>
             </map>
         </property>
         <property name="properties">
             <props>
-                <prop key="prop1">p1</prop>
-                <prop key="prop2">p2</prop>
+                <prop key="key1">p1</prop>
+                <prop key="key2">p2</prop>
             </props>
         </property>
     </bean>
