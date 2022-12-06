@@ -1,10 +1,31 @@
+# IO基础
+
+## 文件描述符
+
+    Linux内核将所有外部设备都看做一个文件来操作，对文件的读写操作会调用内核提供的系统命令，返回一个文件描述符fd
+    对一个socket的读写使用的描述符称为socket文件描述符(socket fd)
+    fd是一个数字，指向内核中一个结构体(包含文件路径、数据区等属性)
+
+## 套接字
+
+```java
+// 套接字socket=ip+端口，可理解为一个数据载体
+data=socket.read()
+```
+
+## 用户空间和内核空间
+
+## IO运行过程
+
+![IOProcessing.png](images/IOProcessing.png)
+
 # 同步IO
 
 ## 阻塞IO(同步阻塞)
 
-阻塞IO过程
-
 ![BIO.png](images/BIO.png)
+
+阻塞IO过程
 
 1. 用户线程发起read操作
    
@@ -16,6 +37,8 @@
 
 ![NIO.png](images/NIO.png)
 
+![NIO3.png](images/NIO3.png)
+
 非阻塞IO过程
 
 1. 用户线程发起read操作
@@ -26,7 +49,11 @@
 
 ※ 应用程序对内存轮询影响性能
 
-### Buffer(缓冲区)
+※ NIO没有Selector选择器的时候是阻塞模式，即只使用Channel和Buffer
+
+### FileChannel
+
+#### Buffer(缓冲区)
 
 通过Channel管道运输着存储数据的Buffer缓冲区来实现数据处理
 
@@ -40,7 +67,7 @@
 ---|---|---
 数据传输方向|单向|双向(因为有Channel)
 
-#### Buffer类核心变量
+##### Buffer类核心变量
 
 ![NIOBufferVariable.png](images/NIOBufferVariable.png)
 
@@ -60,13 +87,13 @@
 
     备忘位置，用于记录上一次读写的位置
 
-#### flip()函数
+##### flip()函数
 
 又称"切换成读模式"，每当要从缓存区的时候读取数据时，就调用flip()"切换成读模式"
 
 ![NIOBufferFlip.png](images/NIOBufferFlip.png)
 
-### Channel(通道)
+#### Channel(通道)
 
 ![NIOChannel.png](images/NIOChannel.png)
 
@@ -94,6 +121,10 @@
 * 静态方法open()
 
 * Files工具类newByteChannel()方法 
+
+### 网络通信Channel
+
+![NIONetChannel.png](images/NIONetChannel.png)
 
 ### 直接缓冲区/非直接缓冲区
 
@@ -152,24 +183,35 @@
    
 4. 这个时候用户进程再调用read操作，将数据从kernel拷贝到用户进程(空间)
 
-### select
+### NIO实现(通常指网络IO)
 
-### poll
+![NIO2.png](images/NIO2.png)
 
-### epoll
+* 远程连接对应一个通道channel
 
-### pselect
+* (文件/网络)数据读写通过buffer，且读写非阻塞
 
-## 同步非阻塞模型
+* selector：通道管理器
 
-不创建线程去IO，而发出请求给acceptor，acceptor轮询多个socket状态，当socket有读写事件时，才新建线程调用实际的IO读写操作。
+* 数据读写：buffer->channel
 
-多路复用IO模型中，一个线程可管理多个socket，系统无需建立新进程或线程，socket读写事件发生时才使用IO资源，减少资源占用率(select,poll,epoll)
+过程
 
-```java
-// 套接字socket=ip+端口，可理解为一个数据载体
-data=socket.read()
-```
+1. 创建通道channel并注册到selector中
+
+2. 注册事件到通道
+
+    1. 客户端连接服务端事件
+
+    2. 服务端接收客户端连接事件
+
+    3. 读/写事件
+
+3. selector轮询方式调用select/poll/epoll/pselect中的一个函数
+
+    1. 有通道事件：返回，新建IO线程处理
+
+    2. 无通道事件：阻塞继续轮询
 
 # 异步IO(AIO) 
 
@@ -204,12 +246,14 @@ data=socket.read()
 ---|---|---|---
 读取方式|面向流(Stream Oriented)|面向缓冲区(Buffered Oriented)|面向缓冲区(Buffered Oriented)
 读取主体※1|用户线程|用户线程|内核线程
-阻塞有无|阻塞※2|阻塞+非阻塞|非阻塞
+阻塞有无|阻塞※2|阻塞+非阻塞※3|非阻塞
 -|无|选择器(Selector)|-
 
 ※1 指从内核缓冲区读取到用户空间(外部文件读取到内核缓冲区由内核线程完成)   
 
 ※2 连接全程等待
+
+※3 NIO称为no-blocking IO通常在网络中使用，在网络层次中理解是非阻塞的，对于FileChannel而言同样是阻塞的
 
 ### BIO
 
@@ -237,36 +281,6 @@ data=socket.read()
 
 -> 进行IO操作(读/写)请求时，一个请求一个线程处理
 
-#### NIO实现
-
-![NIO2.png](images/NIO2.png)
-
-* 远程连接对应一个通道channel
-
-* (文件/网络)数据读写通过buffer，且读写非阻塞
-
-* selector：通道管理器
-
-* 数据读写：buffer->channel
-
-过程
-
-1. 创建通道channel并注册到selector中
-
-2. 注册事件到通道
-
-   1. 客户端连接服务端事件
-   
-   2. 服务端接收客户端连接事件
-   
-   3. 读/写事件
-   
-3. selector轮询方式调用select/poll/epoll/pselect中的一个函数
-
-   1. 有通道事件：返回，新建IO线程处理
-   
-   2. 无通道事件：阻塞继续轮询
-
 ### AIO
 
 AIO是异步非阻塞IO，进程读取数据时只负责发送跟接收指令，数据的准备工作由操作系统完成
@@ -283,20 +297,11 @@ AIO是异步非阻塞IO，进程读取数据时只负责发送跟接收指令，
   
   B顾客去吃海底捞，他一看要等挺久，于是去逛商场，每次逛一会就跑回来看有没有排到他。于是他最后既购了物，又吃上海底捞了
 
+* 多路复用IO
+
+  C顾客去吃海底捞，他一看要等挺久，于是去逛商场，时不时注意听商场广播，等到广播复述C可以就餐了，然后回去吃火锅
+  广播不是为C顾客一个人服务
+
 * AIO
 
-   C顾客去吃海底捞，由于他是高级会员，所以店长说，你去商场随便玩吧，等下有位置，我立马打电话给你。于是C顾客不用干坐着等，也不用每过一会儿就跑回来看有没有等到，最后也吃上了海底捞
-
-# IO基础
-
-## 文件描述符
-
-    Linux内核将所有外部设备都看做一个文件来操作，对文件的读写操作会调用内核提供的系统命令，返回一个文件描述符fd
-    对一个socket的读写使用的描述符称为socket文件描述符(socket fd)
-    fd是一个数字，指向内核中一个结构体(包含文件路径、数据区等属性)
-
-## 用户空间和内核空间
-
-## IO运行过程
-
-![IOProcessing.png](images/IOProcessing.png)
+   D顾客去吃海底捞，由于他是高级会员，所以店长说，你去商场随便玩吧，等下有位置，我立马打电话给你。于是C顾客不用干坐着等，也不用每过一会儿就跑回来看有没有等到，最后也吃上了海底捞
