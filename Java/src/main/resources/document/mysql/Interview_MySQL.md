@@ -525,7 +525,7 @@ UNIQUE(`username`)
 #### MyISAM
 * MySQL5.1之前默认引擎
 * 不支持事务和行锁(对整张表加锁，读加共享锁，写加排它锁)
-* shiyong 
+* 实用 
 
 #### Memory
 * 快速访问且数据不被修改

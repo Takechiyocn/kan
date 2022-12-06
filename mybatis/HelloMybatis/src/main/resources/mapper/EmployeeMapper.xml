@@ -15,6 +15,8 @@
         insert into mybatis.employee (e_name, e_age, e_email) values (#{name, jdbcType=VARCHAR}, #{age, jdbcType=VARCHAR}, #{email, jdbcType=VARCHAR})
     -->
 
+    <!-- MyBatis大多数情况可以识别参数类型。但在插入、更新、删除时必须指定jdbcType
+         另外如果将传递的参数保存为map，也需指定jdbcType -->
     <resultMap id="employee_map" type="Employee">
         <!--
 			id指定定义主键列的封装规则
@@ -23,7 +25,7 @@
 			property:指定对应的JavaBean属性
 		 -->
         <id column="e_id" jdbcType="BIGINT" property="id"/>
-        <!-- <result/>是定义普通列的封装规则 -->
+        <!-- <result>是定义普通列的封装规则 -->
         <result column="e_name" jdbcType="VARCHAR" property="name"/>
         <result column="e_age" jdbcType="INTEGER" property="age"/>
         <result column="e_email" jdbcType="VARCHAR" property="email"/>

@@ -81,6 +81,22 @@ select version();
   net stop
   mysql80;
   ```
+### DDL
+
+    Data Define Language数据定义语言
+    用于库和表的创建、删除和修改
+
+### DML
+
+    Data Manipulate Language数据操纵语言
+    用于添加、删除和修改数据库记录，并检查数据完整性
+
+### DQL
+
+    Data Query Language数据查询语言
+    用于查询数据库中表的记录
+
+
 
 ## 程序
 

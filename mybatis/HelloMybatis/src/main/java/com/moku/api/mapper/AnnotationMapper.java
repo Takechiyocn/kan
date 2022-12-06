@@ -51,5 +51,4 @@ public interface AnnotationMapper {
     @Select("select * from muser where name = #{name} and password = #{password}")
     User login3(@Param("name") String nm, @Param("password") String pwd);
 
-
 }

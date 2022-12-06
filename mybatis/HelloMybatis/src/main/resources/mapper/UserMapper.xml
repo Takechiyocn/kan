@@ -91,7 +91,7 @@
              如果某一个数据没有，name会自动设置为null，不符合实际场景。
              如： select * from muser where name like ’%null%‘ 返回0条数据。
              解决方案：使用动态SQL语句
-        select * from muser where name like concat('%', #{name}, '%') or age = #{age}
+                select * from muser where name like concat('%', #{name}, '%') or age = #{age}
         -->
         select * from muser
         <include refid="select_condition_sql"/>
