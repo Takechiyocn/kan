@@ -47,7 +47,7 @@
     <bean id="customerServiceAroundProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
         <!--
             JDK动态代理，目标对象：customerService
-            代理类：hijackAroundMethodBean
+            代理类：ProxyFactoryBean(hijackAroundMethodBean实现该代理类)
         -->
         <property name="target" ref="customerService"></property>
         <property name="interceptorNames">

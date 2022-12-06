@@ -48,5 +48,4 @@ public class ScatterGatherBase {
         inChannel.close();
         outChannel.close();
     }
-
 }

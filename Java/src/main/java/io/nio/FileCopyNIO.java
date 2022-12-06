@@ -42,7 +42,7 @@ public class FileCopyNIO {
         long timeNio3 = transferFileByDirectMemory1(strSource, strDes);
         System.out.println(timeNio3 + "：NIO(直接内存)时间");
 
-        // NIO复制文件4：直接缓冲区操作
+        // NIO复制文件4：直接缓冲区操作 -> 速度最快
         long timeNio4 = transferFileByDirectMemory2(strSource, strDes2);
         System.out.println(timeNio4 + "：NIO(直接内存2)时间");
     }
@@ -50,7 +50,7 @@ public class FileCopyNIO {
     private static long transferFileByDirectMemory2(String source, String des) throws IOException {
         long startTime = System.currentTimeMillis();
         FileChannel inChannel = FileChannel.open(Paths.get(source), StandardOpenOption.READ);
-        FileChannel outChannel = FileChannel.open(Paths.get(des), StandardOpenOption.WRITE, StandardOpenOption.READ, StandardOpenOption.CREATE_NEW);
+        FileChannel outChannel = FileChannel.open(Paths.get(des), StandardOpenOption.WRITE, StandardOpenOption.READ, StandardOpenOption.TRUNCATE_EXISTING);
 
         // 直接缓存操作
         inChannel.transferTo(0, inChannel.size(), outChannel);
@@ -64,7 +64,7 @@ public class FileCopyNIO {
     private static long transferFileByDirectMemory1(String source, String des) throws IOException {
         long startTime = System.currentTimeMillis();
         FileChannel inChannel = FileChannel.open(Paths.get(source), StandardOpenOption.READ);
-        FileChannel outChannel = FileChannel.open(Paths.get(des), StandardOpenOption.WRITE, StandardOpenOption.READ, StandardOpenOption.CREATE_NEW);
+        FileChannel outChannel = FileChannel.open(Paths.get(des), StandardOpenOption.WRITE, StandardOpenOption.READ, StandardOpenOption.TRUNCATE_EXISTING);
 
         // 内存映射文件
         MappedByteBuffer inMappedBuf = inChannel.map(FileChannel.MapMode.READ_ONLY, 0, inChannel.size());
@@ -74,6 +74,7 @@ public class FileCopyNIO {
         byte[] b = new byte[inMappedBuf.limit()];
         inMappedBuf.get(b);
         outMappedBuf.put(b);
+        System.out.println("直接缓冲区？：" + inMappedBuf.isDirect());
 
         inChannel.close();
         outChannel.close();
@@ -93,8 +94,9 @@ public class FileCopyNIO {
         // 读写channel
         FileChannel readChannel = read.getChannel();
         FileChannel writeChannel = write.getChannel();
-        // 读写buffer
+        // 读写buffer：非直接缓冲区
         ByteBuffer byteBuffer = ByteBuffer.allocate(1024 * 1024);
+        System.out.println("直接缓冲区？：" + byteBuffer.isDirect());
 
         while (readChannel.read(byteBuffer) > 0) {
             // 切换称读数据模式：设置读指针到缓存头部
@@ -110,6 +112,7 @@ public class FileCopyNIO {
         long endTime = System.currentTimeMillis();
         return endTime - startTime;
     }
+
     private static long transferFileWithNIOLocal1(File source, File des) {
         long startTime = System.currentTimeMillis();
 
@@ -126,6 +129,8 @@ public class FileCopyNIO {
 
             // 分配指定大小缓冲区
             ByteBuffer byteBuffer = ByteBuffer.allocate(1024 * 1024);
+
+            System.out.println("直接缓冲区？：" + byteBuffer.isDirect());
 
             // 将缓冲区数据写入通道
             while (inChannel.read(byteBuffer) > 0) {

@@ -20,16 +20,16 @@
 
 * 不使用ORM时，对象与关系数据库之间的映射：
     ```java
-        // 获取连接
+        // 1.获取连接
         DataSource dataSource;
         connection = dataSource.getConnection();
         // 将执行的sql
         String sql = "SELECT name, id, age, password FROM users";
-        // 创建命令对象
+        // 2.创建命令对象
         preparedStatement = connection.prepareStatement(sql);
-        // 执行并获得结果集
+        // 3.执行并获得结果集
         resultSet = preparedStatement.executeQuery();
-        // 遍历结果集，将数据库中的数据转换成Java中的对象
+        // 4.遍历结果集，将数据库中的数据转换成Java中的对象
         while(resultSet.next()){
             String name = resultSet.getString("name");
             int id = resultSet.getInt("id");

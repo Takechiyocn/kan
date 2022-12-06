@@ -95,7 +95,7 @@
 
 * Files工具类newByteChannel()方法 
 
-### 直接缓冲区/费直接缓冲区
+### 直接缓冲区/非直接缓冲区
 
 #### 非直接缓冲区
 
@@ -105,13 +105,13 @@
 
 #### 直接缓冲区
 
-不需要经过copy井段，内存映射文件
+不需要经过copy阶段，可理解成内存映射文件
 
 ![NIOUnDirectBuffer.png](images/NIOUnDirectBuffer.png)
 
 #### 直接缓冲区创建
 
-* 缓冲区创建的时候分配的是直接缓冲区
+* 缓冲区创建的时候分配的直接缓冲区(allocateDirect()方法)
 
 * FileChannel上调用map()方法，将文件直接映射到内存中创建
 
@@ -134,20 +134,31 @@
 ## 多路复用IO(同步非阻塞的一种)
 
 ![NewIO.png](images/NewIO.png)
+![NewIO2.png](images/NewIO2.png)
 
-多路复用IO过程
+### 特点
 
-1. 用户线程发起read操作
+    一个进程能同时等待多个文件描述符，这些文件描述符中的任意一个
+    进入就绪状态，select()函数就可以返回
+    select/epoll优势在于能处理更多连接
 
-2. 内存数据未准备好，不对内存进行轮询，可做其他事情
+### 多路复用IO过程
 
-3. 内核数据准备好，以事件机制通知应用程序
+1. 当用户进程调用select，那么整个进程会被block
+
+2. kernel会"监视"所有select负责的socket
+   
+3. 当任何一个socket中的数据准备好了，select就会返回
+   
+4. 这个时候用户进程再调用read操作，将数据从kernel拷贝到用户进程(空间)
 
 ### select
 
 ### poll
 
 ### epoll
+
+### pselect
 
 ## 同步非阻塞模型
 
@@ -250,7 +261,7 @@ data=socket.read()
    
    3. 读/写事件
    
-3. selector轮询方式调用select函数
+3. selector轮询方式调用select/poll/epoll/pselect中的一个函数
 
    1. 有通道事件：返回，新建IO线程处理
    
@@ -276,3 +287,16 @@ AIO是异步非阻塞IO，进程读取数据时只负责发送跟接收指令，
 
    C顾客去吃海底捞，由于他是高级会员，所以店长说，你去商场随便玩吧，等下有位置，我立马打电话给你。于是C顾客不用干坐着等，也不用每过一会儿就跑回来看有没有等到，最后也吃上了海底捞
 
+# IO基础
+
+## 文件描述符
+
+    Linux内核将所有外部设备都看做一个文件来操作，对文件的读写操作会调用内核提供的系统命令，返回一个文件描述符fd
+    对一个socket的读写使用的描述符称为socket文件描述符(socket fd)
+    fd是一个数字，指向内核中一个结构体(包含文件路径、数据区等属性)
+
+## 用户空间和内核空间
+
+## IO运行过程
+
+![IOProcessing.png](images/IOProcessing.png)

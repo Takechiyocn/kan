@@ -24,10 +24,10 @@
             选择方法   返回值任意 包 类名任意 方法名任意 参数任意
     -->
     <aop:config>
-        <!-- 切入点表达式 -->
+        <!-- 切入点表达式：目标对象的方法 -->
         <aop:pointcut expression="execution(* com.kan.aop.proxy.business.interfaces.*.*(..))" id="myPointCut"/>
         <aop:aspect ref="transaction">
-            <!-- 配置前置通知，注意 method 的值要和 对应切面的类方法名称相同 -->
+            <!-- 增强：配置前置通知，注意 method 的值要和 对应切面的类方法名称相同 -->
             <aop:before method="before" pointcut-ref="myPointCut"></aop:before>
             <aop:after-returning method="after" pointcut-ref="myPointCut"></aop:after-returning>
         </aop:aspect>
