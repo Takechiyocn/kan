@@ -1,4 +1,4 @@
-package io.nio.network.noBlockNIO;
+package io.nio.network.noBlockNIO.tcp;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -59,10 +59,10 @@ public class NoBlockServer {
                     ByteBuffer buf = ByteBuffer.allocate(1024);
 
                     // 9.2 获取本地文件通道
-                    FileChannel outChannel = FileChannel.open(Paths.get("src/main/java/io/nio/network/noBlockNIO/file/server/noBlockNIO.txt"), StandardOpenOption.WRITE, StandardOpenOption.CREATE);
+                    FileChannel outChannel = FileChannel.open(Paths.get("src/main/java/io/nio/network/noBlockNIO/tcp/file/server/noBlockNIO.txt"), StandardOpenOption.WRITE, StandardOpenOption.CREATE);
 
                     // 9.3 读取文件
-                    while (client.read(buf) != -1) {
+                    while (client.read(buf) > 0) {
                         // 读之前切换成读模式
                         buf.flip();
                         outChannel.write(buf);

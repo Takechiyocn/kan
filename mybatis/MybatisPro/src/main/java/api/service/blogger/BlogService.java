@@ -15,6 +15,7 @@ public class BlogService {
 
         try {
             sqlSession = MyBatisFactory.getSession();
+            // 从会话中获取接口的代理对象
             BlogMapper mapper = sqlSession.getMapper(BlogMapper.class);
             return mapper.getBlog(id);
         } catch (Exception e) {

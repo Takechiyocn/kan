@@ -77,7 +77,7 @@ data=socket.read()
 
 * 上界Limit
 
-  (当前)缓冲区里的数据总数
+  (当前)缓冲区里的数据总数，limit为0时数据不能进行读写(即定义buffer后不能进行flip)
 
 * 位置Position
 
@@ -117,7 +117,6 @@ data=socket.read()
           
         * DatagramSocket
     
-    
 * 静态方法open()
 
 * Files工具类newByteChannel()方法 
@@ -125,6 +124,20 @@ data=socket.read()
 ### 网络通信Channel
 
 ![NIONetChannel.png](images/NIONetChannel.png)
+
+#### 管道
+
+![NIOPipe.png](images/NIOPipe.png)
+
+Java NIO管道是2个线程之间的单向数据连接
+
+* sink通道
+
+    数据写入sink通道
+
+* source通道
+
+    从source通道读取数据
 
 ### 直接缓冲区/非直接缓冲区
 

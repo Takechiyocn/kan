@@ -1,4 +1,4 @@
-package io.nio.network.noBlockNIO;
+package io.nio.network.noBlockNIO.tcp;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -25,7 +25,7 @@ public class NoBlockClient {
         socketChannel.configureBlocking(false);
 
         // 2. 获取本地文件通道
-        FileChannel fileChannel = FileChannel.open(Paths.get("src/main/java/io/nio/network/noBlockNIO/file/client/noBlockNIO.txt"), StandardOpenOption.READ);
+        FileChannel fileChannel = FileChannel.open(Paths.get("src/main/java/io/nio/network/noBlockNIO/tcp/file/client/noBlockNIO.txt"), StandardOpenOption.READ);
 
         // 3. 获取非直接缓存
         ByteBuffer buf = ByteBuffer.allocate(1024);

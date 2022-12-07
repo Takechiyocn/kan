@@ -1,4 +1,4 @@
-package io.nio.network.noBlockNIO;
+package io.nio.network.noBlockNIO.tcp;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -34,7 +34,7 @@ public class NoBlockClient2 {
         socketChannel.register(selector, SelectionKey.OP_READ);
 
         // 2. 获取本地文件通道
-        FileChannel fileChannel = FileChannel.open(Paths.get("src/main/java/io/nio/network/noBlockNIO/file/client/noBlockNIO.txt"), StandardOpenOption.READ);
+        FileChannel fileChannel = FileChannel.open(Paths.get("src/main/java/io/nio/network/noBlockNIO/tcp/file/client/noBlockNIO.txt"), StandardOpenOption.READ);
 
         // 3. 获取非直接缓存
         ByteBuffer buf = ByteBuffer.allocate(1024);
@@ -66,7 +66,7 @@ public class NoBlockClient2 {
                     ByteBuffer resBuf = ByteBuffer.allocate(1024);
 
                     // 8.2 读取服务端响应的数据
-                    int rBytes = channel.read(buf);
+                    int rBytes = channel.read(resBuf);
                     if (rBytes > 0) {
                         resBuf.flip();
                         System.out.println("Received msg from server:" + new String(resBuf.array(),0, rBytes));

@@ -40,10 +40,19 @@ public class BufferRWDirectly {
 
         // 创建一个limit()大小的字节数组(因为就只有limit这么多个数据可读)
         byte[] bytesTo = new byte[byteBuffer.limit()];
-
         // 将读取的数据装进我们的字节数组中
         byteBuffer.get(bytesTo);
-
         System.out.println(new String(bytesTo, 0, bytesTo.length));
+
+        // 清空buffer：limit=capacity, position=0
+        byteBuffer.clear();
+
+        // 数据清空后核心变量值
+        System.out.println("clear后 capacity：" + byteBuffer.capacity());
+        System.out.println("clear后 limit：" + byteBuffer.limit());
+        System.out.println("clear后 position：" + byteBuffer.position());
+        System.out.println("clear后 mark：" + byteBuffer.mark());
+
+        // clear后再次获取到的buffer数据，是脏数据
     }
 }

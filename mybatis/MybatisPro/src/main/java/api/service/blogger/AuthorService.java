@@ -19,6 +19,7 @@ public class AuthorService {
     public List<Author> getAuthorById(int id) {
         try {
             sqlSession = MyBatisFactory.getSession();
+            // 从会话中获取接口的代理对象
             AuthorMapper mapper = sqlSession.getMapper(AuthorMapper.class);
             return mapper.getAuthor(id);
         } catch (Exception e) {
