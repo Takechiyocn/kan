@@ -25,10 +25,10 @@ import java.util.List;
  * 二级缓存：SqlSessionFactory工厂级别，即在整个应用都有效，可在多个会话中有效
  * 优缺点：
  *   1. 缓存以namespace为单位，不同namespace操作互不影响
- *   2. insert，update，delete操作会清空namespace下全部缓存
+ *   2. DML(insert添加，delete删除，update修改)操作会清空namespace下全部缓存
  *   3. Mybatis Generator生成的代码，各个表都是独立的，每个表都有自己的namespace
  *   4. 多表操作不推荐使用二级缓存，因为多表操作更新时会产生脏数据
- *   --> 二级缓存为表级缓存，开销大，可用一级缓存(使用HashMap存储)替换，效率更高
+ *      --> 二级缓存为表级缓存，开销大，可用一级缓存(使用HashMap存储)替换，效率更高
  */
 public class AuthorCacheL2Test {
 
@@ -136,6 +136,7 @@ public class AuthorCacheL2Test {
         Gson gson = new Gson();
         String jsonResult = gson.toJson(blogList, new TypeToken<List<Blog>>() {}.getType());
         logger.info("author:{}", jsonResult);
+        session1.close();
 
         // 2. 表更新并提交
         SqlSession session2 = sqlSessionFactory.openSession();
@@ -143,9 +144,10 @@ public class AuthorCacheL2Test {
         Blog blog = blogList.get(0);
         // String转int
 //        Integer.valueOf("7");
-        blog.setTitle(blog.getTitle() +
-                (blog.getTitle().length() > 11 ? (Integer.parseInt(blog.getTitle().substring(10)) + 1) : 1));
+        blog.setTitle(
+                blog.getTitle().length() > 11 ? blog.getTitle().substring(0,11) + (Integer.parseInt(blog.getTitle().substring(11)) + 1) : blog.getTitle()+ 1);
         mapper2.updateBlog(blog);
+        session2.commit();
 
         // 3. 多表查询 --> 结果为上述1操作产生的二级缓存
         SqlSession session3 = sqlSessionFactory.openSession();

@@ -144,7 +144,7 @@ MYSQL事务特点：事务内的语句要么全部执行成功，要么全部执
     某个事务在读取某个范围内的记录时，会产生幻行
     
     幻读是指在一个事务内读取到了别的事务修改的数据，导致前后读取不一致
-    ![img_15.png](../imgtmp/img_15.png)
+    ![IllusionRead.png](images/IllusionRead.png)
   
 * 提交读/不可重复读Read Committed ->侧重于修改，对策：MVCC
 

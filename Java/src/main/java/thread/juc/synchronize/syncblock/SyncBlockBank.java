@@ -43,7 +43,7 @@ public class SyncBlockBank {
             while (accounts[from] < amount) {
                 System.out.printf(Thread.currentThread() + "*** wait***：Transfer [%10.2f] from account[%d:%10.2f] to account[%d:%10.2f].", amount, from, accounts[from], to, accounts[to]);
                 System.out.println();
-                // 同步阻塞：进入等待状态
+                // 同步阻塞：释放synchronized锁，进入等待状态
                 obj.wait();
             }
             System.out.print(Thread.currentThread() + ":");
