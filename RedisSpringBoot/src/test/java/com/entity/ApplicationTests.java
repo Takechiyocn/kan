@@ -8,6 +8,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import javax.annotation.Resource;
+
 //@RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 public class ApplicationTests {
@@ -16,7 +18,6 @@ public class ApplicationTests {
 
     @Test
     public void test() {
-
         stringRedisTemplate.opsForValue().set("aaa", "111");
         Assert.assertEquals("111", stringRedisTemplate.opsForValue().get("aaa"));
     }

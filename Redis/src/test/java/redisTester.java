@@ -31,6 +31,7 @@ public class redisTester {
                 }
                 i++;
                 jedis.set("test" + i, i + "");
+//                jedis.del("test" + i);
             }
         } finally {// 关闭连接
             jedis.close();
