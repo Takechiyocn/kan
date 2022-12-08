@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * TODO：数据库追加
  */
 @Slf4j
-public class exeMethodFromDb {
+public class ExeMethodFromDb {
     public static void main(String[] args) throws ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException {
         eReflection();
     }

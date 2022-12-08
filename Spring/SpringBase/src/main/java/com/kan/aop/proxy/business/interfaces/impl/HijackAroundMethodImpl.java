@@ -6,9 +6,7 @@ import org.aopalliance.intercept.MethodInvocation;
 import java.util.Arrays;
 
 /**
- * JDK动态代理
- * 代理类实现：增强(切面此处未显示实现)+ 切入点(此处通过xml配置文件拦截的切入点(所有customerService方法)：methodInvocation)
- *     <property name="target" ref="customerService"></property>
+ * 切面类(CGLib代理)
  */
 public class HijackAroundMethodImpl implements MethodInterceptor {
     @Override

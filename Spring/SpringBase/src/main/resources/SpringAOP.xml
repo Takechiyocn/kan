@@ -42,12 +42,12 @@
         </property>
     </bean>
 
-    <!-- 代理类：环绕通知 -->
+    <!-- 切面：环绕通知/增强 -->
     <bean id="hijackAroundMethodBean" class="com.kan.aop.proxy.business.interfaces.impl.HijackAroundMethodImpl"></bean>
     <bean id="customerServiceAroundProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
         <!--
-            JDK动态代理，目标对象：customerService
-            代理类：ProxyFactoryBean(hijackAroundMethodBean实现该代理类)
+            CGLib代理，目标对象：customerService(此处切点默认全部方法)
+            代理类：ProxyFactoryBean(此处未实现代理类)
         -->
         <property name="target" ref="customerService"></property>
         <property name="interceptorNames">

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+         version="4.0">
+<!--    <moku>-->
+<!--        <moku-name>hello1</moku-name>-->
+<!--        <moku-class>cn.test.moku.Hello1Servlet</moku-class>-->
+<!--        <load-on-startup>0</load-on-startup>-->
+<!--    </moku>-->
+<!--    <moku-mapping>-->
+<!--        <moku-name>hello1</moku-name>-->
+<!--        <url-pattern>/hello1</url-pattern>-->
+<!--    </moku-mapping>-->
+<!--    <moku>-->
+<!--        <moku-name>hello2</moku-name>-->
+<!--        <moku-class>cn.test.moku.Hello2Servlet</moku-class>-->
+<!--        <load-on-startup>1</load-on-startup>-->
+<!--    </moku>-->
+<!--    <moku-mapping>-->
+<!--        <moku-name>hello2</moku-name>-->
+<!--        <url-pattern>/hello2</url-pattern>-->
+<!--    </moku-mapping>-->
+<!--    <moku>-->
+<!--        <moku-name>hello3</moku-name>-->
+<!--        <moku-class>cn.test.moku.Hello3Servlet</moku-class>-->
+<!--        <load-on-startup>2</load-on-startup>-->
+<!--    </moku>-->
+<!--    <moku-mapping>-->
+<!--        <moku-name>hello3</moku-name>-->
+<!--        <url-pattern>/hello3</url-pattern>-->
+<!--    </moku-mapping>-->
+    <servlet>
+        <!-- servlet名字，一般跟servlet类名相同 -->
+        <servlet-name>helloServlet</servlet-name>
+        <!-- servlet全限定类名，即servlet位置 -->
+        <servlet-class>com.moku.servlet01.HelloServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>helloServlet</servlet-name>
+        <!-- 浏览器通过该url找到servlet -->
+        <url-pattern>/hello</url-pattern>
+    </servlet-mapping>
+    <!-- 配置每个Servlet参数 -->
+    <servlet>
+        <servlet-name>servlet02</servlet-name>
+        <servlet-class>com.moku.servlet02.Servlet02</servlet-class>
+        <!--配置ServLetConfig-->
+        <init-param>
+            <!--设置编码为utf-8-->
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+            <!--设置描述信息-->
+            <param-name>desc</param-name>
+            <param-value>this is Servlet02</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>servlet02</servlet-name>
+        <!-- 以.do结尾的资源url都可以访问 -->
+        <url-pattern>*.do</url-pattern>
+    </servlet-mapping>
+    <!-- 配置全局Servlet参数：ServletContext -->
+    <context-param>
+        <param-name>globalEncoding</param-name>
+        <param-value>UTF-8</param-value>
+    </context-param>
+    <context-param>
+        <!--设置全局描述信息-->
+        <param-name>gdesc</param-name>
+        <param-value>this is Context</param-value>
+    </context-param>
+</web-app>

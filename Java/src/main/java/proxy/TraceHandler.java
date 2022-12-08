@@ -18,6 +18,7 @@ import java.lang.reflect.Method;
  */
 public class TraceHandler implements InvocationHandler {
 
+    // 目标类：需要被代理的类
     private Object target;
 
     public TraceHandler(Object t) {

@@ -1,7 +1,7 @@
 import java.io.IOException;
 import java.util.Arrays;
 
-public class ConcpetOfJava {
+public class ConceptOfJava {
     // 类常量：添加public后可在其他类中调用 -> 静态常量
     public static final Double PI = 3.14;
 
@@ -119,10 +119,6 @@ public class ConcpetOfJava {
         //    继承：is-a：特殊与一般关系。如RushOrder类由Order继承而来
         //  耦合度减小：将相互依赖的类减至最少。如果类A不知道B的存在，它就不会关心B的任何改变（亦即B的改变不会导致A产生任何bug）
         //
-
-        //  反射：程序在运行期间发现更多的类及其属性的能力
-        //
-
         //  多态：一个对象变量（例如变量e）可以指示多种实际类型的的现象被称为多态polymorphism
         //  动态绑定：运行时能够自动选择调用哪个方法的现象称为动态绑定dynamic binding
         //        --> 调用的方法依赖于隐式参数的实际类型，并且在运行时实现动态绑定
@@ -165,10 +161,10 @@ public class ConcpetOfJava {
         //   Character,Boolean
         // 自动装箱：autoboxing。将(类型)值直接添加到包装器实例中，内部进行类型自动转换的过程
         //    ArrayList<Integer> list = new ArrayLst<>();
-        //    list.add(3);  --> 自动转换成list.add(Ingeger.valueOf(3));
+        //    list.add(3);  --> 自动转换成list.add(Integer.valueOf(3));
         // 自动拆箱：自动装箱的逆过程
         //    int n = list.get(i);   --> 自动转换成list.get(i).intValue();
-        // Ingeger n = 3;   // 自动装箱
+        // Integer n = 3;   // 自动装箱
         // n++; // 自动拆箱-->自加-->自动装箱
         // 自动装箱规范将下列范围内的值被装箱到固定对象中，亦即Integer a=100;Integer b=100; a==b：
         //   boolean，byte，char < 127
@@ -178,9 +174,5 @@ public class ConcpetOfJava {
         //   getClass();   <==> this.getClass();
         //   --> 静态方法没有this，对于静态方法类名的获取：
         //      --> new Object(){}.getClass().getEnclosingClass();
-
-        // TODO: 反射/代理/克隆
-
-
     }
 }

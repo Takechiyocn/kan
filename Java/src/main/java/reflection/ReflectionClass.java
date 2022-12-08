@@ -10,7 +10,7 @@ import java.lang.reflect.Modifier;
 import java.util.Random;
 
 /**
- * @description:能够分析类能力的程序称为反射
+ * @description: 能够分析类能力的程序称为反射
  * @author: Kan
  * @date: 2021/2/23 23:34
  */

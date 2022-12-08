@@ -10,6 +10,7 @@ import java.util.Random;
  */
 public class ProxyClassMain {
     public static void main(String[] args) {
+
         Object[] elements = new Object[5];
 
         // 填充代理元素
@@ -30,7 +31,7 @@ public class ProxyClassMain {
             /**
              * 代理Comparable对象
              * 生成代理对象：无论何时调用代理对象(proxy)的方法(实现的接口方法，此处Integer实现的Comparable接口的compareTo方法)，
-             *             调用处理器的invoke方法都会被调用，并向其传递Method对象（接口对象？）和原始的调用参数(key)。
+             *             调用处理器的invoke方法都会被调用，并向其传递Method对象（接口对象）和原始的调用参数(key)。
              * 参数1：类加载器（不同的类可以有不同的类加载器）
              * 参数2：Class对象数组。每个元素都是要实现的接口
              * 参数3：调用处理器
@@ -61,6 +62,5 @@ public class ProxyClassMain {
         if (result >= 0) {
             System.out.println(elements[result]);
         }
-
     }
 }

@@ -146,7 +146,7 @@
 
 ---
 
-### 注解
+### Spring注解
 
 * @Configuration注解
 
@@ -195,6 +195,13 @@
 * @Autowired注解
 
       将@Autowired标注的组件注入到相应的bean中。
+      默认根据type进行注解，当接口实现类有多个时，需要配合修饰注解Qualifier或Primary使用
+
+* @Resource注解(Java注解)
+
+      默认byName注入策略
+      如果设置type值，则使用byType注入策略
+      name、type均不指定，利用反射机制使用byName注入
 
 * @Data注解
 

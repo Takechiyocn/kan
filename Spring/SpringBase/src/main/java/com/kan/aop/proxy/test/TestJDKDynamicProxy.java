@@ -16,7 +16,7 @@ public class TestJDKDynamicProxy {
         MyTransaction transaction = new MyTransaction();
         // 代理类(拦截器)：织入过程，拦截被切面类（MyTransaction）横切的对象(UserServiceImpl)的切入点(此处所有方法)
         ObjectInterceptor proxyObject = new ObjectInterceptor(target, transaction);
-        // 动态代理对象：代理类实现了接口InvocationHandler，使用JDK动态代理
+        // 动态代理对象：实现了代理类接口InvocationHandler，使用JDK动态代理
         UserService userService = (UserService) Proxy.newProxyInstance(target.getClass().getClassLoader(),
                 target.getClass().getInterfaces(),
                 proxyObject);
