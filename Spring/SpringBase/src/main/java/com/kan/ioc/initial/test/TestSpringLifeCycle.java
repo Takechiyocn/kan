@@ -16,8 +16,8 @@ public class TestSpringLifeCycle {
         SpringLifeCycle lifeCycle = (SpringLifeCycle) context.getBean("springLifeCycle");
         lifeCycle.sayHello();
 
-        // 销毁Spring容器，多例模式(scope="prototype")不会销毁Spring容器
-        // 多例模式下，spring的ioc不再管理我们自定义的销毁方法
+        // 销毁Spring容器，原型模式(scope="prototype")不会销毁Spring容器
+        // 原型模式下，spring的ioc不再管理我们自定义的销毁方法
         ClassPathXmlApplicationContext classContext = (ClassPathXmlApplicationContext) context;
         classContext.close();
     }
