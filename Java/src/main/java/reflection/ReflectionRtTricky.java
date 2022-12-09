@@ -7,9 +7,9 @@ import java.lang.reflect.Modifier;
  * 反射更改静态常量（java8/10以下可以使用）
  */
 public class ReflectionRtTricky {
-    public static void main(String args[]) throws Exception {
-        setFinalStatic(Boolean.class.getField("FALSE"), true);
+    public static void main(String[] args) throws Exception {
 
+        setFinalStatic(Boolean.class.getField("FALSE"), true);
         System.out.format("Everything is %s", false); // "Everything is true"
     }
 
@@ -40,6 +40,7 @@ public class ReflectionRtTricky {
 
         // 没有final(常量)属性的域可以更改域值
         // 将默认的Boolean类定义的false更改为true
+        // 因为field初始（底层）修饰符为static，所以第一个参数可以为null
         field.set(null, newValue);
     }
 }

@@ -1,5 +1,7 @@
 package reflection.executeMethodFromDb;
 
+import common.ConstantsBase;
+
 /**
  *
  */
@@ -9,12 +11,14 @@ public class Enums {
      *
      */
     public enum ParameterTypes {
-        //
-        STRING("java.lang.String"),
-        DOUBLE("double"),
-        INT("int"),
-        LONG("long");
-
+        // java.lang.String
+        STRING(ConstantsBase.STRING_PARAMETER),
+        // double
+        DOUBLE(ConstantsBase.DOUBLE_PARAMETER),
+        // int
+        INT(ConstantsBase.INTEGER_PARAMETER),
+        // long
+        LONG(ConstantsBase.LONG_PARAMETER);
 
         private String extended;
 

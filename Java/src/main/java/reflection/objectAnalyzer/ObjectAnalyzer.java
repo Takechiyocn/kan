@@ -23,11 +23,9 @@ public class ObjectAnalyzer
         visited.add(obj);
         Class cl = obj.getClass();
         if (cl == String.class) return (String) obj;
-        if (cl.isArray())
-        {
+        if (cl.isArray()) {
             String r = cl.getComponentType() + "[]{";
-            for (int i = 0; i < Array.getLength(obj); i++)
-            {
+            for (int i = 0; i < Array.getLength(obj); i++) {
                 if (i > 0) r += ",";
                 Object val = Array.get(obj, i);
                 if (cl.getComponentType().isPrimitive()) r += val;
@@ -38,35 +36,28 @@ public class ObjectAnalyzer
 
         String r = cl.getName();
         // inspect the fields of this class and all superclasses
-        do
-        {
+        do {
             r += "[";
             Field[] fields = cl.getDeclaredFields();
             AccessibleObject.setAccessible(fields, true);
             // get the names and values of all fields
-            for (Field f : fields)
-            {
-                if (!Modifier.isStatic(f.getModifiers()))
-                {
+            for (Field f : fields) {
+                if (!Modifier.isStatic(f.getModifiers())) {
                     if (!r.endsWith("[")) r += ",";
                     r += f.getName() + "=";
-                    try
-                    {
+                    try {
                         Class t = f.getType();
                         Object val = f.get(obj);
                         if (t.isPrimitive()) r += val;
                         else r += toString(val);
-                    }
-                    catch (Exception e)
-                    {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
             }
             r += "]";
             cl = cl.getSuperclass();
-        }
-        while (cl != null);
+        } while (cl != null);
 
         return r;
     }
