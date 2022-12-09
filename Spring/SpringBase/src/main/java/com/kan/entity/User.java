@@ -1,10 +1,15 @@
 package com.kan.entity;
 
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
+
 /**
  * 实体类
  *
  * @author moku
  */
+@Component
+@ConfigurationProperties(prefix = "person")
 public class User {
     private Long id;
     private String name;

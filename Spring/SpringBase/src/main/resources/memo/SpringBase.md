@@ -419,12 +419,6 @@
 
 [comment]: <> (创建bean时，会通过@Autowired标注的构造器将JdbcTemplate注入进来 @Controller @Component)
 
-[comment]: <> (@SessionAttribute @ModelAttribute)
-
-[comment]: <> (4716442903549583)
-
-[comment]: <> (JDBC：Java Database connectivity JPA：Java Persistence API持久层API Spring Data JPA：基于关系型数据库进行JPA持久化)
-
 ## 流程图
 
 ### mermaid

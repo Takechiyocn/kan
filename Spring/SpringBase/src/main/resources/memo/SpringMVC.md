@@ -254,52 +254,86 @@ Spring基础设施，面向Spring本身
 
 ### Spring Bean作用域
 
-#### 单例模式singleton
+![SpringBeanScope.png](images/SpringBeanScope.png)
 
-SpringIoC容器默认单例模式，即该容器只存在一个共享的Bean实例
+#### 单例模式singleton(默认作用域:全局共享)
 
-* 多线程下不安全
+SpringIoC容器只存在一个共享的Bean实例
+ 
+```java
+<bean id="userDao" class="com.ioc.UserDaoImpl" scope="singleton"/>
+```
 
-* 作用域：Spring的缺省作用域
-
-    * 显示配置：
-    
-        ```java<bean id="userDao" class="com.ioc.UserDaoImpl" scope="singleton"/>```
-
-#### prototype原型模式
+#### prototype原型模式(创建后IoC容器不再管理bean状态)
 
 * 每次获取bean时，容器创建新bean实例
   
-* 启动时不创建对象，类似lazy-init
+* xml配置时，Spring启动时不创建实例，类似lazy-init
 
 * 有状态的bean使用prototype，无状态bean使用singleton
 
-#### request
+场景：
 
-一次request一个实例
+#### request：请求作用域
 
-* 一次Http请求，容器返回该Bean的同一实例，且仅在当前request内有效，请求结束实例销毁
+每一次HTTP请求都会创建一个新的bean，该bean仅在当前Http Request内有效，请求处理完后销毁实例(请求和响应共享bean)
+
+场景：一次Http请求和响应的共享Bean
+
+```java
+<bean id="loginAction" class="" scope="request"/>
+```
+
+#### session：会话作用域
+
+同一Http Session之间共享一个bean，不同session(会话)使用不同bean
+
+场景：记录用户的登录信息
+
+```java
+<bean id="user" class="" scope="session"/>
+```
+
+解读
+
+    1. 设置bean id = user
+    2. Spring容器每次调用user时，都会在(每)一个会话中创建一个新实例(因为bean是session级别)
+    3. session中所有请求(request)共享一个bean
+    4. 会话级别的bean可随意修改互不影响 
+
+#### ~~global session：全局会话作用域~~
+
+全局session作用域，仅在基于portlet的web应用中才有意义
+
+* portlet时能够生成语义代码(如HTML)片段的小型JavaWeb插件(Spring5已取消该功能)
+
+* portlet与servlet不同，每个portlet都有不同的会话
+
+#### application：全局作用域
+
+ServletContext级别：在一个Http Servlet Context中，定义一个Bean实例
+
+场景：Web应用的上下文信息，比如：记录一个应用的共享信息
+
+```java
+<bean id="app" class="" scope="application"/>
+```
+
+#### singleton和application区别
+
+* singleton是Spring Core的作用域，作用于IoC的容器
   
-* 不同Http请求(或者多次相同)，容器产生新的Bean实例
+* application是Spring Web中的作用，作用于Servlet容器
 
-```java
-<bean id="loginAction" class="com.cnblogs.Login" scope="request"/>
-```
+#### Spring的Controller是单例
 
-#### session
+单例线程不安全，可能导致属性重复使用
 
-* 一次Http Session中，容器返回该Bean的同一实例
+解决方案：
 
-* 不同Session请求，创建新实例bean，bean实例仅在当前session内有效
+* 不在Controller中定义成员变量
 
-* 多次同Http请求，每次session请求创建新实例，实例间属性不共享
+* 必须定义非静态成员变量时，通过注解@Scope("request")，将其设置为多例模式
 
-```java
-<bean id="userPreference" class="com.ioc.UserPreference" scope="session"/>
-```
-
-#### global session
-
-全局的Http Session中，容器返回该Bean的同一实例，仅在portlet context时有效
 
 ### Spring Bean声明周期
