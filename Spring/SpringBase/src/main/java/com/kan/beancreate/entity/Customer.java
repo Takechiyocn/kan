@@ -1,4 +1,4 @@
-package com.kan.entity;
+package com.kan.beancreate.entity;
 
 import lombok.Data;
 

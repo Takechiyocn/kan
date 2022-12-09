@@ -54,6 +54,14 @@ public class Demo {
 
 @Data注解包含以下注解：
 
+* @Setter
+
+* @Getter
+
+* @RequiredArgsConstructor
+
+* @ToString
+
 * @EqualsAndHashCode(callSuper = false)
 
     * 含义：在重写hashCode和equals时只重写当前类的数据，不重写父类的数据
@@ -67,7 +75,5 @@ public class Demo {
         * 自己重写equals方法(Lombok不对显示重写的方法进行生成)
     
         * 显示使用@EqualsAndHashCode(callSuper = true)
-
-
 
 ### 
