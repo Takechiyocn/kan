@@ -104,32 +104,10 @@ public class EqualsInJava {
         System.out.println("v1.equals(v2):" + v1.equals(v2));
         // false:==比较两个对象的地址
         System.out.println("v1 == v2:" + (v1 == v2));
-
-        // 静态变量和瞬态变量
-        Person p = new Person();
-        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("src/main/java/equal/file/fos.txt"));
-        oos.writeObject(p);
-        oos.close();
-        ObjectInputStream ois = new ObjectInputStream(new FileInputStream("src/main/java/equal/file/fos.txt"));
-        System.out.println(ois.readObject());
-        ois.close();
     }
 }
 
 class Value
 {
     int i;
-}
-
-class Person implements Serializable {
-    // TODO：静态变量可以被序列化?
-    static String name = "user";
-    static int birthday = 1989;
-    // 瞬态变量不能被序列化(只有对象才能被序列化)，故序列化时toString后age=0
-    transient int age = 18;
-
-    @Override
-    public String toString() {
-        return "Person[name:" + name + ",birthday:" + birthday + ",age:" + age + "]";
-    }
 }

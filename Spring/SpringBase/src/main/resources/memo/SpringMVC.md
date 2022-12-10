@@ -250,7 +250,69 @@ Spring基础设施，面向Spring本身
 
 ### DI(Dependency Injection依赖注入)
 
-    Spring通过DI动态的向某个对象提供其他所需要的对象(通过反射实现)
+    Spring通过DI动态的向某个对象提供其他所需要的对象(通过反射实现)，可通过@Autowire注解实现
+
+![DependencyInjection.png](images/DependencyInjection.png)
+
+* 依赖注入方式
+
+    * 基于构造函数的依赖注入(Constructor Injection)
+    
+        * 优点：可以将需要注入的字段声明为final，在类实例化期间被初始化
+    
+            ```java
+            @Component
+            public class ConstructorBasedInjection {
+                private final InjectedBean injectedBean;
+          
+                // 官方文档中，@Autowired可省略
+                @Autowired
+                public ConstructorBasedInjection(InjectedBean injectedBean) {
+                    this.injectedBean = injectedBean;
+                }
+            }
+            ```
+    
+    * 基于setter的依赖注入(Setter Injection)
+    
+        * 使用无参构造函数或无参静态工厂方法实例化Bean时，为了注入Bean的依赖项，Spring容器将调用这些setter方法
+    
+            ```java
+            @Component
+            public class SetterBasedInjection {
+                private InjectedBean injectedBean;
+            
+                // 官方文档中，@Autowired可省略
+                @Autowired
+                public void setInjectedBean(InjectedBean injectedBean) {
+                    this.injectedBean = injectedBean;
+                }
+            }
+            ```
+          
+    * 基于字段的依赖注入(Field Injection)
+        
+        * 不允许声明不可变域(final/immutable)
+    
+            * 依赖注入字段必须在类实例化时初始化(final域不允许更改值)
+    
+        * 容易违反单一设计原则(依赖增多容易)
+
+        * Spring4开始不推荐使用
+    
+            ```java
+            @Component
+            public class FieldBasedInjection {
+                @Autowired
+                private InjectedBean injectedBean;
+            }
+            ```
+          
+* 依赖注入选择
+
+    1. 依赖注入的使用上，Constructor Injection是首选
+       
+    2. 使用@Autowired注解的时候，要使用Setter Injection方式，这样代码更容易编写单元测试
 
 ### Spring Bean作用域
 

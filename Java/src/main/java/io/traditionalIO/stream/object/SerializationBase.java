@@ -1,4 +1,4 @@
-package io.stream.object;
+package io.traditionalIO.stream.object;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -38,7 +38,7 @@ public class SerializationBase implements Serializable {
             add(new SerializationBase(200, "B"));
             add(new SerializationBase(300, "C"));
         }};
-        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("src/main/java/io/stream/object/file/temp.txt"));
+        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("src/main/java/io/traditionalIO/stream/object/file/temp.txt"));
 
         // 序列化对象多个对象
         oos.writeObject(sa);
