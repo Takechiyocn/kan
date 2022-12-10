@@ -14,7 +14,7 @@
 
 ### @RequiredArgsConstructor
 
-@RequiredArgsConstructor注解则会将类中所有带有@NonNull注解 / org.jetbrains.annotations.NotNull注解的或者带有final修饰的成员变量生成对应的构造方法
+@RequiredArgsConstructor注解则会将类中所有带有@NonNull注解、org.jetbrains.annotations.NotNull注解的或者带有final修饰的成员变量生成对应的构造方法
 ```java
 @RequiredArgsConstructor
 public class Demo {

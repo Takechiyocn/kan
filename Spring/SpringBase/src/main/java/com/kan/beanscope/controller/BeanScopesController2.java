@@ -1,6 +1,6 @@
-package com.kan.controller;
+package com.kan.beanscope.controller;
 
-import com.kan.entity.User;
+import com.kan.beanscope.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -14,9 +14,9 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class BeanScopesController2 {
     @Autowired
-    private User user1;
+    private User userInComponent;
     public User getUser1() {
-        User user = user1;
+        User user = userInComponent;
         return user;
     }
 }

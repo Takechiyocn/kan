@@ -1,12 +1,12 @@
 package com.kan.beancreate.test;
 
-import com.kan.beancreate.configuration.MyConfiguration2;
+import com.kan.beancreate.configuration.MyConfiguration3ComponentScan;
 import com.kan.beancreate.entity.Customer;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 /**
- * @ClassName LoadBeanBy2ConfigurationBean
+ * @ClassName LoadBeanBy3ConfigurationComponent
  * @Description 生成Bean方法：1. 基于XML配置
  *                          2. 基于@Configuration+@Bean的形式
  *                          3. 基于@Configuration+@Component/@Service/@Controller/@Repository注解方式
@@ -16,18 +16,20 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
  *                          7. 基于@Configuration+@Component注解方式和实现FactoryBean接口方式
  *                          8. 基于@Configuration+@Conditional注解(Spring4注解)+实现Condition接口方式
  * @Author moku
- * @Date 2022/12/10 2:08
+ * @Date 2022/12/10 2:30
  * @Version 1.0
  */
-public class LoadBeanBy2ConfigurationBean {
+public class LoadBeanBy3ConfigurationComponent {
     /**
-     * 测试通过 @Configuration 和 @Bean的形式注入Bean
+     * 测试配置文件中指定扫描包路径的方式创建Bean
      * @param args
      */
     public static void main(String[] args) {
 
-        ApplicationContext context = new AnnotationConfigApplicationContext(MyConfiguration2.class);
-        Customer customer = (Customer) context.getBean("myCustomer");
-        System.out.println(customer);
+        ApplicationContext context = new AnnotationConfigApplicationContext(MyConfiguration3ComponentScan.class);
+        Customer bean1 = (Customer) context.getBean("customerConfigurationBean");
+        Customer bean2 = (Customer) context.getBean("customerScannedComponent");
+        System.out.println(bean1);
+        System.out.println(bean2);
     }
 }

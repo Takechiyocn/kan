@@ -256,9 +256,19 @@ Spring基础设施，面向Spring本身
 
 ![SpringBeanScope.png](images/SpringBeanScope.png)
 
+![SpringBeanScope2.png](images/SpringBeanScope2.png)
+
+* 无状态bean：通常指对象的属性状态不需要更新
+
+* 有状态bean：通常指对象的属性状态需要更新
+
 #### 单例模式singleton(默认作用域:全局共享)
 
-SpringIoC容器只存在一个共享的Bean实例
+* IoC容器启动产生，容器销毁时销毁(bean)
+
+* SpringIoC容器只存在一个共享的Bean实例
+
+场景：通常无状态的Bean使⽤该作⽤域
  
 ```java
 <bean id="userDao" class="com.ioc.UserDaoImpl" scope="singleton"/>
@@ -266,13 +276,13 @@ SpringIoC容器只存在一个共享的Bean实例
 
 #### prototype原型模式(创建后IoC容器不再管理bean状态)
 
+* 作瞬时Bean，用完就销毁(Spring容器不再管理的意思)，多例Bean
+  
 * 每次获取bean时，容器创建新bean实例
   
 * xml配置时，Spring启动时不创建实例，类似lazy-init
 
-* 有状态的bean使用prototype，无状态bean使用singleton
-
-场景：
+场景：通常有状态的Bean使⽤该作⽤域
 
 #### request：请求作用域
 
@@ -286,7 +296,9 @@ SpringIoC容器只存在一个共享的Bean实例
 
 #### session：会话作用域
 
-同一Http Session之间共享一个bean，不同session(会话)使用不同bean
+* 会话开始产生，会话结束销毁
+  
+* 同一Http Session之间共享一个bean，不同session(会话)使用不同bean
 
 场景：记录用户的登录信息
 
@@ -303,7 +315,9 @@ SpringIoC容器只存在一个共享的Bean实例
 
 #### ~~global session：全局会话作用域~~
 
-全局session作用域，仅在基于portlet的web应用中才有意义
+* web容器启动产生，web容器销毁bean销毁(MVC中bean类似)
+
+* 全局session作用域，仅在基于portlet的web应用中才有意义
 
 * portlet时能够生成语义代码(如HTML)片段的小型JavaWeb插件(Spring5已取消该功能)
 
@@ -335,5 +349,159 @@ ServletContext级别：在一个Http Servlet Context中，定义一个Bean实例
 
 * 必须定义非静态成员变量时，通过注解@Scope("request")，将其设置为多例模式
 
+
+### Spring Bean注入方式
+
+#### 1. 基于XML配置
+
+* Bean生成入方式
+
+    1. Spring容器优先读取配置文件
+    
+    2. 生成配置文件内定义的Bean实例
+    
+#### 2. 基于@Configuration和@Bean的形式
+
+* Bean生成方式
+
+    1. Spring容器优先读取配置信息(此处配置注解类)
+    
+    2. 生成配置类Bean实例
+    
+    3. 生成配置类定义的Bean实例
+
+#### 3. 基于@Configuration和@Component、@Service、@Controller、@Repository注解方式
+
+* Bean生成方式
+
+    1. Spring容器优先读取配置信息(此处配置注解类)
+
+    2. 生成配置类Bean实例
+
+    3. 生成配置类定义的组件扫描到的Bean实例
+    
+    4. 生成组件扫描的的Bean内定义的Bean实例
+
+    5. 生成配置类Bean内定义的Bean实例
+
+#### 4. 基于@Configuration、@Import注解方式
+   
+* @Import注解引入外部资源交由Spring管理
+  
+* 通过@Import注解引入的类只能根据类型进行注入，不能根据名称注入
+
+* Bean生成方式(@Import注解时通常配置类中不定义其他Bean)
+
+    1. Spring容器优先读取配置信息(此处配置注解类)
+
+    2. 生成配置类Bean实例
+
+    3. 生成通过配置类@Import注解引入的Bean实例(非接口实现)
+
+
+#### 5.基于@Configuration、@Import注解和ImportSelector接口方式
+
+通常实现类同时实现以下接口
+
+1. ImportSelector接口：收集需要导入的配置类
+
+    * 方法： 调用selectImports方法之前先调用其他接口中对应方法
+
+2. 其他接口
+   
+    * EnvironmentAware
+      
+    * BeanFactoryAware
+      
+    * BeanClassLoaderAware
+      
+    * ResourceLoaderAware
+
+3. Bean生成生成方式(@Import注解时通常配置类中不定义其他Bean)
+
+    1. Spring容器优先读取配置信息(此处配置注解类)
+
+    2. 生成配置类Bean实例
+
+    3. 生成通过配置类@Import引入的接口实现类中定义的Bean实例(接口实现不生成Bean实例)
+
+        * 实现EnvironmentAware接口的方法内，生成Environment的Bean实例
+
+6. 基于@Configuration、@Import注解和ImportBeanDefinitionRegistrar接口方式
+
+    * ImportBeanDefinitionRegistrar能够实现动态注册bean到容器中
+    
+        如可以先判断容器中是否存在某个对象，然后进行相应的逻辑处理，动态的向容器中添加对象等
+
+    * Bean生成方式(@Import注解时通常配置类中不定义其他Bean，也可以定义)
+    
+        1. Spring容器优先读取配置信息(此处配置注解类)
+    
+        2. 生成配置类Bean实例
+        
+        3. 生成配置类Bean定义的其他Bean实例(如果有)
+    
+        4. 生成通过配置类@Import引入的接口实现类中定义的Bean实例(接口实现不生成Bean实例)
+           
+            * 实现ImportBeanDefinitionRegistrar接口的方法内，动态生成的Bean实例
+        
+7. 基于@Configuration+@Component注解方式和实现FactoryBean接口方式
+   
+    * BeanFactory负责创建Bean对象，FactoryBean是由BeanFactory创建出来的Bean
+
+    * Bean生成方式(@Import注解时通常配置类中不定义其他Bean)
+
+        1. Spring容器优先读取配置信息(此处配置注解类)
+
+        2. 生成配置类Bean
+    
+        3. 生成配置类定义的组件扫描到的Bean实例
+
+        4. 生成通过组件扫描到Bean(接口实现)中定义的其他Bean实例: getBean时生成
+
+8. 基于@Configuration+@Conditional注解(Spring4注解)+实现Condition接口方式
+
+* 按照一定的条件进行判断(类似动态注册ImportBeanDefinitionRegistrar)，满足条件给容器注册bean，通常和配置文件配合使用(类似ImportSelector)
+
+* Bean生成方式(@Import注解时通常配置类中不定义其他Bean)
+
+    1. Spring容器优先读取配置信息(此处配置注解类)
+
+    2. 生成配置类Bean
+
+    3. 根据配置类中@Conditional注解的条件判断，生成相应的Bean实例
+    
+        ```java
+        @Configuration
+        @PropertySource("myApplication.properties")
+        public class MyConfiguration8Conditional {
+            @Bean
+            @Conditional(MyConfiguration8ConditionalImpl.class)
+            public Customer customerConditional() {
+            return new Customer("张楚岚", 21);
+            }
+        
+            @Bean
+            @Conditional(MyConfiguration8ConditionalImpl2.class)
+            public Customer customerConditional2() {
+                return new Customer("冯宝宝", 18);
+            }
+        }
+
+       public class MyConfiguration8ConditionalImpl implements Condition {
+          /**
+           * 当配置文件中包含有配置security.isOpen并且配置文件的值为true时才向Spring中注入Bean
+           */
+          @Override
+          public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
+              Environment environment = context.getEnvironment();
+              if (environment.containsProperty("security.isOpen") &&
+                  environment.getProperty("security.isOpen").equals("true")) {
+                  return true;
+              }
+              return false;
+          }
+      }
+    ``` 
 
 ### Spring Bean声明周期
