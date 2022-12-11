@@ -1,4 +1,4 @@
-package com.kan.di.annotation.entities;
+package com.kan.di.xml.entities;
 
 import com.kan.di.xml.entities.Student;
 import org.springframework.stereotype.Component;
@@ -14,7 +14,7 @@ import java.util.Set;
  * @author moku
  */
 @Component
-public class Person {
+public class PersonComponent {
     private Long pid;
     private String pname;
     private Student students;

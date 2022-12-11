@@ -14,11 +14,13 @@ import org.springframework.stereotype.Controller;
  */
 @Controller
 public class BeanScopesController {
-    // userInComponent代表User的的唯一bean，Autowired注解装配从Users类注入的userInComponent
+    // @Autowired按type注解，此时注入User类型的Bean
+    // 该Bean从Users类注入(Bean名称：userInComponent)，
+    // 以下Autowired注解后，User的Bean名称：userInComponent2(通常使用相同名称userInComponent装配)
     @Autowired
-    private User userInComponent;
+    private User userInComponent2;
     public User getUser1() {
-        User user = userInComponent;
+        User user = userInComponent2;
         System.out.println("Bean原Name：" + user.getName());
         user.setName("Java-modify");
         return user;

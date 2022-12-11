@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class Users {
+    // 注入User类型的Bean(Bean名称：userInComponent)
     @Bean
     public User userInComponent() {
         User user = new User();

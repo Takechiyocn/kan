@@ -252,67 +252,73 @@ Spring基础设施，面向Spring本身
 
     Spring通过DI动态的向某个对象提供其他所需要的对象(通过反射实现)，可通过@Autowire注解实现
 
-![DependencyInjection.png](images/DependencyInjection.png)
+![DependencyInjectionScope.png](images/DependencyInjectionScope.png)
 
-* 依赖注入方式
+#### 依赖注解@Autowired
 
-    * 基于构造函数的依赖注入(Constructor Injection)
-    
-        * 优点：可以将需要注入的字段声明为final，在类实例化期间被初始化
-    
-            ```java
-            @Component
-            public class ConstructorBasedInjection {
-                private final InjectedBean injectedBean;
-          
-                // 官方文档中，@Autowired可省略
-                @Autowired
-                public ConstructorBasedInjection(InjectedBean injectedBean) {
-                    this.injectedBean = injectedBean;
-                }
+默认开启按类型的自动装配(byType)，可通过参数required=false关闭自动装配
+
+#### 依赖注入方式
+
+* 基于构造函数的依赖注入(Constructor Injection)
+
+    * 优点：可以将需要注入的字段声明为final，在类实例化期间被初始化
+
+        ```java
+        @Component
+        public class ConstructorBasedInjection {
+            private final InjectedBean injectedBean;
+      
+            // 官方文档中，@Autowired可省略
+            @Autowired
+            public ConstructorBasedInjection(InjectedBean injectedBean) {
+                this.injectedBean = injectedBean;
             }
-            ```
-    
-    * 基于setter的依赖注入(Setter Injection)
-    
-        * 使用无参构造函数或无参静态工厂方法实例化Bean时，为了注入Bean的依赖项，Spring容器将调用这些setter方法
-    
-            ```java
-            @Component
-            public class SetterBasedInjection {
-                private InjectedBean injectedBean;
-            
-                // 官方文档中，@Autowired可省略
-                @Autowired
-                public void setInjectedBean(InjectedBean injectedBean) {
-                    this.injectedBean = injectedBean;
-                }
-            }
-            ```
-          
-    * 基于字段的依赖注入(Field Injection)
+        }
+        ```
+
+* 基于setter的依赖注入(Setter Injection)
+
+    * 使用无参构造函数或无参静态工厂方法实例化Bean时，为了注入Bean的依赖项，Spring容器将调用这些setter方法
+
+        ```java
+        @Component
+        public class SetterBasedInjection {
+            private InjectedBean injectedBean;
         
-        * 不允许声明不可变域(final/immutable)
-    
-            * 依赖注入字段必须在类实例化时初始化(final域不允许更改值)
-    
-        * 容易违反单一设计原则(依赖增多容易)
-
-        * Spring4开始不推荐使用
-    
-            ```java
-            @Component
-            public class FieldBasedInjection {
-                @Autowired
-                private InjectedBean injectedBean;
+            // 官方文档中，@Autowired可省略
+            @Autowired
+            public void setInjectedBean(InjectedBean injectedBean) {
+                this.injectedBean = injectedBean;
             }
-            ```
-          
-* 依赖注入选择
+        }
+        ```
+      
+* 基于字段的依赖注入(Field Injection)
+    
+    * 不允许声明不可变域(final/immutable)
 
-    1. 依赖注入的使用上，Constructor Injection是首选
-       
-    2. 使用@Autowired注解的时候，要使用Setter Injection方式，这样代码更容易编写单元测试
+        * 依赖注入字段必须在类实例化时初始化(final域不允许更改值)
+
+    * 容易违反单一设计原则(依赖增多容易)
+
+    * Spring4开始不推荐使用
+
+        ```java
+        @Component
+        public class FieldBasedInjection {
+            @Autowired
+            private InjectedBean injectedBean;
+        }
+        ```
+
+#### 依赖注入选择
+
+1. 依赖注入的使用上，Constructor Injection是首选
+   
+2. 使用@Autowired注解的时候，要使用Setter Injection方式，这样代码更容易编写单元测试
+   
+    ![DependencyInjection.png](images/DependencyInjection.png)
 
 ### Spring Bean作用域
 
@@ -411,7 +417,6 @@ ServletContext级别：在一个Http Servlet Context中，定义一个Bean实例
 
 * 必须定义非静态成员变量时，通过注解@Scope("request")，将其设置为多例模式
 
-
 ### Spring Bean注入方式
 
 #### 1. 基于XML配置
@@ -432,7 +437,7 @@ ServletContext级别：在一个Http Servlet Context中，定义一个Bean实例
     
     3. 生成配置类定义的Bean实例
 
-#### 3. 基于@Configuration和@Component、@Service、@Controller、@Repository注解方式
+#### 3. 基于@Configuration+@Component/@Service/@Controller/@Repository注解方式
 
 * Bean生成方式
 
@@ -489,7 +494,7 @@ ServletContext级别：在一个Http Servlet Context中，定义一个Bean实例
 
         * 实现EnvironmentAware接口的方法内，生成Environment的Bean实例
 
-6. 基于@Configuration、@Import注解和ImportBeanDefinitionRegistrar接口方式
+#### 6. 基于@Configuration、@Import注解和ImportBeanDefinitionRegistrar接口方式
 
     * ImportBeanDefinitionRegistrar能够实现动态注册bean到容器中
     
@@ -506,8 +511,8 @@ ServletContext级别：在一个Http Servlet Context中，定义一个Bean实例
         4. 生成通过配置类@Import引入的接口实现类中定义的Bean实例(接口实现不生成Bean实例)
            
             * 实现ImportBeanDefinitionRegistrar接口的方法内，动态生成的Bean实例
-        
-7. 基于@Configuration+@Component注解方式和实现FactoryBean接口方式
+
+#### 7. 基于@Configuration+@Component注解方式和实现FactoryBean接口方式
    
     * BeanFactory负责创建Bean对象，FactoryBean是由BeanFactory创建出来的Bean
 
@@ -521,7 +526,7 @@ ServletContext级别：在一个Http Servlet Context中，定义一个Bean实例
 
         4. 生成通过组件扫描到Bean(接口实现)中定义的其他Bean实例: getBean时生成
 
-8. 基于@Configuration+@Conditional注解(Spring4注解)+实现Condition接口方式
+#### 8. 基于@Configuration+@Conditional注解(Spring4注解)+实现Condition接口方式
 
 * 按照一定的条件进行判断(类似动态注册ImportBeanDefinitionRegistrar)，满足条件给容器注册bean，通常和配置文件配合使用(类似ImportSelector)
 

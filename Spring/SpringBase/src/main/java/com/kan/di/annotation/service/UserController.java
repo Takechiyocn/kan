@@ -1,4 +1,4 @@
-package com.kan.controller;
+package com.kan.di.annotation.service;
 
 import com.kan.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import javax.annotation.Resource;
  * @Date 2022/12/8 15:46
  * @Version 1.0
  */
-@RestController
+//@RestController
 public class UserController {
 
     @Autowired

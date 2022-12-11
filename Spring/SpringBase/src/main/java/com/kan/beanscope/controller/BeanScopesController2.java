@@ -13,10 +13,13 @@ import org.springframework.stereotype.Controller;
  */
 @Controller
 public class BeanScopesController2 {
+    // @Autowired按type注解，此时注入User类型的Bean
+    // 该Bean从Users类注入(Bean名称：userInComponent)，
+    // 以下Autowired注解后，User的Bean名称：userInComponent3(通常使用相同名称userInComponent装配)
     @Autowired
-    private User userInComponent;
+    private User userInComponent3;
     public User getUser1() {
-        User user = userInComponent;
+        User user = userInComponent3;
         return user;
     }
 }
