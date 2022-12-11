@@ -270,6 +270,7 @@ Spring基础设施，面向Spring本身
             private final InjectedBean injectedBean;
       
             // 官方文档中，@Autowired可省略
+            // 此处并非构造器装配，依然使用Autowired装配方式字段(字段注入相同效果)
             @Autowired
             public ConstructorBasedInjection(InjectedBean injectedBean) {
                 this.injectedBean = injectedBean;
@@ -277,6 +278,21 @@ Spring基础设施，面向Spring本身
         }
         ```
 
+* 基于方法的依赖注入(Method Injection)
+
+    * Spring启动过程中，自动调用一次加了@Autowired注解的方法，我们可以在此做一些初始化工作
+
+        ```java
+        @Service
+        public class UserService {
+        
+            @Autowired
+            public void test(IUser user) {
+               user.say();
+            }
+        }
+        ```
+      
 * 基于setter的依赖注入(Setter Injection)
 
     * 使用无参构造函数或无参静态工厂方法实例化Bean时，为了注入Bean的依赖项，Spring容器将调用这些setter方法
@@ -311,6 +327,39 @@ Spring基础设施，面向Spring本身
             private InjectedBean injectedBean;
         }
         ```
+
+* 基于参数的依赖注入(Parameter Injection)
+
+    * 构造器参数依赖注入
+    
+        ```java
+        @Service
+        public class UserService {
+        
+            private IUser user;
+        
+            public UserService(@Autowired IUser user) {
+                this.user = user;
+                System.out.println("user:" + user);
+            }
+        }
+        ```
+      
+    * 非静态方法参数依赖注入
+
+        ```java
+        @Service
+        public class UserService {
+        
+            public void test(@Autowired IUser user) {
+               user.say();
+            }
+        }
+        ```
+
+* 基于注解的依赖注入(ANNOTATION_TYPE Injection)
+
+TODO：不常使用
 
 #### 依赖注入选择
 

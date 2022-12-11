@@ -212,8 +212,33 @@ public Map<String, Object> validate(
 
 ### @NotBlank：只能作用在String上，不能为null，而且调用trim()后，长度必须大于0
 
-## Spring注解
+## Spring/MVC注解
 
 ### @Configuration
 
+### @Service
+
+* 用于标注业务层组件
+  
+* 让组件扫描将类识别为一个组件，并创建该类实例作为Spring上下文中的bean
+
+### @Controller注解
+
+* 用于标注控制层组件(如Struts中的action)
+
+* 让组件扫描将类识别为一个组件，并创建该类实例作为Spring上下文中的bean
+
+### @Repository注解
+
+* 用于标注数据访问层组件
+
+* 让组件扫描将类识别为一个组件，并创建该类实例作为Spring上下文中的bean
+
+* 将标注类中的数据访问异常封装为Sprig的数据访问异常类型
+
+###  @Component注解
+
+* 表示泛型组件，当组件不好归类的时候，可以使用这个组件进行注解
+
+* 让组件扫描将类识别为一个组件，并创建该类实例作为Spring上下文中的bean。
 

@@ -73,7 +73,7 @@
 
 * 组件
 
-      负责整个应用功能的一部分，也称为~~bean~~
+      负责整个应用功能的一部分，也称为bean
 
 *  *容器container*
 
@@ -164,23 +164,6 @@
   > * @SpringBootConfiguration注解
   > * @EnableAutoConfiguration注解
   > * @ComponentScan注解
-
-* @Controller注解
-
-      让组件扫描将类识别为一个组件，并创建该类实例作为Spring上下文中的bean。
-
-* @Component注解
-
-      让组件扫描将类识别为一个组件，并创建该类实例作为Spring上下文中的bean。
-
-* @Repository注解
-
-      让组件扫描将类识别为一个组件，并创建该类实例作为Spring上下文中的bean。
-      同时将标注类中的数据访问异常封装为Sprig的数据访问异常类型。
-
-* @Service注解
-
-      让组件扫描将类识别为一个组件，并创建该类实例作为Spring上下文中的bean。
 
 * @Autowired注解
 
