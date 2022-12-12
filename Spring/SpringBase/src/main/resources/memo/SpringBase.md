@@ -14,6 +14,8 @@
 
 ![SpringComponent.png](images/SpringComponent.png)
 
+![SpringJar.png](images/SpringJar.png)
+
 * 核心容器
 
       核心容器SpringCore提供框架的基本功能。
@@ -341,7 +343,7 @@
 
     * Spring原始Factory，不支持AOP、Web等插件
     
-    * Spring基础设施，面向Spring本身
+    * Spring框架基础设施，面向Spring本身
 
 * ApplicationContext
 
@@ -397,10 +399,6 @@
 ### Spring MVC请求映射注解
 
 ![SpringMVC请求映射注解](images/SpringMVCRequestReflectionAnnoation.png)
-
-[comment]: <> (** 构造型注解：stereotype @Repository:Spring组件扫描ComponentScan会自动发现类并将其初始化为Spring应用上下文中的bean，)
-
-[comment]: <> (创建bean时，会通过@Autowired标注的构造器将JdbcTemplate注入进来 @Controller @Component)
 
 ## 流程图
 

@@ -4,6 +4,7 @@ import com.kan.di.annotation.service.DiMultiBean1Service1;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
 /**
  * @ClassName DiMultiBean1Configuration
@@ -27,6 +28,11 @@ public class DiMultiBean1Configuration {
     // DIMultiBean1Service1类型Bean：Bean名=t2
     @Bean("t2")
     public DiMultiBean1Service1 t2() {
+        return new DiMultiBean1Service1();
+    }
+
+    @Bean
+    public DiMultiBean1Service1 diMultiBean1Service1() {
         return new DiMultiBean1Service1();
     }
 }

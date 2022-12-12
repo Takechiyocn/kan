@@ -10,7 +10,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  * @ClassName BeanScopeTest
- * @Description TODO
+ * @Description
  * @Author moku
  * @Date 2022/12/9 22:40
  * @Version 1.0

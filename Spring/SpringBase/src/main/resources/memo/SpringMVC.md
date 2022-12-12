@@ -256,7 +256,7 @@ Spring基础设施，面向Spring本身
 
 #### 依赖注解@Autowired
 
-默认开启按类型的自动装配(byType)，可通过参数required=false关闭自动装配
+默认开启按类型的自动装配(byType)，可通过参数 required=false关闭自动装配
 
 #### 依赖注入方式
 
@@ -361,6 +361,45 @@ Spring基础设施，面向Spring本身
 
 TODO：不常使用
 
+#### 依赖注入失效
+
+1. 类未加@Controller、@Service、@Repository、@Component等注解
+
+2. 注入Filter或Listener(在Filter中字段注入)
+
+    * Web应用启动顺序：Listener->Filter->Servlet
+
+        ![SpringWebInitialization.png](images/SpringWebInitialization.png)
+    
+    * 对于所有SpringBootWeb应用程序而言，SpringMVC启动(DispatcherServlet加载Bean)在Listener/Filter之后执行
+
+3. 注解未被@ComponentScan扫描/路径不正确
+
+   ※ SpringBoot项目中@SpringBootApplication注解内置@ComponentScan注解功能
+
+   ※ basePackages：默认扫描与启动类在同个包以及子包下的bean
+   
+    1. @Component注解扫描[@Controller、@Service、@Repository、@Component等注解的]类，收集元数据
+    
+        1. 扫描路径未添加 -> 注解无法收集
+    
+        2. 扫描路径不正确 -> 注解无法收集
+    
+        3. 扫描范围太小 -> 注解无法收集
+    
+    2. 使用@Autowired自动装配(已经被收集/注入的Bean)
+
+4. 循环依赖问题
+
+如果A依赖于B，B依赖于C，C依赖于A，形成一个死循环
+![SpringDIDeadLoop.png](images/SpringDIDeadLoop.png)
+
+* Spring默认单例，单例使用@Autowired装配，大多数情况能解决循环依赖
+
+    * 如果创建代理对象，单例可能出现循环依赖问题
+
+* 多例Bean出现循环依赖，导致bean自动装配失败
+
 #### 依赖注入选择
 
 1. 依赖注入的使用上，Constructor Injection是首选
@@ -458,7 +497,7 @@ ServletContext级别：在一个Http Servlet Context中，定义一个Bean实例
 
 #### Spring的Controller是单例
 
-单例线程不安全，可能导致属性重复使用
+单例线程不安全，可能导致属性重复使用(单例：同一实例可能被多处修改)
 
 解决方案：
 
@@ -545,35 +584,35 @@ ServletContext级别：在一个Http Servlet Context中，定义一个Bean实例
 
 #### 6. 基于@Configuration、@Import注解和ImportBeanDefinitionRegistrar接口方式
 
-    * ImportBeanDefinitionRegistrar能够实现动态注册bean到容器中
-    
-        如可以先判断容器中是否存在某个对象，然后进行相应的逻辑处理，动态的向容器中添加对象等
+* ImportBeanDefinitionRegistrar能够实现动态注册bean到容器中
 
-    * Bean生成方式(@Import注解时通常配置类中不定义其他Bean，也可以定义)
+    如可以先判断容器中是否存在某个对象，然后进行相应的逻辑处理，动态的向容器中添加对象等
+
+* Bean生成方式(@Import注解时通常配置类中不定义其他Bean，也可以定义)
+
+    1. Spring容器优先读取配置信息(此处配置注解类)
+
+    2. 生成配置类Bean实例
     
-        1. Spring容器优先读取配置信息(此处配置注解类)
-    
-        2. 生成配置类Bean实例
-        
-        3. 生成配置类Bean定义的其他Bean实例(如果有)
-    
-        4. 生成通过配置类@Import引入的接口实现类中定义的Bean实例(接口实现不生成Bean实例)
-           
-            * 实现ImportBeanDefinitionRegistrar接口的方法内，动态生成的Bean实例
+    3. 生成配置类Bean定义的其他Bean实例(如果有)
+
+    4. 生成通过配置类@Import引入的接口实现类中定义的Bean实例(接口实现不生成Bean实例)
+       
+        * 实现ImportBeanDefinitionRegistrar接口的方法内，动态生成的Bean实例
 
 #### 7. 基于@Configuration+@Component注解方式和实现FactoryBean接口方式
    
-    * BeanFactory负责创建Bean对象，FactoryBean是由BeanFactory创建出来的Bean
+* BeanFactory负责创建Bean对象，FactoryBean是由BeanFactory创建出来的Bean
 
-    * Bean生成方式(@Import注解时通常配置类中不定义其他Bean)
+* Bean生成方式(@Import注解时通常配置类中不定义其他Bean)
 
-        1. Spring容器优先读取配置信息(此处配置注解类)
+    1. Spring容器优先读取配置信息(此处配置注解类)
 
-        2. 生成配置类Bean
-    
-        3. 生成配置类定义的组件扫描到的Bean实例
+    2. 生成配置类Bean
 
-        4. 生成通过组件扫描到Bean(接口实现)中定义的其他Bean实例: getBean时生成
+    3. 生成配置类定义的组件扫描到的Bean实例
+
+    4. 生成通过组件扫描到Bean(接口实现)中定义的其他Bean实例: getBean时生成
 
 #### 8. 基于@Configuration+@Conditional注解(Spring4注解)+实现Condition接口方式
 
@@ -604,20 +643,39 @@ ServletContext级别：在一个Http Servlet Context中，定义一个Bean实例
             }
         }
 
-       public class MyConfiguration8ConditionalImpl implements Condition {
-          /**
-           * 当配置文件中包含有配置security.isOpen并且配置文件的值为true时才向Spring中注入Bean
-           */
-          @Override
-          public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
-              Environment environment = context.getEnvironment();
-              if (environment.containsProperty("security.isOpen") &&
+        public class MyConfiguration8ConditionalImpl implements Condition {
+            /**
+            * 当配置文件中包含有配置security.isOpen并且配置文件的值为true时才向Spring中注入Bean
+            */
+            @Override
+            public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
+                Environment environment = context.getEnvironment();
+                if (environment.containsProperty("security.isOpen") &&
                   environment.getProperty("security.isOpen").equals("true")) {
                   return true;
-              }
-              return false;
-          }
-      }
-    ``` 
+                }
+                return false;
+            }
+        }
+        ```
+       
+### Spring 对象注入方式
+
+1. xml配置文件注入
+
+    通过obj = context.getBean("xxx")获取
+
+2. 依赖注入@Autowired注解(默认byType)
+
+    ```java
+    @Autowired
+    private InjectedObject injectedObject;
+    ```
+3. @Resource注解(默认byName)
+
+4. @Inject注解(默认byType)
+
+    第三方插件
 
 ### Spring Bean声明周期
+
