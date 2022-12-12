@@ -6,14 +6,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 
 /**
- * @ClassName BeanScopesController
+ * @ClassName BeanScope1SingletonController
  * @Description
  * @Author moku
  * @Date 2022/12/9 22:36
  * @Version 1.0
  */
 @Controller
-public class BeanScopesController {
+public class BeanScope1SingletonController {
     // @Autowired按type注解，此时注入User类型的Bean
     // 该Bean从Users类注入(Bean名称：userInComponent)，
     // 以下Autowired注解后，User的Bean名称：userInComponent2(通常使用相同名称userInComponent装配)

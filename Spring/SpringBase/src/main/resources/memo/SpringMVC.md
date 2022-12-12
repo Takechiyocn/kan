@@ -2,13 +2,13 @@
 
 ### Spring MVC初始化
 
-![SpringContainerInitialization.png](images/SpringContainerInitialization.png)
-
 #### 处理流程
 
 1. 初始化处理
    
     1. Web容器启动通知Spring初始化容器，加载Bean的定义信息并初始化所有单例Bean
+
+        ![SpringContainerInitialization.png](images/SpringContainerInitialization.png)
        
     2. 遍历容器中的Bean，获取每一个Controller中所有方法访问的URL，将URL和所有对应的Controller保存到Map集合(HandlerMapping)中
     
@@ -37,6 +37,11 @@
     2. 对视图渲染并填充数据到视图中
        
     3. 返回客户端
+
+#### Bean执行流程
+
+![BeanExecutionFlow.png](images/BeanExecutionFlow.png)
+![BeanExecutionFlowSample.png](images/BeanExecutionFlowSample.png)
 
 #### Spring MVC组件
 
@@ -189,9 +194,9 @@ CGLib动态代理：类未实现接口时使用，在运行时动态生成某个
     优点：IOC让程序员不再关注如何创建对象，而关注创建对象后的操作，把对象的创建、初始化、销毁等工作交给Spring容器
     通俗理解，对于某个具体对象而言，传统是它控制其他对象，现在是所有对象都被Spring控制，称控制反转
 
-#### BeanFactory
+#### BeanFactory框架基础设施
 
-Spring基础设施，面向Spring本身
+Spring框架的基础设施，面向Spring本身
 
 ![SpringBeanFactory.png](images/SpringBeanFactory.png)
 
@@ -207,9 +212,7 @@ Spring基础设施，面向Spring本身
 
 * 视图层Bean可以引用业务层和持久层Bean，反之则不行
 
-#### ApplicationContext
-
-面向开发者
+#### ApplicationContext面向开发应用
 
 ![SpringApplicationContext.png](images/SpringApplicationContext.png)
 
@@ -236,7 +239,7 @@ Spring基础设施，面向Spring本身
    的状态下，调用 refresh()则清除缓存并重新装载配置信息，而调用close()则可关闭应用
    上下文。
 
-#### WebApplication
+#### WebApplication体系架构
 
 面向Web应用，允许从相对于web根目录路径装载配置文件完进行初始化
 
@@ -361,7 +364,7 @@ Spring基础设施，面向Spring本身
 
 * 基于注解的依赖注入(ANNOTATION_TYPE Injection)
 
-TODO：不常使用
+    * TODO：不常使用
 
 #### 依赖注入失效
 
@@ -456,7 +459,7 @@ TODO：不常使用
 
 #### 单例模式singleton(默认作用域:全局共享)
 
-* IoC容器启动产生，容器销毁时销毁(bean)
+* IoC容器启动产生，容器销毁时销毁(bean实例/对象)
 
 * SpringIoC容器只存在一个共享的Bean实例
 
@@ -468,9 +471,9 @@ TODO：不常使用
 
 #### prototype原型模式(创建后IoC容器不再管理bean状态)
 
-* 作瞬时Bean，用完就销毁(Spring容器不再管理的意思)，多例Bean
+* 瞬时Bean，用完就销毁(Spring容器不再管理的意思)，多例Bean
   
-* 每次获取bean时，容器创建新bean实例
+* 每次获取bean时，容器创建新bean实例/对象
   
 * xml配置时，Spring启动时不创建实例，类似lazy-init
 
@@ -529,7 +532,7 @@ ServletContext级别：在一个Http Servlet Context中，定义一个Bean实例
 
 * singleton是Spring Core的作用域，作用于IoC的容器
   
-* application是Spring Web中的作用，作用于Servlet容器
+* application是Spring Web中的作用域，作用于Servlet容器
 
 #### Spring的Controller是单例
 
@@ -713,5 +716,55 @@ ServletContext级别：在一个Http Servlet Context中，定义一个Bean实例
 
     第三方插件
 
-### Spring Bean声明周期
+### Spring Bean生命周期
 
+    一个Bean对象从出生到销毁的过程
+    即Bean的定义 -> Bean的初始化 -> Bean的使用 -> Bean的销毁
+
+具体过程：
+
+![SpringBeanLifecycle.png](images/SpringBeanLifecycle.png)
+
+![SpringBeanLifecycleFlow.png](images/SpringBeanLifecycleFlow.png)
+
+1. 实例化Bean，为Bean分配一些内存空间
+
+2. 设置属性，注入或者装配Bean
+
+3. 进行初始化
+
+    1. 实现各种通知(Aware)方法，如BeanNameAware、BeanFactoryAware、BeanFactoryAware、ApplicationContextAware等
+    
+    2. 执行BeanPostProcessor初始化前置方法
+       
+    3. 执行@PostConstruct初始化方法，注入依赖后执行
+       
+    4. 执行自定义的init-method方法(可有可无)
+       
+    5. 执行BeanPostProcessor初始化后置方法
+    
+4. 使用Bean
+
+5. 销毁Bean
+
+#### 实例化和初始化区别(生命周期中)
+
+* 实例化
+
+实例化和属性设置时Java级别的系统事件，操作过程不可人工干预和修改
+
+* 初始化
+
+给开发者提供的，可在实例化之后，类加载完成之前进行自定义事件处理
+
+#### 生命周期样例：买房
+
+1. 买房(实例化，从无到有)
+
+2. 装修(设置属性)
+
+3. 买家电，如洗衣机等(各种初始化)
+
+4. 入住(使用Bean)
+
+5. 卖出(Bean销毁)

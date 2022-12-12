@@ -2,7 +2,6 @@ package com.kan.di.annotation.service2;
 
 import com.kan.di.annotation.interfaces.IUser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 /**

@@ -1,8 +1,6 @@
 package com.kan.di.annotation.controller;
 
-import com.kan.di.annotation.configuration.FilterConfig;
 import com.kan.di.annotation.interfaces.IUser;
-import com.kan.di.annotation.service3.UserService;
 import com.kan.di.annotation.service4.UserFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

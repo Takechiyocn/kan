@@ -4,7 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 /**
- * @ClassName Users
+ * @ClassName BeanScope1User
  * @Description
  * @Author moku
  * @Date 2022/12/9 22:34

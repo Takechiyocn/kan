@@ -4,7 +4,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @ClassName BaseScopeConfiguration
+ * @ClassName BeanScope1SingletonConfiguration
  * @Description
  * @Author moku
  * @Date 2022/12/10 23:29
@@ -12,5 +12,5 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @ComponentScan("com.kan.beanscope.controller")
-public class BaseScopeConfiguration {
+public class BeanScope1SingletonConfiguration {
 }

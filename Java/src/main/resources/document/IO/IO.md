@@ -149,7 +149,9 @@ Java NIO管道是2个线程之间的单向数据连接
 
 #### 直接缓冲区
 
-不需要经过copy阶段，可理解成内存映射文件
+不需要经过copy阶段，可理解成内存映射文件(零拷贝)
+
+零拷贝：不需要将数据从一个存储区域复制到另一个存储区域
 
 ![NIOUnDirectBuffer.png](images/NIOUnDirectBuffer.png)
 
@@ -158,6 +160,8 @@ Java NIO管道是2个线程之间的单向数据连接
 * 缓冲区创建的时候分配的直接缓冲区(allocateDirect()方法)
 
 * FileChannel上调用map()方法，将文件直接映射到内存中创建
+
+* FileChannel的transferTo()/transferFrom()方法，直接缓存操作
 
 ![NIODirectBufferCreate.png](images/NIODirectBufferCreate.png)
 

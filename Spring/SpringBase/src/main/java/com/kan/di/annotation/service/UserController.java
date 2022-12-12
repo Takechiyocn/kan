@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 
 /**
- * @ClassName UserController
+ * @ClassName UserLifeCycleAllController
  * @Description TODO
  * @Author moku
  * @Date 2022/12/8 15:46
