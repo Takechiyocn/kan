@@ -124,7 +124,7 @@ public ReentrantLock(boolean fair) {
 
 #### Condition
 
-精准的通知和环形线程，依赖于Lock接口的接口，基本方法await()和signal()
+精准的通知和唤醒线程，依赖于Lock接口的接口，基本方法await()和signal()
 
 生成Condition：lock.Condition()
 
@@ -205,3 +205,30 @@ HashMap死循环常用解决方案
   
 * 使用synchronized或Lock加锁HashMap之后再进行操作，相当于多线程排队(麻烦，不建议使用)
 
+## executors(执行者)
+
+### Callable
+
+![Callable.png](images/Callable.png)
+
+## 辅助类
+
+### CountDownLatch
+
+    当计数到达零，所有等待线程被释放，后续的await调用立即返回
+
+![CountDownLatch.png](images/CountDownLatch.png)
+
+### CyclicBarrier
+
+    线程相互等待(await)，直到到达共同屏障点(barrier)
+    即阻塞线程数(调用await)=parties(新建对象指定的线程数)
+    期间线程状态可共享
+
+![CyclicBarrier.png](images/CyclicBarrier.png)
+
+### Semaphore
+
+多个共享资源互斥使用，可并发限流、控制最大线程数
+
+![Semaphore.png](images/Semaphore.png)
