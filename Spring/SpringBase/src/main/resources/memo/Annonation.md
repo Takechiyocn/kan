@@ -1,5 +1,9 @@
 ## Java注解
 
+### @Bean注解
+
+bean组件(负责整个应用功能的一部分)
+
 ### @NotNull
 
 使用在Bean的字段注解中
@@ -214,7 +218,21 @@ public Map<String, Object> validate(
 
 ## Spring/MVC注解
 
-### @Configuration
+![SpringAnnotation.png](images/SpringAnnotation.png)
+
+### @Configuration注解
+
+    配置类，为容器提供bean
+    配置类中方法用@Bean注解进行标注，表明方法返回的对象会以bean的形式添加到容器中（默认bean ID与方法名称相同）
+
+### @SpringBootConfiguration注解
+
+    声明该类为配置类
+    属于@Configuration注解的特殊形式
+
+### @ComponentScan注解
+
+    启用组件扫描
 
 ### @Service
 
@@ -241,4 +259,32 @@ public Map<String, Object> validate(
 * 表示泛型组件，当组件不好归类的时候，可以使用这个组件进行注解
 
 * 让组件扫描将类识别为一个组件，并创建该类实例作为Spring上下文中的bean
+
+### @Autowired注解
+
+* 默认开启按类型的自动装配(byType)，可通过参数 required=false关闭自动装配
+  
+* 当接口实现类有多个时，需要配合修饰注解Qualifier或Primary使用
+  
+  ![AutowiredDI.png](images/AutowiredDI.png)
+
+### @Resource注解(Java注解)
+
+* 默认byName注入策略、或者指定了name
+
+    ![ResourceDI.png](images/ResourceDI.png)
+  
+* 如果设置type值，则使用byType注入策略
+
+    ![ResourceDI2.png](images/ResourceDI2.png)
+
+* 同时指定name、type
+
+    ![ResourceDI3.png](images/ResourceDI3.png)
+  
+* name、type均不指定，利用反射机制使用byName注入
+
+    ![ResourceDI4.png](images/ResourceDI4.png)
+
+
 

@@ -138,50 +138,15 @@
 
 ### Spring注解
 
-![SpringAnnotation.png](images/SpringAnnotation.png)
-
-* @Configuration注解
-
-      配置类，为容器提供bean。
-      配置类中方法用@Bean注解进行标注，表明方法返回的对象会以bean的形式添加到容器中（默认bean ID与方法名称相同）。
-
-* @Bean注解
-
-      bean组件。
-
-* @SpringBootConfiguration注解
-
-      声明该类为配置类。属于@Configuration注解的特殊形式。
-
 * @EnableAutoConfiguration注解
 
       启用Spring Boot的自动配置。
-
-* @ComponentScan注解
-
-      启用组件扫描。
 
 * @SpringBootApplication注解
   > Spring Boot应用。该注解为组合注解。包含：
   > * @SpringBootConfiguration注解
   > * @EnableAutoConfiguration注解
   > * @ComponentScan注解
-
-* @Autowired注解
-
-      将@Autowired标注的组件注入到相应的bean中。
-      默认根据type进行注解，当接口实现类有多个时，需要配合修饰注解Qualifier或Primary使用
-
-* @Resource注解(Java注解)
-
-      默认byName注入策略
-      如果设置type值，则使用byType注入策略
-      name、type均不指定，利用反射机制使用byName注入
-
-* @Data注解
-
-      提高代码的简洁，该注解可以省去getter、setter、toString等方法(运行时生成)。
-      该注解会自动添加一个有参构造器。
 
 * 构造型(stereotype)注解
 

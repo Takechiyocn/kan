@@ -258,6 +258,8 @@ Spring基础设施，面向Spring本身
 
 默认开启按类型的自动装配(byType)，可通过参数 required=false关闭自动装配
 
+![AutowiredDI.png](images/AutowiredDI.png)
+
 #### 依赖注入方式
 
 * 基于构造函数的依赖注入(Constructor Injection)
@@ -399,6 +401,40 @@ TODO：不常使用
     * 如果创建代理对象，单例可能出现循环依赖问题
 
 * 多例Bean出现循环依赖，导致bean自动装配失败
+
+#### 静态注入(new)/动态注入(Autowired)
+
+##### 为什么要动态注入
+
+传统：
+
+1. 只需要一个实例
+
+    判断有无Object实例，没有则创建    
+
+2. 需要多个实例
+
+    每次都创建Object实例
+
+    -> 更好办法：Object定义初始化静态工厂方法，别的地方都调用
+    
+##### 静态注入
+
+    本质是创建一个全局的KV，key是Object的类，value是new出来的所有Object
+    代码逻辑：
+      1. 创建全局KV
+      2. 手工new或通过静态方法创建第一个没有依赖的Ojbect，存放到KV
+      3. 手工new或通过静态方法创建其他Ojbect，如果需要依赖则从KV取出来用
+      4. 所有Object创建完启动服务
+
+##### 动态注入
+
+    运行时注入
+    代码逻辑：
+      1. 初始化Object
+        a. 如何创建：单例/多例/Factory
+        b. 自定义初始化代码等
+      2. 描述Object的依赖(class/name描述)
 
 #### 依赖注入选择
 
