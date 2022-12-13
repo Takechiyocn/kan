@@ -229,6 +229,6 @@ HashMap死循环常用解决方案
 
 ### Semaphore
 
-多个共享资源互斥使用，可并发限流、控制最大线程数
+    多个共享资源互斥使用，可并发限流、控制最大线程数
 
 ![Semaphore.png](images/Semaphore.png)
