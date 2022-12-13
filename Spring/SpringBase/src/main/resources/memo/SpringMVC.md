@@ -396,14 +396,15 @@ Spring框架的基础设施，面向Spring本身
 
 4. 循环依赖问题
 
-如果A依赖于B，B依赖于C，C依赖于A，形成一个死循环
-![SpringDIDeadLoop.png](images/SpringDIDeadLoop.png)
+    如果A依赖于B，B依赖于C，C依赖于A，形成一个死循环
 
-* Spring默认单例，单例使用@Autowired装配，大多数情况能解决循环依赖
+    ![SpringDIDeadLoop.png](images/SpringDIDeadLoop.png)
 
-    * 如果创建代理对象，单例可能出现循环依赖问题
-
-* 多例Bean出现循环依赖，导致bean自动装配失败
+    * Spring默认单例，单例使用@Autowired装配，大多数情况能解决循环依赖
+    
+        * 如果创建代理对象，单例可能出现循环依赖问题
+    
+    * 多例Bean出现循环依赖，导致bean自动装配失败
 
 #### 静态注入(new)/动态注入(Autowired)
 

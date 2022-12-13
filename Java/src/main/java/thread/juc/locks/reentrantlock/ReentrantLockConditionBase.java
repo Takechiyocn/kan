@@ -46,6 +46,7 @@ class SupplierConsumer {
             }
             number++;
             System.out.println(Thread.currentThread().getName() + ">>" + number);
+            // 通知其他线程我+1完成
             condition.signalAll();
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -63,6 +64,7 @@ class SupplierConsumer {
             }
             number--;
             System.out.println(Thread.currentThread().getName() + ">>" + number);
+            // 通知其他线程我-1完成
             condition.signalAll();
         } catch (InterruptedException e) {
             e.printStackTrace();
