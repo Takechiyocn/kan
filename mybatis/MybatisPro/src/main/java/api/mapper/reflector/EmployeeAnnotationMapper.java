@@ -20,5 +20,3 @@ public interface EmployeeAnnotationMapper {
     @Select("select * from mybatis2.department where id = #{dept_id}")
     Department selectDeptById(Long id);
 }
-
-

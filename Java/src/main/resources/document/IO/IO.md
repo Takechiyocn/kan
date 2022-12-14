@@ -151,11 +151,11 @@ data=socket.read()
 
 * Files工具类newByteChannel()方法 
 
-#### 网络通道Channel
+##### 网络通道Channel
 
 ![NIONetChannel.png](images/NIONetChannel.png)
 
-#### 管道
+##### 管道Pipe
 
 ![NIOPipe.png](images/NIOPipe.png)
 

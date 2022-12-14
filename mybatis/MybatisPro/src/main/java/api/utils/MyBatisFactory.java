@@ -7,7 +7,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import java.io.InputStream;
 
 /**
- * 获取sql session
+ * 静态工厂：调用静态工厂方法获取所需对象(SqlSession)
  *
  * @author moku
  */
@@ -20,8 +20,12 @@ public class MyBatisFactory {
     private MyBatisFactory() {
     }
 
+    /**
+     * 获取SqlSessionFactory静态工厂方法
+     */
     public static SqlSessionFactory getSqlSessionFactory() {
 
+        // 同步代码块
         synchronized (LOCK) {
             if (sqlSessionFactory != null) {
                 return sqlSessionFactory;

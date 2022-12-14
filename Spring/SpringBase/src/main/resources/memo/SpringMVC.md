@@ -2,6 +2,8 @@
 
 ### Spring MVC初始化
 
+![SpringMVCInitializationSummary.png](images/SpringMVCInitializationSummary.png)
+
 #### 处理流程
 
 1. 初始化处理
@@ -18,7 +20,7 @@
        
     2. DispatcherServlet请求HandlerMapping找出被@Controller注解修饰的Bean和被@RequestMapping修饰的方法和类
        
-       * Controller中可调用一些Service和DAO进行数据操作
+       * Controller中可调用Service进行业务处理和DAO进行数据操作
        
     3. 生成Handler和HandlerInterceptor并以一个HandlerExecutionChain处理器执行链返回
     
@@ -118,12 +120,31 @@
 面向切面编程，简单说就是将重复代码提取出来，在需要执行的时候使用动态代理技术，在不修改源码的基础上对源码进行增强
 
 ![SpringAOP.png](images/SpringAOP.png)
+![SpringAOP2.png](images/SpringAOP2.png)
 
 #### AOP分类
 
-JDK动态代理：类实现接口时使用
+* JDK动态代理
+  
+    * 目标类是接口时使用(类实现接口时使用)
     
-CGLib动态代理：类未实现接口时使用，在运行时动态生成某个类的子类，final标记的类不能使用
+        * 只能为接口创建代理实例
+    
+    * 涉及Proxy和InvocationHandler类
+    
+        * 实现InvocationHandler接口定义横切逻辑
+    
+* CGLib动态代理
+  
+    * Code Generation Library
+
+    * 目标类不是接口时使用(类未实现接口时使用)
+      
+    * 在运行期动态扩展Java类和实现Java接口，封装asm，运行器动态生成新的class(final标记的类不能使用)
+    
+    * 对于没有通过接口定义业务方法的类只能通过CGLib代理
+    
+        ![SpringAOPProxy.png](images/SpringAOPProxy.png)
 
 #### AOP注解
 
@@ -184,6 +205,10 @@ CGLib动态代理：类未实现接口时使用，在运行时动态生成某个
 * Weaving
 
     织入，指把增强/通知advice应用到目标对象target来创建代理对象proxy的过程
+
+* Introduction
+
+    在不修改代码的前提下，引入可以在运行期为类动态地添加一些方法或字段
 
   ![SpringAOPConcept.png](images/SpringAOPConcept.png)
 
@@ -421,7 +446,98 @@ Spring框架的基础设施，面向Spring本身
     每次都创建Object实例
 
     -> 更好办法：Object定义初始化静态工厂方法，别的地方都调用
+
+##### 静态工厂注入
     
+所谓静态工厂，就是通过调用静态工厂的方法来获取自己需要的对象
+
+1. 配置文件注入
+
+```java
+// 静态工厂
+public class DaoFactory {
+    public static final FactoryDao getStaticFactoryDaoImpl() {
+        return new StaticFacotryDaoImpl();
+    }
+}
+
+public class SpringAction {
+    // 注入对象FactoryDao的Bean实例
+    private FactoryDao staticFactoryDao;
+    // 注入对象的set方法
+    public void setStaticFactoryDao(FactoryDao staticFactoryDao) {
+        this.staticFactoryDao = staticFactoryDao;
+    }
+}
+
+// xml配置文件
+<bean name="springAction" class=" SpringAction" >
+    <!-- 使用静态工厂方法注入对象，以下为初始化内容
+         即private FactoryDao staticFactoryDao; 初始化为ref指向的Bean -->
+    <property name="staticFactoryDao" ref="staticFactoryDao"></property>
+</bean>
+<!-- 使用静态工厂方法注入对象 -->
+<!-- factory-method：指定调用哪个工厂方法-->
+<bean name="staticFactoryDao" class="DaoFactory"
+    factory-method="getStaticFactoryDaoImpl"></bean>
+```
+
+2. 注解注入
+
+```java
+// 静态工厂
+@Component
+public class DaoFactory {
+    @Bean
+    public static final FactoryDao getStaticFactoryDaoImpl() {
+        return new StaticFacotryDaoImpl();
+    }
+}
+
+@Component
+public class SpringAction {
+    // 注入对象FactoryDao的Bean实例
+    private FactoryDao staticFactoryDao;
+
+    // 注入对象的set方法
+    @Autowired
+    public void setStaticFactoryDao(FactoryDao staticFactoryDao) {
+        this.staticFactoryDao = staticFactoryDao;
+    }
+}
+```
+
+##### 实例工厂注入
+
+获取对象实例的方法不是静态的，需要首先new工厂类，再调用普通的实例方法
+
+```java
+// 实例工厂
+public class DaoFactory { 
+    public FactoryDao getFactoryDaoImpl(){
+        return new FactoryDaoImpl();
+    }
+}
+
+public class SpringAction {
+    // 注入对象
+    private FactoryDao factoryDao;
+    public void setFactoryDao(FactoryDao factoryDao) {
+        this.factoryDao = factoryDao;
+    }
+}
+<!-- xml配置文件 -->
+<bean name="springAction" class="SpringAction">
+    <!-- 使用实例工厂的方法注入对象,对应下面的配置文件 -->
+    <property name="factoryDao" ref="factoryDao"></property>
+</bean>
+<!-- 此处获取对象的方式是从工厂类中获取实例方法 -->
+<!-- [factory-bean]+[factory-method]生成实例(类似new) -->
+<bean name="daoFactory" class="com.DaoFactory"></bean>
+<bean name="factoryDao" factory-bean="daoFactory"
+    factory-method="getFactoryDaoImpl"></bean>
+```
+
 ##### 静态注入
 
     本质是创建一个全局的KV，key是Object的类，value是new出来的所有Object
@@ -545,7 +661,7 @@ ServletContext级别：在一个Http Servlet Context中，定义一个Bean实例
 
 * 必须定义非静态成员变量时，通过注解@Scope("request")，将其设置为多例模式
 
-### Spring Bean注入方式
+### Spring Bean生成方式
 
 #### 1. 基于XML配置
 
@@ -728,7 +844,11 @@ ServletContext级别：在一个Http Servlet Context中，定义一个Bean实例
 
 ![SpringBeanLifecycleFlow.png](images/SpringBeanLifecycleFlow.png)
 
+![SpringBeanLifecycleFlow2.png](images/SpringBeanLifecycleFlow2.png)
+
 1. 实例化Bean，为Bean分配一些内存空间
+
+    实例化一个Bean，也就是常说的new
 
 2. 设置属性，注入或者装配Bean
 

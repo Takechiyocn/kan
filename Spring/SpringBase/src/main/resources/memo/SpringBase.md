@@ -95,6 +95,34 @@
          c. Java类配置(注解@Autowired等)
          d. 自动配置
 
+* Spring装配
+
+    * 手动装配
+
+        * 基于xml装配、构造方法、setter方法等
+        
+    * 自动装配
+    
+        1. no
+    
+            默认方式是不进行自动装配，通过显示设置ref属性来进行装配
+    
+        2. byName 
+    
+            通过参数名自动装配。Spring容器在配置文件中发现bean的autowire属性被设置成byName，容器试图匹配、装配和该bean的属性具有相同名字的bean
+      
+        3. byType
+
+            通过参数类型自动装配。Spring容器在配置文件中发现bean的autowire属性被设置成byType，容器试图匹配、装配和该bean的属性具有相同类型的bean
+
+        4. constructor
+           
+            类似byType，需提供参数给构造器
+           
+        5. autodetect
+    
+            constructor装配 -> byType装配
+
 *  ***自动配置(SpringBoot Auto Configuration)***
 
        自动配置≈自动装配+组件扫描
