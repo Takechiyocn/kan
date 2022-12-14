@@ -1,9 +1,11 @@
-package thread.thread;
+package thread.thread.volatilebase;
 
 /**
- * volatile关键字：变量可见性，禁止指令重排
- *                一种免锁同步访问机制，volatile变量直接从主存读写最新值
- *                -> 不保证原子性
+ * volatile关键字：JVM提供的一种免锁的同步访问机制，volatile变量直接从主内存读写最新值
+ *                特点：
+ *                  变量可见性
+ *                  不保证原子性
+ *                  禁止指令重排
  * 原子atomic操作：不可分割的操作，即不会因为线程调度被打断的操作
  * @author moku
  */

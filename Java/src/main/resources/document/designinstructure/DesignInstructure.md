@@ -110,6 +110,7 @@ ExecutorService executorService = Executors.newCachedThreadPool(new ThreadPoolFa
         private LazySingleton() {};
         private static LazySingleton instance;
         public static LazySingleton getInstance() {
+            // 多线程不安全：获取到CPU时间片时可能已经创建
             if (instance == null) {
                 instance = new LazySingleton();
             }
@@ -121,6 +122,16 @@ ExecutorService executorService = Executors.newCachedThreadPool(new ThreadPoolFa
 * 双重检查锁：使用volatile/synchronized和多重检查来减小锁范围，提升效率
 
     ```java
+    /**
+     * 
+     * 如果发生指令重排，多线程可能不安全
+     *   1.分配内存空间
+     *   2.执行构造器，初始化对象
+     *   3.把对象指向内存空间
+     * 正常情况下：按照123执行；发生指令重排，可能会先执行132
+     * 多线程情况下：如果第一个线程执行了13，此时第二个线程过来可能就会判断instance不为空，
+     *              直接就返回了instance，此时，instance对象内存空是空的。
+     */
     public class DoubleCheckingSingleton {
         private DoubleCheckingSingleton() {};
         private static DoubleCheckingSingleton instance;
@@ -128,6 +139,7 @@ ExecutorService executorService = Executors.newCachedThreadPool(new ThreadPoolFa
             if (instance == null) {
                 synchronized (DoubleCheckingSingleton.class) {
                     if (instance == null) {
+                        // 非原子性操作，可能会有指令重排
                         instance = new DoubleCheckingSingleton();
                     }
                 }
@@ -140,6 +152,7 @@ ExecutorService executorService = Executors.newCachedThreadPool(new ThreadPoolFa
 * 静态内部类：解决饿汉式内存浪费和懒汉式线程安全
 
     ```java
+    // 内部类不随外部类一起加载，外部类实例化之后，内部类才会加载
     public class StaticSingleton {
         private StaticSingleton() {};
         public static StaticSingleton getInstance() {

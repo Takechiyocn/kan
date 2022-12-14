@@ -1,11 +1,11 @@
-package thread.thread;
+package thread.thread.volatilebase;
 
 /**
  * 传递性：如果A happens-before B, B happens-before C，那 A happens-before C
  * 解读：x并不需要定义为volatile, 对于x变量，我们只需要一个volatile变量b来确保线程2能看到线程1对x的修改：
- *    1.根据代码顺序规则，线程1的x=5; happens-before b=1;
- *    2.根据volatile变量规则，线程1的b=1; happens-before 线程2的int dummy=b;
- *    3.根据传递性，x=5; happens-before while(x!=5);
+ *      1.根据代码顺序规则，线程1的x=5; happens-before b=1;
+ *      2.根据volatile变量规则，线程1的b=1; happens-before 线程2的int dummy=b;
+ *      3.根据传递性，x=5; happens-before while(x!=5);
  */
 class VolatileTransmit {
     int x = 0;
