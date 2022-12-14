@@ -4,6 +4,7 @@ import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
+import java.nio.channels.FileLock;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
@@ -98,7 +99,13 @@ public class FileCopyNIO {
         ByteBuffer byteBuffer = ByteBuffer.allocate(1024 * 1024);
         System.out.println("直接缓冲区？：" + byteBuffer.isDirect());
 
-        while (readChannel.read(byteBuffer) > 0) {
+        // 多线程读取同一文件，可加锁
+        FileLock readChannelLock = readChannel.lock();
+        // pos和siz决定加锁区域， shared指定是否是共享锁
+//        FileLock readChannelLock = readChannel.lock(pos, size, shared);
+//        if (readChannelLock!=null) {
+//        }
+            while (readChannel.read(byteBuffer) > 0) {
             // 切换称读数据模式：设置读指针到缓存头部
             byteBuffer.flip();
             // 将缓冲区数据写入通道
@@ -132,9 +139,10 @@ public class FileCopyNIO {
 
             System.out.println("直接缓冲区？：" + byteBuffer.isDirect());
 
-            // 将缓冲区数据写入通道
+            // 写缓冲区：从(输入)通道将数据写入缓冲区
             while (inChannel.read(byteBuffer) > 0) {
                 byteBuffer.flip();
+                // 读缓冲区：将缓冲区数据写入(输出)通道
                 outChannel.write(byteBuffer);
                 byteBuffer.clear();
             }

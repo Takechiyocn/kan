@@ -51,7 +51,7 @@ data=socket.read()
 
 ※ NIO没有Selector选择器的时候是阻塞模式，即只使用Channel和Buffer
 
-### FileChannel
+### NIO核心3组件
 
 #### Buffer(缓冲区)
 
@@ -67,9 +67,11 @@ data=socket.read()
 ---|---|---
 数据传输方向|单向|双向(因为有Channel)
 
-##### Buffer类核心变量
+###### Buffer类核心变量
 
 ![NIOBufferVariable.png](images/NIOBufferVariable.png)
+
+![BufferClass.png](images/BufferClass.png)
 
 * 容量Capacity
 
@@ -83,6 +85,12 @@ data=socket.read()
 
     下一个要被读或写的元素的位置，由相应的get()和put()更新
 
+    *  手动修改position方法
+    
+        1. rewind()将position置为0
+        
+        2. mark()可标记1个特定位置(之前write/read后的位置)，后续write/read后，通过reset()返回之前mark的位置 
+
 * 标记Mark
 
     备忘位置，用于记录上一次读写的位置
@@ -92,6 +100,28 @@ data=socket.read()
 又称"切换成读模式"，每当要从缓存区的时候读取数据时，就调用flip()"切换成读模式"
 
 ![NIOBufferFlip.png](images/NIOBufferFlip.png)
+
+##### Buffer读写
+
+1. 向Buffer写数据
+   
+    1. 从通道读数据到Buffer中
+
+       while (inChannel.read(byteBuffer) > 0) {}
+    
+    2. 手动向Buffer写入字符
+    
+        charBuffer.putChar('C');
+    
+2. 从Buffer读数据
+   
+    1. 从Buffer中读取数据写入通道 
+    
+        outChannel.write(byteBuffer);
+    
+    2. 手动读取Buffer中字符
+    
+       byte b = charBuffer.get();
 
 #### Channel(通道)
 
@@ -103,7 +133,7 @@ data=socket.read()
 
 * getChannel方法
 
-    * 本地IO
+    * 本地IO(FileChannel:阻塞式)
     
         * FileInputStream/FileOutputStream
     
@@ -121,7 +151,7 @@ data=socket.read()
 
 * Files工具类newByteChannel()方法 
 
-### 网络通信Channel
+#### 网络通道Channel
 
 ![NIONetChannel.png](images/NIONetChannel.png)
 
@@ -138,6 +168,87 @@ Java NIO管道是2个线程之间的单向数据连接
 * source通道
 
     从source通道读取数据
+
+#### Selector选择器
+
+selector可用来在线程中关联多个通道，并进行时间监听
+
+![SelectorBase.png](images/SelectorBase.png)
+
+作用：
+
+* 相比BIO，用更少线程管理各个通道
+
+* 减少线程上下文切换的资源开销
+
+##### selector支持注册通道类型
+
+* 阻塞
+
+    如Socket：channel.configureBlocking(false)
+
+    FileChannel默认阻塞，无法注册
+
+* 非阻塞
+
+    如Socket:channel.configureBlocking(false)
+
+##### selector监听事件
+
+* Connect
+
+    成功连接到1个服务器
+
+* Accept
+
+    准备好接收新进入的连接
+
+* Read
+  
+    有数据可读
+  
+* Write
+
+    接收到往里写的数据
+
+##### selector维护的SelectionKey集合
+
+* 已注册的所有键值的集合(Registered key set)
+
+    所有与选择器关联的通道所生成的键的集合(有些可能失效)
+
+* 已选择的键的集合(Selected key set)
+
+    相关通道被选择器(前一个选择操作中)判断为已准备好的，且包含于键的interest集合中的操作
+
+* 已取消的键的集合(Cancelled key set)
+
+    包含cancel方法调用过的键(键无效化)，但还没被注销
+
+##### selector监听事件流程
+
+1. 选择器调用select()方法获取已就绪的通道(返回n个就绪通道)
+
+2. 从selector中获取selectedKeys
+
+3. 遍历selectedKeys
+
+4. 查看各SelectionKey中是否有就绪事件
+
+5. 获取就绪事件管道，做相应处理
+
+※ 一般启动一个线程对应这个selector监听的处理
+
+##### select()方法
+
+    阻塞方法，调用时进入等待，直到把所有通道轮询完毕
+    可通过以下方法提前结束：
+      1. wakeup()，调用后select()立刻返回 
+      2. close()，直接管理selector
+
+    -> NIO非阻塞理解
+      1. NIO非阻塞指的是IO不阻塞，即不会在read()处阻塞
+      2. selector的select()方法查询通道的就绪状态，是阻塞的
 
 ### 直接缓冲区/非直接缓冲区
 

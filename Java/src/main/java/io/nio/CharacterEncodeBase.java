@@ -29,13 +29,13 @@ public class CharacterEncodeBase {
         cBuf.put("中国人");
         cBuf.flip();
 
-        // 编码
+        // 编码：CharBuffer->ByteBuffer
         ByteBuffer bBuf = ce.encode(cBuf);
         for (int i = 0; i < 6; i++) {
             System.out.println(bBuf.get());
         }
 
-        // 解码
+        // 解码：ByteBuffer->CharBuffer
         bBuf.flip();
         CharBuffer cBuf2 = cd.decode(bBuf);
         for (int i = 0; i < cBuf.limit(); i++) {
