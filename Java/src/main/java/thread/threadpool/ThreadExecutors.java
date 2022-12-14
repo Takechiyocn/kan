@@ -33,6 +33,8 @@ public class ThreadExecutors {
                 System.out.println(Thread.currentThread().getName());
             });
         }
+        // 关闭线程池
+        executorService.shutdown();
     }
 
     /**

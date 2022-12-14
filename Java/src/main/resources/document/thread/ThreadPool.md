@@ -105,9 +105,9 @@ public ThreadPoolExecutor(int corePoolSize,
       
     * ThreadPoolExecutor.CallerRunsPolicy：调用者所在线程来运行该任务，此策略提供简单的反馈控制机制，能够减缓新任务的提交速度。
       
-    * ThreadPoolExecutor.DiscardPolicy：无法执行的任务将被删除。
+    * ThreadPoolExecutor.DiscardPolicy：无法执行的任务将被删除，不会抛出异常。
       
-    * ThreadPoolExecutor.DiscardOldestPolicy：如果执行程序尚未关闭，则位于工作队列头部的任务将被删除，然后重新尝试执行任务（如果再次失败，则重复此过程）。
+    * ThreadPoolExecutor.DiscardOldestPolicy：如果执行程序尚未关闭，则位于工作队列头部的任务将被删除，然后重新尝试执行任务（如果再次失败，则重复此过程）。不会抛出异常
 
 ### 队列
 
@@ -150,7 +150,7 @@ public ThreadPoolExecutor(int corePoolSize,
 
 BlockingQueue的插入/移除/检查这些方法，对于不能立即满足但可能在将来某一时刻可以满足的操作，共有4种不同的处理方式：第一种是抛出一个异常，第二种是返回一个特殊值（null 或 false，具体取决于操作），第三种是在操作可以成功前，无限期地阻塞当前线程，第四种是在放弃前只在给定的最大时间限制内阻塞。如下表格：
 
-操作|抛出异常|特殊值|阻塞等待|超时等待
+操作|抛出异常|特殊值|阻塞等待|阻塞超时等待
 ---|---|---|---|---
 插入|add(e)|offer(e)	|put(e)	|offer(e, time, unit)
 移除	|remove()|	poll()	|take()	|poll(time, unit)
@@ -160,13 +160,17 @@ BlockingQueue的插入/移除/检查这些方法，对于不能立即满足但�
 
 ##### SynchronousQueue
 
-同步的阻塞队列。
+>同步的阻塞队列。
+> 
+>进去一个元素，必须等待取出这个元素后才能放下一个元素。
+> 
+>即每个插入操作必须等待另一个线程的对应移除操作，等待过程一直处于阻塞状态。 同理，每一个移除操作必须等到另一个线程的对应插入操作。
 
-其中每个插入操作必须等待另一个线程的对应移除操作，等待过程一直处于阻塞状态。 同理，每一个移除操作必须等到另一个线程的对应插入操作。
+>SynchronousQueue没有任何容量。不能在同步队列上进行 peek，因为仅在试图要移除元素时，该元素才存在；除非另一个线程试图移除某个元素，否则也不能（使用任何方法）插入元素；也不能迭代队列，因为其中没有元素可用于迭代。
 
-SynchronousQueue没有任何容量。不能在同步队列上进行 peek，因为仅在试图要移除元素时，该元素才存在；除非另一个线程试图移除某个元素，否则也不能（使用任何方法）插入元素；也不能迭代队列，因为其中没有元素可用于迭代。
-
-Executors.newCachedThreadPool使用了该队列。
+>Executors.newCachedThreadPool使用了该队列。
+> 
+> 元素添加删除：put/take
 
 ##### LinkedBlockingQueue
 
@@ -222,13 +226,15 @@ ArrayBlockingQueue构造方法可通过设置fairness参数来选择是否采用
 
 #### 对于CPU密集型任务
 
-线程池中线程个数应尽量少，不应大于CPU核心数
+线程池中线程个数(最大线程数)应尽量少，不应大于CPU核心数(一般几核就设几)
 
   * CPU密集型也叫计算密集型，指的是系统的硬盘、内存性能相对CPU要好很多，此时，系统运作大部分的状况是CPU Loading 100%，CPU要读/写I/O(硬盘/内存)，I/O在很短的时间就可以完成，而CPU还有许多运算要处理，CPU Loading很高。
 
 #### 对于IO密集型任务
 
 由于IO操作速度远低于CPU速度，那么在运行这类任务时，CPU绝大多数时间处于空闲状态，那么线程池可以配置尽量多些的线程，以提高CPU利用率
+
+一般判断程序中十分消耗IO的线程数量，一般最大线程数设置成这个数的2倍
 
   * IO密集型指的是系统的CPU性能相对硬盘、内存要好很多，此时，系统运作，大部分的状况是CPU在等I/O (硬盘/内存) 的读/写操作，此时CPU Loading并不高。
 

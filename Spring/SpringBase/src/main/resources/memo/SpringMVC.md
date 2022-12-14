@@ -208,7 +208,7 @@
 
 * Introduction
 
-    在不修改代码的前提下，引入可以在运行期为类动态地添加一些方法或字段
+  引入，在不修改代码的前提下，引入可以在运行期为类动态地添加一些方法或字段
 
   ![SpringAOPConcept.png](images/SpringAOPConcept.png)
 
