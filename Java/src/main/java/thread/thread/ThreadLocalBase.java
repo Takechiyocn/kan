@@ -30,7 +30,8 @@ public class ThreadLocalBase {
                         System.out.println(Thread.currentThread() + ", Time by SimpleDateFormat:" + dateStamp);
                         System.out.println(Thread.currentThread() + ", Time by ThreadLocal<SimpleDateFormat>:" + dateStamp);
 
-                        // java.util.Random线程安全：如果多个线程需要等待一个共享的随机数生成器会很低效（因为线程安全，其他线程要等待前面线程生成结束后才能获取锁）
+                        // java.util.Random线程安全：
+                        //  如果多个线程需要等待一个共享的随机数生成器会很低效(因为线程安全，其他线程要等待前面线程生成结束后才能获取锁)
                         // ThreadLocalRandom.current返回特定于当前线程的Random类实例
                         int random = ThreadLocalRandom.current().nextInt(100);
                         System.out.println("ThreadLocalRandom integer：" + random);

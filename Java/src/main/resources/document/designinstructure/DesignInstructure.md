@@ -94,7 +94,7 @@
 
 #### 单一职责原则
 
-    一个类只负责一项职责，一个类应该只有一个引起它变化的原因
+    一个类只负责一项职责，一个类应该只有一个引起它修改的原因
     例如：
         类A负责2个功能，功能1、功能2
         当功能1需求变更而改变类A时，可能造成功能2执行错误
@@ -138,6 +138,11 @@
 
 ### 设计模式分类
 
+#### 传统创建对象
+
+    传统创建对象的方式是new一个对象，每new一个对象，调用者多知道了一个类，
+    增加了类与类之间的联系，不利于程序的松耦合
+
 #### 工厂方法模式
 
 #### 抽象工厂模式
@@ -148,62 +153,171 @@
 
 #### 原型模式
 
-#### 创建型
+#### 构建型模式
 
-创建对象时隐藏创建逻辑，即不用new直接实例化对象。
-包括工厂、抽象工厂、单例、建造者、原型模式
+    创建对象时隐藏创建逻辑，即不用new直接实例化对象。
+    包括工厂模式、抽象工厂模式、单例模式、建造者模式、原型模式
+
+##### 工厂模式
+
 ```java
 // 工厂
-ExecutorService executorService = Executors.newCachedThreadPool(new ThreadPoolFactory("CachedThread"));
+ExecutorService executorService 
+        = Executors.newCachedThreadPool(new ThreadPoolFactory("CachedThread"));
 ```
 
-##### 简单工厂模式
+###### 简单工厂模式
 
-  由一个工厂对象创建实例，客户端无需关注创建逻辑，只需提供参数。
-  如Calendar的getInstance方法，调用createCalendar方法根据不同时区创建不同对象
-  
-  场景：创建对象较少时
+    工厂方法模式的一个特例
+    由一个工厂对象创建实例，客户端无需关注创建逻辑，只需提供参数。
+    如Calendar的getInstance方法，调用createCalendar方法根据不同时区创建不同对象
+    场景：创建对象较少时
+    缺点：
+        1. 扩展过多，导致工厂类过于庞大，承担过多职责，变成超级类
+        2. 各个功能变更时均需修改工厂逻辑，违背单一职责原则(这个类不止一个引起修改的原因)
+        3. 功能需要扩展时，需修改工厂类，违背开闭原则
 
-  缺点：功能扩展需修改工厂逻辑，违背开闭原则，且容易使工厂类复杂化
+```java
+// 简单工厂模式创建水果对象
+public class FruitFactory {
+    public Fruit create(String type) {
+        switch (type) {
+            case "Apple": 
+                // 生产苹果需要种子、阳光、水
+                Appleseed seed = new AppleSeed();
+                Sunlight sunlight = new Sunlight();
+                Water water = new Water();
+                return new Apple(seed, sunlight, water);
+            case "Pear": 
+                return new Pear();
+            default: 
+                throw new IllegalArgumentException("Undefined fruit!");
+        }
+    }
+}
 
-##### 工厂方法模式
+public class User {
+    private void eat() {
+        FruitFactory factory = new FruitFactory();
+        Fruit apple = factory.create("Apple");
+        Fruit pear = factory.create("Pear");
+        apple.eat();
+        pear.eat();
+    }
+}
+```
 
-  定义一个创建对象的接口，让接口的实现类决定创建哪种对象，推迟类的实例化到子类进行
+###### 工厂方法模式
 
-  -> 解决功能扩展问题
+    定义一个/多个创建对象的接口，让接口的实现类决定创建哪种对象，推迟类的实例化到子类进行
+    即每个产品都有一个专属的工厂
+    可解决简单工厂模式的3个问题
+    如Spring的FactoryBean接口的getObject方法
+    如Collection接口抽象工厂定义了一个抽象iterator工厂方法，返回一个Iterator类的抽象产品，
+      iterator由ArrayList、HashMap等实现
 
-  如Spring的FactoryBean接口的getObject方法
-  
-  如Collection接口抽象工厂定义了一个抽象iterator工厂方法，返回一个Iterator类的抽象产品
+```java
+public class AppleFactory {
+    public Fruit create() {
+        return new Apple();
+        // 需要更改逻辑时，只需修改相应工厂类
+        // 生产苹果需要种子、阳光、水
+        Appleseed seed = new AppleSeed();
+        Sunlight sunlight = new Sunlight();
+        Water water = new Water();
+        return new Apple(seed, sunlight, water);
+    }
+}
 
-  iterator由ArrayList、HashMap等实现
+public class PearFactory {
+    public Fruit create() {
+        return new Pear();
+    }
+}
 
-##### 抽象工厂模式
+// 调用
+public class User {
+    private void eat() {
+        AppleFactory appleFactory = new AppleFactory();
+        Fruit apple = appleFactory.create();
+        PearFactory pearFactory = new PearFactory();
+        Fruit pear = pearFactory.create();
+        apple.eat();
+        pear.eat();
+    }
+}
+```
 
-  提供一个创建一系列相关或相互依赖对象的接口，无需指定它们的具体类，如java.sql.Connection
+###### 抽象工厂模式
+
+    提供一个创建一系列相关或相互依赖对象的接口，无需指定它们的具体类，如java.sql.Connection
+    优缺点：
+        替换具体工厂时只需修改少量代码(具体工厂类那一行即可)
+        新增抽象方法时需修改所有具体工厂类(给人很重的感觉)
+    适用于只增加同类工厂这样的横向扩展需求，不适合新增功能这样的纵向扩展需求
+
+```java
+// 工厂接口：开闭原则的约束抽象，即定义一个相对稳定的抽象层
+public interface IFactory {
+    Fruit create();
+}
+
+// 苹果工厂
+public class AppleFactory implements IFactory {
+    @Override
+    public Fruit create() {
+        return new Apple();
+    }
+}
+
+// 梨子工厂
+public class PearFactory implements IFactory {
+    @Override
+    public Fruit create() {
+        return new Pear();
+    }
+}
+
+// 调用者
+public class User {
+    private vloid eat() {
+        IFactory appleFactory = new AppleFactory();
+        Fruit apple = appleFactory.create();
+        IFactory pearFactory = new PearFactory();
+        Fruit pear = pearFactory.create();
+        apple.eat();
+        pear.eat();
+    }
+}
+```
 
 ##### 单例模式
 
-特点：
-
-* 只存在一个实例
-* 构造方法私有，且由内部自定义静态变量调用
-* 提供静态公有方法获取实例
+    特点：
+      1. 只存在一个实例
+      2. 构造方法私有，且由内部自定义静态变量调用
+      3. 提供静态公有方法获取实例
     
-优点：开销小(频繁创建销毁实例情况避免资源多重占用)
+    优点：开销小(频繁创建销毁实例情况避免资源多重占用)
+    缺点：没有抽象层，扩展难，不符合单一职责原则
 
-缺点：没有抽象层，扩展难，不符合单一职责原则
+    应用场景：
+     * 需要频繁创建的一些类，单例可降低系统内存压力，减少GC
+     * 某些类只要求生成一个对象，如班级班长，身份证号等
+     * 某些类需要频繁实例化，且所创建对象又频繁被销毁，如多线程的线程池、网络连接池等
+     * 对象需要被共享时，如Web配置文件，数据库连接池等。
 
-应用场景：
+    加载方式选择：
+        饿汉式：构建不复杂，加载完成后会立即使用的单例对象
+               如QQ、微信等，启动时立刻刷新所有数据，保证最新内容
+        懒汉式：构建过程耗时较长，并不是所有使用此类都会用到的单例对象
+               如美团、饿了么等，首页立刻刷新，其他标签页点击才会刷新
+               游戏中某些模块，点击时才会下载资源
+        代码整洁之道：不提倡懒加载，因为程序应该将构建与使用分离，达到解耦
 
-* 需要频繁创建的一些类，单例可降低系统内存压力，减少GC
-* 某些类只要求生成一个对象，如班级班长，身份证号等
-* 某些类需要频繁实例化，且所创建对象又频繁被销毁，如多线程的线程池、网络连接池等
-* 对象需要被共享时，如Web配置文件，数据库连接池等。
+###### 饿汉式
 
-实现：
-
-* 饿汉式：类加载时初始化创建单例对象，线程安全，不使用该对象时导致内存浪费
+* 类加载时初始化创建单例对象，线程安全，不使用该对象时导致内存浪费
 
     ```java
     public class HungrySingleton {
@@ -215,7 +329,9 @@ ExecutorService executorService = Executors.newCachedThreadPool(new ThreadPoolFa
     }
     ```
 
-* 懒汉式：外部调用时才加载，线程不安全(可加锁保证安全，但效率低)
+###### 懒汉式
+
+* 外部调用时才加载，线程不安全(可加锁保证安全，但效率低)
 
     ```java
     public class LazySingleton {
@@ -231,7 +347,9 @@ ExecutorService executorService = Executors.newCachedThreadPool(new ThreadPoolFa
     }
     ```
 
-* 双重检查锁：使用volatile/synchronized和多重检查来减小锁范围，提升效率
+###### 双重检查锁 
+
+* 使用volatile/synchronized和多重检查来减小锁范围，提升效率
 
     ```java
     /**
@@ -243,6 +361,7 @@ ExecutorService executorService = Executors.newCachedThreadPool(new ThreadPoolFa
      * 正常情况下：按照123执行；发生指令重排，可能会先执行132
      * 多线程情况下：如果第一个线程执行了13，此时第二个线程过来可能就会判断instance不为空，
      *              直接就返回了instance，此时，instance对象内存空是空的。
+     *              使用volatile避免指令重排
      */
     public class DoubleCheckingSingleton {
         private DoubleCheckingSingleton() {};
@@ -260,23 +379,28 @@ ExecutorService executorService = Executors.newCachedThreadPool(new ThreadPoolFa
         }
     }
     ```
+  
+###### 静态内部类
 
-* 静态内部类：解决饿汉式内存浪费和懒汉式线程安全
+* 解决饿汉式内存浪费和懒汉式线程安全
 
     ```java
-    // 内部类不随外部类一起加载，外部类实例化之后，内部类才会加载
+    // 避免内存浪费：内部类不随外部类一起加载，外部类实例化之后，内部类才会加载
+    // 线程安全由虚拟机保证(client方法的正确加锁、同步)
     public class StaticSingleton {
         private StaticSingleton() {};
         public static StaticSingleton getInstance() {
-            return StaticClass.instance;
+            return SingletonHolder.instance;
         }
-        private static class StaticClass() {
+        private static class SingletonHolder() {
             private static final StaticSingleton instance = new StaticSingleton();
         }
     }
     ```
 
-* 枚举：线程安全，可防止反序列化重新创建新对象，防止多次实例化，防止反射破解单例
+###### 枚举
+
+* 线程安全，可防止反序列化重新创建新对象，防止多次实例化，防止反射破解单例
 
     ```java
     class Resource() {}

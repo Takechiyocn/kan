@@ -1,4 +1,4 @@
-package io.stream.standardoutput;
+package io.traditionalIO.stream.standardoutput;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;

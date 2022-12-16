@@ -4,6 +4,53 @@
 
 ![MyBatisCache.png](images/MyBatisCache.png)
 
+#### 一级缓存
+
+SqlSession级别缓存，默认开启，同一session中相同的sql语句查询时，第二次以后的查询从缓存中获取(一级缓存最多缓存1024条SQL)
+
+数据结构(map)
+
+* key
+
+  MapperID+offset+limit+Sql+所有的入参
+
+* value  
+
+缓存失效
+
+1. session关闭，再开
+
+2. DML(增、删、改)操作/提交事务
+
+3. session.clearCache();
+
+#### 二级缓存
+
+mapper级别/namespace级别/SqlSessionFactory工厂级别，即在整个应用都有效，可在多个会话中有效
+
+优缺点：
+* 1. 缓存以namespace为单位，不同namespace操作互不影响
+* 2. DML(insert添加，delete删除，update修改)操作会清空namespace下全部缓存
+* 3. Mybatis Generator生成的代码，各个表都是独立的，每个表都有自己的namespace
+* 4. 多表操作不推荐使用二级缓存，因为多表操作更新时会产生脏数据 
+* 5. 二级缓存为表级缓存，开销大，可用一级缓存(使用HashMap存储)替换，效率更高
+
+缓存失效
+
+1. session未提交
+
+  * commit/close:包含select
+
+2. DML(增、删、改)操作/提交事务
+
+##### 二级缓存配置
+
+* MyBatis全局配置中启用二级缓存配置
+
+* 在对应的Mapper.xml中配置cache结点
+
+* 在对应的select查询结点中添加useCache=true
+
 #### MyBatis注解
 
 * @Select 查询数据注解
