@@ -1,40 +1,152 @@
+## 基础知识
+
+### 类关系
+
+![ClassRelation.png](images/ClassRelation.png)
+
+#### 继承(is-a)
+
+    特殊与一般关系
+    如RushOrder类由Order继承而来
+
+![ClassRelationExtends.png](images/ClassRelationExtends.png)
+
+#### 实现implements
+
+    一个类实现接口的功能
+
+![ClassRelationImplements.png](images/ClassRelationImplements.png)
+
+#### 依赖(use-a)
+
+    如果一个类的方法操纵另一个类的对象，我们就说一个类依赖于另一个类
+    通常在局部变量、方法的形参或者静态方法的调用上体现
+    如Order类对象查看用户信用状态需要访问Account类对象，则称Order类依赖于Account类
+
+![ClassRelationDependency.png](images/ClassRelationDependency.png)
+
+#### 关联(Association)
+
+    类与类之间的联结，使一个类知道另一个类的属性和方法
+    分为单向关联、双向关联等
+    通常变现为被关联类B以类属性的形式出现在关联类A中，也可能是类A引用了一个类型为被关联类B的全局变量
+
+![ClassRelationAssociation.png](images/ClassRelationAssociation.png)
+
+##### 分类 
+
+* 单向关联/直接关联
+
+    ![ClassRelationAssociation2.png](images/ClassRelationAssociation2.png)
+
+* 双向关联
+
+    ![ClassRelationAssociation3.png](images/ClassRelationAssociation3.png)
+
+* 自身关联
+
+    ![ClassRelationAssociation4.png](images/ClassRelationAssociation4.png)
+
+* 多维关联
+    
+    ![ClassRelationAssociation5.png](images/ClassRelationAssociation5.png)
+
+
+#### 聚合(has-a)
+
+    对象包含关系，强调整体与部分之间的关系
+    如Order对象包含一些Item对象
+
+![ClassRelationAggregation.png](images/ClassRelationAggregation.png)
+
+#### 组合
+
+    强调整体与部分的生命周期是一致的，不可分的
+
+![ClassRelationComposition.png](images/ClassRelationComposition.png)
+
+#### 泛化
+
+    Generalization
+    学术名称，通常包含类与类之间的继承关系和类与接口的实现关系
+
+### 类关系强弱程度
+
+组合 > 聚合 > 关联 > 依赖  
+
+### 减小耦合度
+
+    将相互依赖的类减至最少
+    如果类A不知道B的存在，它就不会关心B的任何改变（亦即B的改变不会导致A产生任何bug）
+
 ## 设计模式
 
 ### 设计模式原则
 
 #### 开闭原则
 
-    软件实体应(类，模块，方法等)对扩展开放，对修改关闭
-    实现方式：抽象约束，封装变化。
-        即通过接口、抽象类来定义一个相对稳定的抽象层，
-        将相同的可变因素封装在具体实现类中。
-    
-![WindowsDisplay.png](../images/WindowsDisplay.png)
+    软件实体(类，模块，函数等)应对扩展开放，对修改关闭
+    实现方式：抽象约束(需求变化可通过扩展实现)，封装变化。
+            即通过接口、抽象类来定义一个相对稳定的抽象层，
+            将相同的可变因素封装在具体实现类中。
+
+![WindowsDisplay.png](images/WindowsDisplay.png)
 
 #### 单一职责原则
 
-    一个类、接口及方法只负责单一职责，降低代码复杂度及变更引起的风险
+    一个类只负责一项职责，一个类应该只有一个引起它变化的原因
+    例如：
+        类A负责2个功能，功能1、功能2
+        当功能1需求变更而改变类A时，可能造成功能2执行错误
+        所以需要将类A的粒度分解为类A1、类A2两个类
 
 #### 依赖倒置原则
 
     程序应依赖于抽象类或接口，而不是具体的实现类
+    简单来说就是要求对抽象进行编程，而不要对实现进行编程
+    例如：
+        访问数据库公用代码库(未用接口/抽象类)
+        项目内各个地方均可公用
+        新项目更改数据库或存储方式时，无法复用
 
 #### 里式替换原则(开闭原则补充)
 
-    通俗讲，子类可以扩展父类功能，不能改变父类原有功能。
+    子类应该可以完全替换父类
+    通俗讲，子类可以扩展父类功能，不能改变父类原有功能
     即除添加新方法外，尽量不重写父类方法
 
 #### 迪米特原则/最少知道原则
 
     模块间尽可能少地了解和依赖，降低代码耦合度
+    即类不应知道自己操作的类的细节
 
-#### 合成/聚合原则
-
-    尽可能使用组合(has-a)/聚合(contains-a)而非继承(is-a)，避免继承带来的方法污染和方法爆炸
-    方法污染：子类不具备执行从父类继承的方法
+#### 合成复用原则
+    
+    Composite Reuse Principle
+    尽可能使用聚合(contains-a)/组合(has-a)而非继承(is-a)，避免继承带来的方法污染和方法爆炸
+    方法污染TODO：子类不具备执行从父类继承的方法的能力
     方法爆炸：继承树不断扩大，底层类拥有的方法过于复杂，导致容易选择错误
 
+![CompositeReuseBefore.png](images/CompositeReuseBefore.png)
+
+![CompositeReuseAfter.png](images/CompositeReuseAfter.png)
+
+#### 接口隔离原则
+
+    Interface Segregation Principle
+    客户端不应该依赖它不需要的接口，即类间的依赖关系应建立在最小接口上(接口拆分)
+
 ### 设计模式分类
+
+#### 工厂方法模式
+
+#### 抽象工厂模式
+
+#### 单例模式
+
+#### 建造型模式
+
+#### 原型模式
 
 #### 创建型
 

@@ -2,7 +2,7 @@
 
 #### 线程池执行流程
 
-![ThreadPoolFlow.png](../images/ThreadPoolFlow.png)
+![ThreadPoolFlow.png](images/ThreadPoolFlow.png)
 
 1. 判断核心线程池是否已满，即已创建线程数是否小于corePoolSize？没满则创建一个新的工作线程来执行任务。已满则进入下个流程。
 2. 判断工作队列是否已满？没满则将新提交的任务添加在工作队列，等待执行。已满则进入下个流程。

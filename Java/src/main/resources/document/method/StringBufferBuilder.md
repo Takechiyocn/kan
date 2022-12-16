@@ -2,18 +2,18 @@
 
 ### 一.字符修改上的区别
 
-![StringBufferBuilderDifference.png](../images/StringBufferBuilderDifference.png)
+![StringBufferBuilderDifference.png](images/StringBufferBuilderDifference.png)
 
 1. 当对字符串进行修改的时候，需要使用 StringBuffer 和 StringBuilder 类。
 2. 和 String 类不同的是，StringBuffer 和 StringBuilder类的对象能够被多次的修改，并且不产生新的未使用对象。
 3. StringBuilder和 StringBuffer 之间的最大不同在于 StringBuilder 的方法不是线程安全的（不能同步访问）。
 4. 由于 StringBuilder 相较于 StringBuffer 有速度优势，多数情况下建议使用 StringBuilder类。然而在应用程序要求线程安全的情况下，则必须使用 StringBuffer 类。
 
-![StringBufferBuilderScene.png](../images/StringBufferBuilderScene.png)
+![StringBufferBuilderScene.png](images/StringBufferBuilderScene.png)
 
 ### 二. 继承结构
 
-![StringBufferBuilderInheritance.png](../images/StringBufferBuilderInheritance.png)
+![StringBufferBuilderInheritance.png](images/StringBufferBuilderInheritance.png)
 
 ### 三.StringBuffer 和 StringBuilder区别详解
 
@@ -69,6 +69,6 @@
     
 ### 作用领域
 
-![StringBufferBuilderScene2.png](../images/StringBufferBuilderScene2.png)
+![StringBufferBuilderScene2.png](images/StringBufferBuilderScene2.png)
 
 

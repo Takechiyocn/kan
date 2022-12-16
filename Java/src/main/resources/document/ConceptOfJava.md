@@ -512,8 +512,8 @@ lambda表达式就是闭包
 * 在算法的适当位置运行代码（例如，排序中的比较操作）
 * 发生某种情况时执行代码（如，点击了一个按钮，数据到达，等等）
 * 只在必要时才运行代码
-  ![img_2.png](images/img_2.png)
-  ![img_3.png](images/img_3.png)
+  ![FunctionalInterface.png](images/FunctionalInterface.png)
+  ![FunctionalInterface2.png](images/FunctionalInterface2.png)
 
 ### 省略参数
 
@@ -534,9 +534,9 @@ private static int sumUp(int[]values){
 }
 ```
 
-![img_8.png](images/img_8.png)
+![WildCharChild.png](images/WildCharChild.png)
 
-![img_7.png](images/img_7.png)
+![WildCharSuper.png](images/WildCharSuper.png)
 
 ### 集合框架接口
 ![CollectionFrameInterface.png](container/images/CollectionFrameInterface.png)
