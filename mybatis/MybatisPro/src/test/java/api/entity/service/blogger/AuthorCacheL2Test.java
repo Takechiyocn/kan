@@ -22,7 +22,7 @@ import java.io.Reader;
 import java.util.List;
 
 /**
- * 二级缓存：SqlSessionFactory工厂级别，即在整个应用都有效，可在多个会话中有效
+ * 二级缓存/mapper级别/namespace级别：SqlSessionFactory工厂级别，即在整个应用都有效，可在多个会话中有效
  * 优缺点：
  *   1. 缓存以namespace为单位，不同namespace操作互不影响
  *   2. DML(insert添加，delete删除，update修改)操作会清空namespace下全部缓存

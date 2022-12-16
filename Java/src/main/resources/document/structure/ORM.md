@@ -23,6 +23,8 @@
         // 1.获取连接
         DataSource dataSource;
         connection = dataSource.getConnection();
+        // 1.1 自动提交设置为false。true：每一次数据更新认定为一个事务并自动提交
+        connection.setAutoCommit(false);
         // 将执行的sql
         String sql = "SELECT name, id, age, password FROM users";
         // 2.创建命令对象

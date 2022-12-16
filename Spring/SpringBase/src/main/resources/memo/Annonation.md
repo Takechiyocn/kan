@@ -219,6 +219,7 @@ public Map<String, Object> validate(
 ## Spring/MVC注解
 
 ![SpringAnnotation.png](images/SpringAnnotation.png)
+![SpringMVCAnnotation.png](images/SpringMVCAnnotation.png)
 
 ### @Configuration注解
 

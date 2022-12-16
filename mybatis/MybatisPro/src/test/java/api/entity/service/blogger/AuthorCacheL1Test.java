@@ -17,7 +17,7 @@ import java.io.InputStream;
 import java.util.List;
 
 /**
- * 一级缓存：SqlSession会话对象级别，即在每一次会话中有效
+ * 一级缓存：SqlSession会话对象级别，即在每一次会话中有效(最多存储1024条SQL)
  */
 public class AuthorCacheL1Test {
 

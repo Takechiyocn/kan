@@ -1,3 +1,9 @@
+## MyBatis
+
+### MyBatis缓存
+
+![MyBatisCache.png](images/MyBatisCache.png)
+
 #### MyBatis注解
 
 * @Select 查询数据注解
