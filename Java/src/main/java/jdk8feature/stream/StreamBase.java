@@ -1,4 +1,4 @@
-package stream;
+package jdk8feature.stream;
 
 import bean.User;
 

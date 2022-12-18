@@ -28,11 +28,6 @@ public class ConceptOfJava {
         // Java虚拟机启动路径
         System.out.println(System.getProperty("user.dir"));
 
-        // 读文件
-//        Scanner in = new Scanner(Paths.get("test.txt"), "UTF-8");
-        // 写文件
-//        PrintWriter out = new PrintWriter("outFile.txt","UTF-8");
-
         // 多维数组
         int[][] matrix = {
                 {1, 3, 5},

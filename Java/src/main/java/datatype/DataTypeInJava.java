@@ -43,10 +43,12 @@ public class DataTypeInJava {
 
         // str3 + "d"为运行时创建，运行时在堆上创建"abcd"对象，即str == str3 为false
         str3 = str3 + "d";
+        // false
         System.out.println("拼接字符串(运行时确定，存放于堆变量)：" + (str == str3));
 
         // 直接在堆上创建对象
         String str4 = new String("abcd");
+        // false
         System.out.println("堆上创建对象：" + (str == str4));
 
         // 在堆上重新创建对象
@@ -57,7 +59,10 @@ public class DataTypeInJava {
         String str6 = "ab";
         stringConcat(str6);
         System.out.println("常量池：" + ("ab" == str6));
+        System.out.println("str6：" + str6);
     }
+
+    // 因为String为不可变对象，所以字符串连接会产生新的对象，并不更改原始对象的指向
     public static void stringConcat(String str) {
         // 执行前：str和调用处的str6均指向常量池中的"ab"
         // 执行后：str指向堆中新地址"ab123"，调用处的str6指向不变

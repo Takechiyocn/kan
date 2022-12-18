@@ -1,4 +1,4 @@
-package primitivetype;
+package datatype;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -25,7 +25,6 @@ public class PrimitiveType {
 //        char charEmoji = '\uD83D\uDE42';
 
         // String.length()返回的是code unit的个数(不含编码标志位)，而不是字符的个数，也不是占用字节的个数
-        // 2
         String stringEmoji = "\uD83D\uDE42";
         System.out.println(stringEmoji + " length:" + stringEmoji.length());
 

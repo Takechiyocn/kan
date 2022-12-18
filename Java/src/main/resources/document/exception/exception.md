@@ -70,8 +70,6 @@
 
 ##### 带资源的try语句
 
-
-
 ### 断言
 
 当条件(又称前置条件Precondition)检测结果为false时，会抛出AssertionError异常

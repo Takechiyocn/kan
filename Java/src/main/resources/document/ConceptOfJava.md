@@ -646,3 +646,20 @@ private static int sumUp(int[]values){
 #### 语法糖
 
 编程语言中可以更容易表达一个操作的语法，简单理解就是一种便捷写法
+
+#### BigDecimal
+
+BigDecimal类型数据转字符串
+
+* toPlainString()
+  
+    不使用任何科学计数法
+  
+* toString()
+  
+    在必要的时候使用科学计数法
+* toEngineeringString()
+  
+    在必要的时候使用工程计数法。类似于科学计数法，只不过指数的幂都是3的倍数，这样方便工程上的应用，因为在很多单位转换的时候都是10^3
+
+    ![BigDecimalToString.png](images/BigDecimalToString.png)

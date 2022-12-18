@@ -1,6 +1,6 @@
 ## Stream
 
-Stream流
+Java8新特性：Stream流
 
 >将集合或数组转换成一种流的元素序列
 
