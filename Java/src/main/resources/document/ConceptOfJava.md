@@ -638,10 +638,11 @@ private static int sumUp(int[]values){
     add.accumulate(value);
     ```
   
-#### 构造者builder风格接口
-
 #### Unsafe
 
 用于执行低级别、不安全操作的方法，如直接访问系统内存资源、自主管理内存资源等
 特点：使Java具备底层操作能力，提升运行效率
 
+#### 语法糖
+
+编程语言中可以更容易表达一个操作的语法，简单理解就是一种便捷写法

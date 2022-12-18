@@ -143,22 +143,12 @@
     传统创建对象的方式是new一个对象，每new一个对象，调用者多知道了一个类，
     增加了类与类之间的联系，不利于程序的松耦合
 
-#### 工厂方法模式
-
-#### 抽象工厂模式
-
-#### 单例模式
-
-#### 建造型模式
-
-#### 原型模式
-
-#### 构建型模式
+#### 构建型模式(creational)
 
     创建对象时隐藏创建逻辑，即不用new直接实例化对象。
     包括工厂模式、抽象工厂模式、单例模式、建造者模式、原型模式
 
-##### 工厂模式
+##### 工厂模式(factory pattern)
 
 ```java
 // 工厂
@@ -233,7 +223,7 @@ public class User {
 
 ###### 工厂方法模式
 
-    定义一个创建对象的接口，让接口的实现类决定创建哪种对象，推迟类的实例化到子类进行
+    定义一个创建对象的接口，让子类(接口的实现类)决定创建哪种对象，推迟类的实例化到子类进行
     即每个产品都有一个专属的工厂
     如Spring的FactoryBean接口的getObject方法
     如Collection接口抽象工厂定义了一个抽象iterator工厂方法，返回一个Iterator类的抽象产品，
@@ -267,7 +257,7 @@ public class Pear extends Fruit {
 public interface FruitFactory {
     Fruit create();
 }
-// 定义实现工厂：工厂类
+// 定义实现工厂
 public class AppleFactory implements FruitFactory{
     @Override
     public Fruit create() {
@@ -395,7 +385,7 @@ public class User {
 }
 ```
 
-##### 单例模式
+##### 单例模式(singleton pattern)
 
     特点：
       1. 只存在一个实例
@@ -469,10 +459,14 @@ public class User {
      */
     public class DoubleCheckingSingleton {
         private DoubleCheckingSingleton() {};
-        private static DoubleCheckingSingleton instance;
+        private static volatile DoubleCheckingSingleton instance;
         public static DoubleCheckingSingleton getInstance() {
+            // 第一重check：提高访问性能，一旦实例被创建，所有的check均为假
+            //             可以被多个线程进入
             if (instance == null) {
                 synchronized (DoubleCheckingSingleton.class) {
+                    // 第二重check：线程安全，确保多线程下只生成一个实例
+                    //             线程只能排队进入
                     if (instance == null) {
                         // 非原子性操作，可能会有指令重排
                         instance = new DoubleCheckingSingleton();
@@ -526,9 +520,62 @@ public class User {
     }
     ```
 
-#### 结构型
+##### 建造型模式(builder pattern)
 
-通过类和接口间的继承和引用实现创建复杂结构的对象
+    将一个复杂的构建与其表示分离，使得同样的构建过程可以创建不同的表示
+    
+    优缺点：不用担心忘记某个配置，保证构建过程的稳定
+    应用场景：OkHttp、Retrofit等框架源码中使用
+
+##### 原型模式(prototype pattern)
+
+    用原型实例指定创建对象的种类，并通过拷贝这些原型创建新的对象
+
+    应用场景：Object的clone()方法
+
+```java
+public class MilkTea implements Cloneable {
+    public String type;
+    public boolean ice;
+
+    @Override
+    public MilkTea clone() throws CloneNotSupportedException {
+        return (MilkTea) super.clone();
+//        MilkTea milkTea = new MilkTea();
+//        milkTea.type = this.type;
+//        milkTea.ice = this.ice;
+//        return milkTea;
+    }
+}
+public class CustomerUse {
+    public static void main(String[] args) throws CloneNotSupportedException {
+        MilkTea milkTeaOfA = new MilkTea();
+        milkTeaOfA.type = "原味";
+        milkTeaOfA.ice = false;
+        MilkTea milkTeaOfB = milkTeaOfA.clone();
+    }
+}
+```
+
+#### 结构型模式(structural)
+
+结构型模式就像搭积木，将不同的类结合在一起形成契合的结构
+
+##### 适配器模式
+
+
+##### 桥接模式
+
+##### 组合模式
+
+
+##### 装饰模式
+
+
+##### 外观模式
+
+
+##### 享元模式
 
 ##### 代理模式
 

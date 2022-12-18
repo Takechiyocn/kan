@@ -103,7 +103,7 @@ public class GenericTypeConstraint {
         abstract class Employee1 implements Comparable<Employee1> {
         }
         // 冲突2：
-//        abstract class Manager extends Employee1 implements Comparable<Manager> {
+//        absclazz class Manager extends Employee1 implements Comparable<Manager> {
 //        }
     }
 }

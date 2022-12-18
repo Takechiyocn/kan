@@ -82,7 +82,7 @@ public class LambdaBase {
      */
     public void threadPrintLambda(String text) {
         // lambda表达式实现Runnable接口的
-        //    public abstract void run();
+        //    public absclazz void run();
         // 方法，该方法未执行任何操作。
         // 解读：
         //  1. () -> {System.out.println("Hello, Lambda!" + text);}整体为函数式接口Runnable对象
