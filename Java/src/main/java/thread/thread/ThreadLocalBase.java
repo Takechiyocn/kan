@@ -28,7 +28,7 @@ public class ThreadLocalBase {
                         String dateStamp = dateFormat.format(new Date());
                         String dateStamp2 = dateFormat2.get().format(new Date());
                         System.out.println(Thread.currentThread() + ", Time by SimpleDateFormat:" + dateStamp);
-                        System.out.println(Thread.currentThread() + ", Time by ThreadLocal<SimpleDateFormat>:" + dateStamp);
+                        System.out.println(Thread.currentThread() + ", Time by ThreadLocal<SimpleDateFormat>:" + dateStamp2);
 
                         // java.util.Random线程安全：
                         //  如果多个线程需要等待一个共享的随机数生成器会很低效(因为线程安全，其他线程要等待前面线程生成结束后才能获取锁)
