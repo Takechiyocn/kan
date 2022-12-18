@@ -177,9 +177,31 @@ ExecutorService executorService
         2. 各个功能变更时均需修改工厂逻辑，违背单一职责原则(这个类不止一个引起修改的原因)
         3. 功能需要扩展时，需修改工厂类，违背开闭原则
 
+![SimpleFactory.png](images/SimpleFactory.png)
+
 ```java
-// 简单工厂模式创建水果对象
+// 定义对象抽象基类
+public abstract class Fruit {
+    public abstract void eat();
+}
+
+// 定义具体的对象类
+public class Apple extends Fruit {
+    @Override
+    public void eat() {
+        System.out.println("Eat an apple");
+    }
+}
+public class Pear extends Fruit {
+    @Override
+    public void eat() {
+        System.out.println("Eat a pear");
+    }
+}
+
+// 定义对象工厂：简单工厂模式创建水果对象
 public class FruitFactory {
+    // 可根据实际情况注入该类bean(xml,注解)
     public Fruit create(String type) {
         switch (type) {
             case "Apple": 
@@ -196,28 +218,58 @@ public class FruitFactory {
     }
 }
 
+// 客户端使用
 public class User {
     private void eat() {
+        // 创建工厂对象
         FruitFactory factory = new FruitFactory();
-        Fruit apple = factory.create("Apple");
-        Fruit pear = factory.create("Pear");
-        apple.eat();
-        pear.eat();
+        // 生产苹果
+        factory.create("Apple").eat();
+        // 生产梨子
+        factory.create("pear").eat();
     }
 }
 ```
 
 ###### 工厂方法模式
 
-    定义一个/多个创建对象的接口，让接口的实现类决定创建哪种对象，推迟类的实例化到子类进行
+    定义一个创建对象的接口，让接口的实现类决定创建哪种对象，推迟类的实例化到子类进行
     即每个产品都有一个专属的工厂
-    可解决简单工厂模式的3个问题
     如Spring的FactoryBean接口的getObject方法
     如Collection接口抽象工厂定义了一个抽象iterator工厂方法，返回一个Iterator类的抽象产品，
       iterator由ArrayList、HashMap等实现
+    优缺点：
+        1. 可解决简单工厂模式的3个问题
+        2. 每增加一种对象(产品等)就需增加一个工厂类，类增多了
+
 
 ```java
-public class AppleFactory {
+// 定义对象抽象基类
+public abstract class Fruit {
+    public abstract void eat();
+}
+
+// 定义具体的对象类
+public class Apple extends Fruit {
+    @Override
+    public void eat() {
+        System.out.println("Eat an apple");
+    }
+}
+public class Pear extends Fruit {
+    @Override
+    public void eat() {
+        System.out.println("Eat a pear");
+    }
+}
+
+// 定义工厂
+public interface FruitFactory {
+    Fruit create();
+}
+// 定义实现工厂：工厂类
+public class AppleFactory implements FruitFactory{
+    @Override
     public Fruit create() {
         return new Apple();
         // 需要更改逻辑时，只需修改相应工厂类
@@ -228,22 +280,24 @@ public class AppleFactory {
         return new Apple(seed, sunlight, water);
     }
 }
-
-public class PearFactory {
+// 定义实现工厂
+public class PearFactory implements FruitFactory {
+    @Override
     public Fruit create() {
         return new Pear();
     }
 }
 
-// 调用
+// 客户端使用
 public class User {
-    private void eat() {
+    private void eatFruit() {
+        // 生产苹果
         AppleFactory appleFactory = new AppleFactory();
-        Fruit apple = appleFactory.create();
+        appleFactory.create().eat();
+        
+        // 生产梨子
         PearFactory pearFactory = new PearFactory();
-        Fruit pear = pearFactory.create();
-        apple.eat();
-        pear.eat();
+        pearFactory.create().eat();
     }
 }
 ```
@@ -256,37 +310,87 @@ public class User {
         新增抽象方法时需修改所有具体工厂类(给人很重的感觉)
     适用于只增加同类工厂这样的横向扩展需求，不适合新增功能这样的纵向扩展需求
 
+![AbstractFactory.png](images/AbstractFactory.png)
+
 ```java
-// 工厂接口：开闭原则的约束抽象，即定义一个相对稳定的抽象层
+// 水果接口
+public abstract class Fruit {
+    public abstract void eat();
+}
+
+public class AFruit extends Fruit {
+    @Override
+    public void eat() {
+        System.out.println("A公司水果产品");
+    }
+}
+public class BFruit extends Fruit {
+    @Override
+    public void eat() {
+        System.out.println("B公司水果产品");
+    }
+}
+
+// 蔬菜接口
+public abstract class Vegetable {
+    public abstract void eat();
+}
+public class AVegetable extends Vegetable {
+    @Override
+    public void eat() {
+        System.out.println("A公司蔬菜产品");
+    }
+}
+public class BVegetable extends Vegetable {
+    @Override
+    public void eat() {
+        System.out.println("B公司蔬菜产品");
+    }
+}
+
+// 抽象工厂接口：开闭原则的约束抽象，即定义一个相对稳定的抽象层
 public interface IFactory {
-    Fruit create();
+    Fruit createFruit();
+    Vegetable createVegetable();
 }
 
-// 苹果工厂
-public class AppleFactory implements IFactory {
+// A公司产品工厂
+public class ACompanyFactory implements IFactory {
     @Override
-    public Fruit create() {
-        return new Apple();
+    public Fruit createFruit() {
+        return new AFruit();
+    }
+
+    @Override
+    public Vegetable createVegetable() {
+        return new AVegetable();
     }
 }
 
-// 梨子工厂
-public class PearFactory implements IFactory {
+// B公司产品工厂
+public class BCompanyFactory implements IFactory {
     @Override
-    public Fruit create() {
-        return new Pear();
+    public Fruit createFruit() {
+        return new BFruit();
+    }
+
+    @Override
+    public Vegetable createVegetable() {
+        return new BVegetable();
     }
 }
 
-// 调用者
+// 客户端使用
 public class User {
     private vloid eat() {
-        IFactory appleFactory = new AppleFactory();
-        Fruit apple = appleFactory.create();
-        IFactory pearFactory = new PearFactory();
-        Fruit pear = pearFactory.create();
-        apple.eat();
-        pear.eat();
+        // 使用A公司工厂生产系列产品
+        IFactory aCompanyFactory = new ACompanyFactory();
+        aCompanyFactory.createFruit().eat();
+        aCompanyFactory.createVegetable().eat();
+        // 使用B公司工厂生产系列产品
+        IFactory bCompanyFactory = new BCompanyFactory();
+        bCompanyFactory.createFruit().eat();
+        bCompanyFactory.createVegetable().eat();
     }
 }
 ```
@@ -387,6 +491,7 @@ public class User {
     ```java
     // 避免内存浪费：内部类不随外部类一起加载，外部类实例化之后，内部类才会加载
     // 线程安全由虚拟机保证(client方法的正确加锁、同步)
+    // 类加载过程：加载(二进制字节流)、验证(安全)、准备(空间)、解析(常量池符号引用)、初始化(client方法)
     public class StaticSingleton {
         private StaticSingleton() {};
         public static StaticSingleton getInstance() {
