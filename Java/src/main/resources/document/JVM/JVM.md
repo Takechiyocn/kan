@@ -913,6 +913,14 @@ Serial收集器的多线程版本
 
 ![ThreadStatus2.png](images/ThreadStatus2.png)
 
+### 线程礼让
+
+Thread.yield方法，不一定礼让成功
+
+### 线程合并/插队
+
+t1.join();其他线程阻塞让t1线程优先执行，执行完t1后再执行其他线程
+
 ### 守护线程
 
 > 用途：为其他线程提供服务，必须在线程启动前调用

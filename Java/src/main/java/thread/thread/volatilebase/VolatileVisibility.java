@@ -1,5 +1,7 @@
 package thread.thread.volatilebase;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * @ClassName VolatileVisibility
  * @Description
@@ -10,16 +12,21 @@ package thread.thread.volatilebase;
 
 public class VolatileVisibility {
     // 不加volatile程序死循环，volatile可保证可见性
-    private volatile static int num = 0;
-
+    private boolean flag = false;
     public static void main(String[] args) {
 
+        VolatileVisibility v = new VolatileVisibility();
         new Thread(() -> {
+            try {
+                TimeUnit.SECONDS.sleep(2);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             // 如果不加volatile线程对内存变化不知道
-            while (num == 0) {
+            while (v.flag) {
             }
         }).start();
-        num = 1;
-        System.out.println(num);
+        v.flag = true;
+        System.out.println(v.flag);
     }
 }

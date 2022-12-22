@@ -36,7 +36,7 @@ public class ForkJoinTest {
     private static void forkJoinCalculate() throws ExecutionException, InterruptedException {
         long start = System.currentTimeMillis();
         ForkJoinPool fjp = new ForkJoinPool();
-        ForkJoinTask<Long> task = new ForkJoinBase(0L, 10_0000_0000L);
+        ForkJoinTask task = new ForkJoinBase(0L, 10_0000_0000L);
         ForkJoinTask<Long> fjt = fjp.submit(task);
         Long sum = fjt.get();
         long end = System.currentTimeMillis();
