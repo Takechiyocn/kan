@@ -109,7 +109,7 @@ public void transferAccount() {
 
 两阶段提交保证了分布式事务的原子性：所有结点要么全做，要么全不做
 
-![DistributedTransactionPhases.png](DistributedTransactionPhases.png)
+![DistributedTransactionPhases.png](images/DistributedTransactionPhases.png)
 
 1. 准备阶段
 

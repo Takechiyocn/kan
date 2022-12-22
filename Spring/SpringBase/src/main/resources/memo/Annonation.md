@@ -1,5 +1,54 @@
 ## Java注解
 
+为程序元素设置元数据的方法
+
+![JavaAnnotation.png](images/JavaAnnotation.png)
+
+### 元注解
+
+负责注解其他注解
+
+#### @Target注解
+
+说明注解所修饰的对象范围
+
+范围：
+
+* package
+
+* type(类、接口、枚举、Annotation类型)
+  
+* 类型成员(方法、构造方法、成员变量、枚举值)
+  
+* 方法参数和本地变量(如循环变量、catch参数)
+
+#### @Retention注解
+
+保留、滞留。定义被保留的时间长短，即描述注解的生命周期
+
+* source
+
+  在源文件中有效(源文件保留)
+  
+* class
+
+  在class文件中有效(class保留)
+  
+* runtime
+
+  在运行时有效(云信使保留)
+
+#### @Documented
+
+描述其他类型的注解应被作为被标注的程序成员的公共API，因此可以被如javadoc等工具文档化
+
+#### @Inherited
+
+标记注解，描述某个被标注的类型时被继承的
+
+* 如果一个使用了@Inherited修饰的注解类型被用于一个class，
+  则这个注解将被用于该class的子类
+
 ### @Bean注解
 
 bean组件(负责整个应用功能的一部分)

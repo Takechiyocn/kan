@@ -28,12 +28,13 @@ public class ObjectInterceptor implements InvocationHandler {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        Object result = null;
         // 开启事务
         this.transaction.before();
         // 调用目标方法：通过反射机制调用目标类
-        method.invoke(this.target, args);
+        result = method.invoke(this.target, args);
         // 提交事务
         this.transaction.after();
-        return null;
+        return result;
     }
 }
