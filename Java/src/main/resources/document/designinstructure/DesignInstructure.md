@@ -29,7 +29,7 @@
 
     类与类之间的联结，使一个类知道另一个类的属性和方法
     分为单向关联、双向关联等
-    通常变现为被关联类B以类属性的形式出现在关联类A中，也可能是类A引用了一个类型为被关联类B的全局变量
+    通常表现为被关联类B以类属性的形式出现在关联类A中，也可能是类A引用了一个类型为被关联类B的全局变量
 
 ![ClassRelationAssociation.png](images/ClassRelationAssociation.png)
 
@@ -126,6 +126,7 @@
     尽可能使用聚合(contains-a)/组合(has-a)而非继承(is-a)，避免继承带来的方法污染和方法爆炸
     方法污染TODO：子类不具备执行从父类继承的方法的能力
     方法爆炸：继承树不断扩大，底层类拥有的方法过于复杂，导致容易选择错误
+    常用于结构型模式的桥接模式
 
 ![CompositeReuseBefore.png](images/CompositeReuseBefore.png)
 
@@ -135,6 +136,7 @@
 
     Interface Segregation Principle
     客户端不应该依赖它不需要的接口，即类间的依赖关系应建立在最小接口上(接口拆分)
+    结构型模式的组合模式(透明方式)违背该原则
 
 ### 设计模式分类
 
@@ -578,7 +580,7 @@ public class CustomerUse {
 
 ##### 组合模式
 
-    定义：又叫部分整体模式。是用于把一组相似的对象当做一个单一的对象。
+    定义：又称为部分整体模式。是用于把一组相似的对象当做一个单一的对象。
          组合模式依据树形结构来组合对象，用来表示部分以及整体层次
     用于整体与部分的结构，当整体与部分有相似的结构，
     在操作时可以被一致对待，就可以使用组合模式(生命周期)
@@ -600,6 +602,67 @@ public class CustomerUse {
 
 ##### 装饰模式
 
+    定义：动态的给一个对象增加一些额外的职责，就增加对象功能来说，装饰模式比子类更加灵活
+         也称为装饰器模式、包装器(模式)
+    作用：1. 增强一个类原有功能
+           a. 仅用于增强，不改变原有功能，称为透明装饰模式
+             i. 透明：无需知道被装饰者具体的类
+           b. 继承的一种替代方案。避免多种装饰下继承实现产生的类爆炸
+           c. 相比集成来说更加灵活
+         2. 为一个类添加新的功能
+           a. 不改变原有功能，增加新功能，称为半透明模式
+             i. 一半透明：无需知道被装饰者具体的类(可以为任意的装饰者类，被装饰者对客户端不可见)
+             i. 一半不透明：使用新方法必须知道具体装饰类，装饰类对客户端可见、不透明
+           b. 半透明模式无法多次装饰
+    适用场景：
+      1. 不想增加很多子类的前提下扩展一个类的功能
+      2. java.io包中，InputStream字节输入流通过装饰器BufferedInputStream增强为缓冲字节输入流
+
+JavaIO解析
+![img.png](img.png)
+
+```java
+public abstract class InputStream implements Closeable {
+  
+    public abstract int read() throws IOException;
+    // ...
+}
+```
+
+1. 左边3个类：FileInputStream、ByteArrayInputStream、ServletInputStream实现InputStream基本功能，类似House类实现IHouse接口
+
+2. 右下角3个类：BufferedInputStream、DataInputStream、CheckedInputStream是具体的装饰类
+
+    1. FilterInputStream：装饰类父类，无具体功能，仅用于包装InputStream
+
+        ```java
+        public class FilterInputStream extends InputStream {
+          protected volatile InputStream in;
+        
+          protected FilterInputStream(InputStream in) {
+            this.in = in;
+          }
+        
+          public int read() throws IOException {
+              return in.read();
+          }
+          
+          // ...
+        }
+        ```
+   2. BufferedInputStream
+      
+      * 读取内容到缓冲区，满后再从缓冲区一段一段取出
+  
+      * 只有增强功能fill(read方法体内)，故该类使用透明的装饰模式
+
+        ```
+   3. DataInputStream
+
+     * 方便读取int、double等类型内容
+
+     * 新增readInt、readLong等方法，故该类使用半透明模式
+
 ##### 外观模式
 
 
@@ -617,17 +680,9 @@ public class CustomerUse {
         2. 权限管理
         3. Spring利用动态代理实现AOP，如果Bean实现了接口就使用JDK代理，否则CGLib代理
 
-区别|装饰模式|代理模式
----|---|---
-着重点|为了增强/添加功能|为了加以控制
-
-##### 装饰器模式
-
-不改变原有对象的基础上将功能附加到对象
-
-适用场景：不想增加很多子类的前提下扩展一个类的功能
-
-如java.io包中，InputStream字节输入流通过装饰器BufferedInputStream增强为缓冲字节输入流
+区别|适配器模式|装饰模式|代理模式
+---|---|---|---
+着重点|改变接口,接口回炉重造|为了增强/添加功能|为了加以控制
 
 ##### 装饰器模式VS动态代理模式
 
