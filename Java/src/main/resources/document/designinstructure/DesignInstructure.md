@@ -158,7 +158,7 @@ ExecutorService executorService
         = Executors.newCachedThreadPool(new ThreadPoolFactory("CachedThread"));
 ```
 
-###### 简单工厂模式
+###### 简单工厂模式(Simple Factory Pattern)
 
     工厂方法模式的一个特例
     由一个工厂对象创建实例，客户端无需关注创建逻辑，只需提供参数。
@@ -223,7 +223,7 @@ public class User {
 }
 ```
 
-###### 工厂方法模式
+###### 工厂方法模式(Factory Method Pattern)
 
     定义一个创建对象的接口，让子类(接口的实现类)决定创建哪种对象，推迟类的实例化到子类进行
     即每个产品都有一个专属的工厂
@@ -294,7 +294,7 @@ public class User {
 }
 ```
 
-###### 抽象工厂模式
+###### 抽象工厂模式(Abstract Factory Pattern)
 
     提供一个创建一系列相关或相互依赖对象的接口，无需指定它们的具体类，如java.sql.Connection
     优缺点：
@@ -387,7 +387,7 @@ public class User {
 }
 ```
 
-##### 单例模式(singleton pattern)
+##### 单例模式(Singleton Pattern)
 
     特点：
       1. 只存在一个实例
@@ -522,14 +522,14 @@ public class User {
     }
     ```
 
-##### 建造型模式(builder pattern)
+##### 建造型模式(Builder Pattern)
 
     将一个复杂的构建与其表示分离，使得同样的构建过程可以创建不同的表示
     
     优缺点：不用担心忘记某个配置，保证构建过程的稳定
     应用场景：OkHttp、Retrofit等框架源码中使用
 
-##### 原型模式(prototype pattern)
+##### 原型模式(Prototype Pattern)
 
     用原型实例指定创建对象的种类，并通过拷贝这些原型创建新的对象
 
@@ -563,7 +563,7 @@ public class CustomerUse {
 
 结构型模式就像搭积木，将不同的类结合在一起形成契合的结构
 
-##### 适配器模式
+##### 适配器模式(Adapter Pattern)
 
     将一个类的接口转换成另一个类的接口，使得原本由于接口不兼容而不能一起工作的类可以一起工作
     适配：源接口通过一个中间件转换之后才可以适用于目标接口，这个转换过程称为适配
@@ -572,13 +572,13 @@ public class CustomerUse {
     适用场景：有相关性但不兼容的结构
              如java.io包中，InputStream字节输入流通过适配器InputStreamReader转换为Reader字符输入流
 
-##### 桥接模式
+##### 桥接模式(Bridge Pattern)
 
     将抽象部分与它的实现部分分离，使它们都可以独立地变化
     通常表现为合成复用原则(Composite Reuse Principle)的实现
     主要用于两个或多个同等级的接口
 
-##### 组合模式
+##### 组合模式(Composite Pattern)
 
     定义：又称为部分整体模式。是用于把一组相似的对象当做一个单一的对象。
          组合模式依据树形结构来组合对象，用来表示部分以及整体层次
@@ -600,7 +600,7 @@ public class CustomerUse {
 
 ![CompositePattern.png](images/CompositePattern.png)
 
-##### 装饰模式
+##### 装饰模式(Decorator Pattern)
 
     定义：动态的给一个对象增加一些额外的职责，就增加对象功能来说，装饰模式比子类更加灵活
          也称为装饰器模式、包装器(模式)
@@ -619,7 +619,7 @@ public class CustomerUse {
       2. java.io包中，InputStream字节输入流通过装饰器BufferedInputStream增强为缓冲字节输入流
 
 JavaIO解析
-![img.png](img.png)
+![DecoratorPatternIO.png](images/DecoratorPatternIO.png)
 
 ```java
 public abstract class InputStream implements Closeable {
@@ -678,7 +678,7 @@ public abstract class InputStream implements Closeable {
     要求能够共享的对象必须是细粒度对象，又称轻量级模式
     适用场景：缓存池、对象池
 
-##### 代理模式
+##### 代理模式(Proxy Pattern)
 
     给某一个对象提供一个代理，并由代理对象控制对原对象的引用
 
@@ -695,11 +695,11 @@ public abstract class InputStream implements Closeable {
 着重点|改变接口,接口回炉重造|为了增强/添加功能|为了加以控制
 关系|无层级关系|有层级关系|不能改变代理对象接口
 
-#### 行为模式
+#### 行为模式(behavioral)
 
 行为模式重点关注类与类之间的交互协作
 
-##### 责任链模式
+##### 责任链模式(Chain of Responsibility)
 
     使得多个对象都有机会处理请求，从而避免请求的发送者和接收者之间的耦合关系
     将这些对象形成一条链，并沿着这条链传递该请求，直到有一个对象处理它为止
@@ -715,6 +715,47 @@ public abstract class InputStream implements Closeable {
     适用场景：
         1. 假期审批
         2. 加薪申请等
+
+##### 命令模式(Command Pattern)
+
+    将一个请求封装为一个对象，从而使你可用不同的请求对客户进行参数化，对请求排队或记录请求日志，以及支持可撤销操作
+    宏命令：将一组命令封装起来
+    优点：
+        1. 降低系统耦合度
+        2. 扩展性强，方便实现Undo和Redo操作
+        3. 很容易实现序列操作及实现回掉系统
+            1. 命令添加到列表实现序列操作
+            2. 将命令对象添当做参数，而这个对象可以执行，实现了回调功能
+    缺点:
+        1. 产生大量命令类，增加系统复杂性
+    适用场景：
+        1. 当需要将各种执行的动作抽象出来，使用时通过不同的参数来决定执行哪个对象
+        2. 当某个或者某些操作需要支持撤销的场景
+        3. 当要对操作过程记录日志，以便后期通过日志将操作过程重新做一遍时
+        4. 当某个操作需要支持事务操作的时候
+    总结：日常开发中使用频率不高
+
+![CommandPattern.png](images/CommandPattern.png)
+
+* Command
+
+    一个接口，定义一个命令
+
+* ConcreteCommand
+
+    具体的执行命令，实现Command接口
+
+* Receiver
+
+    真正执行命令的角色，那些具体的命令引用它，让它完成命令的执行
+
+* Invoker
+
+    负责按照客户端的指令设置并执行命令，像命令的撤销、日志的记录等功能都在此类中完成
+
+##### 解释器模式(Interceptor Pattern)
+
+
 
 ##### 策略模式
 
