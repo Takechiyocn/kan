@@ -10,7 +10,7 @@ package generic;
  *   E - Element (used extensively by the Java Collections Framework)
  *   K - Key
  *   V - Value
- *   N - Number
+ *   N - NumberInterpreter
  *   T - Type
  *   S,U,V etc. - 2nd, 3rd, 4th types
  * 泛型特点：
