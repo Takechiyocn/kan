@@ -311,6 +311,7 @@ FROM (
 
 -- 简单case函数2：
 -- 根据a=when后面语句为true/false判断输出结果
+-- a=null无法和when后面的结果true/false进行比较
 SELECT CASE a
       WHEN a is null THEN b
       ELSE a

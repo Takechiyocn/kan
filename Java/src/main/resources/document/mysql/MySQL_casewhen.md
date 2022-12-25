@@ -39,32 +39,32 @@ END CASE
 
 1. ifnull 用法
 
-```mysql
-SELECT IFNULL(a, b) AS new,
-       a,
-       b
-FROM
-    -- 创建临时表: a 的值为null ,b为1
-    (SELECT NULL AS a, 1 AS b) tmp;
-```
+    ```mysql
+    SELECT IFNULL(a, b) AS new,
+           a,
+           b
+    FROM
+        -- 创建临时表: a 的值为null ,b为1
+        (SELECT NULL AS a, 1 AS b) tmp;
+    ```
 
 2. case when 用法
 
-```mysql
-SELECT (CASE a
-            WHEN a IS NULL THEN b
-            ELSE a
-    END
-           ) AS new,
-       a,
-       b
-FROM (SELECT NULL AS a, 1 AS b) tmp;
-```
+    ```mysql
+    SELECT (CASE a
+                WHEN a IS NULL THEN b
+                ELSE a
+        END
+               ) AS new,
+           a,
+           b
+    FROM (SELECT NULL AS a, 1 AS b) tmp;
+    ```
 
 发现得到的结果不对，new 的值居然为null ,而不是我们想要的1.
 
 为什么会出现这个错误呢？ 是将第一种语法与第二种语法混用导致的，case 后面commission_pct 的值有两种：真实值或者为null，而 when 后面的commission_pct is null
-也有两个值：true或者false，所以case 后面为null时候永远无法跟true或false匹配，因此输出不为null。
+也有两个值：true或者false，所以case 后面为null时候永远无法跟true或false匹配，因此new输出为null。
 
 对于该种情况如果必须要用语法1的话可以如下改写：
 
