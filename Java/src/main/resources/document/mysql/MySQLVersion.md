@@ -1,5 +1,7 @@
 ## MySQL版本
 
+### 发行版本
+
 1. MySQL Community Server
    
     社区版本，免费
@@ -43,3 +45,32 @@
     * MySQL Query Browser：用于数据查询的图形化客户端
     
     * MySQL Workbench：DB Design工具
+
+### 各版本区别
+
+#### 5.5
+
+* 默认存储引擎：InnoDB
+
+* 引入UTF-8：utf8mb4
+
+#### 5.6
+
+##### InnoDB增强
+
+* 引入全文索引：基于相似度查询/关键字匹配查询
+
+* 可修改未亚索表InnoDB页大小(4KB、8KB、16KB默认)
+
+* log
+
+   * redo log：文件可存储最大值4G->512G
+   
+   * undo log：可保存在独立的表空间
+
+##### Partitioning
+
+#### 5.7
+
+
+#### 5.8

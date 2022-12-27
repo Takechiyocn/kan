@@ -46,9 +46,9 @@
 * 不推荐使用
        
     * 查询缓存失效频繁，更新操作会导致响应表查询缓存清空
-    * 静态表(如系统配置)，可使用
+    * 静态表/master表(如系统配置)，可使用
     * select SQL_CACHE * from T where ID = 10;
-  
+    
 ### 解析器
 
 * 词法分析
@@ -243,19 +243,43 @@ unlock tables;
     写|NG|NG
     其他表读写|NG|OK
 
+    加锁线程sessionA|其他线程sessionB
+    ---|---
+    #给user表加读锁：lock tables user read;|-
+    select user表 ok|select user表 ok
+    insert user表被拒绝|insert user表堵塞
+    insert address表被拒绝|insert address表ok
+    select address表被拒绝|alter user表堵塞
+    unlock tables; 释放锁|-
+    -|被堵塞的修改操作执行ok
+
+    ![TableLockRead.png](images/TableLockRead.png)
+
 * 写锁
 
     加锁表|加锁线程|其他线程
     ---|---|---
-    读|OK|NG
+    读|OK|OK
     写|OK|NG
     其他表读写|NG|OK
 
+    加锁线程sessionA|其他线程sessionB
+    ---|---
+    #给user表加写锁:lock tables user write;|-
+    select user表 ok|select user表 ok
+    insert user表 ok|insert user表堵塞
+    insert address表被拒绝|insert address表ok
+    select address表被拒绝|alter user表堵塞
+    unlock tables; 释放锁|-
+    -|堵塞在user表的上更新操作执行ok
+
+    ![TableLockWrite.png](images/TableLockWrite.png)
+
 ##### 元数据锁
 
-metadata lock(MDL)，MySQL5.5引进。访问表时自动加上，以保证读写的正确性
+metadata lock(MDL)，MySQL5.5引进。访问表时自动添加，以保证读写的正确性
 
-* MDL读锁
+* MDL读锁(默认DML产生读锁)
 
     MDL读锁之间不互斥，允许多个线程同时对加了MDL读锁的表进行CRUD操作
 
@@ -273,7 +297,7 @@ metadata lock(MDL)，MySQL5.5引进。访问表时自动加上，以保证读写
   
     ![MDLRead.png](images/MDLRead.png)
 
-* MDL写锁
+* MDL写锁(默认DDL产生读锁)
 
     * MDL写锁和读锁、写锁互斥，用以保证变更表结构操作的安全性
 
@@ -362,35 +386,126 @@ IS|冲突|兼容|兼容|兼容
 
 ##### 记录锁Record Lock
 
-在索引记录上加锁
+在索引记录上加锁，锁定的总是索引记录。
+
+锁退化：
+
+* 当加锁行不是索引时
+
+* 查询语句不为精准匹配(=)时，即<、>、like等会退化成临键锁
+
+加锁线程sessionA|线程sessionB|线程sessionC
+---|---|---
+#开启事务，begin;|-|-
+给user表id=1加写锁：select id from user where id = 1 for update;|-|-
+-|update user set name = 'name121' where id = 1;|-
+-|-|查看 InnoDB监视器中记录锁数据show engine innodb status\G
+commit提交事务record lock被释放|-|-
+-|被堵塞的update操作执行ok|-
+
+![RecordLock.png](images/RecordLock.png)
 
 ##### 间隙锁Gap Lock
 
-锁定一个范围，但不包含记录
+基于非唯一索引，锁定一个范围，但不包含记录，由InnoDB隐式添加
 
-##### 临建锁Next-key Lock
+* 间隙锁存在于可重复读隔离级别，为了解决可重复读隔离级别下的幻读现象
 
-Record Lock+Gap Lock：锁定一个范围(GapLock实现)，并且锁定记录本身(RecordLock实现)
+    ```mysql
+    # 所有在（1，10）区间内的记录行都会被锁住
+    # 所有id 为 2、3、4、5、6、7、8、9 的数据行的插入会被阻塞
+    #  1 和 10 两条记录行并不会被锁住
+    SELECT * FROM table WHERE id BETWEN 1 AND 10 FOR UPDATE;
+    ```
 
-##### 插入意向锁
+![GapLock.png](images/GapLock.png)
 
-针对inert操作产生的意向锁
-  
+加锁线程sessionA|线程sessionB|线程sessionC
+---|---|---
+#开启事务，begin;|-|-
+加锁：select * from user where age = 10 for share;|-|-
+-|insert into user(id,age) values(2,20);|-
+-|-|查看 InnoDB监视器中记录锁数据show engine innodb status\G
+commit提交事务Gap lock被释放|-|-
+-|被堵塞的insert操作执行ok|-
+
+![GapLock2.png](images/GapLock2.png)
+
+##### 临键锁Next-key Lock
+
+* Record Lock+Gap Lock：锁定一个范围(GapLock实现)，并且锁定记录本身(RecordLock实现)。它是一种左开右闭的范围，可以用符号表示为：(a,b]。
+
+* 每个数据行上的非唯一索引列都会存在一把临键锁，即唯一索引列(包含主键列)不存在临键锁
+
+    ![NextKeyLock.png](images/NextKeyLock.png)
+
+    潜在临键锁：(-∞, 10],(10, 20],(20, 30],(30, +∞]
+
+加锁线程sessionA|线程sessionB|线程sessionC|线程sessionD
+---|---|---|---
+#开启事务，begin;|-|-
+加锁：select * from user where age = 10 for share;|-|-|-
+-|#获取锁失败，insert操作被堵塞:insert into user(id,age) values(2,20);|-|-
+-|-|update user set name='name1' where age = 10;|-
+-|-|-|查看 InnoDB监视器中记录锁数据show engine innodb status\G
+提交事务Gap Lock被释放commit|-|-|-
+-|被堵塞的insert操作执行ok|被堵塞的update操作执行ok|-
+
+![NextKeyLock2.png](images/NextKeyLock2.png)
+
+##### 插入意向锁Insert Intention Lock
+
+特殊的间隙锁，特指插入操作产生的间隙锁
+
+加锁线程sessionA|线程sessionB|线程sessionC
+---|---|---
+#开启事务，begin;|-|-
+加锁：select * from user where age = 10 for share;|-|-
+-|#获取锁失败，insert操作被堵塞:insert into user(id,age) values(2,20);|-
+-|-|查看 InnoDB监视器中记录锁数据show engine innodb status\G
+commit提交事务Gap lock被释放|-|-
+-|#被堵塞的insert操作执行ok：insert into user(id,age) values(2,20);|-
+
+![InsertIntentionLock.png](images/InsertIntentionLock.png)
+
+### 乐观锁&悲观锁
+
+#### 悲观锁PessimisticLock
+
+对记录进行修改前，先尝试为该记录加上排它锁(Exclusive lock)，采取先获取锁再操作数据的策略，可能会产生死锁
+
+#### 乐观锁OptimisticLock
+
+一般不利用数据库的锁机制，采用版本号之类的操作，不会产生死锁问题
+
 ### 数据库死锁
 
 多个事务在同一资源上相互占用并请求锁定对方占用的资源而导致的恶性循环
 
-产生：
+* 产生
 
 * 多个事务以不同顺序锁定资源时
 * 多个事务同时锁定同一资源时
 
-规避：
+* 查看
 
-* 死锁检测
-* 死锁超时
+```mysql
+show engine innodb status\G
+```
 
-InnoDB处理死锁：将持有最少行级排它锁的事务进行回滚
+* 策略
+
+    * 死锁检测
+    
+        1. 发起死锁检测，发现死锁后，主动回滚死锁链条中的某一事务，让其他事务得以继续执行
+
+        2. innodb_deadlock_detect=on：开起死锁检测
+
+           InnoDB处理死锁：将持有最少行级排它锁的事务进行回滚
+      
+    * 死锁超时
+
+        innodb_lock_wait_timeout：默认50s
 
 ## MYSQL事务
 
@@ -425,7 +540,7 @@ MYSQL事务特点：事务内的语句要么全部执行成功，要么全部执
     * 保证当前事务不会读取到其他事务已提交的UPDATE操作(保证多次读取结果一致，未UPDATE前的相同值)
     * 无法保证当前事务感知到其他事务中的INSERT或DELETE操作，导致幻读产生
 
-        * 幻读(前后多次读取，数据总量不一致) ->侧重于新增/删除，对策：临建锁（Next key lock）
+        * 幻读(前后多次读取，数据总量不一致) ->侧重于新增/删除，对策：间隙锁(GapLock)、临键锁(Next-key lock)
         
             某个事务在读取某个范围内的记录时，会产生幻行
     
@@ -622,7 +737,7 @@ InnoDB引擎特殊功能，当某些索引被频繁使用时，在内存中基�
 
 #### 空间索引(R-Tree)
 
-MyISAM支持。无所前缀索引，从所有维度来索引数据。
+MyISAM支持。无锁前缀索引，从所有维度来索引数据。
 
 #### 全文索引(Full-Text)
 
@@ -800,6 +915,7 @@ UNIQUE(`username`)
 * 采用MVCC支持高并发
 * 默认隔离级别可重复读，并通过间隙锁(锁定涉及行及索引中间隙进行锁定防止幻行插入)防止幻读
 * 基于聚簇索引建立
+* 行锁依赖于索引，一旦某个加锁操作没有使用到索引，该锁退化为表级锁
 
 ### MyISAM
 * MySQL5.5之前默认引擎

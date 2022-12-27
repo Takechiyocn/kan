@@ -56,9 +56,9 @@ public class OptimisticLock {
         Integer playerId = 10;
         // 不使用锁
         updateCoinsUnsafe(playerId);
-        // 乐观锁：对数据加锁
+        // 悲观锁：对数据加锁
         updateCoinsPessimistic(playerId);
-        // 悲观锁：版本号机制
+        // 乐观锁：版本号机制
         updateCoinsOptimistic(playerId);
     }
 
