@@ -96,8 +96,6 @@ select version();
     Data Query Language数据查询语言
     用于查询数据库中表的记录
 
-
-
 ## 程序
 
 ### 基本功能

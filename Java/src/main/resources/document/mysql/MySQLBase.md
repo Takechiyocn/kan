@@ -95,28 +95,136 @@
 
 ## MYSQL锁
 
-### MYSQL读写锁
+![MySQLLock.png](images/MySQLLock.png)
 
-处理并发读写时，通过实现由两种类型组成的锁系统规避问题。
+### 划分
 
-* 共享锁/读锁
-  
-    共享，相互不阻塞->不影响其他客户读取统一资源
-  
-* 排他锁/写锁
-  
-    * 排他->写锁会阻塞其他的写锁和读锁
-    * 写锁优先级高->写锁可插入读锁队列前面，反之则不行
-  
-### MYSQL锁策略
+1. 按照锁使用方式
 
-#### 表锁
+    * 共享锁/读锁
+
+    * 排他锁/写锁
+
+2. 按照加锁范围
+
+    * 全局锁
+
+    * 表级锁
+
+    * 行级锁
+
+3. 从思想层面
+
+    * 乐观锁
+
+    * 悲观锁
+
+### 使用方式
+
+#### 共享锁/读锁
+  
+对象被锁定时，允许其他事务读取该对象，也允许其他事务从该对象上再次获取共享锁
+
+```mysql
+# 加锁方式1
+select ... lock in share mode;
+# 加锁方式2
+select ... for share;
+```
+
+* 表级锁定
+
+    允许其他事务再次获取共享锁，不允许获取排它锁
+
+    ![ShareLockTable.png](images/ShareLockTable.png)
+
+* 行级锁定
+
+   允许其他事务再次获取共享锁，允许获取未锁定行的排它锁，不允许获取锁定行的排它锁
+
+    ![ShareLockRow.png](images/ShareLockRow.png)
+
+#### 排他锁/写锁/独占锁
+
+防止其他事务和当前事务锁定同一对象。写锁优先级高->写锁可插入读锁队列前面，反之则不行
+
+```mysql
+# 加锁方式
+select ... for update;
+```
+* 表级锁定
+
+    其他事务无法对该表进行DML等操作，如insert、update、delete、alter、drop
+
+    ![ExclusiveLockTable.png](images/ExclusiveLockTable.png)
+
+* 行级锁定
+
+    其他事务无法对该行进行DML等操作，如insert、update、delete、alter、drop
+
+    ![ExclusiveLockRow.png](images/ExclusiveLockRow.png)
+
+### 加锁范围
+
+#### 全局锁
+
+对整个数据库实例加锁。粒度最大的锁
+
+```mysql
+# 加锁方式：全局读锁
+#   1. DDL、DML语句被阻塞
+#   2. 更新操作事务commit语句被阻塞
+flush tables with read lock;
+# 释放锁方式1
+unlock tables;
+# 释放锁方式2：对表加锁时，全局锁会自动释放
+```
+加锁线程sessionA|线程B sessionB
+---|---
+flush tables with read lock; 加全局锁|-
+select user表ok|select user表ok
+insert user表堵塞|insert user表堵塞
+delete user表堵塞|delete user表堵塞
+drop user 表堵塞|drop user 表堵塞
+alter user表堵塞|alter user表 堵塞
+unlock tables; 解锁|
+被堵塞的修改操作执行ok|被堵塞的修改操作执行ok
+
+![GlobalLock.png](images/GlobalLock.png)
+
+全库备份
+
+* 全库逻辑备份FTWRL，常见问题
+
+    ![FTWRL.png](images/FTWRL.png)
+
+    * 主库上备份
+
+        备份期间，业务服务器不能对数据库执行更新操作，更新业务瘫痪
+      
+    * 从库上备份
+
+        备份期间，从库不能执行主库同步过来的binlog，导致主从延迟变大
+
+        如果做了读写分离，从库上获取数据会出现延迟，影响业务
+    
+* mysqldump
+
+    ```mysql
+    mysqldump -single-transaction 
+    ```
+  
+    * 备份数据前会启动一个事务，确保获取一致性视图read view，MVCC保证备份过程中数据可以正常更新
+    
+    * 限制：适用于库中所有表都使用事务引擎，如有表不支持则只能使用FTWRL
+
+#### 表级锁
 
 * 基本策略，开销最小
 * 获取写锁后，阻塞其他用户读写操作
 * 没有写锁后，其他用户才能进行读写操作
 
-#### 行锁
+#### 行级锁
 
 * 最大程度支持并发，开销大
 * 只在存储引擎实现
@@ -547,14 +655,14 @@ UNIQUE(`username`)
 ## MySQL存储引擎
 
 ### InnoDB
-* MySQL默认事务型引擎，处理大量短期事务
+* MySQL默认事务型引擎(5.5开始)，处理大量短期事务
 * 数据存储在表空间，表空间由一系列数据文件组成
 * 采用MVCC支持高并发
 * 默认隔离级别可重复读，并通过间隙锁(锁定涉及行及索引中间隙进行锁定防止幻行插入)防止幻读
 * 基于聚簇索引建立
 
 ### MyISAM
-* MySQL5.1之前默认引擎
+* MySQL5.5之前默认引擎
 * 不支持事务和行锁(对整张表加锁，读加共享锁，写加排它锁)
 * 实用 
 
@@ -797,12 +905,12 @@ CHARACTER SET name|指定一个一个字符集
     1. 主库：数据更改记录到二进制文件binlog
     2. 备库：将主库日志复制到备库的中继日志
     3. 备库：读取中继日志，放到备库数据之上 
-      -> 主从数据不一致，延迟
+        * 主从数据不一致，延迟
   
 * 向后兼容
   
     * 主库：旧版本，备库：新版本 -> OK
-    * 主库：新版本，备库：版本 -> NG(新特性，语法无法解析)
+    * 主库：新版本，备库：旧版本 -> NG(新特性，语法无法解析)
     
 * 作用
 
@@ -834,7 +942,8 @@ CHARACTER SET name|指定一个一个字符集
 在缓存和读写分离之间选择时，应首先考虑缓存，因为
 1. 缓存成本低
 2. 缓存开发容易，大部分读操作可以先去缓存查找，找不到再去数据库查找
-    1. 缓存缺点：缓存挂了，所有流量同时聚集到数据库容易导致宕机(雪崩？)
+    1. 缓存缺点：缓存挂了，所有流量同时聚集到数据库容易导致宕机(缓存击穿/雪崩)
+
 读写分离可作为运用了缓存之后，数据库读依然是瓶颈的一种解决方案
 
 ### 数据库水平切分
