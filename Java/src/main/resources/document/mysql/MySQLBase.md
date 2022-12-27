@@ -221,8 +221,138 @@ unlock tables; 解锁|
 #### 表级锁
 
 * 基本策略，开销最小
-* 获取写锁后，阻塞其他用户读写操作
+* 获取写锁后，阻塞其他用户写操作
 * 没有写锁后，其他用户才能进行读写操作
+
+##### 表锁
+
+```mysql
+# 写锁
+lock tables tablename write;
+# 读锁
+lock tables tablename read;
+# 释放锁
+unlock tables;
+```
+
+* 读锁
+
+    加锁表|加锁线程|其他线程
+    ---|---|---
+    读|OK|OK
+    写|NG|NG
+    其他表读写|NG|OK
+
+* 写锁
+
+    加锁表|加锁线程|其他线程
+    ---|---|---
+    读|OK|NG
+    写|OK|NG
+    其他表读写|NG|OK
+
+##### 元数据锁
+
+metadata lock(MDL)，MySQL5.5引进。访问表时自动加上，以保证读写的正确性
+
+* MDL读锁
+
+    MDL读锁之间不互斥，允许多个线程同时对加了MDL读锁的表进行CRUD操作
+
+    加锁线程sessionA|其他线程sessionB
+    ---|---
+    开启事务begin;|-
+    select user表，user表会默认加上MDL读锁|-
+    select user表ok|select user表ok
+    insert user表ok|insert user表ok
+    update user表ok|update user表ok
+    delete user表ok|delete user表ok
+    -|alter user表，获取MDL写锁失败，操作被堵塞
+    commit;提交事务，MDL读锁被释放|-
+    -|被堵塞的修改操作执行ok
+  
+    ![MDLRead.png](images/MDLRead.png)
+
+* MDL写锁
+
+    * MDL写锁和读锁、写锁互斥，用以保证变更表结构操作的安全性
+
+    * 当对表结构进行变更时，默认加MDL写锁，此操作阻塞其他线程的表结构变更操作
+    
+        * (获取MDL写锁时)被阻塞的写操作，会继续阻塞其他读/写锁
+
+    加锁线程sessionA|线程sessionB|线程sessionC
+    ---|---|---
+    #开启事务begin;|-|-    
+    #user表会默认加上MDL读锁，select user表|-|-
+    select user表ok|select user表ok|select user表ok
+    -|#获取MDL写锁失败，alter user表操作被堵塞|#获取MDL读锁失败，select * from user
+    提交事务，MDL读锁被释放|-|-
+    -|#MDL写锁被释放，被堵塞的alter user操作执行ok|-
+    -|-|#被堵塞的select 操作执行ok
+    
+    ![MDLWrite.png](images/MDLWrite.png)
+  
+* MDL读写锁
+
+    在事务commit之后释放
+
+##### 意向锁
+
+Intention Lock：允许行锁和表锁共存，为了快速判断表中是否存在行锁，InnoDB支持意向锁
+
+用于标识事务打算在表中的行上获取什么类型的锁
+
+* 意向共享锁IS
+
+    表示事务打算在表中的各个行上设置共享锁
+
+    加锁线程sessionA|线程sessionB
+    ---|---
+    #开启事务，begin;|-
+    #user表id=6加共享行锁 ，默认user表会 加上IS锁：select * from user where id = 6 for share;|-
+    -|# 观察IS锁：select * from performance_schema.data_locks\G
+
+    ![ISL.png](images/ISL.png)
+  
+* 意向排他锁XS
+
+    表示事务打算对表中的各个行设置排它锁
+
+    加锁线程sessionA|线程sessionB
+    ---|---
+    #开启事务，begin;|-
+    #user表id=6加排他锁，默认user表会 加上IX锁：select * from user where id = 6 for update;|-
+    -|# 观察IX锁：select * from performance_schema.data_locks\G
+
+    ![IXL.png](images/IXL.png)
+
+* 意向锁由InnoDB自动添加，加锁时遵从以下协议
+
+    * 事务在获取表中行的共享锁之前，必须先获取表上的IS锁或更强的锁
+    
+    * 事务在获取表中行的排他锁之前，必须先获取表上的IX锁
+
+##### AUTO-INC锁(自增锁)
+
+特殊的表级锁，当表中有AUTO_INCREMENT字段时，如果向表中插入数据，InnoDB或先获取表的AUTO-INC锁，等插入语句完成时，AUTO-INC锁被释放
+
+可使用innodb_autoinc_lock_mode变量配置自增锁的算法
+
+innodb_autoinc_lock_mode|含义
+---|---
+0|传统锁模式，采用 AUTO-INC锁
+1|连续锁模式，采用轻量级锁
+2|交错锁模式(MySQL8默认)，AUTO-INC和轻量级锁之间灵活切换
+
+##### 表级锁兼容性
+
+-|X|IX|S|IS
+---|---|---|---|---
+X|冲突|冲突|冲突|冲突
+IX|冲突|兼容|冲突|兼容
+S|冲突|冲突|兼容|兼容
+IS|冲突|兼容|兼容|兼容
 
 #### 行级锁
 
@@ -230,11 +360,21 @@ unlock tables; 解锁|
 * 只在存储引擎实现
 * InnoDB和XtraDB及其他存储引擎实现了行锁
 
-##### 记录锁
+##### 记录锁Record Lock
 
-##### 间隙锁
+在索引记录上加锁
 
-##### 临建锁
+##### 间隙锁Gap Lock
+
+锁定一个范围，但不包含记录
+
+##### 临建锁Next-key Lock
+
+Record Lock+Gap Lock：锁定一个范围(GapLock实现)，并且锁定记录本身(RecordLock实现)
+
+##### 插入意向锁
+
+针对inert操作产生的意向锁
   
 ### 数据库死锁
 
