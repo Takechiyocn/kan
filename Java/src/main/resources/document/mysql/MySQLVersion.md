@@ -60,17 +60,64 @@
 
 * 引入全文索引：基于相似度查询/关键字匹配查询
 
-* 可修改未亚索表InnoDB页大小(4KB、8KB、16KB默认)
+* 可修改未压缩表InnoDB页大小(4KB、8KB、16KB默认)
 
 * log
 
-   * redo log：文件可存储最大值4G->512G
-   
-   * undo log：可保存在独立的表空间
+    * undo log：可保存在独立的表空间
+      
+    * redo log：文件可存储最大值4G->512G
 
 ##### Partitioning
 
+* 最大分区数量增加到8192
+
+* 支持显示分区选择
+
+    ```mysql
+    select * from t partition(p0,p1) where c < 5
+    ```
+
+##### MySQL NDB Cluster
+
+MySQL集群，存储引擎NDB
+
+![NDBCluster.png](NDBCluster.png)
+
+##### Replication and logging
+
+复制和日志记录
+
+* 可以从远程服务器读取binlog
+
+    --read-from-remote-server,-R;
+    --raw
+  
+* 延迟复制
+    
+##### Optimizer enhancements
+
+优化器增强
+
+* 可用explain查看delete、insert、replace、update等DML操作的执行计划(之前只支持select操作)
+
+* 优化子查询
+
+* 主机缓存
+
 #### 5.7
 
+##### InnoDB
 
-#### 5.8
+* 增加DATA_GEOMETRY类型支持空间数据类型，之前时blob
+
+* 支持原生Json类型
+
+#### 8.0
+
+* 支持隐藏索引
+
+* 索引支持降序排序
+
+* 正则表达式
+
