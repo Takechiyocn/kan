@@ -82,7 +82,7 @@
 
 MySQL集群，存储引擎NDB
 
-![NDBCluster.png](NDBCluster.png)
+![NDBCluster.png](images/NDBCluster.png)
 
 ##### Replication and logging
 
