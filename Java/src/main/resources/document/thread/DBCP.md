@@ -1,6 +1,6 @@
 ## 数据源
 
-### 操作数据库步骤
+### 传统数据库连接机制
 
 1. 加载数据库驱动程序(Class.forName("数据库驱动类"))
 
@@ -34,6 +34,28 @@
             Users.add(entity);
         }
         ```
+
+### 传统MySQL连接
+
+![MySQLConnection.png](images/MySQLConnection.png)
+
+1. TCP建立连接的三次握手
+
+2. MySQL认证的三次握手
+
+3. SQL执行
+
+4. MySQL关闭
+
+5. TCP的四次握手关闭
+
+### 使用连接池
+
+![DBCP.png](images/DBCP.png)
+
+1. 第一次访问时，建立连接
+
+2. 之后的访问，复用之前创建的连接，直接执行SQL语句
 
 ### 使用数据源
 
@@ -76,6 +98,10 @@ Tomcat7.0前使用common-dbcp.jar作为连接池组件，7.0后使用新连接�
 优缺点：为分析监控设计、快速的交互式查询，高可用，可扩展，支持高并发
 
 ![ConnectionPool.png](images/ConnectionPool.png)
+
+### Hikari
+
+SpringBoot默认连接池
 
 ## JNDI+Tomcat配置数据源
 

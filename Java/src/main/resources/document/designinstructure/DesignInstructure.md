@@ -1,5 +1,7 @@
 ## 基础知识
 
+所谓设计模式，是对软件实体模块间的相互关系总结出的一套规范，以达到降低模块间的耦合度
+
 ### 类关系
 
 ![ClassRelation.png](images/ClassRelation.png)
