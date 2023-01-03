@@ -4,7 +4,7 @@ import lombok.Data;
 
 /**
  * @ClassName User1
- * @Description TODO
+ * @Description @Data注解只重写当前类的数据的比较方法，不重写父类数据(此处id, name)
  * @Author moku
  * @Date 2022/12/10 0:53
  * @Version 1.0

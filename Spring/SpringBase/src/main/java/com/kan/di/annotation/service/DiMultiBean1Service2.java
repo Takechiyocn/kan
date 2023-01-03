@@ -21,7 +21,7 @@ public class DiMultiBean1Service2 {
 //    private DiMultiBean1Service1 diMultiBean1Service1;
 
 //    @Autowired
-//    // 2. 通过实现类/Bean定义出使用@Primary注解消除歧义(同1)
+//    // 2. 通过实现类/Bean定义处使用@Primary注解消除歧义(同1)
 //    private DiMultiBean1Service1 diMultiBean1Service1;
 
     @Autowired

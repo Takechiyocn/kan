@@ -5,7 +5,7 @@ import lombok.EqualsAndHashCode;
 
 /**
  * @ClassName User1
- * @Description TODO
+ * @Description 显示使用@EqualsAndHashCode(callSuper=true)注解
  * @Author moku
  * @Date 2022/12/10 0:53
  * @Version 1.0

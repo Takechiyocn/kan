@@ -48,7 +48,7 @@
     <bean id="person-con" class="com.kan.di.xml.entities.Person">
         <!--
             index  代表参数的位置  从0开始计算
-            type   指的是参数的类型,在有多个构造函数时，可以用type来区分，要是能确定是那个构造函数，可以不用写type
+            type   指的是参数的类型,在有多个构造函数时，可以用type来区分，要是能确定是哪个构造函数，可以不用写type
             value  给基本类型赋值
             ref    给引用类型赋值
         -->

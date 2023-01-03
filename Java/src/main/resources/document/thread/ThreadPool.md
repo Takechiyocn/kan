@@ -63,6 +63,7 @@ public ThreadPoolExecutor(int corePoolSize,
         this.handler=handler;
      }
 ```
+
 * corePoolSize（线程池基本大小/核心线程池大小）
   
     当向线程池提交一个任务时，若线程池已创建的线程数小于corePoolSize，即便此时存在空闲线程，也会通过创建一个新线程来执行该任务，直到已创建的线程数大于或等于corePoolSize时，才会根据是否存在空闲线程，来决定是否需要创建新的线程。除了利用提交新任务来创建和启动线程（按需构造），也可以通过 prestartCoreThread() 或 prestartAllCoreThreads() 方法来提前启动线程池中的基本线程。 

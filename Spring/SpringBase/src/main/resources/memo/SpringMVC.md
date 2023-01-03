@@ -304,7 +304,7 @@ Spring框架的基础设施，面向Spring本身
             private final InjectedBean injectedBean;
       
             // 官方文档中，@Autowired可省略
-            // 此处并非构造器装配，依然使用Autowired装配方式字段(字段注入相同效果)
+            // 此处并非构造器装配，依然使用Autowired装配字段(字段注入相同效果)
             @Autowired
             public ConstructorBasedInjection(InjectedBean injectedBean) {
                 this.injectedBean = injectedBean;
@@ -457,59 +457,59 @@ Spring框架的基础设施，面向Spring本身
 
 1. 配置文件注入
 
-```java
-// 静态工厂
-public class DaoFactory {
-    public static final FactoryDao getStaticFactoryDaoImpl() {
-        return new StaticFacotryDaoImpl();
+    ```java
+    // 静态工厂
+    public class DaoFactory {
+        public static final FactoryDao getStaticFactoryDaoImpl() {
+            return new StaticFacotryDaoImpl();
+        }
     }
-}
-
-public class SpringAction {
-    // 注入对象FactoryDao的Bean实例
-    private FactoryDao staticFactoryDao;
-    // 注入对象的set方法
-    public void setStaticFactoryDao(FactoryDao staticFactoryDao) {
-        this.staticFactoryDao = staticFactoryDao;
+    
+    public class SpringAction {
+        // 注入对象FactoryDao的Bean实例
+        private FactoryDao staticFactoryDao;
+        // 注入对象的set方法
+        public void setStaticFactoryDao(FactoryDao staticFactoryDao) {
+            this.staticFactoryDao = staticFactoryDao;
+        }
     }
-}
-
-// xml配置文件
-<bean name="springAction" class=" SpringAction" >
-    <!-- 使用静态工厂方法注入对象，以下为初始化内容
-         即private FactoryDao staticFactoryDao; 初始化为ref指向的Bean -->
-    <property name="staticFactoryDao" ref="staticFactoryDao"></property>
-</bean>
-<!-- 使用静态工厂方法注入对象 -->
-<!-- factory-method：指定调用哪个工厂方法-->
-<bean name="staticFactoryDao" class="DaoFactory"
-    factory-method="getStaticFactoryDaoImpl"></bean>
-```
+    
+    // xml配置文件
+    <bean name="springAction" class=" SpringAction" >
+        <!-- 使用静态工厂方法注入对象，以下为初始化内容
+             即private FactoryDao staticFactoryDao; 初始化为ref指向的Bean -->
+        <property name="staticFactoryDao" ref="staticFactoryDao"></property>
+    </bean>
+    <!-- 使用静态工厂方法注入对象 -->
+    <!-- factory-method：指定调用哪个工厂方法-->
+    <bean name="staticFactoryDao" class="DaoFactory"
+        factory-method="getStaticFactoryDaoImpl"></bean>
+    ```
 
 2. 注解注入
 
-```java
-// 静态工厂
-@Component
-public class DaoFactory {
-    @Bean
-    public static final FactoryDao getStaticFactoryDaoImpl() {
-        return new StaticFacotryDaoImpl();
+    ```java
+    // 静态工厂
+    @Component
+    public class DaoFactory {
+        @Bean
+        public static final FactoryDao getStaticFactoryDaoImpl() {
+            return new StaticFacotryDaoImpl();
+        }
     }
-}
-
-@Component
-public class SpringAction {
-    // 注入对象FactoryDao的Bean实例
-    private FactoryDao staticFactoryDao;
-
-    // 注入对象的set方法
-    @Autowired
-    public void setStaticFactoryDao(FactoryDao staticFactoryDao) {
-        this.staticFactoryDao = staticFactoryDao;
+    
+    @Component
+    public class SpringAction {
+        // 注入对象FactoryDao的Bean实例
+        private FactoryDao staticFactoryDao;
+    
+        // 注入对象的set方法
+        @Autowired
+        public void setStaticFactoryDao(FactoryDao staticFactoryDao) {
+            this.staticFactoryDao = staticFactoryDao;
+        }
     }
-}
-```
+    ```
 
 ##### 实例工厂注入
 
@@ -635,7 +635,7 @@ public class SpringAction {
 
 * 全局session作用域，仅在基于portlet的web应用中才有意义
 
-* portlet时能够生成语义代码(如HTML)片段的小型JavaWeb插件(Spring5已取消该功能)
+* portlet是能够生成语义代码(如HTML)片段的小型JavaWeb插件(Spring5已取消该功能)
 
 * portlet与servlet不同，每个portlet都有不同的会话
 
@@ -876,11 +876,11 @@ ServletContext级别：在一个Http Servlet Context中，定义一个Bean实例
 
 * 实例化
 
-实例化和属性设置时Java级别的系统事件，操作过程不可人工干预和修改
+    实例化和属性设置是Java级别的系统事件，操作过程不可人工干预和修改
 
 * 初始化
 
-给开发者提供的，可在实例化之后，类加载完成之前进行自定义事件处理
+    给开发者提供的，可在实例化之后，类加载完成之前进行自定义事件处理
 
 #### 生命周期样例：买房
 
