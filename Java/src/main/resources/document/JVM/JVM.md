@@ -209,48 +209,315 @@ HotSpot相关
 
 2. server compiler
 
-
 # 内存管理
 
 ![JVMAndMemoryGraph.png](images/JVMAndMemoryGraph.png)
 
 ## Java内存模型(Java Memory Model:JMM)
 
-### Java内存模型
+### JVM内存模式
 
-* Java内存模型主要指JVM内存模型，JVM内存区域
+JVM内存模式指的是JVM的内存区分，又称为运行时数据区域。主要由以下五部分组成
 
-    * 线程私有区域：程序计数器、虚拟机栈、本地方法区/栈
+![JVMAndMemory.png](images/JVMAndMemory.png)
 
-    * 线程共享区域：JAVA堆、方法区(运行时常量池)
+![JVMAndMemory2.png](images/JVMAndMemory2.png)
 
-    * 直接内存
+1. 线程共享区域
+   
+    * 方法区：永久代(JDK1.8前)/元空间(JDK1.8后)
+    
+    * 堆
+    
+2. 线程私有区域
 
-* JMM主要作用范围
+    * 虚拟机栈
+    
+    * 本地方法栈
+    
+    * 程序计数器
 
-    1. JMM描述了线程如何与内存交互
+### Java内存模式
 
-    2. JMM描述了JVM如何与计算机内存进行交互
+Java内存模式指的是一种虚拟机规范，用于屏蔽掉硬件和操作系统的内存访问差异，以实现让Java程序在各种平台下都能达到一致的(并发)效果
 
-    3. JMM围绕原子性，有序性和可见性展开
+Java内存模型JMM：调用栈和本地变量存放在线程栈上，对象存放在堆上
+
+线程栈：线程拥有自己的线程栈，线程栈包含线程调用方法当前执行点相关信息，称调用栈(call stack)。线程间互不可见，且拥有相互独立的局部变量。
+
+* 线程栈
+
+    * 本地变量
+
+        * 原始类型
+        
+        * 指向对象的引用
+    
+    * 对象内的方法的本地变量
+          
+* 堆
+
+    * 对象
+    
+    * 对象成员变量
+    
+    * 静态成员变量
+      
+#### JMM主要作用范围
+
+1. JMM描述了线程如何与内存交互
+
+2. JMM描述了JVM如何与计算机内存进行交互
+
+3. JMM围绕原子性，有序性和可见性展开
+
+#### JMM范例
+
+* 对象
+
+    ![JvmMemorySample.png](images/JvmMemorySample.png)
+
+    ```java
+    public class MyRunnable implements Runnable() {
+        public void run() {
+            methodOne();
+        }
+        
+        public void methodOne() {
+            // 对象方法中本地变量 -> 线程栈上
+            int localVariable1 = 45;
+    
+            // 引用类型本地变量 -> 线程栈上
+            // 引用的对象(MySharedObject.sharedInstance) -> 堆上
+            MySharedObject localVariable2 =  MySharedObject.sharedInstance;
+            //... do more with local variables.
+    
+            methodTwo();
+        }
+    
+        public void methodTwo() {
+            // 对象方法引用类型变量 -> 线程栈上
+            // 引用的对象(Integer对象) -> 堆上
+            Integer localVariable1 = new Integer(99);
+    
+            //... do more with local variable.
+        }
+    } 
+    
+    // MySharedObject -> Object3
+    public class MySharedObject {
+        // 静态成员变量 -> 堆
+        public static final MySharedObject sharedInstance = new MySharedObject();
+    
+        // 对象成员变量 -> 堆
+        public Integer object2 = new Integer(22);
+        public Integer object4 = new Integer(44);
+        
+        // 对象变量 -> 堆
+        public long member1 = 12345;
+        public long member1 = 67890;
+    }
+    ```
+
+* 数组
+
+    ![JVMMemoryOfDynamicArray.png](images/JVMMemoryOfDynamicArray.png)
+    
+    执行顺序
+    
+    1. 代码载入内存，到方法区
+    
+    2. 栈内存：执行到main方法，将main方法压栈，并分配一定空间
+    
+    3. 堆内存：new int型数组时，堆内存分配空间并初始化该对象(默认值)
+    
+    4. 栈内存：在main方法里分配一块空间(步骤2中分配的空间内分配)，用以存放数组名及new出来对象的堆内存地址
+    
+        ![JVMMemoryOfDynamicArrays.png](images/JVMMemoryOfDynamicArrays.png)
+    
+        数组静态初始化内存分布
+    
+        ![JVMMemoryOfStaticArrays.png](images/JVMMemoryOfStaticArrays.png)
 
 ### Java内存模型逻辑视图
 
 ![JMMLogicView.png](images/JMMLogicView.png)
 ![JMMLogicView2.png](images/JMMLogicView2.png)
 
-> 线程栈：线程拥有自己的线程栈，线程栈包含线程调用方法当前执行点相关信息，称调用栈(call stack)。
-线程间互不可见，且拥有相互独立的局部变量。
+### 线程和内存交互
 
-![JVMAndMemory.png](images/JVMAndMemory.png)
+#### 硬件内存架构
 
-![JVMAndMemory2.png](images/JVMAndMemory2.png)
+![JMMAndHard.png](images/JMMAndHard.png)
+
+* 多CPU
+
+    * 可并行执行多个线程
+    
+    * 多线程时，每个CPU上可并发执行多个线程(时间片)
+
+* CPU寄存器
+
+    CPU在寄存器上执行操作的速度远大于在主存上执行的速度
+
+* 高速缓存cache
+
+* 主内存
+
+    * 硬件内存架构并不区分线程栈和堆
+
+    * 对于硬件而言，所有的线程栈和堆都分布在主内存中
+    
+    * 部分线程栈和堆可能出现在CPU内部寄存器和CPU缓存中
+
+#### CPU、缓存、主存
+
+1. 运作原理
+
+    * 读操作
+      
+        当CPU读取主存时，先将主存部分读到CPU缓存中，然后在寄存器中执行操作
+    
+    * 写操作
+    
+        当CPU需要将结果写回主存中时，它会将内部寄存器的值刷新到缓存中，然后在某个时间点将值刷新回主存
+    
+        ![CPUAndMemory.png](images/CPUAndMemory.png)
+    
+        ![JVMMemory.png](images/JVMMemory.png)
+    
+        工作内存：JVM使用的内存，通常理解为线程私有区域(虚拟机栈、本地方法栈、程序计数器)
+
+2. 缓存一致性问题
+
+    多处理器共享同一主存，当运算任务涉及到同一主存区域时可能导致各自的缓存数据不一致，通过缓存一致性协议解决
+
+3. 指令重排序问题
+
+    为了使处理器内部运算单元能尽量被充分利用，处理器对输入代码进行乱序执行优化，处理器在运算后将乱序执行结果重组以保证该结果与顺序执行的结果一致，
+    但并不保证语句执行的先后顺序与代码中顺序一致。
+    
+    导致如果计算任务之间有依赖关系时，代码的先后顺序并不能达到预期结果，可通过禁止指令重排解决
+
+#### 线程和内存交互
+
+![ThreadAssign4.png](images/ThreadAssign4.png)
+
+![ThreadAssign.png](images/ThreadAssign.png)
+
+1. 线程A把本地内存A中更新过的共享变量刷新到主内存中
+
+2. 线程B到主内存中去读取线程A更新过的共享变量
+
+### 原子性
+
+原子性：逻辑上不可分割，要么全部成功要么全部失败(如for循环不是原子性操作)
+
+![ThreadAssign2.png](images/ThreadAssign2.png)
+
+#### 主内存与工作内存交互
+
+JMM定义8种原子操作完成主存与工作内存的交互
+
+* lock锁定：作用于主存的变量，把变量标识为线程独占状态
+
+* read读取：作用于主存的变量，把变量从主存传输到线程的工作内存，便于load
+
+* load载入：作用于工作内存的变量，把read读取的变量放入工作内存副本
+
+* use使用：作用于工作内存，把工作内存的变量值传递给执行引擎，当虚拟机需要使用到变量值的字节码指令时，执行该操作
+
+* assign赋值：作用于工作内存，把执行引擎收到的值赋给工作内存的变量，当虚拟机遇到需要赋值字节码时执行该操作
+
+* store存储：作用于工作内存，把变量值传输到主存中，以便于write
+
+* write写入：作用于主存，把store获取的值放入主存变量中
+
+* unlock解锁：把主存中处于锁定状态的变量释放出来，释放后的变量才可被其他线程锁定
+
+  ![ThreadAssign3.png](images/ThreadAssign3.png)
+
+操作规则
+
+* read和load、store和write必须成对出现
+* 线程assign后必须把变化同步回主存 -> 更改值
+* 新变量只允许在主存中生成，不允许工作内存使用未初始化变量
+* 同一时刻只允许一个线程lock变量，对变量进行lock会清空工作内存中此变量的值
+* unlock必须作用于lock对象，且必须先把更改同步回主存
+
+#### long、double特殊规则
+
+64位类型数据long、double，虚拟机允许读写划分为两次32位的操作，
+即JVM实现可以不保证load、store、write、read操作的原子性，
+但JVM用手段保证long、double读写操作的原子性，几乎没有任何影响
+
+### 可见性
+
+#### 共享对象可见性
+
+如果两个或多个线程共享一个对象，而没有正确使用volatile声明或同步(synchronized)或final字段，那么一个线程对共享对象的更新可能对其他线程不可见
+
+![JMMObjectVisible.png](images/JMMObjectVisible.png)
+
+解决方案：
+
+* 使用volatile：volatile关键字可保证直接从主存中读取一个变量，如果该变量被修改，总是会被写回主存中
+
+    * 场景：对写操作较少且新值不依赖于旧值的应用，可减少线程间同步开销
+
+* 使用synchronized
+
+    * 场景：适合多线程对共享变量的并发访问
+    
+* final关键字
+
+#### 竞态条件：race conditions
+
+多个线程共享同一对象，且多个线程更新该共享对象中的变量时，可能出现竞态条件(以下例子原本想将count+2)
+
+![JMMRaceConditions.png](images/JMMRaceConditions.png)
+
+解决方案：
+
+* 使用Java同步块(同步阻塞synchronized包含的方法称为同步块)
+
+  Java同步块可保证同一时刻只有一个线程进入代码临界区，还可保证同步块中所有被访问的变量将会从主存中读入，
+  当线程退出同步块代码时，所有被更新的变量会被刷新回主存中，不管该变量是否被声明为volatile
+
+### 有序性/指令序列的重排序
+
+* 重排序分类
+  
+    * 编译器优化的重排序
+    
+        编译器在不改变单线程程序语义的前提下，可以重新安排语句的执行顺序
+    
+    * 指令级并行的重排序
+    
+        现代处理器采用了指令级并行技术来将多条指令重叠执行。
+        如果不存在数据依赖(单个处理器中的依赖)，处理器可以改变语句对应机器指令的执行顺序
+    
+    * 内存系统的重排序
+    
+        由于处理器使用缓存和读/写缓冲区，使得加载和存储操作看上去是在乱序执行
+    
+        ![Reorder.png](images/Reorder.png)
+
+* 重排序对内存可见性影响
+
+    ![Reorder2.png](images/Reorder2.png)
+
+    * 语句1、2之间没有数据依赖关系，语句1、2可能被重排
+      
+    * 语句3、4之间没有数据依赖关系，语句3、4可能被重排
+    
+    * 读线程B执行4时，不一定能读取到线程A执行语句1对变量的修改
 
 ## 内存空间
 
-### JVM内存分类
+### JVM内存模型
 
-* 线程私有区域可略称为线程栈)
+* 线程私有区域(可略称为线程栈)
 
   * 虚拟机栈(先进后出)
   
@@ -327,163 +594,6 @@ HotSpot相关
   NIO可使用Native函数直接分配堆外内存，并使用DirectByteBuffer对象作为这块内存的引用进行操作
 
   优点：避免Java堆和Native堆中来回复制数据，提高性能
-
-#### JVM内存范例
-
-对象
-
-![JvmMemorySample.png](images/JvmMemorySample.png)
-
-```java
-public class MyRunnable implements Runnable() {
-    public void run() {
-        methodOne();
-    }
-    
-    public void methodOne() {
-        // 对象方法中本地变量 -> 线程栈上
-        int localVariable1 = 45;
-
-        // 引用类型本地变量 -> 线程栈上
-        // 引用的对象(MySharedObject.sharedInstance) -> 堆上
-        MySharedObject localVariable2 =  MySharedObject.sharedInstance;
-        //... do more with local variables.
-
-        methodTwo();
-    }
-
-    public void methodTwo() {
-        // 对象方法引用类型变量 -> 线程栈上
-        // 引用的对象(Integer对象) -> 堆上
-        Integer localVariable1 = new Integer(99);
-
-        //... do more with local variable.
-    }
-} 
-
-// MySharedObject -> Object3
-public class MySharedObject {
-    // 静态成员变量 -> 堆
-    public static final MySharedObject sharedInstance = new MySharedObject();
-
-    // 对象成员变量 -> 堆
-    public Integer object2 = new Integer(22);
-    public Integer object4 = new Integer(44);
-    
-    // 对象变量 -> 堆
-    public long member1 = 12345;
-    public long member1 = 67890;
-}
-```
-
-数组
-
-![JVMMemoryOfDynamicArray.png](images/JVMMemoryOfDynamicArray.png)
-
- 执行顺序
-
-1. 代码载入内存，到方法区
-   
-2. 栈内存：执行到main方法，将main方法压栈，并分配一定空间
-   
-3. 堆内存：new int型数组时，堆内存分配空间并初始化该对象(默认值)
-   
-4. 栈内存：在main方法里分配一块空间(步骤2中分配的空间内分配)，用以存放数组名及new出来对象的堆内存地址
-
-![JVMMemoryOfDynamicArrays.png](images/JVMMemoryOfDynamicArrays.png)
-
-数组静态初始化内存分布
-
-![JVMMemoryOfStaticArrays.png](images/JVMMemoryOfStaticArrays.png)
-
-### 2. 线程/JVM和内存交互 
-
-#### JMM和硬件
-
-![JMMAndHard.png](images/JMMAndHard.png)
-
-#### CPU、缓存、主存
-
-![CPUAndMemory.png](images/CPUAndMemory.png)
-
-![JVMMemory.png](images/JVMMemory.png)
-
-### 3. 原子性
-
-原子性：逻辑上不可分割，要么全部成功要么全部失败(如for循环不是原子性操作)
-
-#### 主(内)存RAM与JMM
-
-![ThreadAssign.png](images/ThreadAssign.png)
-
-![ThreadAssign2.png](images/ThreadAssign2.png)
-
-#### 主内存与工作内存交互
-
-JMM定义8种原子操作完成主存与工作内存的交互
-
-* lock：作用于主存的变量，把变量标识为线程独占状态
-  
-* read：作用于主存的变量，把变量从主存传输到线程的工作内存，便于load
-  
-* load：作用于工作内存的变量，把read读取的变量放入工作内存副本
-  
-* use：作用于工作内存，把工作内存的变量值传递给执行引擎，当虚拟机需要使用到变量值的字节码指令时，执行该操作
-  
-* assign：作用于工作内存，把执行引擎收到的值赋给工作内存的变量，当虚拟机遇到需要赋值字节码时执行该操作
-  
-* store：作用于工作内存，把变量值传输到主存中，以便于write
-  
-* write：作用于主存，把store获取的值放入主存变量中
-  
-* unlock：把主存中处于锁定状态的变量释放出来，释放后的变量才可被其他线程锁定
-
-    ![ThreadAssign3.png](images/ThreadAssign3.png)
-
-操作规则
-
-* read和load、store和write必须成对出现
-* 线程assign后必须把变化同步回主存 -> 更改值
-* 新变量只允许在主存中生成，不允许工作内存使用未初始化变量
-* 只允许单线程一次或多次lock变量，对变量进行lock会清空工作内存中此变量的值
-* unlock必须作用于lock对象，且必须先把更改同步回主存
-
-#### long、double特殊规则
-
-64位类型数据long、double，虚拟机允许读写划分为两次32位的操作，
-即JVM实现可以不保证load、store、write、read操作的原子性，
-但JVM用手段保证long、double读写操作的原子性，几乎没有任何影响
-
-### 3. 可见性
-
-#### 共享对象可见性
-  
-如果两个或多个线程共享一个对象，而没有正确使用volatile声明或同步(synchronized)或final字段，那么一个线程对共享对象的更新可能对其他线程不可见
-  
-![JMMObjectVisible.png](images/JMMObjectVisible.png)
-
-解决方案：
-  
-* 使用volatile：volatile关键字可保证直接从主存中读取一个变量，如果该变量被修改，总是会被写回主存中
-      
-  * 场景：对写操作较少且新值不依赖于旧值的应用，可减少线程间同步开销
-      
-* 使用synchronized
-      
-  * 场景：适合多线程对共享变量的并发访问
-
-#### 竞态条件：race conditions
-
-多个线程共享同一对象，且多个线程更新该共享对象中的变量时，可能出现竞态条件
-
-![JMMRaceConditions.png](images/JMMRaceConditions.png)
-
-解决方案：
-
-* 使用Java同步块(同步阻塞synchronized包含的方法称为同步块)
-        
-  Java同步块可保证同一时刻只有一个线程进入代码临界区，还可保证同步块中所有被访问的变量将会从主存中读入，
-  当线程退出同步块代码时，所有被更新的变量会被刷新回主存中，不管该变量是否被声明为volatile
 
 ## 内存分配TODO
 
