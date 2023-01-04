@@ -12,8 +12,8 @@ public class NewbieProgrammer extends Programmer {
     void handle(Bug bug) {
         if (bug.value > 0 && bug.value <= 20) {
             solve(bug);
-        } else if (next != null){
-            next.handle(bug);
+        } else if (super.next != null){
+            super.next.handle(bug);
         } else {
             try {
                 throw new Exception("未找到合适人选！");

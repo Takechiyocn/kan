@@ -590,13 +590,13 @@ public class CustomerUse {
         总公司和子公司：都可以设立不分、设立新的分公司
 
     透明方式：在Component中声明所有管理子对象的方法，包括add、remove等，
-        这样继承自Component的子类都具备了add、remove方法。
-        对于外界来说叶子结点和枝节点都是透明的，他们具备完全一致的接口
-    透明方式优缺点：子类具备完全一直的行为接口，调用者可以一致对待他们
-                  违背接口隔离原则
+            这样继承自Component的子类都具备了add、remove方法。
+            对于外界来说叶子结点和枝节点都是透明的，他们具备完全一致的接口
+    透明方式优缺点：子类具备完全一致的行为接口，调用者可以一致对待他们
+                 违背接口隔离原则
 
     安全方式：在Component中不声明add和remove等管理子对象的方法，这样
-        叶节点就无需实现它，只需在枝节点中实现管理子对象的方法即可
+            叶子节点就无需实现它，只需在枝节点中实现管理子对象的方法即可
     安全方式优缺点：遵循接口隔离原则
                  不够透明，子类需要区别对待使用
 
@@ -621,6 +621,7 @@ public class CustomerUse {
       2. java.io包中，InputStream字节输入流通过装饰器BufferedInputStream增强为缓冲字节输入流
 
 JavaIO解析
+
 ![DecoratorPatternIO.png](images/DecoratorPatternIO.png)
 
 ```java

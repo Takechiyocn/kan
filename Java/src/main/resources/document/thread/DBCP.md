@@ -99,7 +99,7 @@ Tomcat7.0前使用common-dbcp.jar作为连接池组件，7.0后使用新连接�
 
 ![ConnectionPool.png](images/ConnectionPool.png)
 
-### Hikari
+### HikariCP
 
 SpringBoot默认连接池
 

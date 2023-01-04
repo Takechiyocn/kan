@@ -15,8 +15,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  *   4. 客户端用context.getBean获取对象时
  *      a. 有代理对象：返回代理对象
  *      b. 没有代理对象：返回目标对象(不做代理)
- *         i. 代理对象未实现代理接口，Spring容器采用CGLib代理
- *         ii.代理对象实现代理接口，Spring容器采用JDK动态代理
+ *         i. 代理对象未实现接口(方法)时，Spring容器采用CGLib代理
+ *         ii.代理对象有实现接口(方法)时，Spring容器采用JDK动态代理
  *  此处采用CGLib代理
  * @author moku
  */

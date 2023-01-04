@@ -11,6 +11,7 @@ import designstructure.structural.struct2bridge.shapeif.IShape;
  * @Version 1.0
  */
 public class Rectangle implements IShape {
+    // 关联:以类属性形式表现
     private IColor color;
 
     public void setColor(IColor color) {
