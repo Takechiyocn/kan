@@ -94,9 +94,9 @@ Spring实现事务隔离级别
 
 3.  可达性分析：
 
-   1. Thread->ThreadLocalMap->Entry(key为null)->value
+      1. Thread->ThreadLocalMap->Entry(key为null)->value
 
-   2. value和Thread存在链路，可达，不会被回收
+      2. value和Thread存在链路，可达，不会被回收
 
 4. 解决方式：
 
@@ -144,10 +144,8 @@ public class TestThreadLocalNpe {
         System.out.println(get());
     }
 }
-```
 
-代码输出：
-```java
+// 代码输出：
 // 主线程不能获取子线程设置的值，故1是子线程的输出
 1
 // 主线程执行时，threadLocal.get()返回泛型T对象null，而get()方法

@@ -4,7 +4,7 @@
 
 以String s = "abc";形式的赋值在java中叫直接量，存放在常量池中，而非new一样保存在堆中
 
-### 符串拘留池(string interning pool)
+### 字符串拘留池(string interning pool)
 
 公共语言运行库会自动维护一个名为“拘留池”(intern pool) 的表，
 它包含程序中以编程方式声明或创建的每个唯一的字符串的一个引用。因此，具有特定值的字符串的实例在系统中只有一个。
