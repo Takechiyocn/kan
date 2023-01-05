@@ -105,7 +105,7 @@ public class FileCopyNIO {
 //        FileLock readChannelLock = readChannel.lock(pos, size, shared);
 //        if (readChannelLock!=null) {
 //        }
-            while (readChannel.read(byteBuffer) > 0) {
+        while (readChannel.read(byteBuffer) > 0) {
             // 切换称读数据模式：设置读指针到缓存头部
             byteBuffer.flip();
             // 将缓冲区数据写入通道

@@ -30,7 +30,7 @@ public class NoBlockClient2 {
         // 1.2 获取选择器
         Selector selector = Selector.open();
 
-        // 1.3 将通道注册到选择其中，获取服务端返回的数据
+        // 1.3 将通道注册到选择器中，获取服务端返回的数据
         socketChannel.register(selector, SelectionKey.OP_READ);
 
         // 2. 获取本地文件通道
