@@ -67,7 +67,7 @@
 
 ### Optional类
 
-Optional类是一个可以为null的容器对象，可不用显示进行空值检测。
+Optional类是一个可以为null的容器对象，使用Optional类后可以不用显示进行空值检测
 
 * isPresent：值存在，返回true
 

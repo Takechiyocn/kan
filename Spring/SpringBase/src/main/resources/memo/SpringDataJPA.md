@@ -133,7 +133,6 @@ public void transferAccount() {
 
 两阶段尽可能晚地提交事务，让事务在提交前尽可能完成所有能完成的工作
 
-
 ### 领域
 
 #### 默认命名策略：ImprovedNamingStrategy
@@ -171,9 +170,63 @@ public void transferAccount() {
 * IsTrue、True
 * IsFalse、False
 * Is、Equals
-*IsNot、Not
+* IsNot、Not
 * IgnoringCase、IgnoresCase
 
 #### Spring属性配置
 
 ![SpringConfiguration.png](images/SpringConfiguration.png)
+
+### JPA实体类注解
+
+* @Entity
+
+    表明当前类是一个实体类
+
+* @Table
+  
+    关联实体类和数据库表
+  
+* @Column
+  
+    关联实体类属性和数据库表中的字段
+  
+* @Id
+  
+    声明当前属性为数据库表主键对应的属性
+  
+* @GeneratedValue
+  
+    声明主键生成策略，需和@Id结合使用，有两个属性generator和strategy。SpringBoot该值默认不加参数，如果数据库控制主键自增(auto_increment)则需加参数
+
+    * generator
+    
+        默认为""，声明主键生成器的名称，通常结合@GenericGenerator使用
+
+        ```java
+        @Id
+        @GenericGenerator(name = "testGenerator", strategy = "com.util.IdGenerator")
+        @GeneratedValue(generator = "testGenerator")
+        private long id;
+        ```
+    
+    * strategy
+    
+        *  AUTO：默认选项，主键由程序控制
+        *  IDENTITY：主键由数据库生成，采用数据库自增长，MySQL专用
+        *  SEQUENCE：通过数据库的序列产生主键，Oracle专用
+        *  TABLE：使用一个特定的数据库表格存放主键
+  
+* @OneToMany
+
+    配置一对多关系
+
+* @OneToMany
+
+    配置多对一关系
+
+* @JoinColumn
+
+    配置外键关系，name为外键名称，referencedColumnName为主表主键名称
+
+    

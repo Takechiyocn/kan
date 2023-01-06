@@ -38,5 +38,4 @@ public class StreamBase {
                 .limit(1)
                 .forEach(System.out::println);
     }
-
 }
