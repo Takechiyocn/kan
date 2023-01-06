@@ -16,6 +16,5 @@ Java8新特性：Stream流
 
 ### Collection接口stream()方法
 
-> Collection.stream()得到一个Stream流对象，通过该对象可以调用
-> Stream接口相应的方法对集合进行过滤、排序、截断(丢弃/获取)等操作
+Collection.stream()得到一个Stream流对象，通过该对象可以调用Stream接口相应的方法对集合进行过滤、排序、截断(丢弃/获取)等操作
 
