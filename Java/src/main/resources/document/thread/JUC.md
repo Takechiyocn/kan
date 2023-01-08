@@ -274,23 +274,37 @@ HashMap死循环常用解决方案
 
 ### CountDownLatch
 
+    允许一个或多个线程等待直到在其他线程中执行的一组操作完成
     当计数到达零，所有等待线程被释放，后续的await调用立即返回
+    并不要求调用CountDownLatch线程等待计数到达零之前继续，它只是组织任何线程通过await
+    计数器只能用一次
 
 ![CountDownLatch.png](images/CountDownLatch.png)
 
 ### CyclicBarrier
 
-    线程相互等待(await)，直到到达共同屏障点(barrier)
+    线程相互等待(每个线程内部调用await)，直到到达共同屏障点(barrier)
     即阻塞线程数(调用await)=parties(新建对象指定的线程数)
     期间线程状态可共享
+    可用reset方法重置，相比CountDownLatch，CyclicBarrier可处理更加复杂的业务(如计算错误可重置计数器重新计算)
 
 ![CyclicBarrier.png](images/CyclicBarrier.png)
 
 ### Semaphore
 
-    多个共享资源互斥使用，可并发限流、控制最大线程数
+    信号量用于控制同时访问特定资源的线程数量
+    可并发限流/流量控制、控制最大线程数
 
 ![Semaphore.png](images/Semaphore.png)
+
+### Exchanger
+
+    用于线程间数据交换，提供一个同步点，这个同步点两个线程可以交换彼此的数据
+    两个线程通过exchange方法交换数据：
+      1. 第一个线程执行exchange方法后会阻塞第二个线程执行该方法
+      2. 当两个线程都到达同步点时这两个线程就可以交换数据
+      3. 将本线程生产的数据传递给对方
+    应用场景：遗传算法、校对工作
 
 ## Forkjoin
 

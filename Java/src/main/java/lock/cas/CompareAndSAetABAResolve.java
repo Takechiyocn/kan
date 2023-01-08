@@ -5,7 +5,7 @@ import java.util.concurrent.atomic.AtomicStampedReference;
 
 /**
  * @ClassName CompareAndSAetABAResolve
- * @Description
+ * @Description ABA漏洞解决
  * @Author moku
  * @Date 2022/12/15 9:33
  * @Version 1.0
