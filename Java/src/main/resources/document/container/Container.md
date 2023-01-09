@@ -77,8 +77,7 @@ public ListIterator<E> listIterator;
         
          * 增删位置在末尾：ArrayList不需要移动和复制数组，此时ArrayList快
         
-         * 增删位置在中间：ArrayList消耗在移动和复制，LinkedList消耗在遍历，
-            此时LinkedList遍历速度通常小于移动复制速度，数据百万量级ArrayList快
+         * 增删位置在中间：ArrayList消耗在移动和复制，LinkedList消耗在遍历，此时LinkedList遍历速度通常小于移动复制速度，数据百万量级ArrayList快
         
         ※2 key获取hash值定位到桶：O(1)
         
@@ -106,15 +105,14 @@ public ListIterator<E> listIterator;
           * 空间满后扩容一倍，ArrayList扩容一半
         
           * 分配内存需要连续的存储空间，数据太多容易内存分配失败
+
 ##### RandomAccess接口
 
 标记接口，内部不存在任何方法
 
 集合中RandomAccess标记接口用于标记该集合具备随机访问的能力，而不是提供了随机访问的能力
 
-集合通过RandomAccess标记接口来标记该结合自身支持随机访问，以便在一些框架或算法中根据是否实现了
-
-该接口而做出更好的决策(方法实现)
+集合通过RandomAccess标记接口来标记该结合自身支持随机访问，以便在一些框架或算法中根据是否实现了该接口而做出更好的决策(方法实现)
 
 * ArrayList底层由数组实现，数组支持随机访问(get)，故该集合实现了RandomAccess接口
 
@@ -185,7 +183,7 @@ Collections不属于Java集合框架，它是集合类的一个工具类，此�
 区别|HashMap|Hashtable
 ---|---|---
 安全性|方法为异步操作，非线程安全|方法为同步操作，线程安全
-数据|可为空(null)|不能为空(null)
+数据|key或者value均可为空(null)|key或者value均不能为空(null)
 性能|性能高|性能低
 
 #### HashMap的get方法执行流程
@@ -194,7 +192,7 @@ Collections不属于Java集合框架，它是集合类的一个工具类，此�
 
 2. 找到key所在桶及其第一个元素
 
-3. 第一个元素(Entry)的key等于带查找key，返回
+3. 第一个元素(Entry)的key等于待查找key，返回
 
 4. 第一个元素是树节点，按树的方式查找
 

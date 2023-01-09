@@ -5,6 +5,7 @@ import java.util.function.BiConsumer;
 
 /**
  * 采用散列(哈希算法)算法进行数据存储，因此数据无序存放
+ *
  * @ClassName HashMapBase
  * @Author moku
  * @Date 2022/11/19 1:36
@@ -45,7 +46,7 @@ public class HashMapBase {
         Map<String, List<Integer>> map3 = new HashMap<>();
         List<Integer> valueList;
         // containsKey：底层调用getNode()
-        if(map3.containsKey("a")) {
+        if (map3.containsKey("a")) {
             // get()：底层调用getNode()
             valueList = map3.get("a");
         } else {
@@ -70,6 +71,7 @@ public class HashMapBase {
      * 2. HashMap.entrySet：最佳遍历方式
      * 3. lambda
      * 4. lambda简略形式
+     *
      * @Params:[]
      * @Returns:void
      */

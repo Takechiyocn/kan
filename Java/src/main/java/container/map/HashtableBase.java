@@ -17,6 +17,9 @@ public class HashtableBase {
             put("c", 1);
             put("b", 2);
             put("a", 3);
+            // Hashtable的key或者value均不能为null
+//            put(null, 3);
+//            put("f", null);
         }};
 
         // 输出：{b=2, a=3, c=1}

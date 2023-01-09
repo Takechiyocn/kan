@@ -259,6 +259,13 @@ private static final Object PRESENT = new Object();//这是一个不变的值
 HashMap死循环常用解决方案
 
 * 使用线程安全容器ConcurrentHashMap替代(推荐使用)
+
+    * 锁分段技术
+    
+        * JDK1.7：将数据分成Segment数据段，然后给每一个数据段分配一把锁
+        多线程时，未被锁住的数据分段可被其他线程访问
+          
+        * JDK1.8：红黑树
   
 * 使用线程安全容器Hashtable替代(性能低，不建议使用)
   
@@ -292,6 +299,7 @@ HashMap死循环常用解决方案
 
 ### Semaphore
 
+    等待阻塞
     信号量用于控制同时访问特定资源的线程数量
     可并发限流/流量控制、控制最大线程数
 
