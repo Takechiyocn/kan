@@ -213,6 +213,26 @@ Collections不属于Java集合框架，它是集合类的一个工具类，此�
     1. 如果类重写了equals方法，也应该重写hashcode方法
     2. 最好定义的key类是不可变的，如此key对应的hashcode()值可被缓存起来，性能更好(这也是为什么string适合作为HashMap的key)。
 
+#### HashMap线程不安全
+
+JDK存在死循环和数据丢失问题
+
+* 死循环
+
+    主要由resize导致
+
+* 数据丢失
+
+    * 并发赋值被覆盖
+    
+    * 已遍历区间新增元素丢失
+    
+        transfer导致
+    
+    * 新表被覆盖
+    
+        resize、transfer导致
+
 ### comparable和comparator区别
 
 区别|comparable|comparator
