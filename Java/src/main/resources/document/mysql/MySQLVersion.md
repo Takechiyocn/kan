@@ -26,7 +26,7 @@
    
 5. MySQL Workbench
 
-    转为MySQL设计的ER/数据库建模工具
+    专为MySQL设计的ER/数据库建模工具
    
     1. MySQL Workbench OSS
         
@@ -109,7 +109,7 @@ MySQL集群，存储引擎NDB
 
 ##### InnoDB
 
-* 增加DATA_GEOMETRY类型支持空间数据类型，之前时blob
+* 增加DATA_GEOMETRY类型支持空间数据类型，之前是blob
 
 * 支持原生Json类型
 
