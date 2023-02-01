@@ -13,7 +13,7 @@
 
 ![ClassRelationExtends.png](images/ClassRelationExtends.png)
 
-#### 实现implements
+#### 实现implements(like-a)
 
     一个类实现接口的功能
 

@@ -164,7 +164,7 @@ public ReentrantLock(boolean fair) {
 
 #### 公平锁
 
-十分公平，可以先来后到，一定要排队
+十分公平，一定要排队
 
 #### 非公平锁
 

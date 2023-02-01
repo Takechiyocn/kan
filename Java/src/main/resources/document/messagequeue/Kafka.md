@@ -24,6 +24,151 @@
 
     ![KafkaInfrastructure.png](images/KafkaInfrastructure.png)
 
+### Kafka特点
+
+* 可靠性
+
+    分布式、可分区、数据可备份、高度容错
+
+* 可扩展性
+
+    无需停机即可实现轻松扩展
+
+* 消息持久性
+
+    Kafka支持将消息持久化到本地磁盘
+
+* 高性能
+
+### 使用场景
+
+* 日志信息收集记录(ELK+FileBeats)
+
+    * FileBeats
+    
+        日志收集，将数据传递给消息队列Kafka
+
+    * Logstash
+    
+        拉取消息队列中的数据进行过滤和分析，然后将数据传递给Elasticsearch进行存储
+
+    * Elasticsearch
+    
+        对数据进行存储
+      
+    * Kibana
+    
+        将日志和数据呈现给用户
+
+        ![ELKIInfrastructure.png](images/ELKIInfrastructure.png)
+    
+* 用户轨迹跟踪
+
+    记录web用户或者app用户的各种活动，如浏览网页、搜索、点击等操作，这些活动被各个服务器发布到kafka的topic中，
+    然后消费者通过订阅这些topic来做实时的监控分析，也可保存到数据库
+
+* 记录运营监控数据
+
+    包括收集各种分布式应用的数据，生产各种操作的集中反馈，比如报警和报告
+
+### Kafka使用哪种方式消费信息
+
+Kafka消费者使用pull(拉)方式将消息从broker中拉下来
+
+优点:
+
+* Kafka可以根据consumer的消费能力以适当的速率消费信息
+
+* 消费者可以控制自己的消费方式
+
+    * 可以使用批量消费
+    
+    * 可以选择逐条消费
+    
+* 消费者可以选择不同的提交方式来实现不同的传输语义(消息语义)
+
+缺点：
+
+* 如果Kafka没有数据，消费者有个专用线程等待数据，可能会陷入循环等待中
+
+规避：
+
+拉取请求中设置参数，允许消费者在等待数据到达的"长轮询"中进行阻塞(可选地等待到给定的字节数，以确保大的传输大小)来避免
+
+push(推)优缺点
+
+* 优点：不需要专用线程等待消息，避免了线程循环等待问题
+
+* 缺点：push模式一般以相同速率将消息推送给消费者，无法满足消费速率不同的消费者，消费能力低的消费者来不及处理可能导致出现拒绝服务以及网络拥塞情况
+
+### Kafka与Zookeeper
+
+Kafka数据会存储在Zookeeper上，包括broker和消费者consumer的信息
+
+* broker信息
+
+    包含各个代理的服务器信息、Topic信息
+
+* 消费者信息
+
+    主要存储每个消费者消费的topic的offset值
+
+### Kafka架构
+
+![KafkaInfrastructure2.png](images/KafkaInfrastructure2.png)
+
+![KafkaInfrastructure3.png](images/KafkaInfrastructure3.png)
+
+* 生产者Producer
+
+    消息的生产者，用于发送消息给客户端
+
+* Kafka集群
+
+* 消费者Consumer
+
+    消息的消费者，用于消费信息的客户端
+
+* 消费者组/集群
+
+    由多个消费者组成，Kafka贵姓消费者组中的消费者不能同时消费topic中的同一分区
+
+* Kafka集群
+  
+    消息存储转发，一般以集群方式存在，每个集群结点称为一个broker代理
+
+* broker
+
+    Kafka集群的一台机器，可包含多个主题topic
+  
+* Zookeeper
+  
+    用于存储信息的注册中心，存储broker信息和消费者信息
+  
+* Topic(逻辑概念)
+  
+    可以理解为一个队列
+  
+* Partition
+
+    1Topic=N分区，用于高并发场景的负载功能
+
+* Offset
+
+    队列中当前读取消息的位置。offset.kafka，如2035位置的2035.kafka文件
+
+### 顺序消费
+
+队列先进先出特点保证消费发送时候是有序的
+
+* 同一分区
+
+    消息是被一个消费者消费，保证消费信息时的顺序型
+
+* 多个分区
+
+  在一个有两个或以上的主题topic内的话，无法保证消息的顺序性，为保证消费信息时的顺序性，在新建主题topic时，指定一个分区
+
 ### 保证数据可靠
 
 Kafka通过副本机制实现数据存储，因此需要一些机制保证数据在跨集群的副本之间能够可靠地传输
@@ -106,13 +251,13 @@ Kafka通过副本机制实现数据存储，因此需要一些机制保证数据
         
             性能很差，影响吞吐量
 
-3. 消息语义
+3. 消息语义/数据传输的事务方式
 
     消息集群整体复杂，整个过程中可能因为各种原因导致消息传递出错，Kafka对于可能遇到的场景定义了对应的消息语义
 
     通过配置各种参数间接设置消息语义
     
-    * at most once
+    * at most once最多一次
     
         代表消息可能被消费者消费0次或者1次，场景：
     
@@ -122,11 +267,11 @@ Kafka通过副本机制实现数据存储，因此需要一些机制保证数据
       
         3. 消费者将数据入库做持久化
 
-        数据丢失问题：第三步入库时消费者A宕机，切换到消费者B后，数据未入库，此时分区不知道，造成数据丢失
+        数据丢失问题：第三步入库时消费者A宕机，切换到消费者B后，数据未入库，此时分区不知道，造成数据丢失(消息未被处理，消息丢失)
     
         ![DataDisappear.png](images/DataDisappear.png)
       
-    * at least once
+    * at least once最少一次
       
         代表分区分发的消息至少被消费一次，场景
 
@@ -136,18 +281,26 @@ Kafka通过副本机制实现数据存储，因此需要一些机制保证数据
 
         3. 消费者把自己收到的消息告诉集群，集群收到之后offset会往后移动
 
-        数据重复问题：数据入库后，将数据返回给分区过程中消费者A挂掉，分区因为收不到响应ACK导致重发，消费者B将数据再次入库导致重复
+        数据重复问题：数据入库后，将数据返回给分区过程中消费者A挂掉，分区因为收不到响应ACK导致重发，消费者B将数据再次入库导致重复(消息重复被消费)
     
         ![DataReplica.png](images/DataReplica.png)
         ![DataReplica2.png](images/DataReplica2.png)
       
-    * exactly once
+    * exactly once精确一次
       
         代表消息正好能被消费一次，不丢失，不重复
     
         at least once基础上，消费者B从数据库查看最新消息对应偏移位，根据这个偏移位返回Kafka集群从对应的偏移位置出发(获取最新消息)，避免消息丢失和重复
     
         ![DataOK.png](images/DataOK.png)
+    
+    * Kafka消息丢失
+    
+        * 消息发送时候，如果发送出去以后，消息因为网络问题没有发送成功
+    
+        * 消息语义的at most once，消息消费时候，消息还未做处理服务挂了，消息丢失 
+          
+        * 分区中leader所在的broker挂了之后(旧leader分区未同步到新leader分区的部分消息丢失)
 
 4. 数据截断机制
 
@@ -183,9 +336,10 @@ Kafka通过副本机制实现数据存储，因此需要一些机制保证数据
     
             ![KafkaLeaderFollower4.png](images/KafkaLeaderFollower4.png)
 
-4. 数据清理机制
-
+5. 数据清理机制(缓冲池满后处理)
+   
     Kafka主要用于通信，为了节约存储空间它会通过一些机制对过期数据进行清理
+    Kafka读取特定消息的时间复杂度为O(1)，即与文件大小无关，日志删除与提高性能无关
 
     * 日志删除
       
@@ -212,6 +366,41 @@ Kafka通过副本机制实现数据存储，因此需要一些机制保证数据
         通过创建检查点文件实现
     
         ![KafkaCompress.png](images/KafkaCompress.png)
+
+### Kafka性能好在哪
+
+* 顺序写
+
+    * 操作系统读写磁盘：寻址，读写
+      
+    * 操作系统读写内存：无需寻址，直接读写
+    
+    * Kafka数据存储在磁盘，采用顺序写，直接追加数据到末尾
+
+* 零拷贝
+  
+    * 传统读取文件，再用socket发送
+    
+        ```java
+        buffer = File.read;
+        Socket.send(buffer);
+        ```
+        
+        * 磁盘文件读取到操作系统内核缓冲区Read Buffer
+    
+        * 将内核缓冲区数据复制到应用程序缓冲区Application Buffer
+          
+        * 将Application Buffer中数据复制到socket网络发送缓冲区
+          
+        * 将Socket Buffer数据复制到网卡，由网卡进行网络传输
+    
+            ![FileReadTraditional.png](images/FileReadTraditional.png)
+    * Kafka零拷贝
+    
+        省略上述2、3复制步骤，直接将内核缓冲区Read Buffer数据复制到网卡
+    
+        ![FileReadKafka.png](images/FileReadKafka.png)
+
 
 ### 业务幂等
 
