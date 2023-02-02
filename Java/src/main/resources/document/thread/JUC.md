@@ -271,6 +271,8 @@ HashMap死循环常用解决方案
   
 * 使用synchronized或Lock加锁HashMap之后再进行操作，相当于多线程排队(麻烦，不建议使用)
 
+* Collections.synchronizedMap(new HashMap())
+
 ## executors(执行者)
 
 ### Callable

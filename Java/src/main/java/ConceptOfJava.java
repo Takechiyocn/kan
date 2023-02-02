@@ -74,15 +74,6 @@ public class ConceptOfJava {
         //         LocalDate calAdd = cal.plusDays(1000);
         //  更改器mutator方法： 使用后对象状态可能会变更
 
-
-        //   一个方法不能让对象参数引用一个新的对象
-
-        // 重载: 如果多个方法有相同的名字，不同的参数，便产生了重载。
-        // 重载解析overloading resolution：对于有产生重载的方法，编译器匹配相应方法的过程
-        // 方法签名signature：完整地描述一个方法，需要指出方法名以及参数类型。
-        //   ⇒　返回类型不是方法签名的一部分。亦即不能有两个名字相同，参数类型也相同的却返回不同类型值的方法。
-
-
         // 包密封：package sealing
 
         // 类的设计技巧

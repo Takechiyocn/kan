@@ -24,12 +24,18 @@
 * Oracle JVM中：编码为byte数组(8bit)，占1个字节
 * 非Oracle JVM中：不确定
 
-自动数据类型转换
+#### 自动数据类型转换
 
 低 ---------------------------------------------> 高
 byte,short,char-> int -> long -> float -> double
 
-long(8byte) -> float(4byte):底层实现方式不同(有符号位、指数域、小数域)
+* long(8byte) -> float(4byte):底层实现方式不同(有符号位、指数域、小数域)
+
+* 数值类型
+
+    数值型数据在运算时会升级成默认的int型，如byte、short、char参与的计算
+
+
 
 ### 浮点数
 

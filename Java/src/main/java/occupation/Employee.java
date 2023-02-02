@@ -23,7 +23,7 @@ public class Employee extends Person implements Comparable<Employee> {
      * instance field initialization
      */
     private double salary;
-    // 不可变类：没有方法能修改对象的状态（对象初始化可以修改，即new对象过程）
+    // 不可变类：一个类一旦被实例化，就不可改变自身的状态（对象初始化可以修改，即new对象过程）
     //          如LocalDate、String(相对特殊)、BigDecimal：每次运算会产生新对象
     private LocalDate hireDay = LocalDate.now();
 

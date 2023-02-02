@@ -9,7 +9,7 @@ package interfacecustomize;
 public interface Named {
     // 不能包含实例域或静态方法
     // 可包含常量
-    // 接口内的方法自动成为public，域自动成为public static final -->通常省略
+    // 接口内的方法自动成为public abstract，域自动成为public static final -->通常省略
 
     /**
      * JDK 8 新特征 interface中允许使用default修饰方法，来完成对于方法的默认定义，该方法可以有方法体

@@ -5,6 +5,7 @@
 异常层次结构
 
 ![ExceptionArchitecture.png](images/ExceptionArchitecture.png)
+![ExceptionArchitecture2.png](images/ExceptionArchitecture2.png)
 
 #### 异常分类
 
