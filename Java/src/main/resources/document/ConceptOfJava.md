@@ -473,7 +473,7 @@ new int[] {1, 2, 3}
         getMethods
         getConstructors
 
-* 获取类中声明的全部域、方法和构造器（包括私有和受保护成员，不包括超类成员）
+* 获取类中声明的全部域(静态/非静态)、方法和构造器（包括私有和受保护成员，不包括超类成员）
 
         getDeclaredFields
         getDeclaredMethods

@@ -96,6 +96,60 @@
 
 2. 如果类中静态变量没有赋值且没有静态语句块，编译器可不为这个类生成&lt;client&gt;方法
 
+程序初始化时，父类和子类代码执行顺序：
+
+1. 静态变量、代码块
+   
+    1. 父类的静态变量、静态代码块
+
+        ```java
+        static {
+            System.out.println();
+        }
+        ```
+       
+    2. 子类的静态变量、静态代码块
+
+        ```java
+        static {
+            System.out.println();
+        }
+        ```
+    
+2. 父类
+
+    1. 父类的非静态变量、非静态代码块
+    
+        ```java
+        {
+            System.out.println();
+        }
+        ```
+    
+    2. 父类的构造函数
+
+        ```java
+        public HelloParent {
+        }
+        ```
+    
+3. 子类
+
+    1. 子类的非静态变量、非静态代码块
+
+        ```java
+        {
+            System.out.println();
+        }
+        ```
+
+    2. 子类的构造函数
+
+        ```java
+        public HelloSon {
+        }
+        ```
+
 ##### 不执行初始化场景
 
 1. 通过子类引用父类的静态字段，只会触发父类的初始化，而不会触发子类的初始化
@@ -779,6 +833,16 @@ MajorGC后空间依然不够则抛出OOM(Out Of Memory)
 ### 垃圾收集器
 
 ![GC.png](images/GC.png)
+
+#### finalize方法
+
+![Finalizer.png](images/Finalizer.png)
+
+finalize方法
+
+* 对象第一次进入回收队列：一个对象只能执行一次，只能在第一次进入被回收的队列，且对象所属于的类重写了该方法才会被执行
+
+* 对象第二次进入回收队列：不再执行finalize方法，而是被二次标记，在下一次GC时候直接被GC
 
 #### 新生代垃圾收集器
 

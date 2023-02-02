@@ -3,7 +3,7 @@ package constructor;
 /**
  * 子类必须实现对父类构造器的显式或隐式调用
  *   a. 父类构造器默认  -> 可显式，隐式调用（编译器）
- *   b. 父类构造器自定义 -> 显式调用
+ *   b. 父类构造器自定义 -> super显式调用
  * 所谓继承：必须继承父类的域(不论有无)，通过super构造器继承
  */
 public class SonClass extends FatherClass {

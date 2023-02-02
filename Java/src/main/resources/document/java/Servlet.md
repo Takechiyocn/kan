@@ -53,7 +53,15 @@ JavaWeb三大组件：servlet、过滤器、监听器
     // 销毁
     void destory();
 
-1. 出生
+1. 加载
+
+   容器通过类加载器使用Servlet类对应的文件加载servlet
+
+2. 创建
+   
+   通过调用Servlet构造函数创建一个Servlet对象/实例(即由Servlet容器创建)
+
+3. 初始化：调用init方法初始化
 
     1. 服务器启动时创建Servlet：此时需要配置web.xml(load-on-startup标签)
    
@@ -67,15 +75,15 @@ JavaWeb三大组件：servlet、过滤器、监听器
       
          2. 缺点：如果有些应用需要在加载时完成初始化，则这种启动方式无法完成
    
-2. 服务
+2. 服务：处理客户请求
 
     1. 服务器接收请求，调用Servlet的service()方法处理请求
     
     2. 接收多次请求，service()方法被调用多次
     
-3. 离去
+3. 卸载：调用destroy方法让servlet释放其占用的资源
 
-    1. 服务器关闭时销毁Servlet：通常销毁Servlet前调用Servlet()方法做收尾(资源释放等)
+    1. 服务器关闭时销毁Servlet：通常销毁Servlet前调用Servlet()方法做收尾(资源释放等)，且仅执行一次
 
          ```java
          public class HelloServlet implements Servlet {
