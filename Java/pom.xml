@@ -39,7 +39,13 @@
             <version>RELEASE</version>
             <scope>compile</scope>
         </dependency>
-<!--        <dependency>-->
+        <dependency>
+            <groupId>com.caucho</groupId>
+            <artifactId>hessian</artifactId>
+            <version>4.0.7</version>
+        </dependency>
+
+        <!--        <dependency>-->
 <!--            <groupId>org.jetbrains</groupId>-->
 <!--            <artifactId>annotations</artifactId>-->
 <!--            <version>21.0.1</version>-->

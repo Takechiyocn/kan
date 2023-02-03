@@ -135,21 +135,7 @@ public class ConceptOfJava {
         //       如:x实际类型是D，D为C的子类。如果D定义了该方法，则调用D.f，否则查找超类的C.f
         //    --> 虚拟机为每个类创建方法表method table，列出了方法签名和实际调用的方法。
 
-        // 包装器：wrapper基本类型都有一个与之对应的类。final类型。不能定义子类
-        //   Byte，Short，Integer，Long，Float，Double派生于公共超类Number
-        //   Character,Boolean
-        // 自动装箱：autoboxing。将(类型)值直接添加到包装器实例中，内部进行类型自动转换的过程
-        //    ArrayList<Integer> list = new ArrayLst<>();
-        //    list.add(3);  --> 自动转换成list.add(Integer.valueOf(3));
-        // 自动拆箱：自动装箱的逆过程
-        //    int n = list.get(i);   --> 自动转换成list.get(i).intValue();
-        // Integer n = 3;   // 自动装箱
-        // n++; // 自动拆箱-->自加-->自动装箱
-        // 自动装箱规范将下列范围内的值被装箱到固定对象中，亦即Integer a=100;Integer b=100; a==b：
-        //   boolean，byte，char < 127
-        //   short,int {-128,127}
-
-        // 当前类名
+         // 当前类名
         //   getClass();   <==> this.getClass();
         //   --> 静态方法没有this，对于静态方法类名的获取：
         //      --> new Object(){}.getClass().getEnclosingClass();

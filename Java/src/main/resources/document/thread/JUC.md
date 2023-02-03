@@ -279,7 +279,7 @@ HashMap死循环常用解决方案
 
 ![Callable.png](images/Callable.png)
 
-## 辅助类
+## 辅助类(并发编程同步器)
 
 ### CountDownLatch
 

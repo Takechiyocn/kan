@@ -79,14 +79,14 @@ public strictfp class Test() {
 
 ### 访问级别修饰符：Access Level Modifiers
 
-1. 在顶级
+1. 在顶级(类级别)
     * public
 
       类用public修饰，类对所有类均可见
     * package-private(no-modifiers)
 
       如果类没有修饰符(默认)，也称package-private，它只在自己的包中可见
-2. 在成员级别(按行看容易理解:成员为public等修饰符时的访问权限)
+2. 在成员级别(按行看容易理解:类Class的成员为public等修饰符时的访问权限)
 
     * public
       
@@ -94,7 +94,7 @@ public strictfp class Test() {
     * protected
 
       对包和所有子类可见，即protected=no-modifiers+subclass
-    * 默认(无修饰符，即package-private)
+    * 默认(无修饰符no-modifiers，即package-private)
 
       它只在自己的包中可见
     * private

@@ -6,6 +6,14 @@ import java.util.*;
 /**
  * 重载，[静态分配]: 参数匹配看实参定义(等号)的左边。
  * 重写，[动态分派]: 调用谁的方法，看对象定义的右边。
+ *
+ * Java多态：
+ *   编译时多态：重载
+ *   运行时多态：重写
+ * Parent p = new Son(); // Son extends Parent;
+ * 静态方法：编译和运行都调用父类版本->静态多分派
+ * 普通方法：编译调用父类版本，运行调用子类版本(动态绑定)->动态单分派
+ * 成员变量：编译和运行都调用父类版本(参考左边)
  */
 public class Overload {
     public static void main(String[] args) {

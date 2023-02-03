@@ -6,7 +6,7 @@ Java的标准IO/基本IO/传统IO是基于字节流和字符流进行操作的�
 
 ※ Java调用：同步调用、异步调用
 
-※ 回调：A调用B的同时传入函数指针，B会调用A的函数指针(如Timer的ActionListener)
+※ 回调：A调用B的同时传入函数指针，B会调用A传入的函数指针(如Timer的ActionListener)
 
 ![IOInfrastructure.png](images/IOInfrastructure.png)
 
@@ -18,7 +18,7 @@ Java的标准IO/基本IO/传统IO是基于字节流和字符流进行操作的�
 
 区别|字节流|字符流
 ---|---|---
-读取方式|字节方式(1byte=8bit)|字符方式
+读取方式|字节方式(1byte=8bit)|字符方式(2byte)
 读取类型|任意类型※1|文本文件
 第一次读取※2|"a"|'a'
 第二次读取※2|"中"的一半|'中'字符
@@ -106,7 +106,7 @@ java.io.ObjectOutputStream
 
    实现Serializable标记接口，Java序列化保留对象类的元数据(类、成员变量、继承类信息)
 
-* Hessian序列化
+* Hessian序列化(序列化对象需实现Serializable接口)
 
    支持动态类型、跨语言、基于对象传输的网络协议
 

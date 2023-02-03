@@ -35,6 +35,8 @@
 
 ##### 受查/非受查
 
+![CheckedAndUncheckedException.png](images/CheckedAndUncheckedException.png)
+
 ###### 非受查unchecked
 
 派生于Error类和RuntimeException类的异常

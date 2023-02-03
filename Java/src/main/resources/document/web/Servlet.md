@@ -8,7 +8,7 @@ servlet是运行在web服务器中的小型java程序(服务器端的小应用�
 
 JavaWeb三大组件：servlet、过滤器、监听器
 
-![ServletInstance.png](images/servlet/ServletInstance.png)
+![ServletInstance.png](images/ServletInstance.png)
 
 ### 实现Servlet的3种方式
 
@@ -217,7 +217,7 @@ Servlet配置参数对象
 
 生命周期：应用加载时创建，停止时销毁
 
-![ServletContext.png](images/servlet/ServletContext.png)
+![ServletContext.png](images/ServletContext.png)
 
 #### 调用方式
 
@@ -227,4 +227,4 @@ Servlet配置参数对象
 
 ### Servlet、Tomcat、JDK版本冲突
 
-![ServletVersionConflict.png](images/servlet/ServletVersionConflict.png)
+![ServletVersionConflict.png](images/ServletVersionConflict.png)
