@@ -100,7 +100,7 @@ Compare And Swap，比较并交换
 
 3. 调用compareAndSet方法进行原子更新
 
-  1. 检查当前数值是否等于except
+  1. 检查当前数值是否等于expect
 
   2. 等于则说明当前值未被其他线程修改，则将当前值更新为next
 
