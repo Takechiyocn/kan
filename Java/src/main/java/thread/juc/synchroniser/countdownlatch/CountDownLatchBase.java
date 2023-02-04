@@ -1,4 +1,4 @@
-package thread.juc.assistclass.countdownlatch;
+package thread.juc.synchroniser.countdownlatch;
 
 import java.util.concurrent.CountDownLatch;
 

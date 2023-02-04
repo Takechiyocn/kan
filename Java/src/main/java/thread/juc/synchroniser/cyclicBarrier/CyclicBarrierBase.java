@@ -1,4 +1,4 @@
-package thread.juc.assistclass.cyclicBarrier;
+package thread.juc.synchroniser.cyclicBarrier;
 
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
@@ -14,7 +14,7 @@ public class CyclicBarrierBase {
     public static void main(String[] args) {
 
         CyclicBarrier cb = new CyclicBarrier(7, () ->
-                System.out.println("召唤神龙成功！"));
+                System.out.println("所有线程到达屏障点后打开屏障：召唤神龙成功！"));
 
         for (int i = 1; i < 8; i++) {
             int n = i;
@@ -29,5 +29,7 @@ public class CyclicBarrierBase {
                 }
             }).start();
         }
+
+        System.out.println("main线程！");
     }
 }

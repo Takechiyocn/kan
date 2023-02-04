@@ -179,7 +179,7 @@
 
 主要加载java的核心类库(到虚拟机内存中)，即加载lib目录下的所有class
 
-* 加载JAVA_HOME/lib目录中的类
+* 加载JAVA_HOME/lib目录中的类，如String、System这些类
 
 * 或通过-Xbootclasspath参数指定路径中的，且被虚拟机认可(按文件名识别，如rt.jar)的类
 
@@ -207,7 +207,7 @@ JVM通过双亲委派模型进行类的加载，用户可通过java.lang.ClassLo
 
 优点：
 
-* 避免类重复加载
+* 避免类重复加载，父类加载后子类不必再去加载
 
 * 保护程序安全性，防止核心API被修改
 
@@ -276,6 +276,8 @@ JVM内存模式指的是JVM的内存区分，又称为运行时数据区域。�
 ![JVMAndMemory.png](images/JVMAndMemory.png)
 
 ![JVMAndMemory2.png](images/JVMAndMemory2.png)
+
+![JVMAndMemory3.png](images/JVMAndMemory3.png)
 
 1. 线程共享区域
    

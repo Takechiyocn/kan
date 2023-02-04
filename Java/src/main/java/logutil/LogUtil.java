@@ -16,6 +16,11 @@ import java.util.Date;
 public class LogUtil {
     public static void log(String msg) {
         try {
+            // System.out.println:
+            //   System：Java.lang的一个类
+            //   out：System内的静态成员，是一个static PrintStream对象
+            //        public static final PrintStream out = null;
+            //   println：内容输出到控制台
             PrintStream ps = new PrintStream(new FileOutputStream("src/main/java/logutil/file/log.txt", true));
             // 改变流输出方向
             System.setOut(ps);

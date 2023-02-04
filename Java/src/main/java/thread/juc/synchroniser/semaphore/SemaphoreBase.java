@@ -1,4 +1,4 @@
-package thread.juc.assistclass.semaphore;
+package thread.juc.synchroniser.semaphore;
 
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;

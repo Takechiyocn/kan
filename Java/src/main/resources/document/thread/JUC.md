@@ -285,7 +285,7 @@ HashMap死循环常用解决方案
 
     允许一个或多个线程等待直到在其他线程中执行的一组操作完成
     当计数到达零，所有等待线程被释放，后续的await调用立即返回
-    并不要求调用CountDownLatch线程等待计数到达零之前继续，它只是组织任何线程通过await
+    并不要求调用CountDownLatch线程等待计数到达零之前继续，它只是阻止任何线程通过await
     计数器只能用一次
 
 ![CountDownLatch.png](images/CountDownLatch.png)

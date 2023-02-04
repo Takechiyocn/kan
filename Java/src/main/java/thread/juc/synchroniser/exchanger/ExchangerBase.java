@@ -1,4 +1,4 @@
-package thread.juc.assistclass.exchanger;
+package thread.juc.synchroniser.exchanger;
 
 import java.util.concurrent.Exchanger;
 import java.util.concurrent.TimeUnit;
