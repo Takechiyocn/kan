@@ -86,6 +86,7 @@ public strictfp class Test() {
     * package-private(no-modifiers)
 
       如果类没有修饰符(默认)，也称package-private，它只在自己的包中可见
+    
 2. 在成员级别(按行看容易理解:类Class的成员为public等修饰符时的访问权限)
 
     * public
@@ -405,7 +406,7 @@ new int[] {1, 2, 3}
 
     * 使用==比较基本类型，使用equals比较对象
 
-    * == 比较引用类型时，比较的是地址，当且仅当两个应用变量对象指向同一个对象时才返回true
+    * == 比较引用类型时，比较的是地址，当且仅当两个引用变量对象指向同一个对象时才返回true
 
         ```java
         /**
@@ -450,7 +451,7 @@ new int[] {1, 2, 3}
     String message = "The current position is " + p;
     ```
 
-* Object类定义的toString方法，用于发音输出对象所述的类名和散列码
+* Object类定义的toString方法，用于输出对象所述的类名和散列码
 
     ```java
     // PrintStream，String类的设计者没有覆盖toString方法，调用的是Object类方法 
@@ -464,20 +465,6 @@ new int[] {1, 2, 3}
     // [1, 2, 4, 6]
     String s = Arrays.toString(arr); 
     ```
-
-**Class类方法**
-
-* 获取类提供的pubic域、方法和构造器（包括超类的公有成员）
-
-        getFields
-        getMethods
-        getConstructors
-
-* 获取类中声明的全部域(静态/非静态)、方法和构造器（包括私有和受保护成员，不包括超类成员）
-
-        getDeclaredFields
-        getDeclaredMethods
-        getDeclaredConstructors
 
 **泛型**
 

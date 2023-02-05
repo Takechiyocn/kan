@@ -16,6 +16,8 @@
 
     设置新生代中Eden区和两个Survivor区(from=to)的比值，如3，则Eden：SurvivorFrom:SurvivorTo=3:1:1
 
+  ![EdenAndOld.png](images/EdenAndOld.png)
+
 收集器
 
 * -XX:UseSerialGC：设置串行收集器
@@ -52,4 +54,3 @@
   
     设置并发收集器年轻代收集方式为并行收集时，使用的CPU数。并行收集线程数。
 
-![EdenAndOld.png](images/EdenAndOld.png)

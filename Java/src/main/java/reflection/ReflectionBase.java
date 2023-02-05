@@ -52,7 +52,8 @@ public class ReflectionBase {
         for (Constructor cons : constructors) {
             StringBuilder parameters = new StringBuilder();
 
-            // class类型数组无法正常显示，需要重新获取
+            // 获取构造器参数列表
+            // TODO：class类型数组无法正常显示，需要重新获取
             Class[] parameterTypes = cons.getParameterTypes();
             for (int i = 0; i < parameterTypes.length; i++) {
                 if (i > 0) {
@@ -85,12 +86,15 @@ public class ReflectionBase {
 
     private static void clazzCompare() throws ClassNotFoundException {
         Employee el = new Employee("e");
+        Employee el2 = new Employee("e2");
         Class cl1 = el.getClass();
         Class cl2 = Class.forName("occupation.Employee");
         Class cl3 = Employee.class;
+        Class cl4 = el2.getClass();
 
         // 类型比较==
-        if (cl1 == cl2 && cl2 == cl3) {
+        // true
+        if (cl1 == cl2 && cl2 == cl3 && cl3 == cl4) {
             log.info("类对象比较：Java运行时每一个类只会生成一个Class对象");
         } else {
             log.info("Not equals");

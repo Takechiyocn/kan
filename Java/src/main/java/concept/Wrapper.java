@@ -26,6 +26,7 @@ public class Wrapper {
         Character c2 = 127;
         Character d1 = 128;
         Character d2 = 128;
+        System.out.println(a1.equals(c1));
         // == 应用于对象包装器：比较两个包装器是否指向同一存储区域，结果取决于包装类常量池大小
         System.out.println(a1 == a2);
         System.out.println(b1 == b2);

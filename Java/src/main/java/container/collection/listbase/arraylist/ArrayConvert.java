@@ -7,7 +7,7 @@ import java.util.Collections;
  * 数组反转
  * <p>
  * length属性：数组长度
- * length()方法：字符串长度
+ * length()方法：字符串长度，获取字符数
  * size()方法：泛型/集合元素个数
  *
  * @author moku
