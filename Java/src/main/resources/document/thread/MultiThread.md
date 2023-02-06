@@ -26,7 +26,7 @@
 
 5. 简化程序结构
 
-### 如何保证线程安全
+### 如何保证线程安全/线程同步方式(主要回答3.锁)
 
 线程安全问题指的是多线程背景下，线程没有按照我们的预期执行，导致操作共享变量出现异常
 
@@ -75,11 +75,19 @@ Java提供许多同步方案供我们使用，从轻到重同有三种方式
    
       1. synchronized关键字
    
-         1. 互斥锁的可重入锁
+         1. 互斥的可重入锁
    
          2. 可作用于实例方法、静态方法、代码块
+   
+            1. 实例方法：锁住当前实例(this)对象
+               
+            2. 静态方法：锁住当前类对象
+               
+            3. 代码块：需要在synchronized后小括号里显示指定锁对象
 
-         3. 1.6之后引入了轻量级锁、偏向锁等优化
+         3. 并发环境中synchronized会随着线程竞争的加剧升级
+            
+            1. 无锁->偏向锁->轻量级锁->重量级锁
             
          4. 适用于少量代码的同步
 
@@ -94,6 +102,8 @@ Java提供许多同步方案供我们使用，从轻到重同有三种方式
          2. 将阻塞队列存储在AQS的双向队列中
    
          3. 适合锁大量的同步代码(只有代码块锁)，性能高
+   
+         4. 根据锁的使用场景，派生出公平锁、非公平锁、读锁、写锁等
 
 4. 其他
 
@@ -114,4 +124,68 @@ Java提供许多同步方案供我们使用，从轻到重同有三种方式
    2. ThreadLocal
    
       1. 定义线程局部变量，为每一个线程单独保存一个副本，隔离了多个线程之间的数据共享
+
+### 线程安全的集合
+
+* java.util包下集合类：性能差
+
+   * Vector
+   
+   * Hashtable
+   
+   * 其他：线程不安全
+   
+      * 可使用Collections工具类提供的synchronizedXxx()方法将集合类包装成线程安全的集合类
+      
+         * Collections.synchronizedSet(new HashSet());
+           
+         * Collections.synchronizedList(new ArrayList());
+           
+         * Collections.synchronizedMap(new HashMap());
+   
+*  juc：java.util并发包下的容器
+
+   * Concurrent开头的容器：降低锁粒度来提高并发性能
+   
+      * ConcurrentHashMap
+   
+   * CopyOnWrite开头的容器：写时复制技术(复制到新容器，引用指向新容器)
+   
+      * CopyOnWriteArrayList：适用于读多写少
+   
+   * 采用Lock锁实现的阻塞队列
+   
+      * 内部采用两个Condition分别用于生产者和消费者的等待，这些类都实现了BlockingQueue
+   
+      * ArrayBlockingQueue：有界队列，底层数组实现
+   
+      * LinkedBlockingQueue：无界队列(也可当做有界队列)，底层单向链表实现
+        
+      * PriorityBlockingQueue：支持优先级的无界队列，PriorityQueue的线程安全版本
+      
+* Collections的如下方法：返回不可变的集合
+
+   * EmptyXxx：返回空的不可变的集合对象
+
+      * EmptyList
+
+      * EmptySet
+
+      * EmptyMap
+      
+   * SingletonXxx：返回一个包含特定对象的不可变的集合对象
+   
+      * SingletonList
+        
+      * SingletonSet
+        
+      * SingletonMap
+   
+   * UnmodifiableXxx：返回指定结合对象的不可变视图
+
+      * UnmodifiableList
+
+      * UnmodifiableSet
+
+      * UnmodifiableMap
    

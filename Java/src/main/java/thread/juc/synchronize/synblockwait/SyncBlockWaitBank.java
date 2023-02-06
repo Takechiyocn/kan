@@ -38,7 +38,7 @@ public class SyncBlockWaitBank {
             System.out.println();
             // 内部条件：添加线程到等待集
             // 内部锁只有单一条件，即只能在一处条件内设置条件对象
-            // wait方法释放锁吧
+            // wait方法释放锁
             wait();
             // 线程进入等待直到被通知或者经过指定时间
 //            wait(1000);

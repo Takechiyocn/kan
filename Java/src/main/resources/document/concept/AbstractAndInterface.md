@@ -10,7 +10,7 @@
 
 区别|抽象类|接口
 ---|---|---
-1.定义|abstract|interface/abstract interface
+1.定义|abstract|interface/abstract interface(只能为public或默认)
 2.属性|常量、可以为成员变量(静态/类变量、成员变量(private变量最好不用，无法继承导致无法重写))|只能有常量(静态常量成员)
 3.方法|可以有抽象方法、普通方法(必须有方法体)|1.8前只能有抽象方法，之后可以有静态方法和默认方法
 4.方法权限|1.8前默认protected，1.8默认default|1.8前必须public，1.8可为default,1.9可为private

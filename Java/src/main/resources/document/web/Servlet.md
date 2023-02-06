@@ -1,5 +1,21 @@
 ## Servlet
 
+* Http服务器：Apache
+
+   * 静态的html可以用Apache处理
+
+* Web容器：Tomcat
+
+   * 动态的html需要转发给Tomcat处理，如jsp页面请求先经由Apache转发给Tomcat，再有Tomcat解析请求
+   
+   * 负责将Http请求转换为HttpServletRequest对象，即创建Servlet实例
+   
+* JSP网页
+
+   * java的服务器页面，本质也是一个Servlet
+   
+   * 由html、Java代码、jsp标签组成，当servlet处理完数据后会转发给jsp，jsp负责显示数据
+
 ### 什么是Servlet
 
 servlet是运行在web服务器中的小型java程序(服务器端的小应用程序)
