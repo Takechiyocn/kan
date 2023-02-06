@@ -4,14 +4,22 @@
 
 对象关系映射Object Relation Mapping
 
+![ORM2.png](images/ORM2.png)
+
 * 定义
   
-      在sql模块(数据库客户端工具内嵌，如MySQL客户端)之上进行了封装，无需编写原生sql
+      * 通过实例对象的语法，完成关系型数据库的操作的技术
 
+      * 简单来说ORM把数据库映射成对象
+
+        * 数据库的表 -> 类(class)
+        * 表的记录(record,行数据) -> 类实例即对象(object)
+        * 字段(field) -> 对象属性(attribute)
+  
 * 作用
 
       用于实现面向对象编程语言里不同类型系统的数据之间的转换
-
+  
         1. 通过使用描述对象和数据库之间映射的元数据，将程序中对象与关系数据库相互映射。
         2. 解决数据库与程序间的异构性。如java中String表示字符串，Oracle中可用varchar2，
            MySql中可用varchar，SQLServer可用nvarchar。
@@ -21,6 +29,8 @@
 * 不使用ORM时，对象与关系数据库之间的映射：
   
   ```java
+  // 0.加载数据库驱动程序
+  DataSource dataSource;
   // 1.获取连接
   DataSource dataSource;
   connection = dataSource.getConnection();
@@ -55,15 +65,17 @@
 
 * hibernate
   
-      全自动的框架，强大、复杂、笨重、学习成本较高
+  * 全自动的框架，强大、复杂、笨重、学习成本较高
   
 * MyBatis
 
-      半自动的框架(懂数据库的人才能操作)，必须要自己写sql
+  * 半自动的框架(懂数据库的人才能操作)，必须要自己写sql
   
 * JPA
 
-      JPA全称Java Persistence API、JPA通过JDK 5.0注解或XML描述对象－关系表的映射关系，是Java自带的框架
+    * JPA全称Java Persistence API
+  
+    * JPA通过JDK 5.0注解或XML描述对象－关系表的映射关系，是Java自带的框架
 
 #### ORM方法论核心原则
 
