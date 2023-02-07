@@ -154,7 +154,7 @@
 
 ### AQS(AbstractQueuedSynchronizer)
 
-队列同步器，用于构建锁或其他同步组件的基础框架，使用一个volatile int state变量作为共享资源
+队列同步器，用于构建锁或其他同步组件的基础框架，使用一个volatile int state变量作为共享资源，Lock实现类都基于AQS实现
 
 如果线程资源获取失败，则进入同步队列等待
 

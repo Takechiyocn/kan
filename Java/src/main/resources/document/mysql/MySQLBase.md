@@ -587,7 +587,7 @@ Multi-Version Concurrency Control多版本并发控制
     * 未提交读：总是读取最新数据行，而不是符合当前事务版本的数据行(未提交部分)
     * 可串行化：对所有读取行都加锁
 
-#### 版本链
+#### 版本链(基于undo log)
 
 * row_id：聚簇索引id(通常使用主键或第一个非NULL列)
 * trx_id：最新修改的事务id,即事务ID(transaction id)
@@ -648,29 +648,248 @@ Multi-Version Concurrency Control多版本并发控制
 
 ## 数据库索引
 
+索引就像指向表行的指针，允许查询操作快速定位符合查询条件的行的一种数据结构
+
 为了使查询数据效率更高，小表通常采用全表扫描，无需索引；索引应避免NULL列
 
-索引/存储引擎|MyISAM|InnoDB|Memory|NDB
----|---|---|---|---
-B-Tree索引|支持(默认)|支持(默认)|支持|
-HASH索引|不支持|不支持|支持(默认)|支持
-R-Tree索引|支持|支持|不支持|
-Full-Text索引|支持|支持|不支持|
+优点
 
-### 分类
+* 大数据量查询提高检索效率，还能用于排序和分组操作的加速
+
+缺点
+
+* 增加存储资源消耗
+
+* 增大插入、更新、删除操作的维护成本，因为索引需要更新
+
+### 索引失效
+
+创建了索引不一定会走索引，比如不遵从最左前缀原则
+
+```mysql
+key 'idx_age'(age)
+key 'idx_name'(name)
+``` 
+
+* 查询字段中，索引列出现隐式类型转换
+
+    * 如字符串字段索引中，where xx = 数值(隐式转换成字符串)，不使用索引
+    * 如字符串字段索引中，where xx = '数值'，使用索引
+
+* or操作
+
+    * or前使用了索引列，索引列有效
+    * or后使用索引列，索引列无效
+
+* like操作
+
+    * 通配符在前，不使用索引
+    * 通配符在后，使用索引
+      ```mysql
+      -- 不使用索引
+      select * from student where name like '%小';
+      -- 使用索引
+      select * from student where 'name' like '王%'
+      ``` 
+
+* 索引列进行计算(包含!=)、使用函数
+
+    ```mysql
+    -- 不使用索引
+    select * from student where age + 8 = 18
+    -- 使用索引
+    select * from student where age = 10 + 8
+    -- 不使用索引
+    select * from student where age != 18
+    -- 不使用索引
+    select * from student where  concat('name','哈') ='王哈哈';
+    -- 使用索引
+    select * from student where name = concat('王哈','哈');
+    ```
+
+* MySQL判断全表扫描比索引查询快，则不使用索引
+
+### 索引分类
+
+* 逻辑应用维度
+    * 普通索引/单列索引
+    * 前缀索引
+    * 唯一索引
+    * 主键索引/聚簇索引
+    * 全文索引Full-Text
+    * 符合索引
+    * 空间索引
+    
+* 物理存储维度
+
+    * 聚簇索引
+    
+    * 非聚簇索引
+
+* 数据存储结构维度
+
+    * B+树索引  
+    * Hash索引  
+    * R-Tree索引  
+    * Full-Text索引
+
+    索引/存储引擎|MyISAM|InnoDB|Memory|NDB
+    ---|---|---|---|---
+    B-Tree索引|支持(默认)|支持(默认)|支持|
+    HASH索引|不支持|不支持|支持(默认)|支持
+    R-Tree索引|支持|支持|不支持|
+    Full-Text索引|支持|支持|不支持|
+
+### 逻辑应用维度
+
+#### 普通索引/单列索引
+
+每个索引只包含单个列，一个表可以有多个普通索引
+
+```sql
+CREATE TABLE tablename (…,INDEX[索引名字](字段名));
+CREATE INDEX 索引的名字 ON tablename(字段名);
+ALTER TABLE table_name ADD INDEX index_name (column_name);
+```
+
+#### 前缀索引
+
+指定索引列长度，数值类型不能指定
+
+```sql
+ALTER TABLE table_name ADD INDEX index_name (column1(length));
+```
+
+#### 唯一索引
+
+索引列中的值必须唯一，可以为空(null)值
+
+```sql
+CREATE TABLE tablename (…,UNIQUE[索引名字](字段名));
+CREATE UNIQUE INDEX 索引的名字 ON tablename(字段名);
+ALTER TABLE table_name ADD UNIQUE INDEX index_name (column_name);
+```
+
+#### 主键索引/聚簇索引
+
+特殊的唯一索引，索引列中的值必须唯一，并且不允许为空(null)值
+
+```sql
+CREATE TABLE table_name (…,PRIMARY KEY (字段名))
+ALTER TABLE table_name ADD PRIMARY KEY (column_name);
+```
+
+#### 外键索引
+
+#### 全文索引
+
+只能在文本类型CHAR,VARCHAR,TEXT类型字段上创建全文索引
+
+如果使用普通索引，进行like查询时效率低
+
+```sql
+CREATE TABLE table_name (…,FULLTEXT KEY index_name (column)); CREATE FULLTEXT INDEX index_name ON table_name (column);
+ALTER TABLE `t_fulltext` ADD FULLTEXT INDEX`idx_content`(`content`);
+```
+
+#### 复合索引/联合索引
+
+多个字段组成的索引
+
+```sql
+CREATE TABLE table_name (…,INDEX index_name (column1,column2,…))
+CREATE INDEX index_name ON table_name (column1,column2,…))
+ALTER TABLE table_name ADD INDEX index_name (column1,column2,…);
+```
+
+* 遵从最左前缀原则，即mysql内部转换(检索字段排序)后的sql语句第一个字段为联合索引的第一个字段
+  
+* 范围字段后的索引字段不适用，即索引到范围字段有效
+
+      学生表联合索引：key idx_age_name_sex(age, name, sex)
+      ```mysql
+      -- 遵从最左前缀原则，age在最左边，使用索引
+      select * from student where age = 16 and name = '小张'
+      -- 不遵从最左前缀原则，不适用索引  
+      select * from student where name = '小张' and sex = '男'
+      -- mysql内部转换后(age字段提前)遵从最左前缀原则，使用索引 
+      select * from student where name = '小张' and sex = '男' and age = 18
+      -- 范围字段，只使用age索引 
+      select * from student where age > 20 and name = '小张'
+      -- 遵从最左前缀原则，但!=表达式不使用索引
+      select * from student where age != 15 and name = '小张'
+      -- 只适用age索引，原因同上
+      select * from student where age = 15 and name != '小张'
+      ```
+
+#### 空间索引(R-Tree)
+
+MyISAM支持。可用作地理数据存储，无需前缀索引，从所有维度来索引数据。
+
+### 物理存储维度
 
 #### 聚簇索引
 
-    聚簇索引并不是一种索引类型，而是数据存储方式。
-    InnoDB聚簇索引在同一结构中包含B+Tree索引和数据行
-    数据存放在叶子页中，一个表只能有一个聚簇索引
-    特点：
-      可将相关数据保存在一起
-      访问速度快(因为索引和数据保存在同一B+Tree中，通常根结点常驻内存最多需要1~3次磁盘IO)
-    劣势：
-      更新聚簇索引列代价高，被更新行移动到新位置
-      更新或插入可能导致页分裂，占用更多磁盘空间
-      上述可能导致全表扫描慢
+InnoDB中一张表只有一个聚簇索引/主键索引，且该索引建立在主键上，索引和数据(存放在叶子页中)在一起
+
+* 特点
+  * 可将相关数据保存在一起
+  * 访问速度快(因为索引和数据保存在同一B+Tree中，通常根结点常驻内存最多需要1~3次磁盘IO)
+* 劣势
+  * 更新聚簇索引列代价高，被更新行移动到新位置
+  * 更新或插入可能导致页分裂，占用更多磁盘空间
+  * 上述可能导致全表扫描慢
+
+#### 非聚簇索引/辅助索引
+
+其他索引都是非聚簇索引，索引和数据分离
+
+#### 聚簇/非聚簇索引物理存储结构
+
+* 表结构
+    ```mysql
+    CREATE TABLE `student` (
+                               `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+                               `name` varchar(50) NOT NULL DEFAULT '' COMMENT '学生姓名',
+                               `age` int(11) NOT NULL DEFAULT 0 COMMENT '学生年龄',
+                               PRIMARY KEY (`id`),
+                               KEY `idx_age` (`age`),
+                               KEY `idx_name` (`name`)
+    ) ENGINE = InnoDB CHARSET = utf8 COMMENT '学生信息';
+    ```
+*  表数据
+
+   ![StudentContents.png](images/StudentContents.png)
+
+    * 主键索引：id
+    * 非聚集索引：name，age
+
+* 聚集索引磁盘存储结构
+
+  ![AssembleIndex.png](images/AssembleIndex.png)
+
+    * 叶子结点：存储表里所有行数据
+    * 每个数据页在不同磁盘上面
+    * 数据查找（查找id=5）
+        1. 磁盘0读入内存
+        2. 二分查找法id=5在3和6中间
+        3. 通过指针p1查找到磁盘2地址
+        4. 磁盘2读入内存
+        5. 二分查找法查到id=5的数据
+
+* 非聚集索引磁盘存储结构
+
+  ![NonAssembleIndex.png](images/NonAssembleIndex.png)
+
+    * 叶子结点：存储聚集索引键
+    * 数据查找（查找name=小徐）
+        1. 磁盘0读入内存
+        2. 二分查找法查到对象在p1所指地址上
+        3. 通过指针p1查找到磁盘2地址
+        4. 二分查找法查到小徐id=4
+        5. 重复上面聚集索引步骤
+
+### 数据结构存储维度
 
 ##### B+树
 
@@ -717,35 +936,43 @@ Full-Text索引|支持|支持|不支持|
 
 #### hash索引
 
-    对每一行数据，存储引擎对所有索引列计算一个哈希码并存储在索引中
-    MySQL哈希表(buckets):哈希值+指向数据行的指针
+* 对每一行数据，存储引擎对所有索引列计算一个哈希码并存储在索引中
 
-![HashCluster.png](images/HashCluster.png)
+* MySQL哈希表(buckets):哈希值+指向数据行的指针
 
-    哈希冲突：散列码相同，需多次遍历冲突数据直到找到相应数据
-    哈希索引效率低下：大量数据时，hash表变得庞大，每次查找都需要遍历哈希表，性能下降
-    查找步骤
-      1. 检索条件(索引列)通过相同算法计算出hash值 
-      2. hash表中找到存储地址
-      3. 根据地址获取数据
-      4. 确定是否是需要查询的数据(避免哈希冲突)
-    哈希索引使用场景：只需一次哈希算法可立即找到相应位置
+    ![HashCluster.png](images/HashCluster.png)
+
+* 哈希冲突：散列码相同，需多次遍历冲突数据直到找到相应数据
+* 哈希索引效率低下：大量数据时，hash表变得庞大，每次查找都需要遍历哈希表，性能下降
+
+查找步骤
+  1. 检索条件(索引列)通过相同算法计算出hash值 
+  2. hash表中找到存储地址
+  3. 根据地址获取数据
+  4. 确定是否是需要查询的数据(避免哈希冲突)
+
+* 哈希索引使用场景：只需一次哈希算法可立即找到相应位置
 
 #### 自适应hash索引
 
 InnoDB引擎特殊功能，当某些索引被频繁使用时，在内存中基于B-Tree索引之上在创建一个hash索引，用户可关闭该功能
 
-#### 空间索引(R-Tree)
+### 联合主键
 
-MyISAM支持。可用作地理数据存储，无需前缀索引，从所有维度来索引数据。
+MySQL不能同时存在多个独立主键，但可以有多个unique
 
-#### 全文索引(Full-Text)
+```mysql
+CREATE TABLE `user` (
 
-MyISAM支持。基于相似度查询，即关键字匹配查询
+`userid` SMALLINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 
-#### 覆盖索引
+`username` CHAR(16) NOT NULL,
 
-指索引覆盖或包含了所有需查询的字段，不再需要根据索引再重新回表查询数据
+`password` char(40) NOT NULL,
+-- 联合主键
+UNIQUE(`username`)
+);
+```
 
 ### 索引使用原则
 
@@ -769,144 +996,6 @@ MyISAM支持。基于相似度查询，即关键字匹配查询
     * 删除重复索引：相同列上按照相同顺序创建的相同类型的索引
     * 如Key1(A,B)后再创建Key2(A),Key2是Key1的前缀索引
     
-### 索引失效
-
-```mysql
-key 'idx_age'(age)
-key 'idx_name'(name)
-``` 
-
-* 查询字段中，索引列出现隐式类型转换
-
-    * 如字符串字段索引中，where xx = 数值(隐式转换成字符串)，不使用索引
-    * 如字符串字段索引中，where xx = '数值'，使用索引
-
-* or操作
-
-    * or前使用了索引列，索引列有效
-    * or后使用索引列，索引列无效
-
-* like操作
-
-    * 通配符在前，不使用索引
-    * 通配符在后，使用索引
-      ```mysql
-      -- 不使用索引
-      select * from student where name like '%小';
-      -- 使用索引
-      select * from student where 'name' like '王%'
-      ``` 
-      
-* 索引列进行计算(包含!=)、使用函数
-
-    ```mysql
-    -- 不使用索引
-    select * from student where age + 8 = 18
-    -- 使用索引
-    select * from student where age = 10 + 8
-    -- 不使用索引
-    select * from student where age != 18
-    -- 不使用索引
-    select * from student where  concat('name','哈') ='王哈哈';
-    -- 使用索引
-    select * from student where name = concat('王哈','哈');
-    ```
-
-* MySQL判断全表扫描比索引查询快，则不使用索引
-
-### 索引分类
-
-* 聚集索引/主键索引
-
-  所有行数都会按照主键索引进行排序
-
-* 非聚集索引
-
-  给普通字段加上索引
-  
-* 联合索引：多个字段组成的索引
-
-  * 遵从最左前缀原则，即mysql内部转换(检索字段排序)后的sql语句第一个字段为联合索引的第一个字段
-  * *范围字段后的索引字段不适用，即索引到范围字段有效*
-        
-        学生表联合索引：key idx_age_name_sex(age, name, sex)
-        ```mysql
-        -- 遵从最左前缀原则，age在最左边，使用索引
-        select * from student where age = 16 and name = '小张'
-        -- 不遵从最左前缀原则，不适用索引  
-        select * from student where name = '小张' and sex = '男'
-        -- mysql内部转换后(age字段提前)遵从最左前缀原则，使用索引 
-        select * from student where name = '小张' and sex = '男' and age = 18
-        -- 范围字段，只使用age索引 
-        select * from student where age > 20 and name = '小张'
-        -- 遵从最左前缀原则，但!=表达式不使用索引
-        select * from student where age != 15 and name = '小张'
-        -- 只适用age索引，原因同上
-        select * from student where age = 15 and name != '小张'
-        ```
-
-### 索引存储结构
-
-* 表结构
-    ```mysql
-    CREATE TABLE `student` (
-                               `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键id',
-                               `name` varchar(50) NOT NULL DEFAULT '' COMMENT '学生姓名',
-                               `age` int(11) NOT NULL DEFAULT 0 COMMENT '学生年龄',
-                               PRIMARY KEY (`id`),
-                               KEY `idx_age` (`age`),
-                               KEY `idx_name` (`name`)
-    ) ENGINE = InnoDB CHARSET = utf8 COMMENT '学生信息';
-    ```
-*  表数据
-
-    ![StudentContents.png](images/StudentContents.png)
-
-    * 主键索引：id
-    * 非聚集索引：name，age
-    
-* 聚集索引磁盘存储结构
-
-    ![AssembleIndex.png](images/AssembleIndex.png)
-
-    * 叶子结点：存储表里所有行数据
-    * 每个数据页在不同磁盘上面
-    * 数据查找（查找id=5）
-        1. 磁盘0读入内存
-        2. 二分查找法id=5在3和6中间
-        3. 通过指针p1查找到磁盘2地址
-        4. 磁盘2读入内存
-        5. 二分查找法查到id=5的数据
-    
-* 非聚集索引磁盘存储结构
-
-    ![NonAssembleIndex.png](images/NonAssembleIndex.png)
-
-    * 叶子结点：存储聚集索引键
-    * 数据查找（查找name=小徐）
-        1. 磁盘0读入内存
-        2. 二分查找法查到对象在p1所指地址上
-        3. 通过指针p1查找到磁盘2地址
-        4. 二分查找法查到小徐id=4
-        5. 重复上面聚集索引步骤
-    
-### 联合主键
-
-MySQL不能同时存在多个独立主键，但可以有多个unique
-
-```mysql
-CREATE TABLE `user` (
-
-`userid` SMALLINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-
-`username` CHAR(16) NOT NULL,
-
-`password` char(40) NOT NULL,
--- 联合主键
-UNIQUE(`username`)
-);
-```
-
 ## MySQL存储引擎
 
 ### InnoDB
@@ -1074,7 +1163,7 @@ CHARACTER SET name|指定一个一个字符集
 
 ### 定位低效SQL
 
-* 慢查询日志：可能影响性能，调优时可开启
+* 慢查询日志
   
     * SHOW VARIABLES LIKE 'slow_query%';
       * slow_query_log：开启状态 
@@ -1092,6 +1181,8 @@ CHARACTER SET name|指定一个一个字符集
     
 ### 优化SQL
 
+* 使用索引
+
 * count
 
     * 不要求完全精确结果的场景，可使用explain估算近似值(并不真正执行查询)
@@ -1102,7 +1193,20 @@ CHARACTER SET name|指定一个一个字符集
 
     * Group By，Order By只涉及一个列，优化器可使用索引优化
     
-* 优化Group By
+    * 分拆关联查询
+    
+        ```sql
+        SELECT * FROM tag
+        JOIN tag_post ON tag_id = tag.id
+        JOIN post ON tag_post.post_id = post.id
+        WHERE tag.tag = 'mysql';
+        -- 分解为：
+        SELECT * FROM tag WHERE tag = 'mysql';
+        SELECT * FROM tag_post WHERE tag_id = 1234;
+        SELECT * FROM post WHERE post.id in (123,456,567);
+        ```
+    
+* 优化Order By
 
     * 不关心结果集顺序，即当不显示指定排序的列(Order By)时，Order By Null禁止排序
 
@@ -1118,6 +1222,16 @@ CHARACTER SET name|指定一个一个字符集
         * 最简单：使用覆盖索引扫描，而非查询所有列，再根据需要进行相应关联操作
         * 从上一次读取数据位置开始扫描，避免使用offset
     
+            ```sql
+            SELECT <cols> FROM profiles where sex='M' order by rating limit 100000, 10;
+            SELECT <cols>
+            FROM profiles
+                inner join
+                (SELECT id form FROM profiles where x.sex='M' order by rating limit 100000, 10)
+                as x using(id);
+            -- 先从覆盖索引中获取 100010 个 id，再丢充掉前 100000 条 id，保留最后 10 个 id 即可
+            ```
+    
 * 优化union查询
     
     * union查询原理：创建并填充临时表，默认临时表distinct，唯一性检查消耗高
@@ -1130,7 +1244,9 @@ CHARACTER SET name|指定一个一个字符集
 * 优化insert
 
     * 一次性插入多个值的inert语句，避免使用多次insert
-    * insert into userInfo(name,password) values('ddf','8979'),('fsd','343'),('sf','45');
+        
+        insert into userInfo(name,password) values('ddf','8979'),('fsd','343'),('sf','45');
+      
     * 插入语句
       * INSERT...VALUES语句
         
@@ -1145,7 +1261,49 @@ CHARACTER SET name|指定一个一个字符集
             SET <列名1> = <值1>，
             <列名2> = <值2>，
             ...
+
+### 优化SQL实例
+
+1. 查看是否开启慢查询
+
+    ```sql
+    SHOW VARIABLES LIKE '%slow_query_log%';
+    ```
+    ![SlowQuery.png](SlowQuery.png)
+
+2. 未开启的话开启慢查询
    
+    ```sql
+    mysql> set global slow_query_log=1;
+    mysql> SHOW VARIABLES LIKE 'long_query_time%';
+    --- 修改为3秒
+    mysql> set global long_query_time=3;
+    ```
+    ![SlowQuery2.png](SlowQuery2.png)
+
+3. 测试慢查询
+    
+    ```sql
+    select sleep(4);
+    ```
+   
+4. 查看慢查询日志
+
+    ![SlowQuery1.png](SlowQuery1.png)
+
+5. explain获取执行计划，找到对应的连接类型
+
+    ![SlowQuery1.png](SlowQuery3.png)
+
+   连接类型是主键id，是最快的const类型，并且只有一行rows需要检索
+
+6. 查看慢查询出现次数
+
+    ```sql
+    mysql> show global status like '%Slow_queries%';
+    ```
+    ![SlowQuery4.png](SlowQuery4.png)
+
 ## MySQL架构
 
 ### 主从复制
@@ -1214,4 +1372,24 @@ CHARACTER SET name|指定一个一个字符集
 
     水平切分作用：业务数据量大，当单库的容量成为性能瓶颈，
     我们希望提高数据库写性能时，降低单库容量，可采用水平切分
+
+#### 为什么不用红黑树二用B+树
+
+* 红黑树本质是二叉树，数据量大时效率低
+
+* B+树是多叉的，有效减少磁盘IO
+
+* 底层数据结构的关系
+
+#### InnoDB和MyIsam区别
+
+区别|InnoDB|MyIsam
+---|---|---
+数据库默认|5.5后|5.5前
+事务|支持|不支持
+锁|行级锁|只支持表级锁
+读写性能|增删改查性能优|查询性能优
+存储结构|存储为文件|存储为三个文件(表定义/数据/树荫)
+存储空间|更多内存|-
+崩溃恢复|有|无
 

@@ -165,7 +165,7 @@ Java提供许多同步方案供我们使用，从轻到重同有三种方式
            
          * Collections.synchronizedMap(new HashMap());
    
-*  juc：java.util并发包下的容器
+*  juc：java.util并发包下的容器：并发容器
 
    * Concurrent开头的容器：降低锁粒度来提高并发性能
    
@@ -210,4 +210,56 @@ Java提供许多同步方案供我们使用，从轻到重同有三种方式
       * UnmodifiableSet
 
       * UnmodifiableMap
+
+
+### Java使用CAS的地方
+
+#### 原子类
+
+以AtomicInteger为例，提供了许多原子操作方法，底层采用操作系统提供的CAS原子指令来实现
+
+* compareAndExchangeInt：原子替换整数值
+
+* getAndIncrement：增加指定值原理
+
+   如getAndIncrement以原子方式将当前的值加1，步骤：
    
+   1. 在for死循环中获取AtomicInteger存储的数值
+   
+   2. 对AtomicInteger当前的值加1
+   
+   3. 调用compareAndSet方法进行原子更新
+   
+   1. 检查当前数值是否等于expect
+   
+   2. 等于则说明当前值未被其他线程修改，则将当前值更新为next
+   
+   3. 否则更新失败返回false，程序进入for循环重新进行compareAndSet操作
+   
+#### AQS
+
+队列同步器，用于构建锁或其他同步组件的基础框架，使用一个volatile int state变量作为共享资源，Lock实现类都基于AQS实现
+
+如果线程资源获取失败，则进入同步队列等待
+
+获取成功，执行临界区代码，释放资源时会通知同步队列中的等待线程
+
+CAS原理
+
+* 同步队列增加节点时，以CAS方式尝试，失败则进入自旋状态，并反复以CAS方式进行尝试
+
+* 以共享方式释放同步状态时，以CAS方式对同步状态进行修改
+
+#### 并发容器/线程安全的集合
+
+以ConcurrentHashMap为例，内部多次使用CAS。原理：
+
+* 初始化数组时，以CAS方式修改初始化状态，避免多个线程同时进行初始化
+
+* put方式初始化头节点时，使用CAS
+
+* resize时，使用CAS
+
+
+
+
