@@ -1269,7 +1269,7 @@ CHARACTER SET name|指定一个一个字符集
     ```sql
     SHOW VARIABLES LIKE '%slow_query_log%';
     ```
-    ![SlowQuery.png](SlowQuery.png)
+    ![SlowQuery.png](images/SlowQuery.png)
 
 2. 未开启的话开启慢查询
    
@@ -1279,7 +1279,7 @@ CHARACTER SET name|指定一个一个字符集
     --- 修改为3秒
     mysql> set global long_query_time=3;
     ```
-    ![SlowQuery2.png](SlowQuery2.png)
+    ![SlowQuery2.png](images/SlowQuery2.png)
 
 3. 测试慢查询
     
@@ -1289,11 +1289,11 @@ CHARACTER SET name|指定一个一个字符集
    
 4. 查看慢查询日志
 
-    ![SlowQuery1.png](SlowQuery1.png)
+    ![SlowQuery1.png](images/SlowQuery1.png)
 
 5. explain获取执行计划，找到对应的连接类型
 
-    ![SlowQuery1.png](SlowQuery3.png)
+    ![SlowQuery1.png](images/SlowQuery3.png)
 
    连接类型是主键id，是最快的const类型，并且只有一行rows需要检索
 
@@ -1302,7 +1302,7 @@ CHARACTER SET name|指定一个一个字符集
     ```sql
     mysql> show global status like '%Slow_queries%';
     ```
-    ![SlowQuery4.png](SlowQuery4.png)
+    ![SlowQuery4.png](images/SlowQuery4.png)
 
 ## MySQL架构
 
