@@ -13,6 +13,7 @@ public class NewbieProgrammer extends Programmer {
         if (bug.value > 0 && bug.value <= 20) {
             solve(bug);
         } else if (super.next != null){
+            // 沿着责任链传递请求
             super.next.handle(bug);
         } else {
             try {

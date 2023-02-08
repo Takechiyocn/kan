@@ -1,4 +1,6 @@
-package designstructure.creational.factory3abstractfactory.phonefactory;
+package designstructure.creational.factory3abstractfactory.absclazz;
+
+import designstructure.creational.factory3abstractfactory.phoneimplement.MobilePhone;
 
 /**
  * @ClassName IPhone

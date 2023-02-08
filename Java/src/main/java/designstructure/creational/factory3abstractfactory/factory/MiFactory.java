@@ -1,9 +1,9 @@
 package designstructure.creational.factory3abstractfactory.factory;
 
-import designstructure.creational.factory3abstractfactory.macfactory.Computer;
-import designstructure.creational.factory3abstractfactory.macfactory.MiComputer;
-import designstructure.creational.factory3abstractfactory.phonefactory.MiPhone;
-import designstructure.creational.factory3abstractfactory.phonefactory.MobilePhone;
+import designstructure.creational.factory3abstractfactory.absclazz.Computer;
+import designstructure.creational.factory3abstractfactory.macimplement.MiComputer;
+import designstructure.creational.factory3abstractfactory.phoneimplement.MiPhone;
+import designstructure.creational.factory3abstractfactory.phoneimplement.MobilePhone;
 
 /**
  * @ClassName MiFactory

@@ -1,5 +1,7 @@
 package designstructure.structural.struct3composite.transparent;
 
+import designstructure.structural.struct3composite.transparent.absclazz.Component;
+
 import java.util.ArrayList;
 import java.util.List;
 

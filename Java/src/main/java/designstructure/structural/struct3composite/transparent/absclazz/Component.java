@@ -1,4 +1,4 @@
-package designstructure.structural.struct3composite.transparent;
+package designstructure.structural.struct3composite.transparent.absclazz;
 
 /**
  * @ClassName Component

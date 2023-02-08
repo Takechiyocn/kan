@@ -1,4 +1,4 @@
-package designstructure.creational.factory3abstractfactory.macfactory;
+package designstructure.creational.factory3abstractfactory.absclazz;
 
 /**
  * @ClassName Computer

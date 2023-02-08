@@ -1,6 +1,6 @@
 package designstructure.structural.struct3composite;
 
-import designstructure.structural.struct3composite.transparent.Component;
+import designstructure.structural.struct3composite.transparent.absclazz.Component;
 import designstructure.structural.struct3composite.transparent.Employee;
 import designstructure.structural.struct3composite.transparent.Manager;
 

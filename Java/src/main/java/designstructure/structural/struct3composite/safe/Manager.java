@@ -1,5 +1,7 @@
 package designstructure.structural.struct3composite.safe;
 
+import designstructure.structural.struct3composite.safe.absclazz.Component;
+
 import java.util.ArrayList;
 import java.util.List;
 

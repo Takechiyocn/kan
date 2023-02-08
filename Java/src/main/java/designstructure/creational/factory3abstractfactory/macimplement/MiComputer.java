@@ -1,4 +1,6 @@
-package designstructure.creational.factory3abstractfactory.macfactory;
+package designstructure.creational.factory3abstractfactory.macimplement;
+
+import designstructure.creational.factory3abstractfactory.absclazz.Computer;
 
 /**
  * @ClassName MiComputer

@@ -1,4 +1,4 @@
-package designstructure.structural.struct3composite.safe;
+package designstructure.structural.struct3composite.safe.absclazz;
 
 /**
  * @ClassName Component

@@ -1,6 +1,6 @@
 package designstructure.structural.struct3composite;
 
-import designstructure.structural.struct3composite.safe.Component;
+import designstructure.structural.struct3composite.safe.absclazz.Component;
 import designstructure.structural.struct3composite.safe.Employee;
 import designstructure.structural.struct3composite.safe.Manager;
 

@@ -11,9 +11,10 @@ import designstructure.structural.struct2bridge.shapeif.IShape;
  * @Version 1.0
  */
 public class Rectangle implements IShape {
-    // 关联:以类属性形式表现
+    // 集合：对象包含关系，强调整体(形状)与部分(颜色)的关系
     private IColor color;
 
+    // 依赖：以方法形参、局部变量形式体现
     public void setColor(IColor color) {
         this.color = color;
     }

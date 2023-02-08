@@ -10,8 +10,8 @@ import designstructure.structural.struct4decorator.enhance.IBeauty;
  * @Version 1.0
  */
 public class EarringDecorator implements IBeauty {
-    // 关联association:作为类属性
     // 依赖dependency:形参、局部参数、静态方法调用
+    // 关联association:作为类属性
     private IBeauty object;
 
     public EarringDecorator(IBeauty object) {

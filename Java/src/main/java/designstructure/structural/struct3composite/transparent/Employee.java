@@ -1,5 +1,7 @@
 package designstructure.structural.struct3composite.transparent;
 
+import designstructure.structural.struct3composite.transparent.absclazz.Component;
+
 /**
  * @ClassName Employee
  * @Description

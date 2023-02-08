@@ -1,4 +1,4 @@
-package designstructure.creational.factory3abstractfactory.phonefactory;
+package designstructure.creational.factory3abstractfactory.phoneimplement;
 
 /**
  * @ClassName MobilePhone

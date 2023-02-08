@@ -5,7 +5,7 @@ import designstructure.structural.struct7proxy.interfaces.IHttp;
 
 /**
  * @ClassName HttpProxy
- * @Description 静态代理
+ * @Description 静态代理：将代理对象分装在代理类里实现控制
  * @Author moku
  * @Date 2022/12/22 23:16
  * @Version 1.0
