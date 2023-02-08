@@ -100,6 +100,8 @@ Redis是一个开源的高性能键值对(key-value)的内存数据库，可用�
 * Hash
 
    String的key和value映射表，适合存储对象
+
+    hash对象保存的键和值字符串长度都小于64字节
  
    常用命令：hget、hset、hgetall
 
@@ -115,7 +117,7 @@ Redis是一个开源的高性能键值对(key-value)的内存数据库，可用�
 
 * set
 
-   String类型的无序(且没有重复)集合，集合通过hashTable实现。
+   String类型的无序(自动去重)集合，集合通过hashTable实现。
   
    常用命令：sdd、spop、smembers(判断成员是否在set集合中)、sunion等
   
@@ -123,7 +125,9 @@ Redis是一个开源的高性能键值对(key-value)的内存数据库，可用�
 
 * zset 
    
-   String类型的没有重复的集合
+   String类型的有序没有重复的集合
+
+    有序集合保存元素数量默认小于128个，所有元素长度默认小于64字节
   
    常用命令：zadd、zrange、zrem、zcard等
   
@@ -132,6 +136,20 @@ Redis是一个开源的高性能键值对(key-value)的内存数据库，可用�
    内部实现：内部使用HashMap和跳跃表skipList保证数据的存储和有序
 
    ![RedisDataType.png](images/RedisDataType.png)
+
+##### Hash/String
+
+* String
+
+    * 每次需要访问大量的字段
+    
+    * 存储的结构具有多层嵌套的时候
+    
+* Hash
+  
+    * 大多数情况中只需要访问少量的字段
+    
+    * 自己始终知道哪些字段可用，防止mget时获取不到想要的数据
 
 #### Redis缓存
 
