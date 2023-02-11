@@ -135,19 +135,47 @@ data=socket.read()
 
     * 本地IO(FileChannel:阻塞式)
     
-        * FileInputStream/FileOutputStream
+        * 流式：FileInputStream/FileOutputStream
+            
+            ```java
+            // 1. 通过本地IO的方式获取通道
+            FileInputStream fis = new FileInputStream("src/main/java/io/nio/file/fis.txt");
+            // 得到文件的输入通道
+            FileChannel inChannel = fis.getChannel();
+            ```
     
-        * RandomAccessFile
+        * 非流式：RandomAccessFile
+    
+            ```java
+            RandomAccessFile read = new RandomAccessFile(source, "rw");
+            RandomAccessFile write = new RandomAccessFile(des, "rw");
+            // 读写channel
+            FileChannel readChannel = read.getChannel();
+            FileChannel writeChannel = write.getChannel();
+            ```
     
     * 网络IO
     
         * Socket
           
+            ```java
+            SocketChannel socketChannel = SocketChannel.open(new InetSocketAddress("127.0.0.1", 6666));
+            ```
+          
         * ServerSocket
+    
+            ```java
+            // 1. 获取网络文件通道
+            ServerSocketChannel server = ServerSocketChannel.open();
+            ```
           
         * DatagramSocket
     
 * 静态方法open()
+
+    ```java
+    FileChannel inChannel2 = FileChannel.open(Paths.get("src/main/java/io/nio/file/fis.txt"), StandardOpenOption.WRITE);
+    ```
 
 * Files工具类newByteChannel()方法 
 
@@ -344,6 +372,7 @@ selector可用来在线程中关联多个通道，并进行事件监听
 # 异步IO(AIO) 
 
 异步非阻塞
+
 ![AIO.png](images/AIO.png)
 
 ## 异步IO模型

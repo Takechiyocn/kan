@@ -2,16 +2,19 @@
 
 包装器wrapper：基本类型都有一个与之对应的类
 
-基本数据类型|字节数|包装类|派生/继承于|包装类常量池
----|---|---|---|---
-byte|1字节|Byte|Number|-128~127
-short|2字节|Short|Number|-128~127
-int|4字节|Integer|Number|-128~127
-long|8字节|Long|Number|-128~127
-float|4字节|Float|Number|无
-double|8字节|Double|Number|无
-char|2字节|Character|-|0~127
-boolean|1字节|Boolean|-|无
+基本数据类型|字节数|包装类|派生/继承于|包装类常量池|Switch支持|数据范围|默认值
+---|---|---|---|---|---|---|---
+byte|1字节|Byte|Number|-128~127|支持|-127～128|0
+short|2字节|Short|Number|-128~127|支持|-32768～32767|0
+int|4字节|Integer|Number|-128~127|支持|-2^31 ～ 2^31 - 1|0
+long|8字节|Long|Number|-128~127|-|-2^63 ～ 2^63 - 1|0L
+float|4字节|Float|Number|无|-|-|0.0f
+double|8字节|Double|Number|无|-|-|0.0d
+char|2字节|Character|-|0~127|支持|-|\u0000
+boolean|1字节|Boolean|-|无|-|-|false
+String|-|-|-|-|支持|-|null
+Enum|-|-|-|-|支持|-|-
+
 
 * 自动装箱(autoboxing)
   

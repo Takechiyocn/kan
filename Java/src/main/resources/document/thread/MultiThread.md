@@ -165,7 +165,7 @@ Java提供许多同步方案供我们使用，从轻到重同有三种方式
            
          * Collections.synchronizedMap(new HashMap());
    
-*  juc：java.util并发包下的容器：并发容器
+*  juc：java.util.Concurrent并发包下的容器：并发容器
 
    * Concurrent开头的容器：降低锁粒度来提高并发性能
    
@@ -203,7 +203,7 @@ Java提供许多同步方案供我们使用，从轻到重同有三种方式
         
       * SingletonMap
    
-   * UnmodifiableXxx：返回指定结合对象的不可变视图
+   * UnmodifiableXxx：返回指定集合对象的不可变视图
 
       * UnmodifiableList
 

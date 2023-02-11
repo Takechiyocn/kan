@@ -24,7 +24,7 @@ public class FileInputStreamBase {
     }
 
     private static void fileInputStreamLoopReadSpecified() throws IOException {
-        FileInputStream fis = new FileInputStream("src/main/java/io/stream/file/file/fis.txt");
+        FileInputStream fis = new FileInputStream("src/main/java/io/traditionalIO/stream/file/file/fis.txt");
 
         int i = 0;
         int rCount = 0;
@@ -36,6 +36,7 @@ public class FileInputStreamBase {
         // 跳过指定字节不读
         fis.skip(3);
 
+        // 读取指定字节数
         while ((rCount = fis.read(bytes)) != -1) {
             // TODO：换行\r字符串 无法输出(sout时换行前内容被截断)
             String s = new String(bytes, 0, rCount);

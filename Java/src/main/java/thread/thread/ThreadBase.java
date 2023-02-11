@@ -20,7 +20,7 @@ public class ThreadBase {
 //        new Thread(Runnable target).start();
         new Thread(t2).start();
 
-        // Lambda表达式
+        // Lambda表达式直接实现Runnable接口
         ThreadLambda t3 = new ThreadLambda();
         t3.newThread();
     }

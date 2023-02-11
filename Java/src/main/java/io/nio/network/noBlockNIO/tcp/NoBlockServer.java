@@ -18,7 +18,7 @@ import java.util.Iterator;
 public class NoBlockServer {
     public static void main(String[] args) throws IOException {
 
-        // 1. 获取网络文件通道
+        // 1. 获取网络文件通道:服务器端创建TCP连接对象
         ServerSocketChannel server = ServerSocketChannel.open();
 
         // 2. 切换成非阻塞模式
@@ -43,7 +43,7 @@ public class NoBlockServer {
                 SelectionKey selectionKey = iterator.next();
                 // 接收事件就绪
                 if (selectionKey.isAcceptable()) {
-                    // 8. 获取客户端连接
+                    // 8. 获取客户端连接：接收客户请求
                     SocketChannel client = server.accept();
 
                     // 8.1 客户端连接切换成非阻塞模式

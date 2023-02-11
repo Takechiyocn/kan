@@ -21,7 +21,7 @@ import java.util.Iterator;
 public class NoBlockClient2 {
     public static void main(String[] args) throws IOException {
 
-        // 1. 获取通道
+        // 1. 获取通道:客户端创建通信的Socket对象
         SocketChannel socketChannel = SocketChannel.open(new InetSocketAddress("127.0.0.1", 6666));
 
         // 1.1 切换成非阻塞模式
