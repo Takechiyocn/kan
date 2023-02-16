@@ -285,15 +285,68 @@ public Map<String, Object> validate(
 
     启用组件扫描
 
-### @Service
-
-* 用于标注业务层组件
-  
-* 让组件扫描将类识别为一个组件，并创建该类实例作为Spring上下文中的bean
-
 ### @Controller注解
 
 * 用于标注控制层组件(如Struts中的action)
+
+* 让组件扫描将类识别为一个组件，并创建该类实例作为Spring上下文中的bean
+
+### @RestController注解
+
+* 等价于@Controller注解+@ResponseBody注解
+
+* 通常用于开发一个和页面交互数据的控制的时候
+
+### @RequestMapping注解
+
+* 映射web请求(访问路径和参数)、处理类和方法
+
+### RequestBody@注解
+
+* request参数放在request体中，而非链接地址后面
+
+### ResponseBody@注解
+
+* 将Controller的方法的返回对象，适当的HttpMessageConverter转换为指定格式后，写入到Response对象的body体中
+
+* 使用时机：返回的数据不是html标签的页面，而是其他某种格式的数据(如json、xml)时
+
+### @RequestParam注解
+
+* 映射参数列表
+  
+* Controller方法的形参和URL参数名不一致可使用该注解绑定(一致时可不使用)
+
+### @PathVariable注解
+
+* RESTful风格URL，通过@PathVariable完成请求参数与形参的绑定
+
+### @CookieValue注解
+
+* 获取Cookie中的值
+
+```java
+import org.springframework.web.bind.annotation.CookieValue;
+
+@RequestMapping("/testCookieValue")
+public String testCookieValue(@CookieValue("JESSIONID") String sessionId) {
+    return "success";
+  }
+```
+
+### @注解
+
+
+
+### @Service
+
+* 用于标注业务层组件
+
+* 让组件扫描将类识别为一个组件，并创建该类实例作为Spring上下文中的bean
+
+###  @Component注解
+
+* 表示泛型组件，当组件不好归类的时候，可以使用这个组件进行注解
 
 * 让组件扫描将类识别为一个组件，并创建该类实例作为Spring上下文中的bean
 
@@ -305,11 +358,7 @@ public Map<String, Object> validate(
 
 * 将标注类中的数据访问异常封装为Sprig的数据访问异常类型
 
-###  @Component注解
 
-* 表示泛型组件，当组件不好归类的时候，可以使用这个组件进行注解
-
-* 让组件扫描将类识别为一个组件，并创建该类实例作为Spring上下文中的bean
 
 ### @Autowired注解
 
