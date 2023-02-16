@@ -2,7 +2,7 @@ package algorithms.queue;
 
 /**
  * @ClassName ArrayQueue
- * @Description
+ * @Description 数组实现队列
  * @Author moku
  * @Date 2023/2/16 1:03
  * @Version 1.0

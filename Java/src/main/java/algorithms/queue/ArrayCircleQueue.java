@@ -2,7 +2,7 @@ package algorithms.queue;
 
 /**
  * @ClassName ArrayCircleQueue
- * @Description
+ * @Description 数组实现环形队列
  * @Author moku
  * @Date 2023/2/16 9:29
  * @Version 1.0

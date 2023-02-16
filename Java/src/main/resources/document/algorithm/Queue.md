@@ -2,7 +2,7 @@
 
 1. 初始化
 
-![img.png](images/img.png)
+![img.png](images/queue/img.png)
 
 ```java
 // 最大容量
@@ -21,7 +21,7 @@ public ArrayCircleQueue(int maxSize) {
 
 2. 队列满
 
-![img_1.png](images/img_1.png)
+![img_1.png](images/queue/img_1.png)
 
 ```java
 public boolean isFul() {
@@ -31,7 +31,7 @@ public boolean isFul() {
 
 3. 有效数据个数
 
-![img_2.png](images/img_2.png)
+![img_2.png](images/queue/img_2.png)
 
 ```java
 public int size() {
@@ -41,7 +41,7 @@ public int size() {
 
 4. 添加元素
 
-![img_3.png](images/img_3.png)
+![img_3.png](images/queue/img_3.png)
 
 ```java
 public void add(int n) {

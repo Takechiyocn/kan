@@ -4,7 +4,7 @@
 
 #### 概念
 
-![Tree.png](btree/Tree.png)
+![Tree.png](images/btree/Tree.png)
 
 特性
 
@@ -32,7 +32,7 @@
     };
     ```
     
-    ![TreeStructure.png](btree/TreeStructure.png)
+    ![TreeStructure.png](images/btree/TreeStructure.png)
 
 2. 双亲表示法
 
@@ -40,7 +40,7 @@
 
 1. 文件系统目录树结构
 
-    ![TreeInApplication.png](btree/TreeInApplication.png)
+    ![TreeInApplication.png](images/btree/TreeInApplication.png)
 
 ### 二叉树
 
@@ -50,13 +50,13 @@
 
 * 每个节点**最多**有两颗子树，即各个节点的度不能超过2(0/1/2)
 
-    ![BinaryTree.png](btree/BinaryTree.png)
+    ![BinaryTree.png](images/btree/BinaryTree.png)
 
 #### 满二叉树
 
 二叉树中除了叶子节点，每个节点的度都为2
 
-![BinaryTreeFull.png](btree/BinaryTreeFull.png)
+![BinaryTreeFull.png](images/btree/BinaryTreeFull.png)
 
 #### 完全二叉树
 

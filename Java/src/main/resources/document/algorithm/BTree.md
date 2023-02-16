@@ -4,7 +4,7 @@
 
 多路自平衡搜索树，类似普通的二叉树，允许每个节点有多个子结点
 
-![BTree.png](btree/BTree.png)
+![BTree.png](images/btree/BTree.png)
 
 特性
 
@@ -18,7 +18,7 @@
 
 #### 范例
 
-![BTreeSample.png](btree/BTreeSample.png)
+![BTreeSample.png](images/btree/BTreeSample.png)
 
 1. 每个节点占用一个盘块的磁盘空间
 
@@ -47,7 +47,7 @@
 
 B-Tree变体，也是一种多路自平衡查找树
 
-![BPlusTree.png](btree/BPlusTree.png)
+![BPlusTree.png](images/btree/BPlusTree.png)
 
 特性
 
@@ -63,7 +63,7 @@ B-Tree变体，也是一种多路自平衡查找树
 
     ※ Hash索引：随机IO
     
-![BPlusTreeSample.png](btree/BPlusTreeSample.png)
+![BPlusTreeSample.png](images/btree/BPlusTreeSample.png)
 
 #### 使用场景
 
