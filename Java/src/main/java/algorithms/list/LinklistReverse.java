@@ -1,4 +1,4 @@
-package algorithms.linklist;
+package algorithms.list;
 
 /**
  * @ClassName LinklistReverse

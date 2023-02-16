@@ -18,3 +18,14 @@ Java8新特性：Stream流
 
 Collection.stream()得到一个Stream流对象，通过该对象可以调用Stream接口相应的方法对集合进行过滤、排序、截断(丢弃/获取)等操作
 
+### map()和peek()
+
+1. map()：函数型接口参数，有返回值
+```java
+<R> Stream<R> map(Function<? super T, ? extends R> mapper);
+```
+
+2. peek：消费型接口参数，无返回值
+```java
+Stream<T> peek(Consumer<? super T> action);
+```

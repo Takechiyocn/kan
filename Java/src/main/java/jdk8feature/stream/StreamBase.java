@@ -45,6 +45,8 @@ public class StreamBase {
 //                .limit(3)
                 .collect(Collectors.toList());
 //                .forEach(System.out::println);
-        System.out.println(list);
+        for (User user : list) {
+            System.out.println(user);
+        }
     }
 }
