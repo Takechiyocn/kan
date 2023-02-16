@@ -5,6 +5,7 @@ import bean.User;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @ClassName StreamBase
@@ -30,12 +31,20 @@ public class StreamBase {
         // 集合负责存储
         List<User> list = new ArrayList<>(Arrays.asList(u1, u2, u3, u4, u5));
         // 流负责计算
-        list.stream()
-                .filter(user -> {return user.getId()%2 ==0;})
-                .filter(user -> {return user.getAge() > 23;})
-                .map(user -> {return user.getName().toUpperCase();})
-                .sorted((uu1, uu2) -> {return uu2.compareTo(uu1);})
-                .limit(1)
-                .forEach(System.out::println);
+        list = list.stream()
+                // 过滤
+//                .filter(user -> {return user.getId()%2 ==0;})
+//                .filter(user -> {return user.getAge() > 23;})
+                // map:支持函数式接口(Function:函数型接口)
+                // 返回给定函数应用于此流的结果组成的流，此处返回String字符串user.getName().toUpperCase()
+//                .map(user -> {return user.getName().toUpperCase();})
+                // 针对String类型字符串，非对象
+//                .map(String::toUpperCase)
+                .peek(user -> user.setAge(user.getAge()+1))
+//                .sorted((uu1, uu2) -> {return uu2.compareTo(uu1);})
+//                .limit(3)
+                .collect(Collectors.toList());
+//                .forEach(System.out::println);
+        System.out.println(list);
     }
 }

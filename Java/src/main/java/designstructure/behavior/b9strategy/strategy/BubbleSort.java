@@ -1,7 +1,7 @@
 package designstructure.behavior.b9strategy.strategy;
 
 /**
- * @ClassName BubbleSort
+ * @ClassName Sort1BubbleSort
  * @Description
  * @Author moku
  * @Date 2022/12/25 11:19

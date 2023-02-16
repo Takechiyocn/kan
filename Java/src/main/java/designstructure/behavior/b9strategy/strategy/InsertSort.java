@@ -1,7 +1,7 @@
 package designstructure.behavior.b9strategy.strategy;
 
 /**
- * @ClassName InsertSort
+ * @ClassName Sort3InsertSort
  * @Description
  * @Author moku
  * @Date 2022/12/25 11:28

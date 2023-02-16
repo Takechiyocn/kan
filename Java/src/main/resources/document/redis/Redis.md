@@ -127,7 +127,7 @@ Redis是一个开源的高性能键值对(key-value)的内存数据库，可用�
    
    String类型的有序没有重复的集合
 
-    有序集合保存元素数量默认小于128个，所有元素长度默认小于64字节
+   有序集合保存元素数量默认小于128个，所有元素长度默认小于64字节
   
    常用命令：zadd、zrange、zrem、zcard等
   
@@ -286,3 +286,50 @@ Redis会周期性将更新的数据写入磁盘或者把修改操作写入记录
   把所有的对Redis的服务器进行修改的命令都存到一个文件里，命令的集合。
 
   当Redis重启的时候，它会优先使用AOF文件来还原数据集，因为AOF文件保存的数据集通常比RDB文件所保存的数据集更完整。
+
+### Redis常用场景
+
+1. 实现下拉框，搜索自动补全和热门搜索排序
+
+    1. 搜索自动补全
+
+        1. 使用zset(sorted set)：带权重的set，按照权重进行排序
+        
+            1. zadd:添加
+        
+                1. zadd 表名 权重score member
+        
+                2. zadd sorted_set 1 kaven 2 java 3 docker 4 redis 5 k8s
+    
+            2. zrank:查询某一成员位置
+        
+                1. zrange sorted_set 0 100
+                   
+                2. zrange sorted_set 0 -1 withscores // 查询所有
+        
+            3. zrange：查询范围内成员
+               
+                1. zrange sorted_set 0 100
+    
+                2. zrange sorted_set 0 -1 // 查询所有
+                   
+                2. zrange sorted_set 0 -1 withscores // 查询所有并带权重(升序)
+               
+        2. zrank定位元素位置，zrange获取范围元素，返回自动补全结果 
+
+   2. 热搜排序
+    
+        1. 设置成员权重增量值：可根据用户点击次数增加
+
+            ```redis
+            zincrby hotTable 1 AA
+            zincrby hotTable 1 BB
+            zincrby hotTable 1 AA
+            zrevrange hotTable 0 -1 withscores
+            ```    
+
+        2. 设置过期时间
+           
+        3. 通过索引区间获取带权重的成员(降序)
+    
+    3. redis请求数据，没有缓存数据则从普通数据库查询，并将查询结果更新到redis缓存
