@@ -79,11 +79,32 @@ Java提供许多同步方案供我们使用，从轻到重同有三种方式
    
          2. 可作用于实例方法、静态方法、代码块
    
-            1. 实例方法：锁住当前实例(this)对象
+            1. 实例方法：锁住当前实例对象
+    
+                ```java
+                private synchronized void a() {
+                }
+                ```
                
             2. 静态方法：锁住当前类对象
                
+                ```java
+                private synchronized static void c() {
+                }
+                ```
+               
             3. 代码块：需要在synchronized后小括号里显示指定锁对象
+    
+                ```java
+                // this锁住当前实例对象
+                private void b() {
+                    synchronized (this) {
+                }
+                // 锁住当前类对象
+                private void d() {
+                    synchronized (Test.class) {
+                }
+                ```
 
          3. 并发环境中synchronized会随着线程竞争的加剧升级
             

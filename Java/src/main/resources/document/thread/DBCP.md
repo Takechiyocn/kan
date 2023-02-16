@@ -13,9 +13,13 @@
     * 不使用ORM时，对象与关系数据库之间的映射
         ```java
         // 0.加载数据库驱动程序
-        DataSource dataSource;
+        //   1. Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+        //   2. DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+        //   3. System.setProperty("jdbc.drivers", "com.mysql.jdbc.Driver");
+         DataSource dataSource;
         // 1.获取连接
         connection = dataSource.getConnection();
+        //  connection = DriverManager.getConnection();
         // 1.1 自动提交设置为false。true：每一次数据更新认定为一个事务并自动提交
         connection.setAutoCommit(false);
         // 将执行的sql
