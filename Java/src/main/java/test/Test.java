@@ -53,6 +53,49 @@ public class Test {
         }
     }
 
+    public class HungrySingleton {
+        private  HungrySingleton() {};
+        private static HungrySingleton instance = new HungrySingleton();
+        public static HungrySingleton getInstance() {
+            return instance;
+        }
+    }
+
+    public class LazySingleton {
+        private LazySingleton() {};
+        private static LazySingleton instance;
+        public static LazySingleton getInstance() {
+            if (instance == null) {
+                instance = new LazySingleton();
+            }
+            return instance;
+        }
+    }
+
+    public class DoubleCheckSingleton {
+        private static volatile DoubleCheckSingleton instance;
+        private DoubleCheckSingleton () {};
+        public static DoubleCheckSingleton getInstance() {
+            if (instance == null) {
+                synchronized (DoubleCheckSingleton.class) {
+                    if (instance == null) {
+                        instance = new DoubleCheckSingleton();
+                    }
+                }
+            }
+            return instance;
+        }
+    }
+    public class StaticSingleton{
+        private StaticSingleton() {};
+        public static StaticSingleton getInstance() {
+            return SingletonHolder.instance;
+        }
+        public static class SingletonHolder {
+            private static StaticSingleton instance = new StaticSingleton();
+        }
+    }
+
 
 
     public static void main(String[] args) {

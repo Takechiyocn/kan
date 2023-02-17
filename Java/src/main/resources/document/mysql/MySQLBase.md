@@ -297,7 +297,7 @@ metadata lock(MDL)，MySQL5.5引进。访问表时自动添加，以保证读写
   
     ![MDLRead.png](images/MDLRead.png)
 
-* MDL写锁(默认DDL产生读锁)
+* MDL写锁(默认DDL产生写锁)
 
     * MDL写锁和读锁、写锁互斥，用以保证变更表结构操作的安全性
 
@@ -545,7 +545,12 @@ MYSQL事务特点：事务内的语句要么全部执行成功，要么全部执
             某个事务在读取某个范围内的记录时，会产生幻行
     
             幻读是指在一个事务内读取到了别的事务修改的数据，导致前后读取不一致
-        ![IllusionRead.png](images/IllusionRead.png)
+        
+            ![IllusionRead.png](images/IllusionRead.png)
+    
+    * MySQL默认隔离级别原因
+    
+        * 最开始的binlog没有row模式，在read commit模式下会存在主从数据不一致的问题
   
 * 可串行化Serializable
 
@@ -561,6 +566,8 @@ MYSQL事务特点：事务内的语句要么全部执行成功，要么全部执
 * 可根据undo log回滚到某个特定版本的数据，实现MVCC
 
 #### binlog：服务层生产日志
+
+* 记录了数据库表结构和表数据[变更]，比如update/delete/insert/truncate/create
 
 * 数据恢复：mysql主从架构是通过slave同步到master的binlog来实现
 
