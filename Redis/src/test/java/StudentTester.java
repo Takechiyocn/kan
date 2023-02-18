@@ -8,7 +8,7 @@ public class StudentTester {
     public void test() {
         ApplicationContext context =
                 new ClassPathXmlApplicationContext("JedisPoolConfig.xml");
-        // 1. 使用IOC获取连接池内连接(连接池通过配置文件设置)
+        // 1. 使用IOC获取连接池中的连接(连接池通过配置文件设置)
         RedisTemplate redisTemplate = (RedisTemplate) context.getBean("redisTemplate");
         Student student = new Student();
         student.setName("name");
@@ -17,10 +17,12 @@ public class StudentTester {
         Student student1 = (Student) redisTemplate.opsForValue().get("student-1");
         student1.service();
 
-        // 2. 直接使用RedisTemplate获取连接池内连接(TODO：连接池如何设置？)
+        // 2. 直接使用RedisTemplate获取连接池中的连接
         RedisTemplate redisTemplate2 = context.getBean(RedisTemplate.class);
         student.setName("name2");
         student.setAge(30);
-        redisTemplate2.opsForValue().set("student2", student);
+        redisTemplate2.opsForValue().set("student-2", student);
+        Student student2 = (Student) redisTemplate.opsForValue().get("student-2");
+        student2.service();
     }
 }

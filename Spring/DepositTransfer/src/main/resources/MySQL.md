@@ -1,0 +1,3 @@
+innodb_rollback_on_timeout='ON'
+max_connections=1000
+innodb_lock_wait_timeout=500

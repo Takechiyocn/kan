@@ -28,4 +28,9 @@
     <bean id="redisTemplate"
           class="org.springframework.data.redis.core.RedisTemplate"
           p:connection-factory-ref="connectionFactory"/>
+
+    <!-- p标签：简化配置方式 xx-ref：对另外一个bean的引用 -->
+    <bean id="stringRedisTemplate"
+          class="org.springframework.data.redis.core.StringRedisTemplate"
+          p:connection-factory-ref="connectionFactory"/>
 </beans>
