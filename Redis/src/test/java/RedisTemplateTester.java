@@ -32,7 +32,6 @@ public class RedisTemplateTester {
     @Autowired
     private RedisTemplate redisTemplate = (RedisTemplate) context.getBean("redisTemplate");
 
-
     @Test
     public void testStringRedisTemplate() {
         // 保存字符串
