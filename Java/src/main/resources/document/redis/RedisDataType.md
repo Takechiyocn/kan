@@ -8,6 +8,8 @@
 
 ![RedisDataType2.png](images/RedisDataType2.png)
 
+![RedisDataType.png](images/RedisDataType.png)
+
 #### String
 
 * String类型是Redis的基本类型，是二进制安全的
@@ -106,7 +108,20 @@
     3. 用户信息在关系型数据库中的结构
     
         ![RedisHash.png](images/RedisHash.png)
-
+    
+        1. 存储用户信息：比如Key = uid:1、value={}
+           
+            * Key: uid:1
+            * Value: field+value
+    
+            ```json
+            uid:1: {
+              "name":"John",
+              "age": 18,
+              "roles":[1, 2, 3]
+            }
+            ```
+    
     4. 存储Hash对象
             
         ```json
@@ -162,7 +177,9 @@
 
 #### set
 
-* 通过HashTable实现的无序去重的键值集合：无序存储
+* 通过HashTable实现的无序不重复的键值集合：无序存储
+
+* 底层数据结构为哈希表
 
 *  常用命令：sdd、spop、smembers(判断成员是否在set集合中)、sunion等
 
@@ -170,24 +187,89 @@
 
 1. 点赞
 
-2. 共同关注
+    ```json
+    # uid:1 用户对文章 article:1 点赞
+    > SADD article:1 uid:1
+    (integer) 1
+    # uid:2 用户对文章 article:1 点赞
+    > SADD article:1 uid:2
+    (integer) 1
+    # uid:3 用户对文章 article:1 点赞
+    > SADD article:1 uid:3
+    (integer) 1
+    // 取消点赞
+    > SREM article:1 uid:1
+    (integer) 1
+    ```
 
-3. 抽奖活动
+2. 共同关注：set的交集运算
+    
+    ```json
+    # uid:1 用户关注公众号 id 为 5、6、7、8、9
+    > SADD uid:1 5 6 7 8 9
+    (integer) 5
+    # uid:2  用户关注公众号 id 为 7、8、9、10、11
+    > SADD uid:2 7 8 9 10 11
+    (integer) 5
+    # 获取共同关注
+    > SINTER uid:1 uid:2
+    1) "7"
+    2) "8"
+    3) "9"
+    ```
 
+3. 抽奖活动：去重
 
-* zset
+    ```json
+    >SADD lucky Tom Jerry John Sean Marry Lindy Sary Mark
+    (integer) 5
+    # 抽取 1 个一等奖：
+    > SRANDMEMBER lucky 1
+    1) "Tom"
+    # 抽取 2 个二等奖：
+    > SRANDMEMBER lucky 2
+    1) "Mark"
+    2) "Jerry"
+    # 抽取 3 个三等奖：
+    > SRANDMEMBER lucky 3
+    1) "Sary"
+    2) "Tom"
+    3) "Jerry"
+    ```
 
-  String类型的有序没有重复的集合
+#### zset
 
-  有序集合保存元素数量默认小于128个，所有元素长度默认小于64字节
+* String类型的有序没有重复的集合
 
-  常用命令：zadd、zrange、zrem、zcard等
+* 有序集合保存元素数量默认小于128个，所有元素长度默认小于64字节
 
-  sorted set可通过用户提供一个优先级(score)的参数来为成员排序，并且时插入有序的即自动排序。
+* 常用命令：zadd、zrange、zrem、zcard等
 
-  内部实现：内部使用HashMap和跳跃表skipList保证数据的存储和有序
+* sorted set可通过用户提供一个优先级(score)的参数来为成员排序，并且时插入有序的即自动排序。
 
-  ![RedisDataType.png](images/RedisDataType.png)
+* 内部实现：内部使用HashMap和跳跃表skipList保证数据的存储和有序
+
+应用场景
+
+1. 排行榜
+
+2. 电话姓名排序
+
+    ![HashZset.png](HashZset.png)
+
+#### BitMap
+
+* 位图，遗传连续的二进制数组，通过偏移量offset定位元素
+
+* 适合二值状态统计的场景，二值即只有0和1
+
+使用场景
+
+1. 记录海量数据
+
+2. 签到统计，连续签到用户总数
+
+3. 判断用户登录状态
 
 ##### Hash/String
 
