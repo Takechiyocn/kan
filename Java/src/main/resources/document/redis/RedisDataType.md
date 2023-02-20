@@ -275,7 +275,7 @@
 
 ![StringAndHash.png](images/StringAndHash.png)
 
-* String+JSON：一般使用
+* String+JSON：一般使用，Redis大key(value很大)
 
     * 每次需要访问大量的字段
 

@@ -245,6 +245,13 @@ Redis4.0加入了LFU(least frequency use)淘汰策略，包括volatile-lfu和all
 
        Redis分布式锁的setnx：set if not exists可以实现锁的效果
 
+       SET lock_key unique_value NX PX 10000
+    
+        1. lock_key:key键
+        2. unique_value:客户端生成的唯一编码，区分来自不同客户端的锁的操作
+        3. nx：lock_key不存在时，才对lock_key进行设置操作
+        4. px:设置过期时间(毫秒单位)
+
         ```java
         public String get(key) {
             String value = redis.get(key);
