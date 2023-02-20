@@ -255,7 +255,7 @@
 
 2. 电话姓名排序
 
-    ![HashZset.png](HashZset.png)
+    ![HashZset.png](images/HashZset.png)
 
 #### BitMap
 

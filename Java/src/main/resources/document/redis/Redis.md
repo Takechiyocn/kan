@@ -54,39 +54,6 @@ Redis是一个开源的高性能键值对(key-value)的内存数据库，可用�
 
 ![RedisSerializer.png](images/RedisSerializer.png)
 
-### Redis构建
-
-#### 集群
-
-![RedisCluster.png](images/RedisCluster.png)
-
-* 扩大缓存容量
-* 提升吞吐量 
-
-#### 主从复制
-
-##### 一主一从
-
-![RedisMS.png](images/RedisMS.png)
-
-* 数据高可用
-  
-   Master负责接收客户写请求，并同步到Slave实现数据备份；当Master挂了提升Slave为Master
-  
-* 提高查询效率
-  
-   忙碌时可将部分查询转发给Slave，即Master负责读写或者只负责写，Slave负责读
-
-##### 一主多从
-
-![RedisMS2.png](images/RedisMS2.png)
-
-* Master进行数据备份工作量变大
-
-##### Master/slave chains架构
-
-![RedisInfrastructure.png](images/RedisInfrastructure.png)
-
 #### Redis为何这么快
 
     内存是其他硬件(如本地磁盘)和CPU沟通的桥梁，即如果内存容量和性能存在瓶颈，CPU再快也是枉然
