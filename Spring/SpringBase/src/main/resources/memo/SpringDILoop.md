@@ -73,7 +73,7 @@ public class TestService2 {
 
 * Spring内部解决
 
-![img_1.png](img_1.png)
+![SpringLoopSolve3.png](images/SpringLoopSolve3.png)
   
 ##### 为什么使用二级缓存
 
@@ -198,9 +198,9 @@ public class TestService2 {
 
 #### 循环依赖解决方案
 
-![img_2.png](img_2.png)
+![SpringLoopSolve2.png](images/SpringLoopSolve2.png)
 
-![img.png](img.png)
+![SpringLoopSolve.png](images/SpringLoopSolve.png)
 
 1. 单例循环依赖：Spring默认能解决
 

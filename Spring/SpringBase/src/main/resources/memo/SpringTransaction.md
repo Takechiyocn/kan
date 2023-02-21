@@ -1,6 +1,6 @@
 ## Spring事务失效
 
-![img_3.png](img_3.png)
+![SpringTransactionInvalid.png](images/SpringTransactionInvalid.png)
 
 
 ### 事务不生效
@@ -329,6 +329,12 @@ public class RoleService {
 
 ### 大事务问题
 
+通常我们会在方法上添加@Transaction注解，实现事务功能
+
+方法上添加事务注解导致整个方法都包含在事务当中
+
+如下实际事务只有:1、2、3，如果query1、query2等方法非常多且耗时，则会造成大事务问题
+
 ```java
 @Service
 public class UserService {
@@ -341,11 +347,12 @@ public class UserService {
        query1();
        query2();
        query3();
+       // 事务1
        roleService.save(userModel);
+        // 事务2
        update(userModel);
     }
 }
-
 
 @Service
 public class RoleService {
@@ -358,14 +365,30 @@ public class RoleService {
        query4();
        query5();
        query6();
+       // 事务3
        saveData(userModel);
     }
 }
 ```
 
-* 使用编程式事务
+大事务问题解决方案：
+
+
+```java
+// 原代码
+@Transactional(rollbackFor=Exception.class)
+public void save(User user) {
+  queryData1();
+  queryData2();
+  addData1();
+  updateData2();
+}
+```
+
+1. 使用编程式事务:TransactionTemplate类中的execute方法实现了事务功能
 
     ```java
+    // 解决方案：
     @Autowired
     private TransactionTemplate transactionTemplate;
     
@@ -382,23 +405,23 @@ public class RoleService {
     }
     ```
 
-* 追加service方法
+2. 追加service方法
 
     ```java
     @Servcie
-    publicclass ServiceA {
-     @Autowired
-     prvate ServiceB serviceB;
-    
-     public void save(User user) {
-           queryData1();
-           queryData2();
-           serviceB.doSave(user);
-     }
+    public class ServiceA {
+      @Autowired
+      prvate ServiceB serviceB;
+      
+      public void save(User user) {
+         queryData1();
+         queryData2();
+         serviceB.doSave(user);
+      }
     }
     
     @Servcie
-    publicclass ServiceB {
+    public class ServiceB {
     
       @Transactional(rollbackFor=Exception.class)
       public void doSave(User user) {
@@ -413,7 +436,7 @@ public class RoleService {
     
     ```java
     @Servcie
-    publicclass ServiceA {
+    public class ServiceA {
      @Autowired
      prvate ServiceA serviceA;
     
