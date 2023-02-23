@@ -294,15 +294,7 @@ Kafka通过副本机制实现数据存储，因此需要一些机制保证数据
     
         ![DataOK.png](images/DataOK.png)
     
-    * Kafka消息丢失
-    
-        * 消息发送时候，如果发送出去以后，消息因为网络问题没有发送成功
-    
-        * 消息语义的at most once，消息消费时候，消息还未做处理服务挂了，消息丢失 
-          
-        * 分区中leader所在的broker挂了之后(旧leader分区未同步到新leader分区的部分消息丢失)
-
-4. 数据截断机制
+    4. 数据截断机制
 
     主/从分区副本数据不一致
 
@@ -401,6 +393,74 @@ Kafka通过副本机制实现数据存储，因此需要一些机制保证数据
     
         ![FileReadKafka.png](images/FileReadKafka.png)
 
+### 解决重复消费问题
+
+1. 保存并查询
+
+    给每个消息设置一个key，消费时候把key记录下来，以后每次消费新的消息都查询
+
+2. 利用业务幂等
+
+    1. 前置处理：幂等key:订单号+订单状态（一笔订单状态只会处理一次）
+    
+        1. 处理前Redis查key存在与否
+    
+        2. 存在则说明已经处理过、丢弃
+    
+    2. 数据库的唯一约束实现幂等
+    
+        比如转账操作限定为，每个账户账单只能转账一次，分布式系统中：
+       
+        1. db中建一张流水表：转账单ID、账户ID、变更金额
+        
+        2. 给转账单ID和账户ID两个字段创建一个唯一约束，使得表里只能有一个字段
+
+![MQMissPost.png](images/MQMissPost.png)
+
+### 解决消息丢失问题
+
+#### 常见消息丢失场景
+
+![MQMissPre.png](images/MQMissPre.png)
+
+##### 生产者侧消息丢失
+
+1. producer->broker
+
+   生产者发消息给broker时，如果发送出去以后，消息因为网络问题没有发送成功
+   
+2. producer->broker同步
+3. producer->磁盘
+
+##### 消费者侧消息丢失
+
+1. 消息语义的at most once，消息消费时候，消息还未做处理服务挂了，消息丢失
+
+#### 解决方案
+
+1. 选择带有callBack的api进行发送，失败则重试
+   
+2. 以下方案
+
+   ![MQMissPost2.png](images/MQMissPost2.png)
+
+    1. 手动提交offset
+
+    2. 从Kafka拉取消息（一次批量拉取500条，这里主要看配置）
+       
+    3. 为每条拉取的消息分配一个msgId（递增）
+       
+    4. 将msgId存入内存队列（sortSet）中
+       
+    5. 使用Map存储msgId与msg(有offset相关的信息）的映射关系
+       
+    6. 当业务处理完消息后，ack时，获取当前处理的消息msgId，然后从sortSet删除该msgId（此时代表已经处理过了）
+       
+    7. 接着与sortSet队列的首部第一个Id比较（其实就是最小的msgId），如果当前msgId<=sort Set第一个ID，则提交当前offset
+       
+    8. 系统即便挂了，在下次重启时就会从sortSet队首的消息开始拉取，实现至少处理一次语义
+       
+    9. 会有少量的消息重复，但只要下游做好幂等就OK了
 
 ### 业务幂等
 
