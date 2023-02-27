@@ -1085,9 +1085,10 @@ Java内存映像工具，用于生成堆转储快照
 
 > 当线程等待另一个线程通知调度器一个条件时，它自己进入等待状态。
 >* 调用Object.wait方法->未设置Timeout参数则无限等待
->* Thread.join：等待终止指定的线程（即被等待线程结束后，该线程才能进入runnable状态）
-   >
-   >  ->未设置Timeout参数则无限等待
+>* Thread.join：如thread1.join等待终止指定的线程（即被等待线程thread1结束后，该线程才能进入runnable状态）
+>>* 未设置Timeout参数则无限等待
+>>* 底层调用wait方法，也释放锁资源
+> 
 >* 等待java.util.concurrent库中的Lock或Condition时
 >
 >* LockSupport.park()使线程无限等待
@@ -1102,10 +1103,15 @@ Java内存映像工具，用于生成堆转储快照
 > 调用带有超时参数的方法时，该线程进入计时等待（如下列方法设置超时参数时）
 >
 >* Thread.sleep
+> 
+>>* TimeUnit.SECONDS.sleep(2); 
+>>* Thread.sleep(2000);
 >
->* Object.wait
+>* Object.wait：
+>>* private Object obj = new Object(); obj.wait();
+>>* this.wait();
 >
->* Thread.join：等待指定的线程死亡或者经过指定的毫秒数
+>* Thread.join：如thread1.join等待指定的线程thread1死亡或者经过指定的毫秒数
 >
 >* Lock.tryLock
 >

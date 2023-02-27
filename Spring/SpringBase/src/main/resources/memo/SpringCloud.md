@@ -65,6 +65,8 @@ SpringBoot和SpringCloud
 
 ## SpringCloud
 
+SpringCloud就是微服务架构的一站式解决方案，我们构建微服务系统过程中需要做如服务发现注册、配置中心、消息总线、负载均衡、断路器、数据监控等操作，Spring Cloud提供了一套简易的编程模型，使我们能在SpringBoot基础上轻松实现微服务项目的构建
+
 ### SpringCloud优缺点
 
 优点
@@ -100,13 +102,15 @@ SpringBoot和SpringCloud
 
 4. 服务网关
 
-6. 熔断器
+6. 断路器/熔断器
 
 ![SpringCloudSummary.png](images/SpringCloudSummary.png)
 
+![SpringCloudSummary2.png](images/SpringCloudSummary2.png)
+
 ### 五大组件运行流程
 
-1. Eureka注册中心：服务注册发现
+1. 服务发现框架-Eureka：服务注册发现
 
     1. 服务注册
         
@@ -138,38 +142,63 @@ SpringBoot和SpringCloud
    
 ### 五大组件
 
-#### Eureka注册中心
+#### 服务发现框架-Eureka注册中心
 
 Spring Cloud Eureka是Spring Cloud Netflix微服务套件的一部分，基于Netflix Eureka做了二次封装，主要完成微服务实例的自动注册和发现
 
 Eureka服务治理体系中的角色
 
-1. Eureka Server：服务注册中心
+1. 服务提供者Eureka Client Provider：提供自己能够执行的服务给外界
 
-    功能：服务注册表维护和服务健康检查
+2. 服务消费者Eureka Client Consumer：需要使用服务的用户
 
-2. Eureka Client
-   
-    1. 组成
-       
-        1. 服务提供者
-    
-            1. 注册中心客户端组件，功能：
-    
-                1. 服务提供者的服务注册、心跳续约
-    
-                2. 服务发现、实例缓存
-    
-            2. 远程客户端组件:RPC远程调用服务
-    
-        2. 服务消费者
-    
-    2. 功能
-    
-        1. 服务注册、心跳续约、健康状况查询
-        
+3. 服务中介Eureka Server：服务提供者和服务消费者之间的桥梁，服务提供者把自己注册到服务中介，服务消费者如需要消费一些服务(或使用一些功能)可以从服务中介寻找注册在服务中介的服务提供者
+
+Eureka功能
+
 ![SpringCloudEureka.png](images/SpringCloudEureka.png)
 ![SpringCloudEureka2.png](images/SpringCloudEureka2.png)
+![SpringCloudEurekaInfrastructure.png](images/SpringCloudEurekaInfrastructure.png)
+
+1. 服务注册Register：Eureka Client Service Provider
+
+    Eureka客户端(可理解成房东)向Eureka Server注册时，它提供自身的元数据，比如IP地址、端口、运行状况指示符URL、主页等
+
+2. 服务续约/心跳续约Renew：Eureka Client Service Provider
+
+    Eureka客户会每隔30秒(默认)发送一次心跳来续约，通过续约来告知Eureka Server该Eureka客户仍然存在，没有出现问题
+
+    1. 如果Eureka Server在90秒没有收到Eureka客户的续约，它会将实例从注册表中删除
+    
+3. 获取注册列表信息Fetch Registers：Eureka Client Service Consumer
+
+    1. 实例缓存：Eureka客户端从服务器(Eureka Server)获取注册表信息，并将其缓存在本地
+    
+    2. 服务发现：客户端会使用该信息查找其他服务，从而进行RPC远程调用
+    
+    3. 更新注册列表：Eureka客户端会定期(30S)更新注册列表信息
+       
+        1. 当注册列表信息与缓存信息不同时：客户端自动更新缓存
+    
+        2. 当由于某种原因导致注册列表信息不能及时匹配：Eureka客户端重新获取整个注册表信息
+    
+    4. 注册列表压缩Eureka Server：Eureka服务器对缓存的注册列表信息和每个应用程序信息进行压缩
+    
+        1. 客户端和Eureka Server可通过JSON/XML格式通讯，默认客户端使用压缩JSON格式获取注册列表信息
+
+4. 服务下线Cancel
+
+    1.  Eureka客户端在程序关闭时向Eureka服务器发送取消请求，发送请求后，该客户端实例将从服务器的实例注册表中删除
+    
+    2. 该下线请求不会自动完成，需调用以下内容：
+            
+        ```java
+        DiscoveryManager.getInstance.shutdownComponent
+        ```
+    
+5. 服务剔除Eviction
+
+    1. 默认情况下，Eureka客户端连续90秒没有向Eureka服务器发送服务续约，即心跳，Eureka服务器会将该服务实例从服务注册列表删除，即服务剔除
 
 #### Ribbon
 
@@ -181,7 +210,9 @@ Eureka服务治理体系中的角色
     
     1. 软负载
     
-        1. 集中式LB：在服务的消费方和提供方之间使用独立的LB设施，如Nginx设施负责把访问请求通过某种策略转发至服务的提供方
+        1. 集中式LB：在服务的消费方和提供方之间使用独立的LB设施，如Nginx设施负责把访问请求集中起来通过某种策略转发至服务的提供方
+    
+            ![LBNginx.png](images/LBNginx.png)
         
             1. ApacheHttpServer+Tomcat搭建集群
         
@@ -193,11 +224,13 @@ Eureka服务治理体系中的角色
         
             1. SpringCloud Netflix Ribbon
     
+                ![SpringCloudRibbon.png](images/SpringCloudRibbon1.png)
+    
     2. 硬负载：使用均衡负载服务器
     
         ![LB.png](images/LB.png)
 
-##### Ribbon负载均衡
+##### 负载均衡-Ribbon
 
 1. 客户端的负载均衡开源组件，Feign组件不具备负载均衡能力，通过集成Ribbon组件实现客户端的负载均衡
 
@@ -207,13 +240,31 @@ Eureka服务治理体系中的角色
     
     2. API网关的代理请求的RPC转发调用
 
-3. Ribbon负载均衡实现方式：
+3. Ribbon负载均衡算法：
 
-    1. 客户端以轮询实现（Ribbon默认）
+    1. 轮询策略RoundRobinRule（Ribbon默认）
+    
+        若经过一轮没有找到可用的Provider，其最多轮询10轮。若最终没有找到，返回null
        
-    2. 随机方式
+    2. 随机策略RandomRule
+    
+        从所有可用的Provider中随机选择一个
        
-    3. 权重方式
+    3. 重试策略RetryRule
+    
+        先按照RoundRobinRule策略获取Provider，若获取失败，则在指定时限内重试。默认时限500毫秒
+    
+    4. 自定义负载均衡策略
+        
+        实现IRule接口，然后修改配置文件或者自定义Java Config类
+    
+    * 更换默认的负载均衡算法
+    
+        ```java
+        providerName:
+          ribbon:
+            NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
+        ```
 
 4. Ribbon负载均衡过程
     
@@ -239,8 +290,25 @@ Eureka服务治理体系中的角色
         ```
        
     2. 在RestTemplate的Bean上添加@LoadBalance注解
+    
+        RestTemplate是Spring提供的一个访问Http服务的客户端类
+    
+        ```java
+        // 每次调用服务都需要调用RestTemplate的API
+        // 消费者B调用提供者A提供的服务
+        @Autowired
+        private RestTemplate restTemplate;
+        // 这里是提供者A的ip地址，但是如果使用了 Eureka 那么就应该是提供者A的名称
+        private static final String SERVICE_PROVIDER_A = "http://localhost:8081";
+        
+        @PostMapping("/judge")
+        public boolean judge(@RequestBody Request request) {
+            String url = SERVICE_PROVIDER_A + "/service1";
+            return restTemplate.postForObject(url, request, Boolean.class);
+        }
+        ```
 
-#### Feign
+#### Open Feign
 
 特点
 
@@ -252,9 +320,9 @@ Eureka服务治理体系中的角色
 
 2. 使用Feign，可以做到使用HTTP请求访问远程服务，就像调用本地方法一样，开发者感知不到在调用远程方法，也感知不到在访问HTTP请求 
 
-3. Feign整合了Ribbon和Hystrix，具备负载均衡、隔离、熔断与降级功能
+3. Feign整合了(内置)Ribbon和Hystrix，具备负载均衡、隔离、熔断与降级功能
 
-编码：微服务调用方法2
+编码：微服务调用方法2，将被调用的服务代码映射到消费者端
 
 1. pom依赖
 
@@ -270,22 +338,28 @@ Eureka服务治理体系中的角色
 
     ```java
     @Component
-    @FeignClient(value = "DEMOSPRINGCLOUDPROVIDER-8080")
-    public interface UserClient {
-        @GetMapping("/get")
-        List<User> get();
+    // 使用@FeignClient注解来指定提供者的名字
+    @FeignClient(value = "eureka-client-provider")
+    public interface TestClient {
+        // 这里一定要注意需要使用的是提供者那端的请求相对路径，这里就相当于映射了
+        @RequestMapping(value = "/provider/xxx", method = RequestMethod.POST)
+        CommonResponse<List<Plan>> getPlans(@RequestBody planGetRequest request);
     }
     ```
 
 3. 在消费者修改Controller
     
     ```java
-    @Resource
-    private UserClient userClient;
- 
-    @GetMapping("/getUser")
-    public List get(){
-        return userClient.get();
+    @RestController
+    public class TestController {
+        // 这里就相当于原来自动注入的Service
+        @Autowired
+        private TestClient testClient;
+        // controller 调用 service 层代码
+        @RequestMapping(value = "/test", method = RequestMethod.POST)
+        public CommonResponse<List<Plan>> get(@RequestBody planGetRequest request) {
+            return testClient.getPlans(request);
+        }
     }
     ```
 
@@ -294,6 +368,8 @@ Eureka服务治理体系中的角色
 ##### 服务雪崩
 
 * 定义：一个服务失败，导致整条链路的服务都失败的情形，称之为服务雪崩
+
+    ![ServiceDown.png2](images/ServiceDown2.png)
 
 * 引发原因
 
@@ -333,15 +409,21 @@ Hystrix是一个用于处理分布式系统的延迟和容错的开源库
 
 1. 隔离
 
-    通过Hystrix线程池去访问服务，不同的服务通过不同的线程池，实现了不同的服务调度隔离
+    舱壁模式：通过Hystrix线程池去访问服务，不同的服务通过不同的线程池，实现了不同的服务调度隔离
 
-2. 熔断：应对雪崩效应的一种微服务链路保护机制
+2. 熔断
    
-    1. 当某个服务单元发生故障之后，通过断路器的故障监控，向调用方返回一个服务预期的，可处理的备选响应(fallback)，避免服务方线程长时间被占用，从而避免服务雪崩
+    1. 服务雪崩的一种有效解决方案。当指定时间窗口内的请求失败率达到设定域值时，系统通过断路器直接将此请求链路断开，避免服务方线程长时间被占用引发服务雪崩
+        ```java
+        @HystrixCommand(commandProperties = {@HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds",value = "1200")})
+        public List<Xxx> getXxxx() {
+            // ...省略代码逻辑
+        }
+        ```
 
-3. 降级：关闭不需要的微服务
+3. 降级
 
-    当服务不可用，客户端一直等待时，调用fallback方法给客户端返回一个错误，让其不再继续等待
+    降级是为了更好的用户体验：当一个方法调用异常时，通过执行另一种代码逻辑来给用户友好的回复，对应着Hystrix的后备处理模式。通常通过fallbackMethod设置备用的代码逻辑
 
     1. 服务正在等待
     
@@ -350,6 +432,20 @@ Hystrix是一个用于处理分布式系统的延迟和容错的开源库
     3. 网络延迟
     
     4. 服务器响应慢
+    
+        ```java
+        // 指定了后备方法调用
+        @HystrixCommand(fallbackMethod = "getHystrixNews")
+        @GetMapping("/get/news")
+        public News getNews(@PathVariable("id") int id) {
+            // 调用新闻系统的获取新闻api 代码逻辑省略
+        }
+        // 
+        public News getHystrixNews(@PathVariable("id") int id) {
+            // 做服务降级
+            // 返回当前人数太多，请稍后查看
+        }
+        ```
     
 编码
 
@@ -411,71 +507,303 @@ Hystrix是一个用于处理分布式系统的延迟和容错的开源库
     }
     ```
 
-#### Zuul
+#### 微服务网关-Zuul
 
-Zuul功能
+未使用网关：
 
-1. 路由、过滤
+1. 用户调用消费者工程
 
-    1. 将不同的REST请求转发至不同的微服务提供者，类似Nginx的反向代理
-    
-    2. 统一端口，将很多微服务提供者的不同端口统一为Zuul的服务端口
+2. 消费者通过Eureka Server调用服务提供者
 
-2. 认证
+    此时Eureka Server是服务提供者的统一入口
 
-    1. 网关直接暴露在公网时，终端要调用某个服务，通常把登录后的token(令牌)传过来，网关层对token进行有效性验证
-    
-        1. token无效/没有token，不允许访问REST服务
-    
-        2. 实现：结合Spring Security的认证机制完成Zuul网关的安全认证
+使用网关：
 
-3. 限流
+1. 网关是对于消费者的统一入口
 
-    1. 高并发场景下的限流 
-    
-4. 负载均衡
+##### Zuul功能
 
-    1. 在多个微服务之间按照多种策略实现负载均衡
-
-编码
-
-1. pom依赖
-
-    ```xml
-    <!--  增加网关  -->
-    <dependency>
-      <groupId>org.springframework.cloud</groupId>
-      <artifactId>spring-cloud-starter-zuul</artifactId>
-      <version>1.4.6.RELEASE</version>
-    </dependency>
-    ```
+1. 路由功能
    
-2. 启动类添加@EnableZuulProxy注解开启网关代理
+   ![ZuulRouting.png](images/ZuulRouting.png)
 
-    ```java
-    @SpringBootApplication
-    @EnableZuulProxy //开启网关代理
-    public class Demo1ZuulApplication {
-        public static void main(String[] args) {
-            SpringApplication.run(Demo1ZuulApplication.class,args);
+    1. 简单配置使用
+
+        1. Zuul向Eureka进行注册，注册后可以获取所有消费者信息(元数据：名称/ip/端口)
+
+        2. 进行路由映射
+
+            ```java
+            // 映射前调用Consumer1
+            localhost:8001/studentInfo/update
+            // 映射后   
+            localhost:9000/consumer1/studentInfo/update
+            ```
+
+        3. 配置(yaml形式)
+
+            ```xml
+            server:
+              port: 9000
+            eureka:
+              client:
+                service-url:
+                  # 这里只要注册 Eureka 就行了
+                  defaultZone: http://localhost:9997/eureka
+            ```
+
+        4. 启动类上添加@EnableZuulProxy注解
+
+    1. 将不同的REST请求转发至不同的微服务提供者，类似Nginx的反向代理。
+    
+    2. 统一前缀：在访问地址前面加一个统一的前缀
+        
+        ```java
+        // 添加配置前
+        localhost:9000/consumer1/studentInfo/update
+        // 添加yaml配置
+        zuul:
+            prefix: /zuul
+        // 添加配置后
+        localhost:9000/zuul/consumer1/studentInfo/update
+        ```
+    
+    3. 路由策略：自定义路径代替微服务名，即自定义路由策略。暴露微服务名存在安全性问题
+       
+        ```xml
+        // 自定义路由策略
+        zuul:
+          routes:
+            consumer1: /FrancisQ1/**
+            consumer2: /FrancisQ2/**
+        // 添加配置后
+        localhost:9000/zuul/FrancisQ1/studentInfo/update
+        ```
+       
+    4. 服务名屏蔽：自定义路由策略后，依然可通过微服务名访问，此时应将服务名屏蔽
+       
+        ```xml
+        zuul:
+          ignore-services: "*"
+        ```
+       
+    5. 路径屏蔽：屏蔽掉路径URI，可以限制用户的权限
+    
+        ```xml
+        // **:匹配多级任意路径
+        // *:匹配一级任意路径
+        // 过滤掉关于auto的请求
+        zuul:
+          ignore-patterns: **/auto/**
+        ```
+       
+    6. 敏感请求头屏蔽
+       
+        默认情况，像Cookie、Set-Cookie等敏感请求头会被Zuul屏蔽掉，我们可以将默认屏蔽去掉。也可以添加需要屏蔽的请求头
+       
+2. 过滤：所有请求都经过Zuul，可以进行各种过滤，以此实现各种功能
+
+    * 过滤不符合规定的请求
+    * 限流
+    * 灰度发布
+    * 权限控制
+    
+    1. 过滤
+        
+        过滤器类型：
+       
+        * Pre：在请求之前进行过滤
+          
+        * Routing：路由策略
+          
+        * Post：Response之前进行的过滤
+    
+        ![ZuulFilter.png](images/ZuulFilter.png)
+    
+        请求时间日志打印
+    
+        ```java
+        // 加入Spring容器
+        @Component
+        public class PreRequestFilter extends ZuulFilter {
+            // 返回过滤器类型 这里是前置过滤器
+            @Override
+            public String filterType() {
+                return FilterConstants.PRE_TYPE;
+            }
+            // 指定过滤顺序 越小越先执行，这里第一个执行
+            // 当然不是真正第一个 在Zuul内置中有其他过滤器会先执行
+            // 那是写死的 比如 SERVLET_DETECTION_FILTER_ORDER = -3
+            @Override
+            public int filterOrder() {
+                return 0;
+            }
+            // 什么时候该进行过滤
+            // 这里我们可以进行一些判断，这样我们就可以过滤掉一些不符合规定的请求等等
+            @Override
+            public boolean shouldFilter() {
+                return true;
+            }
+            // 如果过滤器允许通过则怎么进行处理
+            @Override
+            public Object run() throws ZuulException {
+                // 这里我设置了全局的RequestContext并记录了请求开始时间
+                RequestContext ctx = RequestContext.getCurrentContext();
+                ctx.set("startTime", System.currentTimeMillis());
+                return null;
+            }
         }
-    }
-    ```
+        
+        // lombok的日志
+        @Slf4j
+        // 加入 Spring 容器
+        @Component
+        public class AccessLogFilter extends ZuulFilter {
+            // 指定该过滤器的过滤类型
+            // 此时是后置过滤器
+            @Override
+            public String filterType() {
+                return FilterConstants.POST_TYPE;
+            }
+            // SEND_RESPONSE_FILTER_ORDER 是最后一个过滤器
+            // 我们此过滤器在它之前执行
+            @Override
+            public int filterOrder() {
+                return FilterConstants.SEND_RESPONSE_FILTER_ORDER - 1;
+            }
+            @Override
+            public boolean shouldFilter() {
+                return true;
+            }
+            // 过滤时执行的策略
+            @Override
+            public Object run() throws ZuulException {
+                RequestContext context = RequestContext.getCurrentContext();
+                HttpServletRequest request = context.getRequest();
+                // 从RequestContext获取原先的开始时间 并通过它计算整个时间间隔
+                Long startTime = (Long) context.get("startTime");
+                // 这里我可以获取HttpServletRequest来获取URI并且打印出来
+                String uri = request.getRequestURI();
+                long duration = System.currentTimeMillis() - startTime;
+                log.info("uri: " + uri + ", duration: " + duration / 100 + "ms");
+                return null;
+            }
+        }
+        ```
+        
+    2. 令牌桶限流
+    
+        ![ZuulFilter2.png](images/ZuulFilter2.png)
+    
+        首先定义一个桶，如果里面没有满那么就会以一个固定的速率往里面放入令牌，一个请求过来首先要从桶中获取令牌，如果没有获取到则拒绝这个请求；获取到则放行
+    
+        ```java
+        @Component
+        @Slf4j
+        public class RouteFilter extends ZuulFilter {
+            // 定义一个令牌桶，每秒产生2个令牌，即每秒最多处理2个请求
+            private static final RateLimiter RATE_LIMITER = RateLimiter.create(2);
+            @Override
+            public String filterType() {
+                return FilterConstants.PRE_TYPE;
+            }
+         
+            @Override
+            public int filterOrder() {
+                return -5;
+            }
+         
+            @Override
+            public Object run() throws ZuulException {
+                log.info("放行");
+                return null;
+            }
+         
+            @Override
+            public boolean shouldFilter() {
+                RequestContext context = RequestContext.getCurrentContext();
+                if(!RATE_LIMITER.tryAcquire()) {
+                    log.warn("访问量超载");
+                    // 指定当前请求未通过过滤
+                    context.setSendZuulResponse(false);
+                    // 向客户端返回响应码429，请求数量过多
+                    context.setResponseStatusCode(429);
+                    return false;
+                }
+                return true;
+            }
+        }
+        ```
 
-3. 在application.yml中设置
+    3. 灰度发布
+    
+    4. 权限控制/认证
 
-    ```xml
-    server:
-      port: 5050
-    spring:
-      application:
-        name: demo1-zuul
-    eureka:
-      client:
-        service-url:
-          defaultZone: http://eureka7070:7070/eureka,http://eureka7071:7071/eureka,http://eureka7072:7072/eureka
-    zuul:
-      routes:
-        provider8080.serviceId: DEMOSPRINGCLOUDPROVIDER-8080
-        provider8080.path: /user/**
-    ```
+        1. 网关直接暴露在公网时，终端要调用某个服务，通常把登录后的token(令牌)传过来，网关层对token进行有效性验证
+        
+            1. token无效/没有token，不允许访问REST服务
+        
+            2. 实现：结合Spring Security的认证机制完成Zuul网关的安全认证
+
+            编码
+            
+            1. pom依赖
+            
+                ```xml
+                <!--  增加网关  -->
+                <dependency>
+                  <groupId>org.springframework.cloud</groupId>
+                  <artifactId>spring-cloud-starter-zuul</artifactId>
+                  <version>1.4.6.RELEASE</version>
+                </dependency>
+                ```
+               
+            2. 启动类添加@EnableZuulProxy注解开启网关代理
+            
+                ```java
+                @SpringBootApplication
+                @EnableZuulProxy //开启网关代理
+                public class Demo1ZuulApplication {
+                    public static void main(String[] args) {
+                        SpringApplication.run(Demo1ZuulApplication.class,args);
+                    }
+                }
+                ```
+            
+            3. 在application.yml中设置
+            
+                ```xml
+                server:
+                  port: 5050
+                spring:
+                  application:
+                    name: demo1-zuul
+                eureka:
+                  client:
+                    service-url:
+                      defaultZone: http://eureka7070:7070/eureka,http://eureka7071:7071/eureka,http://eureka7072:7072/eureka
+                zuul:
+                  routes:
+                    provider8080.serviceId: DEMOSPRINGCLOUDPROVIDER-8080
+                    provider8080.path: /user/**
+                ```
+
+#### Spring Cloud配置管理-Config
+
+将各个应用/系统/模块的配置文件存放到统一的地方然后进行管理
+
+![SpringCloudConfig.png](images/SpringCloudConfig.png)
+
+配置动态刷新：运行时更改远程配置仓库中的对应配置文件，可使用以下方式：
+
+* 使用Bus消息总线+SpringCloud Config
+
+##### Spring Cloud Bus
+
+用于将服务和服务实例与分布式消息系统链接在一起的事件总线。在集群中传播状态更改很有用
+
+通常用于管理和广播分布式系统中的消息
+
+![SpringCloudBus.png](images/SpringCloudBus.png)
+
+实现方式：创建一个简单请求，并添加上@RefreshScope注解即可进行配置动态修改

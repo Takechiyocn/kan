@@ -387,6 +387,7 @@ Kafka通过副本机制实现数据存储，因此需要一些机制保证数据
         * 将Socket Buffer数据复制到网卡，由网卡进行网络传输
     
             ![FileReadTraditional.png](images/FileReadTraditional.png)
+        
     * Kafka零拷贝
     
         省略上述2、3复制步骤，直接将内核缓冲区Read Buffer数据复制到网卡

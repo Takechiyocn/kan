@@ -9,6 +9,7 @@ import java.util.Scanner;
  * Arrays.copyOf：底层调用System.arraycopy
  * clone：Object本地方法(Object子类重写该方法使其返回相应类型，不需强制类型转换) --> 时间效率中庸
  * for：循环原始数组并直接赋值到目标数组中
+ * 效率比较结论：System.arrayCopy >= clone > Arrays.copyOf > for循环
  *   1. 原始数组长度不管是多少的时候，Arrays.copyOf()的效率都比System.arraycopy()差
  *   2. 数组长度较小时候(长度几百以内)，for效率较高，随着数组长度增加，效率变低
  *   3. 数组长度中等时候(几千)，两个本地方法(System.arraycopy和clone)效率相似

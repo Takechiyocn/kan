@@ -6,7 +6,7 @@
 
 * Web容器：Tomcat
 
-   * 动态的html需要转发给Tomcat处理，如jsp页面请求先经由Apache转发给Tomcat，再有Tomcat解析请求
+   * 动态的html需要转发给Tomcat处理，如jsp页面请求先经由Apache转发给Tomcat，再由Tomcat解析请求
    
    * 负责将Http请求转换为HttpServletRequest对象，即创建Servlet实例
    
