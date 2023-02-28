@@ -1,0 +1,17 @@
+spring:
+  application:
+    # 当前服务注册在Eureka Server的名称
+    name: service-provider1
+server:
+  port: 8763
+eureka:
+  client:
+    service-url:
+      # 指定Eureka Server地址
+      defaultZone: http://localhost:8761/eureka
+  # 开启健康检查，默认是开启的
+#  eureka.client.healthcheck.enabled=true
+  # 单位是秒，默认30秒。此客户端发送心跳的频率
+#  eureka.instance.lease-renewal-interval-in-seconds=30
+  # 单位是秒，默认90秒，表示eureka server在收到此client上次心跳之后，间隔多久没有收到，就摘除此服务。
+#  eureka.instance.lease-expiration-duration-in-seconds=10
