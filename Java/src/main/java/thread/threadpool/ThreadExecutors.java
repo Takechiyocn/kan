@@ -8,11 +8,11 @@ import java.util.concurrent.*;
 
 /**
  * 方法对比
- *  工厂方法	                corePoolSize    maximumPoolSize	    keepAliveTime	workQueue
+ *  工厂方法	                corePoolSize    maximumPoolSize	    keepAliveTime	workQueue：都继承自BlockingQueue
  *  newCachedThreadPool	    0	            Integer.MAX_VALUE	60s             SynchronousQueue:直接提交任务队列
- *  newFixedThreadPool	    nThreads	    nThreads	        0	            LinkedBlockingQueue:无界队列
- *  newSingleThreadExecutor	1	            1	                0	            LinkedBlockingQueue:无界队列
- *  newScheduledThreadPool	corePoolSize	Integer.MAX_VALUE	0	            DelayedWorkQueue:
+ *  newScheduledThreadPool	corePoolSize	Integer.MAX_VALUE	0	            DelayedWorkQueue:线程数最大数MAX_VALUE可能会创建数量非常多的线程，甚至OOM
+ *  newFixedThreadPool	    nThreads	    nThreads	        0	            LinkedBlockingQueue:无界队列：堆积的请求处理队列可能会耗费非常大的内存，甚至OOM
+ *  newSingleThreadExecutor	1	            1	                0	            LinkedBlockingQueue:无界队列：堆积的请求处理队列可能会耗费非常大的内存，甚至OOM
  *
  * @author moku
  */

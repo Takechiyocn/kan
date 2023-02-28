@@ -8,7 +8,7 @@
 
     一个重要的安全策略，用于限制一个origin的文档或者它加载的脚本如何能与另一个源的资源进行交互。能帮助阻挡恶意文档，减少可能被攻击的媒介
   
-    ![img.png](img.png)
+    ![img.png](images/img.png)
   
 ### 同源
 
@@ -35,11 +35,11 @@ http://www2.example.com:80
 ```html
 http://www.example.com:80/path/to/myfile.html?key1=value1&key2=value2#SomewhereInTheDocument
 ```
-![img_1.png](img_1.png)
+![img_1.png](images/img_1.png)
 
 ### 解决跨域
 
-![img_2.png](img_2.png)
+![img_2.png](images/img_2.png)
 
 #### CORS
 

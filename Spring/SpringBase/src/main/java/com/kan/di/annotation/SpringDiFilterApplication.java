@@ -2,6 +2,7 @@ package com.kan.di.annotation;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 /**
  * @ClassName SpringDiFilterApplication
@@ -11,6 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @Version 1.0
  */
 @SpringBootApplication
+@EnableAsync
 public class SpringDiFilterApplication {
     public static void main(String[] args) {
 

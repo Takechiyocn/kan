@@ -1,8 +1,5 @@
 package test;
 
-import java.util.LinkedList;
-import java.util.List;
-
 /**
  * @ClassName Test
  * @Description
@@ -12,17 +9,26 @@ import java.util.List;
  */
 public class Test {
 
-    public void magicString (List Object) {
+    public static void sort(int[] arr) {
 
+        int target;
+        for (int i = 1; i < arr.length; i++) {
+            target = arr[i];
+            int j = i;
+            while ( j > 0 && target < arr[j-1]) {
+                arr[j] = arr[j -1];
+                j--;
+            }
+            arr[j] = target;
+        }
     }
 
-
-
     public static void main(String[] args) {
-        Test test = new Test();
-        LinkedList list = new LinkedList();
-        test.magicString(list);
         int[] arr = {1, 5, 6, 2, 3, 7, 4};
+        sort(arr);
 
+        for (int res : arr) {
+            System.out.println(res);
+        }
     }
 }

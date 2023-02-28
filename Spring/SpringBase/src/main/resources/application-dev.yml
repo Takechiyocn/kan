@@ -1,0 +1,9 @@
+# 线程池配置
+# 核心线程数
+threadPool.spring.corePoolSize: 20
+# 最大线程数
+threadPool.spring.maxPoolSize: 40
+# 线程队列长度
+threadPool.spring.queueCapacity: 100
+# 超过核心线程数的线程所允许的空闲时间
+threadPool.spring.keepAliveSeconds: 300

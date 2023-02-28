@@ -309,7 +309,7 @@ public Map<String, Object> validate(
 
 * 将Controller的方法的返回对象，适当的HttpMessageConverter转换为指定格式后，写入到Response对象的body体中
 
-* 使用时机：返回的数据不是html标签的页面，而是其他某种格式的数据(如json、xml)时
+* 使用时机：返回的数据不是html标签的页面，而是其他某种格式的数据(如json、xml)时;返回View视图时就使用String
 
 ### @RequestParam注解
 
