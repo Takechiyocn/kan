@@ -8,6 +8,7 @@ spring:
       label: master
       server:
         git:
+          default-label: master
           # https方式
           #uri: https@github.com/mookuu/kan.git
           #username: takechiyocn
@@ -21,7 +22,7 @@ spring:
           ignore-local-ssh-settings: true
           skip-ssl-validation: true
           # 从本地仓库拉取
-          basedir: Spring/SpringCloudConfig/config-files
+#          basedir: Spring/SpringCloudConfig/config-files
 #          timeout: 15
           #hostKey: moku
           #hostKeyAlgorithm: ssh-rsa

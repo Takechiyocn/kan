@@ -3,5 +3,8 @@ spring:
     config:
       label: master
       uri: http://localhost:8765
-      name: config
+      name: config1
       profile: dev
+      encrypt:
+        key: 'moku'
+

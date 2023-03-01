@@ -3,20 +3,9 @@ spring:
     # 当前服务注册在Eureka Server的名称
     # 如果Consumer只是消费服务，可以不用注册到EurekaServer
     name: service-customer1
-  cloud:
-    config:
-      server:
-        git:
-          uri: https://github.com/mookuu/kan.git
-          search-paths: Spring/SpringCloudConfig/config-files
-          #因为要连接外网，所以必须设置代理，电脑的vpn要连接，并且配置文件中也要配置代理
-          #host和port的值是从代理工具里查找到的
-      #          proxy:
-      #            https:
-      #              host: 127.0.0.1
-      #              port: 19180
-      ####读取分支
-      label: master
+#  cloud:
+#    config:
+#      enabled: false
 server:
   port: 8764
 eureka:
