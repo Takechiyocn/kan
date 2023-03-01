@@ -1,14 +1,71 @@
 spring:
   application:
-    name: config
+    #注册进Eureka服务器的微服务名
+    name: config-server
   cloud:
     config:
+      #读取分支
+      label: master
       server:
         git:
-          uri: https://github.com/mookuu/kan/Spring/SpringCloudConfig.git
-          search-paths: config-files
+          # https方式
+          #uri: https@github.com/mookuu/kan.git
+          #username: takechiyocn
+          #password: M@kuk5n1!Kan
+          # key方式
+          uri: git@github.com:mookuu/kan.git
+          strict-host-key-checking: false
+          search-paths: Spring/SpringCloudConfig/config-files
+          # 不加可能会有网络导致连接不上
+          force-pull: true
+          ignore-local-ssh-settings: true
+          skip-ssl-validation: true
+          # 从本地仓库拉取
+          basedir: Spring/SpringCloudConfig/config-files
+#          timeout: 15
+          #hostKey: moku
+          #hostKeyAlgorithm: ssh-rsa
+          private-key: |
+            -----BEGIN OPENSSH PRIVATE KEY-----
+            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
+            -----END OPENSSH PRIVATE KEY-----
 server:
-  port: 8000
+  port: 8765
 eureka:
   client:
     service-url:
