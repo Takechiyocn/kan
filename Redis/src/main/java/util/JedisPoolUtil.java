@@ -67,7 +67,7 @@ public class JedisPoolUtil {
      *
      * @param jedis 连接对象
      */
-    public static void releaseJeids(Jedis jedis) {
+    public static void releaseJedis(Jedis jedis) {
 
         if (jedis != null) {
             // jedisPool.returnResourceObject(jedis)已废弃
