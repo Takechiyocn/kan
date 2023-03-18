@@ -1,2 +1,27 @@
-encrypt:
-  key: 'shizhenchao'
+spring:
+#  cloud:
+#    config:
+#      encrypt:
+#        key: 'shizhenchao'
+  # rabbitmq的配置信息；如下配置的rabbit都是默认值，其实可以完全不配置
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    password: guest
+    username: guest
+# rabbitmq相关配置,暴露bus刷新配置的端点 SpringCloud Bus动态刷新全局广播
+management:
+  # 暴露bus刷新配置的端点
+  endpoints:
+    web:
+      exposure:
+        # 暴露触发消息总线的地址
+        # Postman-post请求测试 Url: http://localhost:8765/actuator/busrefresh
+        include: bus-refresh
+  # 刷新时，关闭安全验证
+  security:
+    enabled: false
+# com.org 包下的日志级别都为Debug
+logging:
+  level:
+    org: debug

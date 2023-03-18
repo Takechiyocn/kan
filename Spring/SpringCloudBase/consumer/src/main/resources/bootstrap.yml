@@ -1,10 +1,61 @@
 spring:
+  application:
+    # 当前服务注册在Eureka Server的名称
+    # 如果Consumer只是消费服务，可以不用注册到EurekaServer
+    name: service-customer1
   cloud:
     config:
       label: master
-      uri: http://localhost:8765
       name: config1
       profile: dev
+#      uri: http://localhost:8765
       encrypt:
-        key: 'moku'
-
+        key: 'shizhenchao'
+      discovery:
+        enabled: true # 使用配置中心
+        service-id: config-server # 配置中心服务id
+    bus:
+      enabled: true
+      # 接受远程EventBus发送过来的RefreshRemoteApplicationEvent事件，从config-server拉取最新配置
+      refresh:
+        enabled: true
+      # 属性部分配置
+      env:
+        enabled: true
+      # 收到EventBus远程发送过来的事件后，返回确认事件
+      ack:
+        enabled: true
+      # 记录事件，SpringCloud未实现，只打印debug日志
+      trace:
+        enabled: false
+  # rabbitmq相关配置,暴露bus刷新配置的端点,如下配置的rabbit都是默认值，其实可以完全不配置
+  # SpringCloud Bus动态刷新定点通知公式：http://localhost:配置中心的端口号/actuator/busrefresh/{destination}
+  # 例如,只通知8764，curl -X POST "http://localhost:8765/actuator/busrefresh/消费者服务名如service-customer1:8764"
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    password: guest
+    username: guest
+# 暴露监控端点,否则curl -X POST "http://localhost:8764/actuator/busrefresh" 不可使用
+management:
+  endpoints:
+    web:
+      exposure:
+        # 暴露触发消息总线的地址
+        # Postman-post请求测试 Url: http://localhost:8765/actuator/busrefresh <-- 因为使用的是starter-amqp
+        include: "*"
+  # 刷新时，关闭安全验证
+  security:
+    enabled: false
+server:
+  port: 8764
+#向Eureka服务中心集群注册服务
+eureka:
+  client:
+    service-url:
+      # 指定Eureka Server地址
+      defaultZone: http://localhost:8761/eureka
+# com.org 包下的日志级别都为Debug
+logging:
+  level:
+    org: debug

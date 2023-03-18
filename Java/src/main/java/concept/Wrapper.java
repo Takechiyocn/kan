@@ -49,5 +49,10 @@ public class Wrapper {
         for (int i : aInt) {
             log.info("boxing:" + i);
         }
+
+        int i = 200;
+        Integer j = new Integer(200);
+        // true：j自动拆箱后再进行值比较
+        System.out.println(i == j);
     }
 }

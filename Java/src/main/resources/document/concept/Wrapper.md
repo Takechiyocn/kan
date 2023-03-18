@@ -9,7 +9,7 @@ short|2字节|Short|Number|-128~127|支持|-32768～32767|0
 int|4字节|Integer|Number|-128~127|支持|-2^31 ～ 2^31 - 1|0
 long|8字节|Long|Number|-128~127|-|-2^63 ～ 2^63 - 1|0L
 float|4字节|Float|Number|无|-|-|0.0f
-double|8字节|Double|Number|无|-|-|0.0d
+double|8字节|Double|Number|无|-|-|0.0d(默认浮点类型)
 char|2字节|Character|-|0~127|支持|-|\u0000
 boolean|1字节|Boolean|-|无|-|-|false
 String|-|-|-|-|支持|-|null
@@ -18,26 +18,44 @@ Enum|-|-|-|-|支持|-|-
 
 * 自动装箱(autoboxing)
   
-    将(类型)值直接添加到包装器实例中，内部进行类型自动转换的过程
+    1. 将(基本类型)值直接添加到包装器实例中，内部进行类型自动转换的过程
   
-    ```java
-    ArrayList<Integer> list = new ArrayLst<>();
-    // 自动转换成list.add(Integer.valueOf(3));
-    list.add(3);
-    ```
+        ```java
+        ArrayList<Integer> list = new ArrayLst<>();
+        // 自动转换成list.add(Integer.valueOf(3));
+        list.add(3);
+        ```
+       
+    2. 使用equals方法时，如
+    
+        ```java
+        int i = 0;
+        Integer j = new Integer(0);
+        // true:i自动装箱为Integer再进行equals比较
+        System.out.println(j.equals(i));
+        ```
 
 * 自动拆箱
   
-    自动装箱的逆过程
+    1. 自动装箱的逆过程
   
-    ```java
-    // 自动转换成list.get(i).intValue();
-    int n = list.get(i);
-    // 自动装箱
-    Integer n = 3;
-    // 自动拆箱-->自加-->自动装箱
-    n++;
-    ```
+        ```java
+        // 自动转换成list.get(i).intValue();
+        int n = list.get(i);
+        // 自动装箱
+        Integer n = 3;
+        // 自动拆箱-->自加-->自动装箱
+        n++;
+        ```
+       
+  2. 基本类型和包装类使用==进行比较时
+
+        ```java
+        int i = 0;
+        Integer j = new Integer(0);
+        // true：j自动拆箱后再进行值比较
+        System.out.println(i == j);
+        ```
   
 ### 运算中的行为
 

@@ -10,20 +10,20 @@ spring:
         git:
           default-label: master
           # https方式
-          #uri: https@github.com/mookuu/kan.git
-          #username: takechiyocn
-          #password: M@kuk5n1!Kan
+#          uri: https://github.com/mookuu/kan.git
+#          username: takechiyocn
+#          password: M@kuk5n1!Kan
           # key方式
           uri: git@github.com:mookuu/kan.git
           strict-host-key-checking: false
+          # basedir: Spring/SpringCloudConfig/config-files
           search-paths: Spring/SpringCloudConfig/config-files
           # 不加可能会有网络导致连接不上
           force-pull: true
+          # 激活基于属性的SSH配置
           ignore-local-ssh-settings: true
           skip-ssl-validation: true
-          # 从本地仓库拉取
-#          basedir: Spring/SpringCloudConfig/config-files
-#          timeout: 15
+          timeout: 60
           #hostKey: moku
           #hostKeyAlgorithm: ssh-rsa
           private-key: |
@@ -67,7 +67,9 @@ spring:
             -----END OPENSSH PRIVATE KEY-----
 server:
   port: 8765
+#向Eureka服务中心集群注册服务
 eureka:
   client:
     service-url:
+      # 指定Eureka Server地址
       defaultZone: http://localhost:8761/eureka

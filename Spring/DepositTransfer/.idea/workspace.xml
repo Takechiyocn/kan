@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="914e9b42-12e6-4ae9-9190-8e6dd6bd390d" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../../Java/src/main/resources/document/projectmanage/Infrastructure.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Java/src/main/resources/document/projectmanage/ProductSample.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringBase/src/main/resources/memo/ApplicationBootstrap.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringCloudBase/consumer/src/main/java/org/moku/consumer/configuration/AuthorProperties.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringCloudConfig/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringCloudConfig/.idea/SpringCloudConfig.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringCloudConfig/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringCloudConfig/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringCloudConfig/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../SpringCloudConfig/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java/src/main/java/concept/Wrapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Java/src/main/java/concept/Wrapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java/src/main/resources/document/concept/Wrapper.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../Java/src/main/resources/document/concept/Wrapper.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringCloudBase/Spring/SpringCloudConfig/config-files" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringCloudBase/config/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringCloudBase/config/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringCloudBase/config/src/main/java/org/moku/config/ConfigApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringCloudBase/config/src/main/java/org/moku/config/ConfigApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringCloudBase/config/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringCloudBase/config/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringCloudBase/config/src/main/resources/bootstrap.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringCloudBase/config/src/main/resources/bootstrap.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringCloudBase/consumer/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringCloudBase/consumer/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringCloudBase/consumer/src/main/java/org/moku/consumer/ConsumerApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringCloudBase/consumer/src/main/java/org/moku/consumer/ConsumerApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringCloudBase/consumer/src/main/java/org/moku/consumer/configinfo/ConfigInfoProperties.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringCloudBase/consumer/src/main/java/org/moku/consumer/controller/ConfigController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringCloudBase/consumer/src/main/java/org/moku/consumer/controller/ConfigController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringCloudBase/consumer/src/main/resources/application.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringCloudBase/consumer/src/main/resources/bootstrap.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringCloudBase/consumer/src/main/resources/bootstrap.yml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/test/java/com/cloud/demo/SpringDemoApplicationTests.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/resources/application.yml" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/com/cloud/demo/mapper/AccountMapper.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/pom.xml" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/com/cloud/demo/SpringDemoApplication.java" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="ProjectId" id="2LqfjeyknGX37dzEgvoxEpmn6q0" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="go.import.settings.migrated" value="true" />
+    <property name="settings.editor.selected.configurable" value="MTHome" />
+  </component>
+  <component name="RunManager">
+    <configuration name="SpringDemoApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="DepositTransfer" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.cloud.demo.SpringDemoApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="914e9b42-12e6-4ae9-9190-8e6dd6bd390d" name="Default Changelist" comment="" />
+      <created>1676603671729</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1676603671729</updated>
+      <workItem from="1676603674750" duration="1609000" />
+      <workItem from="1676944789439" duration="591000" />
+      <workItem from="1677072349591" duration="104000" />
+      <workItem from="1677072524964" duration="586000" />
+      <workItem from="1677601740314" duration="577000" />
+      <workItem from="1677680437586" duration="591000" />
+      <workItem from="1678704329659" duration="592000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+</project>
