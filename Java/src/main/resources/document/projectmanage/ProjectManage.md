@@ -12,6 +12,8 @@
 
 ![PM1.png](images/PM1.png)
 
+WBS:Work BreakDown Structure工作分解结构
+
 ### 项目进度管理
 
 ![PM2.png](images/PM2.png)

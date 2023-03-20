@@ -10,11 +10,11 @@
 
 #### 定义
 
-* QPS(9W)
+* QPS(10W)
 
     Queries Per Second每秒查询数
 
-* TPS
+* TPS(2000)
 
     Transactions Per Second每秒事务数
 
