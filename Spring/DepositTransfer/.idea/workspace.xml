@@ -5,29 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="914e9b42-12e6-4ae9-9190-8e6dd6bd390d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../../Java/src/main/resources/document/projectmanage/Infrastructure.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Java/src/main/resources/document/projectmanage/ProductSample.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../SpringBase/src/main/resources/memo/ApplicationBootstrap.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../SpringCloudBase/consumer/src/main/java/org/moku/consumer/configuration/AuthorProperties.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Java/src/main/resources/document/projectmanage/ProjectSchedule.md" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../SpringCloudConfig/.idea/.gitignore" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../SpringCloudConfig/.idea/SpringCloudConfig.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../SpringCloudConfig/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../SpringCloudConfig/.idea/misc.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../SpringCloudConfig/.idea/modules.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../SpringCloudConfig/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Java/src/main/java/concept/Wrapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Java/src/main/java/concept/Wrapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Java/src/main/resources/document/concept/Wrapper.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../Java/src/main/resources/document/concept/Wrapper.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringCloudBase/Spring/SpringCloudConfig/config-files" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringCloudBase/config/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringCloudBase/config/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringCloudBase/config/src/main/java/org/moku/config/ConfigApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringCloudBase/config/src/main/java/org/moku/config/ConfigApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringCloudBase/config/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringCloudBase/config/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringCloudBase/config/src/main/resources/bootstrap.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringCloudBase/config/src/main/resources/bootstrap.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringCloudBase/consumer/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringCloudBase/consumer/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringCloudBase/consumer/src/main/java/org/moku/consumer/ConsumerApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringCloudBase/consumer/src/main/java/org/moku/consumer/ConsumerApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringCloudBase/consumer/src/main/java/org/moku/consumer/configinfo/ConfigInfoProperties.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringCloudBase/consumer/src/main/java/org/moku/consumer/controller/ConfigController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringCloudBase/consumer/src/main/java/org/moku/consumer/controller/ConfigController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringCloudBase/consumer/src/main/resources/application.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringCloudBase/consumer/src/main/resources/bootstrap.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringCloudBase/consumer/src/main/resources/bootstrap.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java/src/main/resources/document/projectmanage/ProjectManageRisk.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../Java/src/main/resources/document/projectmanage/ProjectManageRisk.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java/src/main/resources/document/projectmanage/img.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../Java/src/main/resources/document/projectmanage/images/img.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java/src/main/resources/document/projectmanage/img_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../Java/src/main/resources/document/projectmanage/images/img_1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java/src/main/resources/document/projectmanage/img_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../Java/src/main/resources/document/projectmanage/images/img_2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java/src/main/resources/document/projectmanage/img_3.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../Java/src/main/resources/document/projectmanage/images/img_3.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java/src/main/resources/document/projectmanage/img_4.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../Java/src/main/resources/document/projectmanage/images/img_4.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Java/src/main/resources/document/projectmanage/img_5.png" beforeDir="false" afterPath="$PROJECT_DIR$/../../Java/src/main/resources/document/projectmanage/images/img_5.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,7 +74,13 @@
       <workItem from="1677072524964" duration="586000" />
       <workItem from="1677601740314" duration="577000" />
       <workItem from="1677680437586" duration="591000" />
-      <workItem from="1678704329659" duration="592000" />
+      <workItem from="1678704329659" duration="1985000" />
+      <workItem from="1679577980684" duration="586000" />
+      <workItem from="1679618767740" duration="1198000" />
+      <workItem from="1680225289761" duration="294000" />
+      <workItem from="1680225660200" duration="609000" />
+      <workItem from="1681639856291" duration="588000" />
+      <workItem from="1681920324337" duration="583000" />
     </task>
     <servers />
   </component>

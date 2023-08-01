@@ -3,30 +3,36 @@ package logic.equal;
 import java.io.*;
 
 /**
- *
  * ==：比较变量(存放于栈中)内存中存放的对象的(堆)内存地址，
- *     用于比较两个对象的地址是否相同，即是否指向同一个对象。比较的是真正意义上的指针操作。
- *     特点：1.比较操作符两端的操作数是否是同一对象
- *          2.两边操作数必须是同一类型(父子类之间亦可)才能通过编译
- *          3.比较的是地址，如果是具体的阿拉伯数字，值相等则为true
- *            如(int a = 10;
- *               long b = 10L;
- *               double c = 10.0)均相等(true)，均指向值为10的栈
+ * 用于比较两个对象的地址是否相同，即是否指向同一个对象。比较的是真正意义上的指针操作。
+ * 特点：1.比较操作符两端的操作数是否是同一对象
+ * 2.两边操作数必须是同一类型(父子类之间亦可)才能通过编译
+ * 3.比较的是地址，如果是具体的阿拉伯数字，值相等则为true
+ * 如(int a = 10;
+ * long b = 10L;
+ * double c = 10.0)均相等(true)，均指向值为10的栈
  * equals：java.lang.Object类方法，用于比较两个对象内容是否相等。
- *         所有类均继承自java.lang.Object，因此equals适用于所有对象。
- *         如果对象未对equals方法进行覆写(如StringBuffer)，则仍然调用Object中equals方法，该方法返回的时==的判断结果。
+ * 所有类均继承自java.lang.Object，因此equals适用于所有对象。
+ * 如果对象未对equals方法进行覆写(如StringBuffer)，则仍然调用Object中equals方法，该方法返回的时==的判断结果。
  * 直接量：以String s = "abc";形式的赋值在java中叫直接量，存放在常量池中，而非new一样保存在堆中
  * 字符串拘留池(string interning pool)：公共语言运行库会自动维护一个名为“拘留池”(intern pool) 的表，
- *      它包含程序中以编程方式声明或创建的每个唯一的字符串的一个引用。因此，具有特定值的字符串的实例在系统中只有一个。
+ * 它包含程序中以编程方式声明或创建的每个唯一的字符串的一个引用。因此，具有特定值的字符串的实例在系统中只有一个。
  * 字符串拘留：直接量形式的字符串在JVM内部发生字符串拘留(String intern)，
- *           即声明直接量字符串后，JVM先在常量池中寻找值相等的对象，如有，则将其赋予当前引用；
- *           如没有，则新建值。这种现象叫字符串拘留
- *           以直接量形式声明的字符串，只要值相等，则多个引用均指向同一对象。
+ * 即声明直接量字符串后，JVM先在常量池中寻找值相等的对象，如有，则将其赋予当前引用；
+ * 如没有，则新建值。这种现象叫字符串拘留
+ * 以直接量形式声明的字符串，只要值相等，则多个引用均指向同一对象。
+ *
  * @author moku
  */
 public class EqualsInJava {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
+
+        // 基本类型：直接比较值是否相等
+        int i = 10;
+        long j = 10L;
+        float k = 10.0f;
+        System.out.println("i ==j:" + (i == j) + ", i == k:" + (i == k));
 
         // 字符串拘留
         String a = "ab";
@@ -52,6 +58,23 @@ public class EqualsInJava {
         // false
         // StringBuffer类未覆写equals方法
         System.out.println("sb.equals(sb2): " + sb.equals(sb2));
+
+        // final型字符串拼接，等价于发生字符串拘留
+        String aa = "hello2";
+        final String bb = "hello";
+        String cc = "hello";
+        // 编译时常量： "ab" + "2";
+        // 运行时常量：cc + "2"; 等价于 new 对象
+        // dd虽然是运行时常量，但因为有final修饰，
+        // 栈：变量aa、dd地址 -> 同时指向相同的堆地址(String对象在堆上分配空间)
+        // 堆：变量aa、dd地址内存放的指向(堆)对象的地址 -> 该堆地址指向常量池
+        String dd = bb + "2";
+        // 栈：变量ee的地址 -> 指向堆地址(String对象在堆上分配空间)
+        // 堆：变量ee的地址内存放的指向(堆)对象的地址 -> 该堆地址指向常量池
+        // 相较于对象aa、dd共用一个堆地址空间，对象ee多使用了一个堆对象空间
+        String ee = cc + "2";
+        System.out.println("aa == dd:" + (aa == dd));
+        System.out.println("aa == ee:" + (aa == ee));
 
         // 基本类型只能用==进行比较，因为基本类型没有equals方法
         int e = 2;
@@ -107,7 +130,6 @@ public class EqualsInJava {
     }
 }
 
-class Value
-{
+class Value {
     int i;
 }
