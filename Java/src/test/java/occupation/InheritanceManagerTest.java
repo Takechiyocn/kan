@@ -1,5 +1,7 @@
 package occupation;
 
+import logic.occupation.Employee;
+import logic.occupation.Manager;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -72,7 +74,7 @@ public class InheritanceManagerTest {
 
         // 子类对象可以声明为父类类型（向上转换）
         //  --> 向下转换的基础
-        Employee e1 = new Manager("test", 10000, 1111, 11, 11);
+        Employee e1 = new Manager("logic/test", 10000, 1111, 11, 11);
         // 父类对象不可以声明为子类类型
         // Manager m1 = new Employee("test"); // cast error
         // 向下转换
@@ -91,7 +93,7 @@ public class InheritanceManagerTest {
         log.info("getClass of Manager:" + m2.getClass());
 
         // 超类Object实例
-        Object obj = new Employee("test");
+        Object obj = new Employee("logic/test");
         Employee e2 = (Employee) obj;
 
         log.info("Object.toString: of Employee:" + e2.toString());

@@ -1,5 +1,8 @@
 package occupation;
 
+import logic.occupation.Employee;
+import logic.occupation.Manager;
+
 /**
  * This program demonstrates the equals method.
  * @version 1.12 2012-01-26

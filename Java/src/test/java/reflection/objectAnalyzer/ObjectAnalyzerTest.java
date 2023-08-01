@@ -1,5 +1,7 @@
 package reflection.objectAnalyzer;
 
+import logic.reflection.objectAnalyzer.ObjectAnalyzer;
+
 import java.util.ArrayList;
 
 /**

@@ -1,5 +1,6 @@
 package interfacecustomize;
 
+import logic.interfacecustomize.ArraysSortComparator;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Arrays;

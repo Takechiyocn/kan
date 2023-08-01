@@ -1,5 +1,7 @@
 package interfacecustomize;
 
+import logic.interfacecustomize.CallBackTimerPrinter;
+
 import javax.swing.*;
 import java.awt.event.ActionListener;
 

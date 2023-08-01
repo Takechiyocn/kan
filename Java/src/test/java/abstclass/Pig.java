@@ -1,5 +1,7 @@
 package abstclass;
 
+import logic.abstclass.Action;
+
 public class Pig extends Action {
     @Override
     public void eat() {

@@ -1,5 +1,7 @@
 package abstclass;
 
+import logic.abstclass.Action;
+
 public class ActionTest {
 
     public static void main(String args[]) {

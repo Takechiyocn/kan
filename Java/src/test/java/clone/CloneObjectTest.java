@@ -1,7 +1,8 @@
 package clone;
 
+import logic.clone.DeepClone;
 import lombok.extern.slf4j.Slf4j;
-import occupation.Employee;
+import logic.occupation.Employee;
 
 /**
  * @description:
@@ -22,7 +23,7 @@ public class CloneObjectTest {
             log.info("Deep copy(original): name=" + original.getName() + ",hireDay=" + original.getHireDay() + ",salary=" + original.getSalary());
             log.info("Deep copy(new): name=" + copy.getName() + ",hireDay=" + copy.getHireDay() + ",salary=" + copy.getSalary());
 
-            Employee el = new Employee("test");
+            Employee el = new Employee("logic/test");
             // protected权限的Object.clone方法：包和子类(代码中，非子类对象)可见
             // 比如B是A的子类，A有一个protected的方法aMethod,B中代码可以访问aMethod。但是如果有一个C类，在其中有B的对象b，b.aMethod()就不对了
             // 以下Employee类(中方法)可访问继承自Object的clone方法

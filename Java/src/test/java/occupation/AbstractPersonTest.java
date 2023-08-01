@@ -1,10 +1,9 @@
 package occupation;
 
-import abstclass.Person;
+import logic.abstclass.Person;
+import logic.occupation.Manager;
+import logic.occupation.Student;
 import lombok.extern.slf4j.Slf4j;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * 经理类
