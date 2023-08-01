@@ -1,5 +1,0 @@
-
-t
-java:S1171 "YMove the contents of this initializer to a standard constructor or to field initializers.(ÒÌâ–øÿÿÿÿ
-|
-java:S1210„"YOverride "equals(Object obj)" to comply with the contract of the "compareTo(T o)" method.(ñí·şÿÿÿÿ8³íÖüü.
