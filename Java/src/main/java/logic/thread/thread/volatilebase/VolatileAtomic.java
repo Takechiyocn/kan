@@ -18,7 +18,7 @@ public class VolatileAtomic {
         num++;
     }
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
 
         // 理论上结果应该是20000
         for (int i = 0; i < 20; i++) {
@@ -29,7 +29,5 @@ public class VolatileAtomic {
                 System.out.println(Thread.currentThread().getName()+ " sum:" + num);
             }).start();
         }
-        Thread.sleep(3000);
-        System.out.println(num);
     }
 }

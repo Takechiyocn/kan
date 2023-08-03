@@ -19,13 +19,13 @@ public class RandomOrderNumber {
         //时间（精确到毫秒）
         DateTimeFormatter ofPattern = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
         String localDate = LocalDateTime.now().format(ofPattern);
+        //随机数
+        String randomNumeric = RandomStringUtils.randomNumeric(8);
 
         long startTime = System.currentTimeMillis();
-        Set<String> set = new HashSet<>();
-//        for (int i = 0; i < 10; i++) {
-        for(int i=0;i<10000000;i++){
-            //随机数
-            String randomNumeric = RandomStringUtils.randomNumeric(8);
+        Set set = new HashSet<>();
+        for (int i = 0; i < 10; i++) {
+//        for(int i=0;i<10000000;i++){
             String orderNumber = localDate + randomNumeric;
             System.out.println("orderNumber---" + (i + 1) + "=======" + orderNumber);
             set.add(orderNumber);

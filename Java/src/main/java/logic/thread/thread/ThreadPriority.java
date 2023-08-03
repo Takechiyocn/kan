@@ -13,9 +13,9 @@ import java.util.Random;
 public class ThreadPriority {
     public static void main(String[] args) {
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 5; i++) {
             Thread t = new Thread(() -> {
-                System.out.println(Thread.currentThread().getThreadGroup()+", ThreadName[" +Thread.currentThread().getName()+"]," + " priority:"
+                System.out.println(Thread.currentThread().getName() + " priority:"
                         + Thread.currentThread().getPriority());
             });
             t.setPriority(i + new Random(6).nextInt(6));

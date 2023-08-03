@@ -8,21 +8,12 @@ package logic.thread.thread;
  * @Version 1.0
  */
 public class ThreadLocalInheritable {
-    static ThreadLocal threadLocal = new InheritableThreadLocal();
     public static void main(String[] args) {
 
-
+        final ThreadLocal threadLocal = new InheritableThreadLocal();
         threadLocal.set("Hello");
         new Thread(() -> {
             System.out.println("获取主线程变量：" + threadLocal.get());
-            try {
-                Thread.sleep(1000*3);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            System.out.println("获取主线程变量：" + threadLocal.get());
         }).start();
-        threadLocal.set("Hello2");
-        System.out.println(threadLocal.get());
     }
 }
