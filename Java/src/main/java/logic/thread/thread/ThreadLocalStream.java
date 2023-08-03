@@ -18,10 +18,10 @@ public class ThreadLocalStream {
         // 新建一个随机数类(线程安全)
         Random random = new Random();
         // Java8新特性：Stream
-        IntStream.range(0,5).forEach(i -> new Thread(() -> {
+        IntStream.range(1,6).forEach(i -> new Thread(() -> {
             // 为每个线程设置local值
             local.set(i + ", " + random.nextInt(10));
-            System.out.println("线程和local值分别为[" + local.get() + "]");
+            System.out.println("线程ID=" + Thread.currentThread().getName() + ",local值为[" + local.get() + "]");
             try {
                 TimeUnit.SECONDS.sleep(1);
             } catch (InterruptedException e) {

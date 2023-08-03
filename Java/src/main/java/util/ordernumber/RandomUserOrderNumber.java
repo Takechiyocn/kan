@@ -38,4 +38,14 @@ public class RandomUserOrderNumber {
         ;
         return orderNum;
     }
+
+    public static void main(String[] args) {
+
+        for (int i = 0; i < 10; i++) {
+            Runnable r = () -> {
+                getOrderNum(Long.valueOf(RandomStringUtils.randomNumeric(6)));
+            };
+            new Thread(r).start();
+        }
+    }
 }

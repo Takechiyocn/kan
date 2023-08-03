@@ -15,7 +15,7 @@ import java.util.Set;
 public class UUIDOrderNumber {
     public static void main(String[] args) {
         long startTime = System.currentTimeMillis();
-        Set set = new HashSet<>();
+        Set<String> set = new HashSet<>();
         for (int i = 0; i < 10000000; i++) {
             String uuid = UUIDUtils.getId();
             System.out.println("uuid---" + (i + 1) + "=======" + uuid);
