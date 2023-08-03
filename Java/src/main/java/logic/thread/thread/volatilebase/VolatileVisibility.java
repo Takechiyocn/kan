@@ -12,21 +12,27 @@ import java.util.concurrent.TimeUnit;
 
 public class VolatileVisibility {
     // 不加volatile程序死循环，volatile可保证可见性
-    private boolean flag = false;
+    private static boolean flag = true;
+
     public static void main(String[] args) {
 
-        VolatileVisibility v = new VolatileVisibility();
         new Thread(() -> {
-            try {
-                TimeUnit.SECONDS.sleep(2);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            System.out.println("thread start");
             // 如果不加volatile线程对内存变化不知道
-            while (v.flag) {
+            // 线程使用时从类中复制拷贝一份到线程工作内存，如果修改线程内存中的值之后再写回到原先的位置，会有线程安全问题
+            // 子线程处睡眠可能导致子线程获取到的flag已经被主线程修改
+            while (flag) {
             }
+            System.out.println("thread end");
         }).start();
-        v.flag = true;
-        System.out.println(v.flag);
+
+        // 主线程睡眠和子线程睡眠
+        try {
+            TimeUnit.SECONDS.sleep(3);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        flag = false;
+        System.out.println("main end");
     }
 }
