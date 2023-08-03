@@ -298,7 +298,37 @@ public class ThreadPoolExecutors {
         pool.shutdown();
     }
 
-    public static void main(String[] args) {
+    /**
+     * 预创建核心线程数
+     * @Params:[]
+     * @Returns:void
+     */
+    public static void preStartCoreThread() throws InterruptedException {
+        // 核心：5，最大线程数：5
+        ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(5);
+        // 提前创建一个线程，如果有任务提交，则会再创建一个线程，保证总有一个core是空闲的。达到core线程数后则不会再预创建线程
+        threadPoolExecutor.prestartCoreThread();
+        System.out.println(threadPoolExecutor.getPoolSize());
+        // 提交任务，核心线程会重新创建一个
+        threadPoolExecutor.execute(() -> {
+            System.out.println(Thread.currentThread().getName());
+            try {
+                TimeUnit.SECONDS.sleep(2);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        Thread.sleep(1);
+        System.out.println(threadPoolExecutor.getPoolSize());
+    }
+
+    public static void preStartAllCoreThreads() {
+        ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(5);
+        threadPoolExecutor.prestartAllCoreThreads();
+        System.out.println(threadPoolExecutor.getPoolSize());
+    }
+
+    public static void main(String[] args) throws InterruptedException {
         // 直接提交任务队列
 //        synchronousQueue();
 
@@ -318,6 +348,12 @@ public class ThreadPoolExecutors {
 //        customThreadFactory();
 
         // ThreadPoolExecutor扩展
-        threadPoolExecutorExtend();
+//        threadPoolExecutorExtend();
+
+        // 预创建核心线程
+//        preStartCoreThread();
+
+        // 预创建所有核心线程
+        preStartAllCoreThreads();
     }
 }
