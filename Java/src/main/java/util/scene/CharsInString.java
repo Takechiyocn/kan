@@ -1,4 +1,4 @@
-package util;
+package util.scene;
 
 import java.io.FileReader;
 import java.io.PrintStream;

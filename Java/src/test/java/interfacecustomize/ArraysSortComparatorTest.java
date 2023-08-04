@@ -25,12 +25,8 @@ public class ArraysSortComparatorTest {
 
         // Arrays.sort(T[] a, Comparator<? super T> c):实现了比较器(Comparator)接口
         String[] friends = {"Peter","Paul","Mary"};
-        for (String s : friends) {
-            log.info("Before compare:" + s);
-        }
+        log.info("Before compare:" + Arrays.toString(friends));
         Arrays.sort(friends,new ArraysSortComparator());
-        for (String s : friends) {
-            log.info("After compare:" + s);
-        }
+        log.info("After compare:" + Arrays.toString(friends));
     }
 }

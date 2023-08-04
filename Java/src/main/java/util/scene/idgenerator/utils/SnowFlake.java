@@ -1,4 +1,4 @@
-package util.ordernumber.utils;
+package util.scene.idgenerator.utils;
 
 /**
  * Twitter_Snowflake<br>

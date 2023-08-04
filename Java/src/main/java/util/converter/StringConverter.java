@@ -1,15 +1,15 @@
-package util.wrapper;
+package util.converter;
 
 import constant.Constants;
 
 /**
- * @ClassName StringWrapper
+ * @ClassName StringConverter
  * @Description
  * @Author moku
  * @Date 2023/7/21 22:05
  * @Version 1.0
  */
-public class StringWrapper {
+public class StringConverter {
     public static String valueOf(Object value) {
         if (value == null) {
             return null;

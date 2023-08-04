@@ -1,6 +1,6 @@
-package util.ordernumber;
+package util.scene.idgenerator;
 
-import util.ordernumber.utils.SnowFlake;
+import util.scene.idgenerator.utils.SnowFlake;
 
 import java.util.Collections;
 import java.util.HashSet;
