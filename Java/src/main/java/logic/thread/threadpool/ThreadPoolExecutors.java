@@ -299,7 +299,7 @@ public class ThreadPoolExecutors {
     }
 
     /**
-     * 预创建核心线程数
+     * 预创建核心线程
      * @Params:[]
      * @Returns:void
      */
@@ -322,6 +322,11 @@ public class ThreadPoolExecutors {
         System.out.println(threadPoolExecutor.getPoolSize());
     }
 
+    /**
+     * 预创建所有核心线程
+     * @Params:[]
+     * @Returns:void
+     */
     public static void preStartAllCoreThreads() {
         ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(5);
         threadPoolExecutor.prestartAllCoreThreads();

@@ -34,10 +34,10 @@ public class QueuePrioritySample {
         q.offer(student2);
         q.offer(student3);
         q.offer(student4);
+        System.out.println(q);
 
-        System.out.println(q.poll().toString());
-        System.out.println(q.poll().toString());
-        System.out.println(q.poll().toString());
-        System.out.println(q.poll().toString());
+        while (!q.isEmpty()) {
+            System.out.println(q.poll().toString());
+        }
     }
 }

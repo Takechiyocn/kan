@@ -78,5 +78,89 @@ public class BigDecimalBase {
         System.out.println("金额\t" + currency.format(loanAmount));
         System.out.println("利率\t" + percent.format(interestRate));
         System.out.println("利息\t" + currency.format(interest));
+
+        // 5. 精度
+        BigDecimal h = new BigDecimal("123.4500");
+        BigDecimal i = new BigDecimal("123.45");
+        BigDecimal j = new BigDecimal("1234500");
+        // 4
+        System.out.println("h小数位:" + h.scale());
+        // 2
+        System.out.println("i小数位:" + i.scale());
+        // 0
+        System.out.println("j小数位:" + j.scale());
+        // 去掉末尾0：整数类型末尾0也会被删除
+        // 2
+        System.out.println("h去掉尾部0后小数位:" + h.stripTrailingZeros().scale());
+        // 2
+        System.out.println("i去掉尾部0后小数位:" + i.stripTrailingZeros().scale());
+        // -2：表示该数据为整形且末尾包含2个0
+        System.out.println("j去掉尾部0后小数位:" + j.stripTrailingZeros().scale());
+
+        // 设置精度
+
+        // 除法模式
+        // RoundingMode.ROUND_UP:向远离0的方向舍入
+        // 例：1.1 -> 2
+        //    1.5 -> 2
+        //    1.8 -> 2
+        //    -1.1 -> -2
+        //    -1.5 -> -2
+        //    -1.8 -> -2
+        // RoundingMode.ROUND_DOWN:向0方向舍入
+        // 例：1.1 -> 1
+        //    1.5 -> 1
+        //    1.8 -> 1
+        //    -1.1 -> -1
+        //    -1.5 -> -1
+        //    -1.8 -> -1
+        // RoundingMode.ROUND_CEILING:向正无穷大方向舍入
+        // 例：1.1 -> 2
+        //    1.5 -> 2
+        //    1.8 -> 2
+        //    -1.1 -> -1
+        //    -1.5 -> -1
+        //    -1.8 -> -1
+        // RoundingMode.ROUND_FLOOR:向负无穷大方向舍入
+        // 例：1.1 -> 1
+        //    1.5 -> 1
+        //    1.8 -> 1
+        //    -1.1 -> -2
+        //    -1.5 -> -2
+        //    -1.8 -> -2
+        // RoundingMode.ROUND_HALF_UP:以5为分界线，四舍五入
+        // 例：1.1 -> 1
+        //    1.5 -> 2
+        //    1.8 -> 2
+        //    -1.1 -> -1
+        //    -1.5 -> -1
+        //    -1.8 -> -1
+        // RoundingMode.ROUND_HALF_DOWN:以5为分界线，五舍六入
+        // 例：1.1 -> 1
+        //    1.5 -> 1
+        //    1.8 -> 2
+        //    -1.1 -> -1
+        //    -1.5 -> -1
+        //    -1.8 -> 0 ?
+        // RoundingMode.ROUND_HALF_EVEN:以5为分界线，偶数舍入
+        // 例：1.1 -> 1
+        //    1.5 -> 2
+        //    1.8 -> 2
+        //    -1.1 -> -1
+        //    -1.5 -> -1
+        //    -1.8 -> -1
+        // RoundingMode.ROUND_UNNECESSARY:断言所请求的操作具有精确的结果，因此不需要舍入。否则将抛出{@link ArithmeticException}异常
+
+        // 商和余数
+        BigDecimal k = new BigDecimal("12.75");
+        BigDecimal l = new BigDecimal("0.15");
+        System.out.println("k商:" + k.divideAndRemainder(l)[0]);
+        System.out.println("k余数:" + k.divideAndRemainder(l)[1]);
+
+        // 6. 比较大小
+        BigDecimal m = new BigDecimal("12.75");
+        BigDecimal n = new BigDecimal("0.15");
+        System.out.println("m大于n:" + (m.compareTo(n) > 0));
+        System.out.println("m小于n:" + (m.compareTo(n) < 0));
     }
 }

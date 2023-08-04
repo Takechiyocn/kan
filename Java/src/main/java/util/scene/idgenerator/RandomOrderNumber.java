@@ -1,4 +1,4 @@
-package util.ordernumber;
+package util.scene.idgenerator;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
@@ -23,7 +23,7 @@ public class RandomOrderNumber {
         String randomNumeric = RandomStringUtils.randomNumeric(8);
 
         long startTime = System.currentTimeMillis();
-        Set set = new HashSet<>();
+        Set<String> set = new HashSet<>();
         for (int i = 0; i < 10; i++) {
 //        for(int i=0;i<10000000;i++){
             String orderNumber = localDate + randomNumeric;
