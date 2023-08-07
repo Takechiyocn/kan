@@ -1,6 +1,7 @@
-package util.scene.idgenerator.utils;
+package util.idgenerator;
 
 /**
+ * 生成32位16进制数
  * @ClassName UUID
  * @Description
  * @Author moku
@@ -12,7 +13,6 @@ public class UUID {
     }
 
     public static String getId() {
-        String id = java.util.UUID.randomUUID().toString().replace("-", "");
-        return id;
+        return java.util.UUID.randomUUID().toString().replace("-", "");
     }
 }
