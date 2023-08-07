@@ -6,11 +6,11 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 /**
- * @ClassName BigDecimalConverter
- * @Description
- * @Author moku
- * @Date 2023/7/21 23:39
- * @Version 1.0
+ * BigDecimalConverter
+ *
+ * @author moku
+ * @date 2023/8/8 01:34:24
+ * @version 1.0
  */
 public class BigDecimalConverter {
 
@@ -22,8 +22,9 @@ public class BigDecimalConverter {
 
     /**
      * add
-     * @Params:[value1, value2]
-     * @Returns:java.math.BigDecimal
+     * @param value1 
+     * @param value2 
+     * @return java.math.BigDecimal
      */
     public static BigDecimal add(Object value1, Object value2) {
         return parse(value1).add(parse(value2));
@@ -31,8 +32,9 @@ public class BigDecimalConverter {
 
     /**
      * subtract
-     * @Params:[value1, value2]
-     * @Returns:java.math.BigDecimal
+     * @param value1 
+     * @param value2 
+     * @return java.math.BigDecimal
      */
     public static BigDecimal subtract(Object value1, Object value2) {
         return parse(value1).subtract(parse(value2));
@@ -40,8 +42,9 @@ public class BigDecimalConverter {
 
     /**
      * multiply
-     * @Params:[value1, value2]
-     * @Returns:java.math.BigDecimal
+     * @param value1 
+     * @param value2 
+     * @return java.math.BigDecimal
      */
     public static BigDecimal multiply(Object value1, Object value2) {
         return parse(value1).multiply(parse(value2));
@@ -49,8 +52,11 @@ public class BigDecimalConverter {
 
     /**
      * divide
-     * @Params:[value1, value2, precision, roundingMode]
-     * @Returns:java.math.BigDecimal
+     * @param value1 
+     * @param value2 
+     * @param precision 
+     * @param roundingMode 
+     * @return java.math.BigDecimal
      */
     public static BigDecimal divide(Object value1, Object value2, int precision, RoundingMode roundingMode) {
         // 被除数为空或者0
@@ -77,6 +83,11 @@ public class BigDecimalConverter {
         return parse(value1).divide(parse(value2), BigDecimalConverter.precision, RoundingMode.HALF_UP);
     }
 
+    /**
+     * valueOf
+     * @param value 
+     * @return java.math.BigDecimal
+     */
     public static BigDecimal valueOf(Integer value) {
         if (value == null) {
             return BigDecimal.ZERO;
@@ -84,6 +95,11 @@ public class BigDecimalConverter {
         return BigDecimal.valueOf(value);
     }
 
+    /**
+     * valueOf
+     * @param value 
+     * @return java.math.BigDecimal
+     */
     public static BigDecimal valueOf(Long value) {
         if (value == null) {
             return BigDecimal.ZERO;
@@ -91,6 +107,11 @@ public class BigDecimalConverter {
         return BigDecimal.valueOf(value);
     }
 
+    /**
+     * valueOf
+     * @param value 
+     * @return java.math.BigDecimal
+     */
     public static BigDecimal valueOf(Float value) {
         if (value == null) {
             return BigDecimal.ZERO;
@@ -98,6 +119,11 @@ public class BigDecimalConverter {
         return new BigDecimal(value.toString());
     }
 
+    /**
+     * valueOf
+     * @param value 
+     * @return java.math.BigDecimal
+     */
     public static BigDecimal valueOf(Double value) {
         if (value == null) {
             return BigDecimal.ZERO;
@@ -107,6 +133,11 @@ public class BigDecimalConverter {
         return BigDecimal.valueOf(value);
     }
 
+    /**
+     * valueOf
+     * @param value 
+     * @return java.math.BigDecimal
+     */
     public static BigDecimal valueOf(String value) {
         if (value == null) {
             return BigDecimal.ZERO;
@@ -114,6 +145,11 @@ public class BigDecimalConverter {
         return new BigDecimal(value);
     }
 
+    /**
+     * parse
+     * @param value 
+     * @return java.math.BigDecimal
+     */
     private static BigDecimal parse(Object value) {
         if (value == null) {
             return BigDecimal.ZERO;
