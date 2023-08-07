@@ -1,4 +1,6 @@
-package util.idgenerator;
+package util.scene.idgenerator;
+
+import util.idgenerator.UUID;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -13,7 +15,7 @@ import java.util.Set;
 public class UUIDTest {
     public static void main(String[] args) {
         long startTime = System.currentTimeMillis();
-        Set set = new HashSet<>();
+        Set<String> set = new HashSet<>();
         for (int i = 0; i < 10000000; i++) {
             String uuid = UUID.getId();
             System.out.println("uuid---" + (i + 1) + "=======" + uuid);
