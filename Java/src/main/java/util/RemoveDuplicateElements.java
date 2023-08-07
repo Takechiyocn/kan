@@ -4,13 +4,13 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * @ClassName DeleteDuplication
+ * @ClassName RemoveDuplicateElements
  * @Description
  * @Author moku
  * @Date 2023/2/12 9:25
  * @Version 1.0
  */
-public class DeleteDuplication {
+public class RemoveDuplicateElements {
     public static void main(String[] args) {
 
         // 1. LinkedHashSet:去重并保持数据的顺序
@@ -69,7 +69,7 @@ public class DeleteDuplication {
     private static void hashSetDeleteDuplication(List<Integer> numbersList) {
         HashSet<Integer> set = new HashSet<>(numbersList.size());
         List<Integer> result = new ArrayList<>(numbersList.size());
-        for ( Integer i : numbersList) {
+        for (Integer i : numbersList) {
             if (set.add(i)) {
                 result.add(i);
             }

@@ -1,30 +1,23 @@
-package util.scene.idgenerator;
-
-import util.scene.idgenerator.utils.SnowFlake;
+package util.idgenerator;
 
 import java.util.HashSet;
 import java.util.Set;
 
 /**
- * @ClassName SnowFlakeOrderNumber
+ * @ClassName UUIDTest
  * @Description
  * @Author moku
- * @Date 2023/2/8 2:14
+ * @Date 2023/2/8 2:03
  * @Version 1.0
  */
-public class SnowFlakeOrderNumber {
-
-    /**
-     * 测试
-     */
+public class UUIDTest {
     public static void main(String[] args) {
         long startTime = System.currentTimeMillis();
-        SnowFlake idWorker = new SnowFlake(0, 0);
-        Set set = new HashSet();
+        Set set = new HashSet<>();
         for (int i = 0; i < 10000000; i++) {
-            long id = idWorker.nextId();
-            set.add(id);
-            System.out.println("id----" + i + ":" + id);
+            String uuid = UUID.getId();
+            System.out.println("uuid---" + (i + 1) + "=======" + uuid);
+            set.add(uuid);
         }
         long endTime = System.currentTimeMillis();
         System.out.println("set.size():" + set.size());

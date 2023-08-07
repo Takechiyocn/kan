@@ -1,4 +1,4 @@
-package util;
+package logic.concept;
 
 import java.util.UUID;
 
