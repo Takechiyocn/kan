@@ -4,11 +4,11 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * @ClassName RemoveDuplicateElements
- * @Description
- * @Author moku
- * @Date 2023/2/12 9:25
- * @Version 1.0
+ * RemoveDuplicateElements
+ *
+ * @author moku
+ * @date 2023/2/12 9:25:38
+ * @version 1.0
  */
 public class RemoveDuplicateElements {
     public static void main(String[] args) {
@@ -38,7 +38,7 @@ public class RemoveDuplicateElements {
         list4 = removeDuplicateElementsWithLinkedHashSet(list4);
         System.out.println("LinkedHashSet After:" + list4);
 
-        // 2. HashSet:无法去重，可作为去重判断条件
+        // 5. HashSet:无法去重，可作为去重判断条件
         List<Integer> list5 = new ArrayList<>(Arrays.asList(6, 6, 6, 1, 1, 2, 3, 3, 3, 4, 5, 7, 8));
         System.out.println("HashSet Before:" + list5);
         removeDuplicateElementsWithHashSet(list5);

@@ -16,14 +16,21 @@ public class BigDecimalConverter {
 
     private static final int precision = 2;
 
+    /**
+     * valueOf
+     *
+     * @param value
+     * @return java.math.BigDecimal
+     */
     public static BigDecimal valueOf(Object value) {
         return parse(value);
     }
 
     /**
      * add
-     * @param value1 
-     * @param value2 
+     *
+     * @param value1
+     * @param value2
      * @return java.math.BigDecimal
      */
     public static BigDecimal add(Object value1, Object value2) {
@@ -32,8 +39,9 @@ public class BigDecimalConverter {
 
     /**
      * subtract
-     * @param value1 
-     * @param value2 
+     *
+     * @param value1
+     * @param value2
      * @return java.math.BigDecimal
      */
     public static BigDecimal subtract(Object value1, Object value2) {
@@ -42,8 +50,9 @@ public class BigDecimalConverter {
 
     /**
      * multiply
-     * @param value1 
-     * @param value2 
+     *
+     * @param value1
+     * @param value2
      * @return java.math.BigDecimal
      */
     public static BigDecimal multiply(Object value1, Object value2) {
@@ -52,10 +61,11 @@ public class BigDecimalConverter {
 
     /**
      * divide
-     * @param value1 
-     * @param value2 
-     * @param precision 
-     * @param roundingMode 
+     *
+     * @param value1
+     * @param value2
+     * @param precision
+     * @param roundingMode
      * @return java.math.BigDecimal
      */
     public static BigDecimal divide(Object value1, Object value2, int precision, RoundingMode roundingMode) {
@@ -85,7 +95,8 @@ public class BigDecimalConverter {
 
     /**
      * valueOf
-     * @param value 
+     *
+     * @param value
      * @return java.math.BigDecimal
      */
     public static BigDecimal valueOf(Integer value) {
@@ -97,7 +108,8 @@ public class BigDecimalConverter {
 
     /**
      * valueOf
-     * @param value 
+     *
+     * @param value
      * @return java.math.BigDecimal
      */
     public static BigDecimal valueOf(Long value) {
@@ -109,7 +121,8 @@ public class BigDecimalConverter {
 
     /**
      * valueOf
-     * @param value 
+     *
+     * @param value
      * @return java.math.BigDecimal
      */
     public static BigDecimal valueOf(Float value) {
@@ -121,7 +134,8 @@ public class BigDecimalConverter {
 
     /**
      * valueOf
-     * @param value 
+     *
+     * @param value
      * @return java.math.BigDecimal
      */
     public static BigDecimal valueOf(Double value) {
@@ -135,7 +149,8 @@ public class BigDecimalConverter {
 
     /**
      * valueOf
-     * @param value 
+     *
+     * @param value
      * @return java.math.BigDecimal
      */
     public static BigDecimal valueOf(String value) {
@@ -147,7 +162,8 @@ public class BigDecimalConverter {
 
     /**
      * parse
-     * @param value 
+     *
+     * @param value
      * @return java.math.BigDecimal
      */
     private static BigDecimal parse(Object value) {

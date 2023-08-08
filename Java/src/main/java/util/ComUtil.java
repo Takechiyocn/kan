@@ -8,14 +8,20 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * @ClassName ComUtil
- * @Description
- * @Author moku
- * @Date 2023/8/4 17:57
- * @Version 1.0
+ * ComUtil
+ * 
+ * @author moku
+ * @date 2023/8/4 17:57:45
+ * @version 1.0
  */
 public class ComUtil {
 
+    /**
+     * isEmpty
+     *
+     * @param obj 
+     * @return boolean
+     */
     public static boolean isEmpty(Object obj) {
         if (obj == null) {
             return true;
@@ -36,6 +42,12 @@ public class ComUtil {
         }
     }
 
+    /**
+     * isNotEmpty
+     *
+     * @param obj 
+     * @return boolean
+     */
     public static boolean isNotEmpty(Object obj) {
         return!isEmpty(obj);
     }
