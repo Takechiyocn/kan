@@ -91,7 +91,12 @@ public class RemoveDuplicateElements {
         //   传递引用时，副本和原始数据指向同一个堆上的数据区域
         // 以下处理使副本list指向新的引用
         // list = list.stream().distinct().collect(Collectors.toList());
+
+        // 默认自然排序
         return list.stream().distinct().sorted().collect(Collectors.toList());
+
+        // TODO:倒序
+//        return list.stream().distinct().sorted().collect(Collectors.toList());
     }
 
     /**
@@ -104,6 +109,7 @@ public class RemoveDuplicateElements {
 //        Set<E> hashSet = new LinkedHashSet<>(list);
         return new ArrayList<>(new LinkedHashSet<>(list));
     }
+
 
     /**
      * HashSet无法去重，可作为去重判断条件(set.add(e):set中元素不存在则返回true)

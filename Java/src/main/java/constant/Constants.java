@@ -1,5 +1,7 @@
 package constant;
 
+import java.util.regex.Pattern;
+
 /**
  * @Author
  */
@@ -47,6 +49,11 @@ public class Constants {
     public static final String STRING_NINE = "9";
     public static final String STRING_TEN = "10";
 
+    // 正则表达式：英文字符
+    public static final Pattern PATTERN_ALPHABET = Pattern.compile("[a-zA-Z]");
+    // 正则表达式：英数字字符
+    public static final Pattern PATTERN_ALPHABET_NUMBER = Pattern.compile("[a-zA-Z0-9]");
+
     public Constants(String name) {
         this.name = name;
     }
@@ -54,4 +61,6 @@ public class Constants {
     public void setName(String name) {
         this.name = name;
     }
+
+
 }
