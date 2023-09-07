@@ -142,7 +142,7 @@ public class BigDecimalConverter {
         if (value == null) {
             return BigDecimal.ZERO;
         }
-        // 对于整形数据类型转换，不能使用new BigDecimal(value)进行转换(会有精度丢失)，
+        // 对于浮点型数据类型转换，不能使用new BigDecimal(value)进行转换(会有精度丢失)，
         // 应使用new BigDecimal(value.toString())或者BigDecimal.valueOf(value)进行转换
         return BigDecimal.valueOf(value);
     }

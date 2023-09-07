@@ -1,14 +1,12 @@
 package util.character;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import constant.Constants;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.regex.Pattern;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 /**
@@ -48,8 +46,9 @@ public class CharsInString {
 
     /**
      * 提取字符串中各类字符个数
+     *
      * @param s
-     * @return java.util.Map<java.lang.String,java.lang.Integer>
+     * @return java.util.Map<java.lang.String, java.lang.Integer>
      */
     public static Map<String, Integer> getLettersCounts(@NotNull String s) {
 
@@ -61,12 +60,12 @@ public class CharsInString {
         Map<String, Integer> map = new HashMap<>();
         char[] chars = s.toCharArray();
         for (char c : chars) {
-            if (c >= 48 && c <= 57) {
-                // 字符c为数字
-                map.put("Numbers", ++nums);
-            } else if (c == 32) {
+            if (c == 32) {
                 // 字符c为空格
                 map.put("Spaces", ++spaces);
+            } else if (c >= 48 && c <= 57) {
+                // 字符c为数字
+                map.put("Numbers", ++nums);
             } else if (c >= 65 && c <= 90 || c >= 97 && c <= 122) {
                 // 字符c为字母 65~99为大写字母 97~122为小写字母
                 map.put("Letters", ++letters);
@@ -79,34 +78,38 @@ public class CharsInString {
 
     /**
      * 字符串内各个字符是否全部为字母
+     *
      * @param s
      * @return boolean
      */
     public static boolean allCharsInAlphabet(String s) {
-        return s.chars().allMatch(c -> Constants.PATTERN_ALPHABET.matcher(String.valueOf((char)c)).find());
+        return s.chars().allMatch(c -> Constants.PATTERN_ALPHABET.matcher(String.valueOf((char) c)).find());
     }
 
     /**
      * 字符串内各个字符是否全部为英数字
+     *
      * @param s
      * @return boolean
      */
     public static boolean allCharsInAlphabetNumber(String s) {
-        return s.chars().allMatch(c -> Constants.PATTERN_ALPHABET_NUMBER.matcher(String.valueOf((char)c)).find());
+        return s.chars().allMatch(c -> Constants.PATTERN_ALPHABET_NUMBER.matcher(String.valueOf((char) c)).find());
     }
 
     /**
-     * 字符串内各个字符是否全部包含在指定字符串内 -> 方法2：使用obj.toCharArray，再对字符数组内每个字符进行判断
+     * 字符串内各个字符是否全部包含在指定字符串内
+     *
      * @param source
      * @param obj
      * @return boolean
      */
     public static boolean allCharsInString(String source, String obj) {
-        return obj.chars().allMatch(c -> source.contains(String.valueOf((char)c)));
+        return obj.chars().allMatch(c -> source.contains(String.valueOf((char) c)));
     }
 
     /**
      * 字符串内各个字符是否全部包含在指定字符串内
+     *
      * @param source
      * @param obj
      * @return boolean
