@@ -1,5 +1,10 @@
 package logic.test;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * @ClassName Test
  * @Description
@@ -9,26 +14,18 @@ package logic.test;
  */
 public class Test {
 
-    public static void sort(int[] arr) {
-
-        int target;
-        for (int i = 1; i < arr.length; i++) {
-            target = arr[i];
-            int j = i;
-            while ( j > 0 && target < arr[j-1]) {
-                arr[j] = arr[j -1];
-                j--;
-            }
-            arr[j] = target;
-        }
-    }
-
     public static void main(String[] args) {
-        int[] arr = {1, 5, 6, 2, 3, 7, 4};
-        sort(arr);
+        String str = "12a6B985Ccv65";
+        String regex = "[a-zA-Z]+";
+        String regex2 = "[\\d]+";
 
-        for (int res : arr) {
-            System.out.println(res);
+        System.out.println(str.replaceAll(regex,"&"));
+        System.out.println(str.replaceAll(regex2,"0"));
+        String str2 = "boo:and:foo";
+        String regex3 = "[o]+";
+        String[] arr = str2.split(regex3);
+        for (String s : arr) {
+            System.out.print(s + " ");
         }
     }
 }

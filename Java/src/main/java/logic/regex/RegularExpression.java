@@ -71,5 +71,21 @@ public class RegularExpression {
         for (String s : arr) {
             System.out.print(s + " ");
         }
+
+        String str2 = "boo:and:foo";
+        // 单个匹配的字符o为单位进行分割
+        String regex2 = "[o]";
+        String[] arr2 = str2.split(regex2);
+        for (String s : arr) {
+            System.out.print(s + " ");
+        }
+
+        String str3 = "boo:and:foo";
+        // 单个或连续匹配的字符o为单位进行分割
+        String regex3 = "[o]+";
+        String[] arr3 = str2.split(regex3);
+        for (String s : arr) {
+            System.out.print(s + " ");
+        }
     }
 }
